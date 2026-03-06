@@ -1,0 +1,1218 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InTheHand.Net.Obex</name>
+    </assembly>
+    <members>
+        <member name="M:InTheHand.Net.AsyncResult`1.SetAsCompletedWithResultOf(System.Func{`0},System.Boolean)">
+            <summary>
+            Get the results of the operation from the specified function
+            and set the operation as completed,
+            or if getting the results fails then set the corresponding error
+            completion.
+            </summary>
+            -
+            <remarks>
+            <para>The pattern that comes to mind when calling
+            <see cref="M:SetAsCompleted(TResult,AsyncResultCompletion)"/> is
+            the incorrect:
+            <code>try {
+               var result = SomeStatementsAndFunctionCallsToGetTheResult(...);
+               ar.SetAsCompleted(result, false);
+            } catch (Exception ex) {
+               ar.SetAsCompleted(ex, false);
+            }
+            </code>
+            That is wrong because if the user callback fails with an exception
+            then we'll catch it and try to call SetAsCompleted a second time!
+            </para>
+            <para>We need to instead call SetAsCompleted outside of the try
+            block.  This method provides that pattern.
+            </para>
+            </remarks>
+            -
+            <param name="getResultsOrThrow">A delegate containing the function
+            to call to get the result.
+            It should throw an exception in error cases.
+            </param>
+            <param name="completedSynchronously"></param>
+        </member>
+        <member name="T:InTheHand.Net.AsyncResultCompletion">
+            <summary>
+            Used with
+            <see cref="M:InTheHand.Net.AsyncResultNoResult.SetAsCompleted(System.Exception,InTheHand.Net.AsyncResultCompletion)">
+            AsyncResultNoResult.SetAsCompleted</see> and 
+            <see cref="M:InTheHand.Net.AsyncResult{TResult}.SetAsCompleted(TResult,AsyncResultNoResult.AsyncResultCompletion)">
+            AsyncResult&lt;TResult&gt;.SetAsCompleted</see>.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.AsyncResultCompletion.IsSync">
+            <summary>
+            Equivalent to <c>true</c> for the <see cref="T:System.Boolean"/>
+            #x201C;completedSynchronously&#x201D; parameter.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.AsyncResultCompletion.IsAsync">
+            <summary>
+            Equivalent to <c>false</c> for the <see cref="T:System.Boolean"/>
+            #x201C;completedSynchronously&#x201D; parameter.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.AsyncResultCompletion.MakeAsync">
+            <summary>
+            Forces the callback to run on a thread-pool thread.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.GuidHelper">
+            <summary>
+            Contains logic to switch byte ordering from host to network (Big-endian). If the host is big-endian then no reording is done.
+            </summary>
+            <remarks>This class is modelled on IPAddress.HostToNetworkOrder which is used for integer types.</remarks>
+        </member>
+        <member name="M:InTheHand.Net.GuidHelper.HostToNetworkOrder(System.Guid)">
+            <summary>
+            Converts a <see cref="T:System.Guid"/> value from host byte order to network byte order.
+            </summary>
+            <param name="host">The <see cref="T:System.Guid"/> to convert, expressed in host byte order.</param>
+            <returns>A <see cref="T:System.Guid"/> value, expressed in network byte order.</returns>
+        </member>
+        <member name="M:InTheHand.Net.GuidHelper.NetworkToHostOrder(System.Guid)">
+            <summary>
+            Converts a <see cref="T:System.Guid"/> value from network byte order to host byte order.
+            </summary>
+            <param name="host">The <see cref="T:System.Guid"/> to convert, expressed in network byte order.</param>
+            <returns>A <see cref="T:System.Guid"/> value, expressed in host byte order.</returns>
+        </member>
+        <member name="T:InTheHand.Net.Obex.Headers.ObexHeaders">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.Obex.ObexClient">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Obex.ObexContent">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Obex.ByteArrayContent">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Obex.StreamContent">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Obex.StringContent">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Obex.ObexResponseMessage">
+            <preliminary/>
+        </member>
+        <member name="T:InTheHand.Net.Mime.MediaTypeNames">
+            <summary>
+            Specifies the media type information for an object.
+            </summary>
+            <seealso cref="T:System.Net.Mime.MediaTypeNames"/>
+        </member>
+        <member name="T:InTheHand.Net.Mime.MediaTypeNames.Text">
+            <summary>
+            Specifies the type of text data in an object.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Text.vCalendar">
+            <summary>
+            Specifies that the data is in vCalendar format.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Text.vCard">
+            <summary>
+            Specifies that the data is in vCard format.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Text.vMessage">
+            <summary>
+            Specifies that the data is in vMsg format.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Text.vNote">
+            <summary>
+            Specifies that the data is in vNote format.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Text.vToDo">
+            <summary>
+            Specifies that the data is in vToDo format.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.Mime.MediaTypeNames.ObjectExchange">
+            <summary>
+            Specifies the type of Object Exchange specific data.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.ObjectExchange.Capabilities">
+            <summary>
+            Used to retrieve supported object types.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.ObjectExchange.FolderListing">
+            <summary>
+            Used to retrieve folder listing with OBEX FTP.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.ObjectExchange.ObjectProfile">
+            <summary>
+            Used to retrieve an object profile.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.Mime.MediaTypeNames.Messaging">
+            <summary>
+            Specifies the type of Messaging Access Profile (MAP) specific data.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Messaging.Message">
+            <summary>
+            Used to retrieve a text message.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Messaging.MessageListing">
+            <summary>
+            Used to retrieve message listing with MAP.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.Messaging.EventReport">
+            <summary>
+            Used to report events.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.Mime.MediaTypeNames.PhoneBookAccess">
+            <summary>
+            Specifies the type of Phone Book Access Profile (PBAP) specific data.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.PhoneBookAccess.PhoneBook">
+            <summary>
+            Used to retrieve a phone book. This is a collection of vCard items with custom fields.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.PhoneBookAccess.VCard">
+            <summary>
+            Used to retrieve an individual vCard entry.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.Mime.MediaTypeNames.PhoneBookAccess.VCardListing">
+            <summary>
+            Used to retrieve a vCard listing from a query.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexHeader">
+            <summary>
+            Header identifiers to describe some aspect of the object being transferred.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Name">
+            <summary>
+            String describing the name of the object.
+            </summary>
+            <remarks>Unicode String. Often a file name.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Description">
+            <summary>
+            Text description of the object.
+            </summary>
+            <remarks>Unicode String.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Type">
+            <summary>
+            Type of object - e.g. text, html, binary, manufacturer specific 
+            </summary>
+            <remarks>Byte sequence. ASCII encoded MIME defined media type.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Time">
+            <summary>
+            Date/time stamp – ISO 8601 version - preferred 
+            </summary>
+            <remarks>Byte sequence. ASCII encoded ISO 8601 DateTime string.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Target">
+            <summary>
+            Name of service that operation is targeted to.
+            </summary>
+            <remarks>Byte sequence. Usually a Uuid for a well-known target.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Http">
+            <summary>
+            An HTTP 1.x header.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Body">
+            <summary>
+            A chunk of the object body. 
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.EndOfBody">
+            <summary>
+            The final chunk of the object body. 
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Who">
+            <summary>
+            Identifies the OBEX application, used to tell if talking to a peer.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:InTheHand.Net.ObexHeader.AppParameters" -->
+        <member name="F:InTheHand.Net.ObexHeader.AuthChallenge">
+            <summary>
+            Authentication digest-challenge.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.AuthResponse">
+            <summary>
+            Authentication digest-response.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.ObjectClassOld">
+            <summary>
+            OBEX Object class of object.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.WanUuid">
+            <summary>
+            Uniquely identifies the network client (OBEX server).
+            </summary>
+            <remarks>Byte sequence. 16-byte UUID.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.ObjectClass">
+            <summary>
+            OBEX Object class of object.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.SessionParameters">
+            <summary>
+            Parameters used in session commands/responses.
+            </summary>
+            <remarks>Byte sequence.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.SessionSequenceNumber">
+            <summary>
+            Sequence number used in each OBEX packet for reliability.
+            </summary>
+            <remarks>Byte.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Count">
+            <summary>
+            Number of objects (used by Connect).
+            </summary>
+            <remarks>4-byte unsigned integer.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Length">
+            <summary>
+            The length of the object in bytes.
+            </summary>
+            <remarks>4-byte unsigned integer.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.Time4Byte">
+            <summary>
+            Date/time stamp – 4-byte version.
+            </summary>
+            <remarks>4-byte unsigned integer.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.ConnectionID">
+            <summary>
+            An identifier used for OBEX connection multiplexing.
+            </summary>
+            <remarks>4-byte unsigned integer.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexHeader.CreatorID">
+            <summary>
+            Indicates the creator of an object.
+            </summary>
+            <remarks>4-byte unsigned integer.</remarks>
+        </member>
+        <member name="T:InTheHand.Net.ObexListener">
+            <summary>
+            Provides a simple, programmatically controlled OBEX protocol listener.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.#ctor">
+            <overloads>
+            Initializes a new instance of the ObexListener class.
+            </overloads>
+            -
+            <summary>
+            Initializes a new instance of the ObexListener class using the Bluetooth transport.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.#ctor(InTheHand.Net.ObexTransport)">
+            <summary>
+            Initializes a new instance of the ObexListener class specifiying the transport to use.
+            </summary>
+            -
+            <param name="transport">Specifies the transport protocol to use.
+            </param>
+        </member>
+        <member name="P:InTheHand.Net.ObexListener.IsListening">
+            <summary>
+            Gets a value that indicates whether the <see cref="T:InTheHand.Net.ObexListener"/> has been started.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.Start">
+            <summary>
+            Allows this instance to receive incoming requests.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.Stop">
+            <summary>
+            Causes this instance to stop receiving incoming requests.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.Close">
+            <summary>
+            Shuts down the ObexListener.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexListener.GetContext">
+            <summary>
+            Waits for an incoming request and returns when one is received.
+            </summary>
+            -
+            <remarks>
+            <para>This method blocks waiting for a new connection.  It will
+            return when a new connection completes or 
+            <see cref="M:InTheHand.Net.ObexListener.Stop"/>/<see cref="M:InTheHand.Net.ObexListener.Close"/>
+            has been called.
+            </para>
+            </remarks>
+            -
+            <returns>Returns a <see cref="T:InTheHand.Net.ObexListenerContext"/>
+            or <see langword="null"/> if
+            <see cref="M:InTheHand.Net.ObexListener.Stop"/>/<see cref="M:InTheHand.Net.ObexListener.Close"/>
+            has been called.
+            </returns>
+        </member>
+        <member name="T:InTheHand.Net.ObexListenerContext">
+            <summary>
+            Provides access to the request and response objects used by the <see cref="T:InTheHand.Net.ObexListener"/> class.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerContext.Request">
+            <summary>
+            Gets the <see cref="T:InTheHand.Net.ObexListenerRequest"/> that represents a client's request for a resource
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexListenerRequest">
+            <summary>
+            Describes an incoming OBEX request to an <see cref="T:InTheHand.Net.ObexListener"/> object.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.ContentLength64">
+            <summary>
+            Gets the length of the body data included in the request.
+            <para><b>New in v1.5.51015</b></para>
+            </summary>
+            <value>A long value that contains the value from the request's Length header.
+            This value is -1 if the content length is not known.</value>
+            <remarks>The Length header expresses the length, in bytes, of the body data that accompanies the request.</remarks>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.ContentType">
+            <summary>
+            Gets the MIME type of the body data included in the request.
+            </summary>
+            <value>A <see cref="T:System.String"/> that contains the text of the request's Type header.</value>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.Headers">
+            <summary>
+            Gets the collection of header name/value pairs sent in the request.
+            </summary>
+            <value>A <see cref="T:System.Net.WebHeaderCollection"/> that contains the OBEX headers included in the request.</value>
+            <remarks>For a complete list of request headers, see the <see cref="T:InTheHand.Net.ObexHeader"/> enumeration.</remarks>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.LocalEndPoint">
+            <summary>
+            Get the device address and service to which the request is directed.
+            </summary>
+            -
+            <remarks>
+            The <see cref="T:System.Net.EndPoint"/> instance returned will be of the 
+            subtype that matches the address family that the <see cref="T:InTheHand.Net.ObexListener"/> 
+            is listening on.  For instance if the listener was created with 
+            <see cref="T:InTheHand.Net.ObexTransport"/>.<see cref="F:InTheHand.Net.ObexTransport.Bluetooth"/>
+            then the <see cref="T:System.Net.EndPoint"/> will be of type
+            <see cref="T:InTheHand.Net.BluetoothEndPoint"/>, and similarly for 
+            <see cref="T:InTheHand.Net.IrDAEndPoint"/> and
+            <see cref="T:System.Net.IPEndPoint"/>.
+            </remarks>
+            -
+            <seealso cref="P:InTheHand.Net.ObexListenerRequest.RemoteEndPoint"/>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.ObexMethod">
+            <summary>
+            Gets the method specified by the client.
+            </summary>
+            <remarks>Only PUT is supported in this version.</remarks>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.InputStream">
+            <summary>
+            Gets a stream that contains the body data sent by the client.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.ProtocolVersion">
+            <summary>
+            Gets the OBEX version used by the requesting client
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.RawUrl">
+            <summary>
+            Gets the URL information (without the host and port) requested by the client.
+            </summary>
+            <value>A <see cref="T:System.String"/> that contains the raw URL for this request.</value>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.RemoteEndPoint">
+            <summary>
+            Gets the device address and service from which the request originated.
+            </summary>
+            -
+            <remarks>
+            The <see cref="T:System.Net.EndPoint"/> instance returned will be of the 
+            subtype that matches the address family that the <see cref="T:InTheHand.Net.ObexListener"/> 
+            is listening on.  For instance if the listener was created with 
+            <see cref="T:InTheHand.Net.ObexTransport"/>.<see cref="F:InTheHand.Net.ObexTransport.Bluetooth"/>
+            then the <see cref="T:System.Net.EndPoint"/> will be of type
+            <see cref="T:InTheHand.Net.BluetoothEndPoint"/>, and similarly for 
+            <see cref="T:InTheHand.Net.IrDAEndPoint"/> and
+            <see cref="T:System.Net.IPEndPoint"/>.
+            </remarks>
+            -
+            <example>
+            C#
+            <code lang="C#">
+              ObexListener lsnr = new ObexListener(ObexTransport.Bluetooth)
+              ... ...
+              ObexListenerRequest olr = ...
+              BluetoothEndPoint remoteEp = (BluetoothEndPoint)olr.RemoteEndPoint;
+              BluetoothAddress remoteAddr = remoteEp.Address;
+            </code>
+            Visual Basic
+            <code lang="VB.NET">
+              Dim lsnr As New ObexListener(ObexTransport.IrDA)
+              ... ...
+              Dim olr As ObexListenerRequest = ...
+              Dim remoteEp As IrDAEndPoint = CType(olr.RemoteEndPoint, IrDAEndPoint);
+              Dim remoteAddr As IrDAAddress = remoteEp.Address;
+            </code>
+            </example>
+            -
+            <seealso cref="P:InTheHand.Net.ObexListenerRequest.LocalEndPoint"/>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.UserHostAddress">
+            <summary>
+            Gets the server address to which the request is directed.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexListenerRequest.Url">
+            <summary>
+            Gets the <see cref="T:System.Uri"/> object requested by the client.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> object that identifies the resource requested by the client.</value>
+        </member>
+        <member name="M:InTheHand.Net.ObexListenerRequest.WriteFile(System.String)">
+            <summary>
+            Writes the body of the request to the specified file path.
+            </summary>
+            <param name="fileName">The filename (including the path) to write to.</param>
+        </member>
+        <member name="T:InTheHand.Net.ObexMethod">
+            <summary>
+            Methods which can be carried out in an Object Exchange transaction.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Put">
+            <summary>
+            Sends an object to a receiving device.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Get">
+            <summary>
+            Requests a file from the remote device.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Connect">
+            <summary>
+            Negotiate an Object Exchange connection with a remote device.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Disconnect">
+            <summary>
+            Disconnect an existing Object Exchange session.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.PutFinal">
+            <summary>
+            Sends the last packet of an object to a receiving device.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.SetPath">
+            <summary>
+            Change remote path on an Object Exchange server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Session">
+            <summary>
+            Used for reliable session support.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexMethod.Abort">
+            <summary>
+            Abort the current operation.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexStatusCode">
+            <summary>
+            Specifies the status codes returned for an Object Exchange (OBEX) operation.
+            </summary>
+            <remarks>OBEX codes are directly related to their HTTP equivalents - see <see cref="T:System.Net.HttpStatusCode"/>.</remarks>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Final">
+            <summary>
+            Applied to another code to indicate this is the only response or final response in a series.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Continue">
+            <summary>
+            Equivalent to HTTP status 100.
+            Continue indicates that the client can continue with its request.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.OK">
+            <summary>
+            Equivalent to HTTP status 200.
+            OK indicates that the request succeeded and that the requested information is in the response.
+            This is the most common status code to receive.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Created">
+            <summary>
+            Equivalent to HTTP status 201.
+            Created indicates that the request resulted in a new resource created before the response was sent. 
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Accepted">
+            <summary>
+            Equivalent to HTTP status 202.
+            Accepted indicates that the request has been accepted for further processing.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NonAuthorativeInformation">
+            <summary>
+            Equivalent to HTTP status 203.
+            NonAuthoritativeInformation indicates that the returned metainformation is from a cached copy instead of the origin server and therefore may be incorrect.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NoContent">
+            <summary>
+            Equivalent to HTTP status 204.
+            NoContent indicates that the request has been successfully processed and that the response is intentionally blank.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.ResetContent">
+            <summary>
+            Equivalent to HTTP status 205.
+            ResetContent indicates that the client should reset (not reload) the current resource.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.PartialContent">
+            <summary>
+            Equivalent to HTTP status 206.
+            PartialContent indicates that the response is a partial response as requested by a GET request that includes a byte range.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.MultipleChoices">
+            <summary>
+            Equivalent to HTTP status 300.
+            MultipleChoices indicates that the requested information has multiple representations.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.MovedPermanently">
+            <summary>
+            Equivalent to HTTP status 301.
+            MovedPermanently indicates that the requested information has been moved to the URI specified in the Location header.
+            The default action when this status is received is to follow the Location header associated with the response.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.MovedTemporarily">
+            <summary>
+            Equivalent to HTTP status 302.
+            Redirect indicates that the requested information is located at the URI specified in the Location header.
+            The default action when this status is received is to follow the Location header associated with the response.
+            When the original request method was POST, the redirected request will use the GET method.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.SeeOther">
+            <summary>
+            Equivalent to HTTP status 303.
+            SeeOther automatically redirects the client to the URI specified in the Location header as the result of a POST. The request to the resource specified by the Location header will be made with a GET.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NotModified">
+            <summary>
+            Equivalent to HTTP status 304.
+            NotModified indicates that the client's cached copy is up to date.
+            The contents of the resource are not transferred.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.UseProxy">
+            <summary>
+            Equivalent to HTTP status 305.
+            UseProxy indicates that the request should use the proxy server at the URI specified in the Location header.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.BadRequest">
+             <summary>
+             Equivalent to HTTP status 400.
+             BadRequest indicates that the request could not be understood by the server. BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have its own error code. 
+            
+             <see cref="T:InTheHand.Net.ObexWebRequest"/> reports errors through 
+             <see cref="P:InTheHand.Net.ObexWebResponse.StatusCode">ObexWebResponse.StatusCode</see>,
+             this status code is overloaded by it to report failure to connect to the server.
+             </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Unauthorized">
+            <summary>
+            Equivalent to HTTP status 401.
+            Unauthorized indicates that the requested resource requires authentication. The WWW-Authenticate header contains the details of how to perform the authentication.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.PaymentRequired">
+            <summary>
+            Equivalent to HTTP status 402.
+            PaymentRequired is reserved for future use.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Forbidden">
+            <summary>
+            Equivalent to HTTP status 403.
+            Forbidden indicates that the server refuses to fulfill the request.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NotFound">
+            <summary>
+            Equivalent to HTTP status 404.
+            NotFound indicates that the requested resource does not exist on the server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.MethodNotAllowed">
+            <summary>
+            Equivalent to HTTP status 405.
+            MethodNotAllowed indicates that the request method (POST or GET) is not allowed on the requested resource.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NotAcceptable">
+            <summary>
+            Equivalent to HTTP status 406.
+            NotAcceptable indicates that the client has indicated with Accept headers that it will not accept any of the available representations of the resource.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.ProxyAuthenticationRequired">
+            <summary>
+            Equivalent to HTTP status 407.
+            ProxyAuthenticationRequired indicates that the requested proxy requires authentication.
+            The Proxy-authenticate header contains the details of how to perform the authentication.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.RequestTimeout">
+            <summary>
+            Equivalent to HTTP status 408.
+            RequestTimeout indicates that the client did not send a request within the time the server was expecting the request.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Conflict">
+            <summary>
+            Equivalent to HTTP status 409.
+            Conflict indicates that the request could not be carried out because of a conflict on the server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.Gone">
+            <summary>
+            Equivalent to HTTP status 410.
+            Gone indicates that the requested resource is no longer available.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.LengthRequired">
+            <summary>
+            Equivalent to HTTP status 411.
+            LengthRequired indicates that the required Content-length header is missing.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.PreconditionFailed">
+            <summary>
+            Equivalent to HTTP status 412.
+            PreconditionFailed indicates that a condition set for this request failed, and the request cannot be carried out.
+            Conditions are set with conditional request headers like If-Match, If-None-Match, or If-Unmodified-Since.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.RequestedEntityTooLarge">
+            <summary>
+            Equivalent to HTTP status 413.
+            RequestEntityTooLarge indicates that the request is too large for the server to process.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.RequestedUrlTooLarge">
+            <summary>
+            Equivalent to HTTP status 414.
+            RequestUriTooLong indicates that the URI is too long.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.UnsupportedMediaType">
+            <summary>
+            Equivalent to HTTP status 415.
+            UnsupportedMediaType indicates that the request is an unsupported type.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.InternalServerError">
+            <summary>
+            Equivalent to HTTP status 500.
+            InternalServerError indicates that a generic error has occurred on the server.
+            
+            <see cref="T:InTheHand.Net.ObexWebRequest"/> reports errors through 
+            <see cref="P:InTheHand.Net.ObexWebResponse.StatusCode">ObexWebResponse.StatusCode</see>,
+            this status code is used by it to report failure to send the object.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.NotImplemented">
+            <summary>
+            Equivalent to HTTP status 501.
+            NotImplemented indicates that the server does not support the requested function.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.BadGateway">
+            <summary>
+            Equivalent to HTTP status 502.
+            BadGateway indicates that an intermediate proxy server received a bad response from another proxy or the origin server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.ServiceUnavailable">
+            <summary>
+            Equivalent to HTTP status 503.
+            ServiceUnavailable indicates that the server is temporarily unavailable, usually due to high load or maintenance.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.GatewayTimeout">
+            <summary>
+            Equivalent to HTTP status 504.
+            GatewayTimeout indicates that an intermediate proxy server timed out while waiting for a response from another proxy or the origin server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.HttpVersionNotSupported">
+            <summary>
+            Equivalent to HTTP status 505.
+            HttpVersionNotSupported indicates that the requested HTTP version is not supported by the server.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.DatabaseFull">
+            <summary>
+            Database Full.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexStatusCode.DatabaseLocked">
+            <summary>
+            Database Locked.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexTarget">
+            <summary>
+            Known Target header values for Bluetooth defined services.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTarget.MessagingAccess">
+            <summary>
+            Target header to connect to Messaging Access Service (Part of Messaging Access Profile).
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTarget.MessagingNotification">
+            <summary>
+            Target header to connect to Messaging Notification Service (Part of Messaging Access Profile).
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTarget.PhoneBookAccess">
+            <summary>
+            Target header to connect to Phone Book Access Profile.
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexTransport">
+            <summary>
+            Supported network transports for Object Exchange.
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTransport.IrDA">
+            <summary>
+            Infrared (IrDA)
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTransport.Bluetooth">
+            <summary>
+            Bluetooth
+            </summary>
+        </member>
+        <member name="F:InTheHand.Net.ObexTransport.Tcp">
+            <summary>
+            TCP/IP
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexWebRequest">
+            <summary>
+            Provides an OBEX implementation of the <see cref="T:System.Net.WebRequest"/> class.
+            </summary>
+            -
+            <remarks>
+            <para>If you want to transfer a file or other object using the standard 
+            service as used by Windows' Wireless Link / Bluetooth File Transfer Wizard, 
+            Palm's Beam, Nokia's Send via Infrared, then use the OBEX protocol.  
+            </para>
+            <para>The PUT operation is supported, and there is new support for GET,
+            (see the documentation at the <see cref="P:InTheHand.Net.ObexWebRequest.Method"/>
+            property).
+            Changing folders is not supported, nor is getting a folder listing.
+            </para>
+            <para>In the previous version there were some issue with handling file names 
+            that include non-English characters, and connections 
+            to some device types failed.  Also if the connection to the peer was lost
+            then the request could hang reading forever.  See the release note and bugs
+            database for more information.
+            </para>
+            </remarks>
+            -
+            <example>
+            For Bluetooth one can use code like the following to send a file:
+            (Note a failure is signalled by an exception).
+            <code lang="VB.NET">
+            Dim addr As BluetoothAddress = BluetoothAddress.Parse("002233445566")
+            Dim path As String = "HelloWorld.txt"
+            '
+            Dim req As New ObexWebRequest(addr, path)
+            req.ReadFile("Hello World.txt")
+            Dim rsp As ObexWebResponse = CType(req.GetResponse(),ObexWebResponse)
+            Console.WriteLine("Response Code: {0} (0x{0:X})", rsp.StatusCode)
+            </code>
+            That constructor isn't available for other transports (TCP/IP, IrDA)
+            so one has to create a Uri to provide the scheme, address, and path
+            parameters.  Thus use code like the following to send a file.
+            <code lang="VB.NET">
+            ' The host part of the URI is the device address, e.g. IrDAAddress.ToString(),
+            ' and the file part is the OBEX object name.
+            Dim addr As BluetoothAddress = ...
+            Dim addrStr As String = addr.ToString("N")
+            Dim uri As New Uri("obex://" &amp; addrStr &amp; "/HelloWorld.txt")
+            '
+            Dim req As New ObexWebRequest(uri)
+            req.ReadFile("Hello World.txt")
+            Dim rsp As ObexWebResponse = CType(req.GetResponse(),ObexWebResponse)
+            Console.WriteLine("Response Code: {0} (0x{0:X})", rsp.StatusCode)
+            </code>
+            Or, to send locally generated content use something like the following.
+            <code lang="VB.NET">
+            Dim addr As BluetoothAddress = ...
+            Dim path As String = "HelloWorld2.txt"
+            '
+            Dim req As New ObexWebRequest(addr, path)
+            Using content As Stream = req.GetRequestStream()
+               ' Using a StreamWriter to write text to the stream...
+               Using wtr As New StreamWriter(content)
+                  wtr.WriteLine("Hello World GetRequestStream")
+                  wtr.WriteLine("Hello World GetRequestStream 2")
+                  wtr.Flush()
+                  ' Set the Length header value
+                  req.ContentLength = content.Length
+               End Using
+               ' In this case closing the StreamWriter also closed the Stream, but ...
+            End Using
+            Dim rsp As ObexWebResponse = CType(req.GetResponse(),ObexWebResponse) 
+            Console.WriteLine("Response Code: {0} (0x{0:X})", rsp.StatusCode)
+            </code>
+            See also the ObexPushApplication and ObexPushVB sample programs.
+            </example>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.#ctor(System.Uri)">
+            <overloads>
+            Create a new Obex request with the specified <see cref="T:System.Uri"/>.
+            </overloads>
+            -
+            <summary>
+            Create a new Obex request with the specified <see cref="T:System.Uri"/>.
+            </summary>
+            <param name="requestUri">e.g. "obex://112233445566/HelloWorld.txt"</param>
+            <remarks>Uri must use one of the following schemes - obex, obex-push, obex-ftp, obex-sync.
+            The host name must be the device address in short hex, or dotted hex notation - not the default representation using the colon separator</remarks>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.#ctor(System.Uri,System.IO.Stream)">
+            <summary>
+            [Advanced usage]
+            Create a new Obex request with the specified <see cref="T:System.Uri"/> 
+            and the open <see cref="T:System.IO.Stream"/> connection to an OBEX server.
+            </summary>
+            -
+            <param name="requestUri">[Advanced usage]
+            A url of the form 
+            &#x201C;<i>scheme</i><c>:///</c><i>filename</i>&#x201D;, 
+            &#x201C;e.g. <c>obex:///foo.txt</c>&#x201D;.
+            That is the host part is blank, 
+            and the scheme and filename parts set as for the other constructor 
+            <see cref="M:InTheHand.Net.ObexWebRequest.#ctor(System.Uri)"/>
+            </param>
+            <param name="stream">An instance of <see cref="T:System.IO.Stream"/>
+            already connected to an OBEX server.
+            </param>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.#ctor(System.String,InTheHand.Net.BluetoothAddress,System.String)">
+            <summary>
+            Initialize an instance of this class given a scheme, 
+            a Bluetooth Device Address, and a remote path name.
+            </summary>
+            -
+            <param name="scheme">The Uri scheme. One of 
+            <c>obex</c>, <c>obex-push</c>, <c>obex-ftp</c>, or <c>obex-sync</c>.
+            </param>
+            <param name="target">The Bluetooth Device Address of the OBEX server.
+            </param>
+            <param name="path">The path on the OBEX server.
+            </param>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.#ctor(InTheHand.Net.BluetoothAddress,System.String)">
+            <summary>
+            Initialize an instance of this class given 
+            a Bluetooth Device Address, and a remote path name.
+            </summary>
+            -
+            <remarks>
+            <para>This is equivalent to calling
+            <see cref="M:InTheHand.Net.ObexWebRequest.#ctor(System.String,InTheHand.Net.BluetoothAddress,System.String)">
+            ObexWebRequest(String scheme, BluetoothAddress target, String path)
+            </see>
+            with scheme &#x201C;<c>obex</c>&#x201D;.
+            </para>
+            </remarks>
+            -
+            <param name="target">The Bluetooth Device Address of the OBEX server.
+            </param>
+            <param name="path">The path on the OBEX server.
+            </param>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.Headers">
+            <summary>
+            Specifies a collection of the name/value pairs that make up the OBEX headers.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.Method">
+            <summary>
+            Gets or sets the method for the request.
+            </summary>
+            <remarks>
+            <para>For Object Exchange the method code is mapped to the equivalent HTTP style method.
+            For example "PUT", "GET" etc. "PUT" is the default value.
+            There is new support for GET as of version 2.5.
+            </para>
+            <para>To use GET change the <c>Method</c> to "<c>GET</c>" and you must also use
+            scheme "<c>obex-ftp</c>" in the URL instead of the usual "<c>obex</c>"
+            -- unless you know that the default OBEX server you are connecting
+            supports GET.
+            </para>
+            <para>For a PUT sample see the <see cref="T:InTheHand.Net.ObexWebRequest">class</see>
+            documentation.  For GET, see below.
+            </para>
+            
+            <example>
+            <code lang="VB.NET">
+            ' The host part of the URI is the device address, e.g. IrDAAddress.ToString(),
+            ' and the file part is the OBEX object name.
+            Dim addr As String = "112233445566"
+            Dim uri As New Uri("obex-ftp://" &amp; addr &amp; "/HelloWorld.txt")
+            Dim req As New ObexWebRequest(uri)
+            req.Method = "GET"
+            Dim rsp As ObexWebResponse = CType(req.GetResponse(), ObexWebResponse)
+            Console.WriteLine("Response Code: {0} (0x{0:X})", rsp.StatusCode)
+            Using content As Stream = rsp.GetResponseStream()
+               ' Using a StreamReader to read text from the stream...
+               Using rdr As New StreamReader(content)
+                  While True
+                     Dim line As String = rdr.ReadLine()
+                     If line Is Nothing Then Exit While
+                     Console.WriteLine(line)
+                  End While
+               End Using
+            End Using
+            </code>
+            </example>
+            </remarks>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.ContentType">
+            <summary>
+            Gets or sets the value of the Type OBEX header.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.ContentLength">
+            <summary>
+            Gets or sets the Length OBEX header.
+            </summary>
+            <remarks>This property is mandatory, if not set no data will be sent.
+            If you use the <see cref="M:InTheHand.Net.ObexWebRequest.ReadFile(System.String)"/> helper method this value is automatically populated with the size of the file that was read.</remarks>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.Proxy">
+            <summary>
+            Not Supported - do not use, this will throw an exception.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.Timeout">
+            <summary>
+            Gets or sets the time-out value for the <see cref="M:InTheHand.Net.ObexWebRequest.GetResponse"/> method.
+            </summary>
+            -
+            <remarks>
+            <para>In versions 3.2 and earlier this property was ignored on
+            Windows Mobile.  It is now (untested!) supported there,
+            but not with the Microsoft Bluetooth stack there as it doesn't
+            support timeouts.
+            A cunning solution is available let me know of your requirements...
+            </para>
+            </remarks>
+            -
+            <value>The number of milliseconds to wait before the request times out.
+            The default is 50,000 milliseconds (50 seconds).
+            A value of -1 or 0 represents no time-out.</value>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebRequest.RequestUri">
+            <summary>
+            Gets the original Uniform Resource Identifier (URI) of the request. 
+            </summary>
+            <remarks>For an ObexPush request the URI will use the "obex://" prefix, followed by the numerical device id in hex format.
+            The path section of the URI represents the remote filename of the pushed object. Subfolders are not supported. Some devices may only support specific object types e.g. V-Card.</remarks>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.GetRequestStream">
+            <summary>
+            Gets a <see cref="T:System.IO.Stream"/> object to use to write request data.
+            </summary>
+            -
+            <returns>A <see cref="T:System.IO.Stream"/> to use to write request data.</returns>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.ReadFile(System.String)">
+            <summary>
+            Reads the contents of the specified file to the request stream.
+            </summary>
+            <param name="fileName">The filename (including the path) from which to read.</param>
+            <remarks>Provides an easy equivalent to manually writing the file contents to the request stream.</remarks>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.GetResponse">
+            <summary>
+            Returns the OBEX server response.
+            </summary>
+            -
+            <returns>An <see cref="T:InTheHand.Net.ObexWebResponse"/>.</returns>
+            -
+            <exception cref="T:System.Net.WebException">
+            An error occurred, with the error that occured being stored in the 
+            <see cref="P:System.Exception.InnerException"/> property.  If the error 
+            occurred in the connect phase then the <see cref="P:System.Net.WebException.Status"/>
+            property will have value <see cref="F:System.Net.WebExceptionStatus.ConnectFailure"/>,
+            and in the operation phase on the desktop CLR it will have value
+            <see cref="F:System.Net.WebExceptionStatus.UnknownError"/>
+            </exception>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.StreamReadBlockMust(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            A wrapper for Stream.Read that blocks until the requested number of bytes
+            have been read, and throw an exception if the stream is closed before that occurs.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.StreamReadBlock(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            A wrapper for Stream.Read that blocks until the requested number of bytes
+            have been read or the end of the Stream has been reached.
+            Returns the number of bytes read.
+            </summary>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.BeginGetResponse(System.AsyncCallback,System.Object)">
+            <summary>
+            Begins a request for a OBEX server response.
+            </summary>
+            -
+            <param name="callback">An <see cref="T:System.AsyncCallback"/> delegate that references the method to invoke when the operation is complete.</param>
+            <param name="state">A user-defined object containing information about the operation.
+            This object is passed to the callback delegate when the operation is complete.</param>
+            -
+            <returns>An <see cref="T:System.IAsyncResult"/> that represents the 
+            asynchronous operation, which could still be pending.
+            </returns>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebRequest.EndGetResponse(System.IAsyncResult)">
+            <summary>
+            Begins a request for a OBEX server response.
+            </summary>
+            -
+            <param name="asyncResult">An <see cref="T:System.IAsyncResult"/>
+            object that was obtained when the asynchronous operation was started.
+            </param>
+            -
+            <returns>An <see cref="T:InTheHand.Net.ObexWebResponse"/>.</returns>
+            -
+            <exception cref="T:System.Net.WebException">
+            An error occurred, with the error that occured being stored in the 
+            <see cref="P:System.Exception.InnerException"/> property.  If the error 
+            occurred in the connect phase then the <see cref="P:System.Net.WebException.Status"/>
+            property will have value <see cref="F:System.Net.WebExceptionStatus.ConnectFailure"/>,
+            and in the operation phase on the desktop CLR it will have value
+            <see cref="F:System.Net.WebExceptionStatus.UnknownError"/>
+            </exception>
+        </member>
+        <member name="T:InTheHand.Net.ObexWebRequestCreate">
+            <summary>
+            Used to create a new web request for obex uri scheme
+            </summary>
+        </member>
+        <member name="T:InTheHand.Net.ObexWebResponse">
+            <summary>
+            Provides an OBEX implementation of the <see cref="T:System.Net.WebResponse"/> class.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebResponse.Headers">
+            <summary>
+            Gets the headers associated with this response from the server.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebResponse.ContentLength">
+            <summary>
+            Gets the length of the content returned by the request.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebResponse.ContentType">
+            <summary>
+            Gets the content type of the response.
+            </summary>
+        </member>
+        <member name="P:InTheHand.Net.ObexWebResponse.StatusCode">
+            <summary>
+            Returns a status code to indicate the outcome of the request.
+            </summary>
+            -
+            <remarks><para>Note, if a error occurs locally then the status code
+            <see cref="F:InTheHand.Net.ObexStatusCode.InternalServerError"/> is returned.
+            Therefore that error code could signal local or remote errors.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebResponse.GetResponseStream">
+            <summary>
+            Gets the stream used to read the body of the response from the server.
+            </summary>
+            -
+            <returns>A <see cref="T:System.IO.Stream"/> containing the body of the response.</returns>
+        </member>
+        <member name="M:InTheHand.Net.ObexWebResponse.Close">
+            <summary>
+            Frees the resources held by the response.
+            </summary>
+        </member>
+    </members>
+</doc>
