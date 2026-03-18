@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Printer_Vendo
+namespace PrintAndSnap
 {
     internal static class Program
     {
@@ -16,7 +16,7 @@ namespace Printer_Vendo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PrinterPhotoVendo());
+            Application.Run(new PrintAndSnap());
         }
     }
 }

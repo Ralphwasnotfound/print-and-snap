@@ -6,9 +6,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Printer_Vendo
+namespace PrintAndSnap
 {
-    partial class PrinterPhotoVendo
+    partial class PrintAndSnap
     {
         /// <summary>
         /// Required designer variable.
@@ -99,18 +99,12 @@ namespace Printer_Vendo
             this.printSettingsPanelLayout = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.radioColored = new System.Windows.Forms.RadioButton();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.radioBlackWhite = new System.Windows.Forms.RadioButton();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.radioPrintAll = new System.Windows.Forms.RadioButton();
-            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.radioPrintRange = new System.Windows.Forms.RadioButton();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.radioSinglePage = new System.Windows.Forms.RadioButton();
+            this.radioPrintAll = new System.Windows.Forms.RadioButton();
+            this.radioPrintRange = new System.Windows.Forms.RadioButton();
             this.totalPagesLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.numericSinglePage = new System.Windows.Forms.NumericUpDown();
             this.totalPagesLabelLabel = new System.Windows.Forms.Label();
             this.totalLabel = new System.Windows.Forms.Label();
@@ -121,7 +115,6 @@ namespace Printer_Vendo
             this.numericCopies = new System.Windows.Forms.NumericUpDown();
             this.totalLabelLabel = new System.Windows.Forms.Label();
             this.printerStatusLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.numericPageRange = new System.Windows.Forms.TextBox();
             this.printerStatus = new System.Windows.Forms.Label();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
@@ -344,6 +337,9 @@ namespace Printer_Vendo
             this.tableLayoutPanel77 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel78 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel79 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.startPanel.SuspendLayout();
             this.startText.SuspendLayout();
             this.startButtonLayout.SuspendLayout();
@@ -374,16 +370,9 @@ namespace Printer_Vendo
             this.printSettingsPanelLayout.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.tableLayoutPanel13.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSinglePage)).BeginInit();
             this.copiesLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericCopies)).BeginInit();
-            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.filePreviewPanel.SuspendLayout();
             this.tableLayoutPanel16.SuspendLayout();
@@ -480,6 +469,9 @@ namespace Printer_Vendo
             this.PhotoRetrievePanel.SuspendLayout();
             this.tableLayoutPanel999.SuspendLayout();
             this.tableLayoutPanel75.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // startPanel
@@ -586,7 +578,6 @@ namespace Printer_Vendo
             this.title.TabIndex = 0;
             this.title.Text = "PRINT AND SNAP";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      
             // 
             // startLeft
             // 
@@ -1361,89 +1352,56 @@ namespace Printer_Vendo
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.05405F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.43243F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.756757F));
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel14, 1, 11);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel15, 1, 10);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel8, 1, 7);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel13, 1, 5);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel7, 1, 6);
-            this.tableLayoutPanel4.Controls.Add(this.totalPagesLabel, 2, 13);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 2, 6);
-            this.tableLayoutPanel4.Controls.Add(this.totalPagesLabelLabel, 1, 13);
-            this.tableLayoutPanel4.Controls.Add(this.totalLabel, 2, 16);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel7, 2, 5);
+            this.tableLayoutPanel4.Controls.Add(this.totalPagesLabel, 2, 10);
+            this.tableLayoutPanel4.Controls.Add(this.totalPagesLabelLabel, 1, 10);
+            this.tableLayoutPanel4.Controls.Add(this.totalLabel, 2, 13);
             this.tableLayoutPanel4.Controls.Add(this.copiesLabel, 1, 1);
-            this.tableLayoutPanel4.Controls.Add(this.paperColor, 1, 9);
+            this.tableLayoutPanel4.Controls.Add(this.paperColor, 1, 7);
             this.tableLayoutPanel4.Controls.Add(this.selectPageLabel, 1, 4);
             this.tableLayoutPanel4.Controls.Add(this.copiesLayout, 1, 2);
-            this.tableLayoutPanel4.Controls.Add(this.totalLabelLabel, 1, 16);
-            this.tableLayoutPanel4.Controls.Add(this.printerStatusLabel, 2, 14);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 2, 5);
-            this.tableLayoutPanel4.Controls.Add(this.printerStatus, 1, 14);
+            this.tableLayoutPanel4.Controls.Add(this.totalLabelLabel, 1, 13);
+            this.tableLayoutPanel4.Controls.Add(this.printerStatusLabel, 2, 11);
+            this.tableLayoutPanel4.Controls.Add(this.printerStatus, 1, 11);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 1, 8);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 1, 5);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 18;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.575757F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515151F));
+            this.tableLayoutPanel4.RowCount = 15;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515103F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515104F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.73929F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515104F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.14145F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515103F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515104F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.57552F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.515104F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(738, 556);
             this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // tableLayoutPanel14
-            // 
-            this.tableLayoutPanel14.ColumnCount = 2;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel14.Controls.Add(this.radioColored, 1, 0);
-            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(52, 363);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 1;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(392, 36);
-            this.tableLayoutPanel14.TabIndex = 2;
             // 
             // radioColored
             // 
             this.radioColored.AutoSize = true;
+            this.radioColored.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioColored.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioColored.Location = new System.Drawing.Point(119, 2);
+            this.radioColored.Location = new System.Drawing.Point(119, 41);
             this.radioColored.Margin = new System.Windows.Forms.Padding(2);
             this.radioColored.Name = "radioColored";
-            this.radioColored.Size = new System.Drawing.Size(149, 32);
+            this.radioColored.Size = new System.Drawing.Size(271, 35);
             this.radioColored.TabIndex = 1;
             this.radioColored.TabStop = true;
             this.radioColored.Text = "COLORED";
             this.radioColored.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel15.Controls.Add(this.radioBlackWhite, 1, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(52, 321);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(392, 36);
-            this.tableLayoutPanel15.TabIndex = 3;
             // 
             // radioBlackWhite
             // 
@@ -1453,53 +1411,38 @@ namespace Printer_Vendo
             this.radioBlackWhite.Location = new System.Drawing.Point(119, 2);
             this.radioBlackWhite.Margin = new System.Windows.Forms.Padding(2);
             this.radioBlackWhite.Name = "radioBlackWhite";
-            this.radioBlackWhite.Size = new System.Drawing.Size(271, 32);
+            this.radioBlackWhite.Size = new System.Drawing.Size(271, 35);
             this.radioBlackWhite.TabIndex = 0;
             this.radioBlackWhite.TabStop = true;
             this.radioBlackWhite.Text = "BLACK AND WHITE";
             this.radioBlackWhite.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel8
+            // radioSinglePage
             // 
-            this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel8.Controls.Add(this.radioPrintAll, 1, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(52, 229);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(392, 36);
-            this.tableLayoutPanel8.TabIndex = 1;
+            this.radioSinglePage.AutoSize = true;
+            this.radioSinglePage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioSinglePage.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioSinglePage.Location = new System.Drawing.Point(119, 41);
+            this.radioSinglePage.Margin = new System.Windows.Forms.Padding(2);
+            this.radioSinglePage.Name = "radioSinglePage";
+            this.radioSinglePage.Size = new System.Drawing.Size(271, 35);
+            this.radioSinglePage.TabIndex = 1;
+            this.radioSinglePage.TabStop = true;
+            this.radioSinglePage.Text = "SINGLE PAGE";
+            this.radioSinglePage.UseVisualStyleBackColor = true;
             // 
             // radioPrintAll
             // 
             this.radioPrintAll.AutoSize = true;
-            this.radioPrintAll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioPrintAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioPrintAll.Location = new System.Drawing.Point(119, 2);
+            this.radioPrintAll.Location = new System.Drawing.Point(119, 80);
             this.radioPrintAll.Margin = new System.Windows.Forms.Padding(2);
             this.radioPrintAll.Name = "radioPrintAll";
-            this.radioPrintAll.Size = new System.Drawing.Size(271, 32);
+            this.radioPrintAll.Size = new System.Drawing.Size(238, 33);
             this.radioPrintAll.TabIndex = 2;
             this.radioPrintAll.TabStop = true;
             this.radioPrintAll.Text = "PRINT ALL PAGES";
             this.radioPrintAll.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel13
-            // 
-            this.tableLayoutPanel13.ColumnCount = 2;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel13.Controls.Add(this.radioPrintRange, 1, 0);
-            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(52, 145);
-            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-            this.tableLayoutPanel13.RowCount = 1;
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(392, 36);
-            this.tableLayoutPanel13.TabIndex = 2;
             // 
             // radioPrintRange
             // 
@@ -1509,39 +1452,11 @@ namespace Printer_Vendo
             this.radioPrintRange.Location = new System.Drawing.Point(119, 2);
             this.radioPrintRange.Margin = new System.Windows.Forms.Padding(2);
             this.radioPrintRange.Name = "radioPrintRange";
-            this.radioPrintRange.Size = new System.Drawing.Size(271, 32);
+            this.radioPrintRange.Size = new System.Drawing.Size(271, 35);
             this.radioPrintRange.TabIndex = 0;
             this.radioPrintRange.TabStop = true;
             this.radioPrintRange.Text = "PRINT RANGE";
             this.radioPrintRange.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel7.Controls.Add(this.radioSinglePage, 1, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(52, 187);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(392, 36);
-            this.tableLayoutPanel7.TabIndex = 0;
-            // 
-            // radioSinglePage
-            // 
-            this.radioSinglePage.AutoSize = true;
-            this.radioSinglePage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioSinglePage.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioSinglePage.Location = new System.Drawing.Point(119, 2);
-            this.radioSinglePage.Margin = new System.Windows.Forms.Padding(2);
-            this.radioSinglePage.Name = "radioSinglePage";
-            this.radioSinglePage.Size = new System.Drawing.Size(271, 32);
-            this.radioSinglePage.TabIndex = 1;
-            this.radioSinglePage.TabStop = true;
-            this.radioSinglePage.Text = "SINGLE PAGE";
-            this.radioSinglePage.UseVisualStyleBackColor = true;
             // 
             // totalPagesLabel
             // 
@@ -1556,25 +1471,11 @@ namespace Printer_Vendo
             this.totalPagesLabel.Text = "[TOTAL PAGES]";
             this.totalPagesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel6.Controls.Add(this.numericSinglePage, 0, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(450, 187);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(233, 36);
-            this.tableLayoutPanel6.TabIndex = 1;
-            // 
             // numericSinglePage
             // 
             this.numericSinglePage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericSinglePage.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericSinglePage.Location = new System.Drawing.Point(2, 2);
+            this.numericSinglePage.Location = new System.Drawing.Point(2, 41);
             this.numericSinglePage.Margin = new System.Windows.Forms.Padding(2);
             this.numericSinglePage.Name = "numericSinglePage";
             this.numericSinglePage.Size = new System.Drawing.Size(159, 35);
@@ -1696,20 +1597,6 @@ namespace Printer_Vendo
             this.printerStatusLabel.TabIndex = 10;
             this.printerStatusLabel.Text = "[PRINTER STATUS]";
             this.printerStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel5.Controls.Add(this.numericPageRange, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(450, 145);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(233, 36);
-            this.tableLayoutPanel5.TabIndex = 0;
             // 
             // numericPageRange
             // 
@@ -2252,7 +2139,6 @@ namespace Printer_Vendo
             this.retrivalPanel.Name = "retrivalPanel";
             this.retrivalPanel.Size = new System.Drawing.Size(1488, 729);
             this.retrivalPanel.TabIndex = 1;
-            this.retrivalPanel.Visible = false;
             // 
             // buttonsLayout
             // 
@@ -2477,6 +2363,7 @@ namespace Printer_Vendo
             this.docPrintingBtn.TabIndex = 0;
             this.docPrintingBtn.Text = "DOCUMENT PRINTING\r\n(Print words or pdf files)\r\n";
             this.docPrintingBtn.UseVisualStyleBackColor = true;
+            this.docPrintingBtn.Click += new System.EventHandler(this.docPrintingBtn_Click);
             // 
             // photoPrintingBtn
             // 
@@ -2488,6 +2375,7 @@ namespace Printer_Vendo
             this.photoPrintingBtn.TabIndex = 1;
             this.photoPrintingBtn.Text = "PHOTO PRINTING\r\n(Take pictures and print photos)";
             this.photoPrintingBtn.UseVisualStyleBackColor = true;
+            this.photoPrintingBtn.Click += new System.EventHandler(this.photoPrintingBtn_Click);
             // 
             // printingPanelLeft
             // 
@@ -2553,8 +2441,8 @@ namespace Printer_Vendo
             // 
             this.printPanel.Controls.Add(this.uploadPanel);
             this.printPanel.Controls.Add(this.printingSettingsPanel);
-            this.printPanel.Controls.Add(this.retrivalPanel);
             this.printPanel.Controls.Add(this.continuePanel);
+            this.printPanel.Controls.Add(this.retrivalPanel);
             this.printPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.printPanel.Location = new System.Drawing.Point(0, 0);
             this.printPanel.Name = "printPanel";
@@ -4847,7 +4735,58 @@ namespace Printer_Vendo
             this.tableLayoutPanel79.Size = new System.Drawing.Size(1488, 81);
             this.tableLayoutPanel79.TabIndex = 0;
             // 
-            // PrinterPhotoVendo
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel5.Controls.Add(this.radioColored, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.radioBlackWhite, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(52, 321);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(392, 78);
+            this.tableLayoutPanel5.TabIndex = 12;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel6.Controls.Add(this.radioSinglePage, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.radioPrintRange, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.radioPrintAll, 1, 2);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(52, 145);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 3;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(392, 120);
+            this.tableLayoutPanel6.TabIndex = 13;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel7.Controls.Add(this.numericSinglePage, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.numericPageRange, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(450, 145);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 3;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(233, 120);
+            this.tableLayoutPanel7.TabIndex = 3;
+            // 
+            // PrintAndSnap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -4858,10 +4797,10 @@ namespace Printer_Vendo
             this.Controls.Add(this.photoPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "PrinterPhotoVendo";
+            this.Name = "PrintAndSnap";
             this.Text = "Printer Vendo";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Printer_Vendo_Load);
+            this.Load += new System.EventHandler(this.Print_And_Snap_Load);
             this.startPanel.ResumeLayout(false);
             this.startText.ResumeLayout(false);
             this.startText.PerformLayout();
@@ -4902,22 +4841,9 @@ namespace Printer_Vendo
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.tableLayoutPanel14.PerformLayout();
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.tableLayoutPanel15.PerformLayout();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
-            this.tableLayoutPanel13.ResumeLayout(false);
-            this.tableLayoutPanel13.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
-            this.tableLayoutPanel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericSinglePage)).EndInit();
             this.copiesLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericCopies)).EndInit();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
             this.filePreviewPanel.ResumeLayout(false);
@@ -5053,6 +4979,12 @@ namespace Printer_Vendo
             this.tableLayoutPanel999.ResumeLayout(false);
             this.tableLayoutPanel75.ResumeLayout(false);
             this.tableLayoutPanel75.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -5106,10 +5038,7 @@ namespace Printer_Vendo
         private System.Windows.Forms.NumericUpDown numericCopies;
         private System.Windows.Forms.Label totalPagesLabel;
         private System.Windows.Forms.Label totalLabel;
-        private System.Windows.Forms.RadioButton radioPrintRange;
-        private System.Windows.Forms.RadioButton radioSinglePage;
         private System.Windows.Forms.NumericUpDown numericSinglePage;
-        private System.Windows.Forms.RadioButton radioPrintAll;
         private System.Windows.Forms.TextBox numericPageRange;
         private System.Windows.Forms.Label paperColor;
         private System.Windows.Forms.RadioButton radioBlackWhite;
@@ -5173,14 +5102,7 @@ namespace Printer_Vendo
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel copiesLayout;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label printerStatus;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
         private System.Windows.Forms.Label fileNameLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
@@ -5368,5 +5290,11 @@ namespace Printer_Vendo
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel77;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel78;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel79;
+        private System.Windows.Forms.RadioButton radioSinglePage;
+        private System.Windows.Forms.RadioButton radioPrintRange;
+        private System.Windows.Forms.RadioButton radioPrintAll;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
     }
 }
