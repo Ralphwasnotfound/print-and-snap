@@ -1,5 +1,7 @@
-﻿using PdfiumViewer;
+﻿using AForge.Video.DirectShow;
+using PdfiumViewer;
 using PrintAndSnap.Services;
+using PrintAndSnap.Services.PhotoPrinting;
 using PrintAndSnap.Services.Printing;
 using QRCoder;
 using System;
@@ -16,6 +18,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -77,10 +80,28 @@ namespace PrintAndSnap
         //SYSTEM HOOK
         private IntPtr hookID = IntPtr.Zero;
 
+        //PHOTO BOOTH
+        private CameraService cameraService = new CameraService();
+        private PhotoService photoService = new PhotoService();
+
+        private Bitmap currentFrame;
+        private Bitmap lastFrame;
+
+        private  List<Bitmap> capturedPhotos = new List<Bitmap>();
+
+        private System.Windows.Forms.Timer captureTimer;
+        private int countdown = 3;
 
         public PrintAndSnap()
         {
             InitializeComponent();
+
+            //PHOTO BOOTH
+            InitCamera();
+            captureTimer = new System.Windows.Forms.Timer();
+            captureTimer.Interval = 1000;
+            captureTimer.Tick += CaptureTimer_Tick;
+            idPrintingContinueBtn.Enabled = false;
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -120,9 +141,209 @@ namespace PrintAndSnap
             Application.ApplicationExit += (s, e) =>
             {
                 ShowTaskbar();
-            };
+            };  
         }
 
+        //PHOTO BOOTH
+        private DateTime lastFrameTime = DateTime.MinValue;
+        private void InitCamera()
+        {
+            cameraService.OnFrameCaptured += (frame) =>
+            {
+                // LIMIT FPS 
+                if ((DateTime.Now - lastFrameTime).TotalMilliseconds < 100)
+                    return;
+
+                lastFrameTime = DateTime.Now;
+
+                currentFrame = frame;
+
+                if (idCameraFeed.InvokeRequired)
+                {
+                    idCameraFeed.Invoke(new Action(() =>
+                    {
+                        UpdateCameraFrame(frame);
+                    }));
+                }
+                else
+                {
+                    UpdateCameraFrame(frame);
+                }
+
+            };
+        }
+        private void UpdateCameraFrame(Bitmap frame)
+        {
+            if (lastFrame != null)
+                lastFrame.Dispose();
+
+            lastFrame = (Bitmap)frame.Clone();
+
+            idCameraFeed.Image = lastFrame;
+            idCameraFeed.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void photoPrintingBtn_Click(Object sender, EventArgs e)
+        {
+            photoPanel.Visible = true;
+            photoPanel.BringToFront();
+
+            ShowPhotoPanel(photoMode);
+        }
+
+        //ID PHOTO PRINTING
+        private void idModeBtn_Click(object sender, EventArgs e)
+        {
+            ShowPhotoPanel(photoIDPanel);
+     
+
+            if (idCameraFeed.Image != null)
+            {
+                idCameraFeed.Image.Dispose();
+                idCameraFeed.Image = null;
+            }
+
+            try
+            {
+                cameraService.StartCamera();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void photoModeCancelBtn_Click(object sender, EventArgs e)
+        {
+            ResetMachine();
+        }
+
+        private void idPrintingCancelBtn_Click(object sender, EventArgs args)
+        {
+            ResetMachine();
+        }
+        private void idPrintingContinueBtn_Click(object sender, EventArgs args)
+        {
+            if (capturedPhotos.Count == 0)
+                return;
+
+            cameraService.StopCamera();
+
+            ShowCapturedPhotos();
+
+            MessageBox.Show("Proceeding to edit panel...");
+        }
+
+        private void ShowCapturedPhotos()
+        {
+            PictureBox[] boxes =
+            {
+        idPreviewPictureBox1,
+        idPreviewPictureBox2,
+        idPreviewPictureBox3,
+        idPreviewPictureBox4
+    };
+
+            for (int i = 0; i < boxes.Length; i++)
+            {
+                if (i < capturedPhotos.Count)
+                {
+                    boxes[i].Image = capturedPhotos[i];
+                    boxes[i].Visible = true;
+                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                }
+                else
+                {
+                    boxes[i].Visible = false;
+                }
+            }
+        }
+
+        private void idCaptureBtn_Click(object sender, EventArgs args)
+        {
+            if (currentFrame == null)
+                return;
+
+            if (capturedPhotos.Count >= 4)
+            {
+                MessageBox.Show("Maximum of 4 photos only.");
+                return;
+            }
+
+            idCaptureBtn.Enabled = false;
+
+            countdown = 3;
+            captureTimer.Start();
+        }
+
+        private void CaptureTimer_Tick(object sender, EventArgs e)
+        {
+            if (countdown > 0)
+            {
+                MessageBox.Show(countdown.ToString()); // shows 3,2,1
+                countdown--;
+            }
+            else
+            {
+                captureTimer.Stop();
+
+                // 🔥 TAKE PHOTO HERE (ONLY HERE)
+                Bitmap shot = (Bitmap)currentFrame.Clone();
+                capturedPhotos.Add(shot);
+
+                PictureBox[] boxes =
+                {
+            idPreviewPictureBox1,
+            idPreviewPictureBox2,
+            idPreviewPictureBox3,
+            idPreviewPictureBox4
+        };
+
+                int index = capturedPhotos.Count - 1;
+
+                boxes[index].Image = shot;
+                boxes[index].SizeMode = PictureBoxSizeMode.StretchImage;
+                boxes[index].Visible = true;
+
+                if (capturedPhotos.Count > 0)
+                    idPrintingContinueBtn.Enabled = true;
+
+                idCaptureBtn.Enabled = true;
+            }
+        }
+
+        private void idCaptureAgainBtn_Click(object obj, EventArgs args)
+        {
+            PictureBox[] boxes =
+            {
+                idPreviewPictureBox1,
+                idPreviewPictureBox2,
+                idPreviewPictureBox3,
+                idPreviewPictureBox4
+            };
+
+            foreach (var box in boxes)
+            {
+                if (box.Image  != null)
+                {
+                    box.Image.Dispose();
+                    box.Image = null;
+                }
+            }
+
+            foreach (var img in capturedPhotos)
+                img.Dispose();
+
+            capturedPhotos.Clear();
+
+            cameraService.StartCamera();
+
+            idPrintingContinueBtn.Enabled = false;
+        }
+
+
+
+        //DOC PRINTING
         //WINDOWS API(DLL IMPORTS)
         [DllImport("user32.dll")]
         static extern IntPtr SetWindowsHookEx(int idHook,
@@ -215,10 +436,25 @@ namespace PrintAndSnap
         }
 
 
-        //PANEL METHODS
-        private void showPanel(Panel panel)
+        //PANEL METHODS 
+        private void ShowPhotoPanel(Control panel)
         {
-            // ONLY hide known panels (SAFE)
+            // KEEP ROOT VISIBLE
+            photoPanel.Visible = true;
+            photoPanel.BringToFront();
+
+            // ONLY SWITCH CHILD PANELS
+            photoMode.Visible = false;
+            photoIDPanel.Visible = false;
+
+            panel.Visible = true;
+            panel.BringToFront();
+
+        }
+
+        private void showPanel(Control panel)
+        {
+            // DOC PANELS
             startPanel.Visible = false;
             printingOptionsPanel.Visible = false;
             uploadPanel.Visible = false;
@@ -226,6 +462,7 @@ namespace PrintAndSnap
             printingSettingsPanel.Visible = false;
             paymentPanel.Visible = false;
             retrivalPanel.Visible = false;
+           
 
             // SHOW target
             panel.Visible = true;
@@ -520,13 +757,6 @@ namespace PrintAndSnap
             inactivityTimer.Start();
 
             uploadPanel.Visible = true;
-        }
-
-        private void photoPrintingBtn_Click(Object sender, EventArgs e)
-        {
-            showPanel(photoPanel);
-
-            photoMode.Visible = true;
         }
 
         private void uploadCancelBtn_Click(object sender, EventArgs e)
@@ -1249,6 +1479,52 @@ namespace PrintAndSnap
         //RESET MACHINE METHODS
         private void ResetMachine()
         {
+            //PHOTOBOOTH
+            cameraService.StopCamera();
+
+            if (idCameraFeed.Image != null)
+            {
+                idCameraFeed.Image.Dispose();
+                idCameraFeed.Image = null;
+            }
+
+            //CLEAR PREVIEW BOXES
+            PictureBox[] boxes =
+            {
+                idPreviewPictureBox1,
+                idPreviewPictureBox2,
+                idPreviewPictureBox3,
+                idPreviewPictureBox4
+            };
+
+            foreach (var box in boxes)
+            {
+                if (box.Image != null)
+                {
+                    box.Image.Dispose();
+                    box.Image = null;
+                }
+            }
+
+            //CLEAR STORED PHOTOS
+            foreach (var img in capturedPhotos)
+            {
+                img.Dispose();
+            }
+            capturedPhotos.Clear();
+
+            //RESET BUTTON
+            idPrintingContinueBtn.Enabled = false;
+
+            //RESET FRAME
+            if (currentFrame != null)
+            {
+                currentFrame.Dispose();
+                currentFrame = null;
+            }
+
+           
+
             //STOP SERVER
             uploadService.StopServer();
 
@@ -1342,6 +1618,7 @@ namespace PrintAndSnap
             // RETURN TO START SCREEN
             showPanel(startPanel);
         }
+      
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             ResetMachine();
@@ -1473,14 +1750,6 @@ namespace PrintAndSnap
             CalculateTotal();
         }
 
-        private void radioPrintRange_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBlackWhite_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }
