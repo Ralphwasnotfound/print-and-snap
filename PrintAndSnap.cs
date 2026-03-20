@@ -1,4 +1,5 @@
 ﻿using AForge.Video.DirectShow;
+using Microsoft.Office.Core;
 using PdfiumViewer;
 using PrintAndSnap.Services;
 using PrintAndSnap.Services.PhotoPrinting;
@@ -7,9 +8,12 @@ using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -92,6 +96,17 @@ namespace PrintAndSnap
         private System.Windows.Forms.Timer captureTimer;
         private int countdown = 3;
 
+        // ID SETTINGS STATE
+        private string selectedLayout = "2x2";
+        private bool isColored = true;
+        private bool isMultiple = false;
+
+        private Bitmap selectedPhoto;
+
+        private int pricePerSheet = 20; // adjust if needed
+        private int totalIdPrice = 0;
+
+
         public PrintAndSnap()
         {
             InitializeComponent();
@@ -102,6 +117,30 @@ namespace PrintAndSnap
             captureTimer.Interval = 1000;
             captureTimer.Tick += CaptureTimer_Tick;
             idPrintingContinueBtn.Enabled = false;
+
+            numericIdPrintingCopies.Minimum = 1;
+            numericIdPrintingCopies.Value = 1;
+
+            numericIdPrintingCopies.ValueChanged += (s, e) => CalculateIdPrice();
+
+            numericIdPrintingCopies.Enabled = false;
+
+            //DEFAULT RADIO BUTTONS
+            radioBtn2x2.Checked = true;
+            radioBtnSinglePhotoCopies.Checked = true;
+            radioBtnPhotoColored.Checked = true;
+
+            //DEFAULT STATES (IMPORTANT)
+            selectedLayout = "2x2";
+            isMultiple = false;
+            isColored = true;
+
+            //DEFAULT COPIES
+            numericIdPrintingCopies.Minimum = 1;
+            numericIdPrintingCopies.Value = 1;
+
+            //UPDATE UI
+            CalculateIdPrice();
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
@@ -194,7 +233,7 @@ namespace PrintAndSnap
         //ID PHOTO PRINTING
         private void idModeBtn_Click(object sender, EventArgs e)
         {
-            ShowPhotoPanel(photoIDPanel);
+            ShowPhotoPanel(photoIDPanel, panelCRMidPrinting);
      
 
             if (idCameraFeed.Image != null)
@@ -222,16 +261,99 @@ namespace PrintAndSnap
         {
             ResetMachine();
         }
-        private void idPrintingContinueBtn_Click(object sender, EventArgs args)
+        private async void idPrintingContinueBtn_Click(object sender, EventArgs args)
         {
+            idPrintingContinueBtn.Enabled = false;
+
             if (capturedPhotos.Count == 0)
+            {
+                MessageBox.Show("Please capture at least one photo.");
                 return;
+            }
 
             cameraService.StopCamera();
 
+            await Task.Delay(200);
+
             ShowCapturedPhotos();
 
-            MessageBox.Show("Proceeding to edit panel...");
+            ShowPhotoPanel(photoIDPanel, idPrintingSettings);
+
+            LoadIdSelectionPhotos();
+        }
+
+        private void LoadIdSelectionPhotos()
+        {
+            PictureBox[] boxes =
+            {
+                idSettingsSelectPicture1,
+                idSettingsSelectPicture2,
+                idSettingsSelectPicture3,
+                idSettingsSelectPicture4
+            };
+
+            for (int i = 0; i < boxes.Length; i++)
+            {
+                boxes[i].Click -= SelectPhoto_Click;
+
+                if (i < capturedPhotos.Count)
+                {
+                    boxes[i].Image = capturedPhotos[i];
+                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                    boxes[i].Visible = true;
+
+                    boxes[i].Click += SelectPhoto_Click;
+                }
+                else
+                {
+                    boxes[i].Visible = false;
+                }
+            }
+
+            if (capturedPhotos.Count > 0)
+            {
+                selectedPhoto = capturedPhotos[0];
+                UpdateIdSettings();
+                idSettingsPicturePreview.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+
+        }
+
+        private void SelectPhoto_Click(object sender, EventArgs e)
+        {
+            PictureBox clicked = sender as PictureBox;
+
+            if (clicked?.Image == null)
+                return;
+
+            selectedPhoto = (Bitmap)clicked.Image;
+
+            HighlightSelectedPhoto(clicked);
+
+            UpdateIdSettings();
+        }
+
+        private void HighlightSelectedPhoto(PictureBox selectedBox)
+        {
+            PictureBox[] boxes =
+            {
+        idSettingsSelectPicture1,
+        idSettingsSelectPicture2,
+        idSettingsSelectPicture3,
+        idSettingsSelectPicture4
+    };
+
+            foreach (var box in boxes)
+            {
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
+            }
+
+            // 🔥 ACTIVE STYLE
+            selectedBox.BorderStyle = BorderStyle.FixedSingle;
+            selectedBox.BackColor = Color.LightBlue; // glow effect
+            selectedBox.Padding = new Padding(3);    // spacing = glow illusion
         }
 
         private void ShowCapturedPhotos()
@@ -276,19 +398,34 @@ namespace PrintAndSnap
             captureTimer.Start();
         }
 
-        private void CaptureTimer_Tick(object sender, EventArgs e)
+        private async void CaptureTimer_Tick(object sender, EventArgs e)
         {
             if (countdown > 0)
             {
-                MessageBox.Show(countdown.ToString()); // shows 3,2,1
+                CameraTimer.Text = countdown.ToString();
+                CameraTimer.Visible = true;
+
                 countdown--;
             }
             else
             {
                 captureTimer.Stop();
 
-                // 🔥 TAKE PHOTO HERE (ONLY HERE)
-                Bitmap shot = (Bitmap)currentFrame.Clone();
+                CameraTimer.Text = "📸";
+
+                await Task.Delay(500);
+                CameraTimer.Visible = false;
+
+                // TAKE PHOTO HERE (ONLY HERE)
+                Bitmap shot;
+
+                lock (this)
+                {
+                    if (currentFrame == null)
+                        return;
+                    shot = (Bitmap)currentFrame.Clone();
+                }
+
                 capturedPhotos.Add(shot);
 
                 PictureBox[] boxes =
@@ -341,7 +478,411 @@ namespace PrintAndSnap
             idPrintingContinueBtn.Enabled = false;
         }
 
+        //ID SETTINGS
 
+        private void UpdateIdSettings()
+        {
+            if (selectedPhoto == null)
+                return;
+
+            Bitmap layout = GenerateSingleLayout(selectedPhoto);
+
+            if (idSettingsPicturePreview.Image != null)
+                idSettingsPicturePreview.Image.Dispose();
+
+            idSettingsPicturePreview.Image = layout;
+
+            UpdateMiniPreview();
+        }
+
+        private void UpdateMiniPreview()
+        {
+            if (selectedPhoto == null)
+                return;
+
+            int baseDpi = 100;
+
+            int pageWidth = (int)(8.27 * baseDpi);
+            int pageHeight = (int)(11.69 * baseDpi);
+
+            Bitmap mini = new Bitmap(pageWidth, pageHeight);
+
+            using (Graphics g = Graphics.FromImage(mini))
+            {
+                g.Clear(Color.White);
+
+                using (Pen pen = new Pen(Color.Gray, 1))
+                {
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                    Image previewPhoto = isColored
+                        ? selectedPhoto
+                        : ConvertToGrayscale(selectedPhoto);
+
+                    // 🟢 SINGLE MODE
+                    if (!isMultiple)
+                    {
+                        int w = pageWidth / 3;
+                        int h = pageHeight / 3;
+
+                        int margin = 10;
+
+                        int x = margin;
+                        int y = margin;
+
+
+                        DrawSingleLayout(g, previewPhoto, x, y, w, h, pen);
+                    }
+                    // 🔵 MULTIPLE MODE
+                    else
+                    {
+                        int layoutW = pageWidth / 4;
+                        int layoutH = pageHeight / 6;
+
+                        int cols = pageWidth / layoutW;
+                        int rows = pageHeight / layoutH;
+
+                        for (int row = 0; row < rows; row++)
+                        {
+                            for (int col = 0; col < cols; col++)
+                            {
+                                int x = col * layoutW;
+                                int y = row * layoutH;
+
+                                DrawSingleLayout(g, previewPhoto, x, y, layoutW, layoutH, pen);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 🧹 dispose old
+            if (idPrintPreviewMini.Image != null)
+                idPrintPreviewMini.Image.Dispose();
+
+            idPrintPreviewMini.Image = mini;
+
+            // 🔥 AUTO FIT TO PANEL
+            idPrintPreviewMini.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        private void idPrintSettingsCancelBtn_Click(object obj, EventArgs args )
+        {
+            ResetMachine();
+        }
+
+        private void idPrintSettingsBackBtn_Click(object obj, EventArgs args)
+        {
+
+        }
+
+        private void idPrintSettingsContinueBtn_Click(object obj, EventArgs args)
+        {
+
+        }
+
+        private void radioBtn2x2_click(object obj, EventArgs args)
+        {
+            selectedLayout = "2x2";
+            UpdateIdSettings();
+
+        }
+
+        private void radioBtn1x1_click(object obj, EventArgs args)
+        {
+            selectedLayout = "1x1";
+            UpdateIdSettings();
+        }
+
+        private void radioBtn2x1_click(object obj, EventArgs args)
+        {
+            selectedLayout = "2x1";
+            UpdateIdSettings();
+        }
+
+        private void radioBtnSinglePhotoCopies_click(object obj, EventArgs args)
+        {
+            isMultiple = false;
+
+            numericIdPrintingCopies.Value = 1;
+            numericIdPrintingCopies.Enabled = false;
+
+            CalculateIdPrice();
+            UpdateIdSettings();
+        }
+
+        private void radioBtnMultipleCopies_click(object obj, EventArgs args)
+        {
+            isMultiple = true;
+
+            numericIdPrintingCopies.Enabled = true;
+
+            CalculateIdPrice();
+            UpdateIdSettings();
+        }
+
+        private void radioBtnPhotoBlack_click(object obj, EventArgs args)
+        {
+            isColored = false;
+            CalculateIdPrice();
+            UpdateIdSettings();
+        }
+
+
+        private void radioBtnPhotoColored_click(object obj, EventArgs args)
+        {
+            isColored = true;
+            CalculateIdPrice();
+            UpdateIdSettings();
+        }
+
+        private void CalculateIdPrice()
+        {
+            int copies = (int)numericIdPrintingCopies.Value;
+
+            int pricePerUnit = 0;
+
+            if (!isMultiple) // 🟢 SINGLE
+            {
+                if (isColored)
+                    pricePerUnit = 50;
+                else
+                    pricePerUnit = 40;
+            }
+            else // 🔵 MULTIPLE (FULL SHEET)
+            {
+                if (isColored)
+                    pricePerUnit = 60;
+                else
+                    pricePerUnit = 50;
+            }
+
+            int total = pricePerUnit * copies;
+
+            idPrintingTotal.Text = "₱" + total.ToString();
+        }
+
+        private Bitmap ConvertToGrayscale(Bitmap original)
+        {
+            Bitmap gray= new Bitmap(original.Width, original.Height);
+
+            using (Graphics g = Graphics.FromImage(gray))
+            {
+                ColorMatrix colorMatrix = new ColorMatrix(
+                    new float[][]
+                    {
+                        new float[] {0.3f, 0.3f, 0.3f, 0, 0},
+                        new float[] {0.59f, 0.59f, 0.59f, 0, 0},
+                        new float[] {0.11f, 0.11f, 0.11f, 0, 0},
+                        new float[] {0, 0, 0, 1, 0},
+                        new float[] {0, 0, 0, 0, 1}
+                    });
+
+                ImageAttributes attributes = new ImageAttributes();
+                attributes.SetColorMatrix(colorMatrix);
+
+                g.DrawImage(original,
+                    new Rectangle(0, 0, original.Width, original.Height),
+                    0, 0, original.Width, original.Height,
+                    GraphicsUnit.Pixel,
+                    attributes);
+            }
+
+            return gray;
+        }
+
+        private Bitmap GenerateLayout(Bitmap photo)
+        {
+            if (photo == null)
+                return null;
+
+            int dpi = 300;
+
+            Func<Bitmap, Image> processPhoto = (img) =>
+            {
+                if (!isColored)
+                    return ConvertToGrayscale(img);
+
+                return img;
+            };
+
+            int spacing = 20; // 🔥 SPACE BETWEEN PHOTOS (pixels)
+
+            // 📌 SINGLE MODE
+            if (!isMultiple)
+            {
+                int layoutWidth = 2 * dpi;
+                int layoutHeight = 2 * dpi;
+
+                if (selectedLayout == "1x1")
+                {
+                    layoutWidth = 1 * dpi;
+                    layoutHeight = 1 * dpi;
+                }
+
+                Bitmap canvas = new Bitmap(layoutWidth + spacing * 2, layoutHeight + spacing * 2);
+                canvas.SetResolution(300, 300);
+
+                using (Graphics g = Graphics.FromImage(canvas))
+                using (Pen pen = new Pen(Color.Black, 2))
+                {
+                    g.Clear(Color.White);
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+
+                    DrawSingleLayout(
+                        g,
+                        processPhoto(photo),
+                        spacing,
+                        spacing,
+                        layoutWidth,
+                        layoutHeight,
+                        pen
+                    );
+                }
+
+                return canvas;
+            }
+
+            // 📌 MULTIPLE MODE (FULL PAGE)
+            int pageWidth = (int)(8.27 * dpi);
+            int pageHeight = (int)(11.69 * dpi);
+
+            Bitmap sheet = new Bitmap(pageWidth, pageHeight);
+            sheet.SetResolution(300, 300);
+
+            using (Graphics g = Graphics.FromImage(sheet))
+            using (Pen pen = new Pen(Color.Black, 1))
+            {
+                g.Clear(Color.White);
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                int layoutWidth = 2 * dpi;
+                int layoutHeight = 2 * dpi;
+
+                if (selectedLayout == "1x1")
+                {
+                    layoutWidth = 1 * dpi;
+                    layoutHeight = 1 * dpi;
+                }
+
+                // include spacing
+                int totalW = layoutWidth + spacing;
+                int totalH = layoutHeight + spacing;
+
+                int cols = pageWidth / totalW;
+                int rows = pageHeight / totalH;
+
+                // 🔥 center grid on page
+                int offsetX = (pageWidth - (cols * totalW)) / 2;
+                int offsetY = (pageHeight - (rows * totalH)) / 2;
+
+                for (int row = 0; row < rows; row++)
+                {
+                    for (int col = 0; col < cols; col++)
+                    {
+                        int x = offsetX + col * totalW;
+                        int y = offsetY + row * totalH;
+
+                        DrawSingleLayout(
+                            g,
+                            processPhoto(photo),
+                            x,
+                            y,
+                            layoutWidth,
+                            layoutHeight,
+                            pen
+                        );
+                    }
+                }
+            }
+
+            return sheet;
+        }
+
+        private Bitmap GenerateSingleLayout(Bitmap photo)
+        {
+            if (photo == null)
+                return null;
+
+            int dpi = 300;
+
+            int width = 2 * dpi;
+            int height = 2 * dpi;
+
+            if (selectedLayout == "1x1")
+            {
+                width = 1 * dpi;
+                height = 1 * dpi;
+            }
+
+            Bitmap canvas = new Bitmap(width, height);
+            canvas.SetResolution(300, 300);
+
+            using (Graphics g = Graphics.FromImage(canvas))
+            using (Pen pen = new Pen(Color.Black, 2))
+            {
+                g.Clear(Color.White);
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                DrawSingleLayout(g, isColored ? photo : ConvertToGrayscale(photo), 0, 0, width, height, pen);
+            }
+
+            return canvas;
+        }
+
+        private void DrawSingleLayout(Graphics g, Image photo, int x, int y, int width, int height, Pen pen)
+        {
+            int gap = 10; // 🔥 SPACE BETWEEN PHOTOS
+
+            if (selectedLayout == "2x2")
+            {
+                int w = (width - gap) / 2;
+                int h = (height - gap) / 2;
+
+                for (int r = 0; r < 2; r++)
+                {
+                    for (int c = 0; c < 2; c++)
+                    {
+                        int px = x + c * (w + gap);
+                        int py = y + r * (h + gap);
+
+                        g.DrawImage(photo, px, py, w, h);
+                        g.DrawRectangle(Pens.Black, px, py, w, h);
+                    }
+                }
+
+                // ✂️ CUT LINES (center)
+                int midX = x + width / 2;
+                int midY = y + height / 2;
+
+                g.DrawLine(pen, midX, y, midX, y + height); // vertical
+                g.DrawLine(pen, x, midY, x + width, midY); // horizontal
+            }
+
+            else if (selectedLayout == "1x1")
+            {
+                g.DrawImage(photo, x, y, width, height);
+                g.DrawRectangle(Pens.Black, x, y, width, height);
+            }
+
+            else if (selectedLayout == "2x1")
+            {
+                int h = (height - gap) / 2;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    int py = y + i * (h + gap);
+
+                    g.DrawImage(photo, x, py, width, h);
+                    g.DrawRectangle(Pens.Black, x, py, width, h);
+                }
+
+                // ✂️ CUT LINE (middle)
+                int midY = y + height / 2;
+                g.DrawLine(pen, x, midY, x + width, midY);
+            }
+        }
 
         //DOC PRINTING
         //WINDOWS API(DLL IMPORTS)
@@ -437,7 +978,7 @@ namespace PrintAndSnap
 
 
         //PANEL METHODS 
-        private void ShowPhotoPanel(Control panel)
+        private void ShowPhotoPanel(Control mainPanel, Control subPanel = null)
         {
             // KEEP ROOT VISIBLE
             photoPanel.Visible = true;
@@ -447,8 +988,17 @@ namespace PrintAndSnap
             photoMode.Visible = false;
             photoIDPanel.Visible = false;
 
-            panel.Visible = true;
-            panel.BringToFront();
+            mainPanel.Visible = true;
+            mainPanel.BringToFront();
+
+            if (mainPanel == photoIDPanel && subPanel != null)
+            {
+                panelCRMidPrinting.Visible = false;
+                idPrintingSettings.Visible = false;
+
+                subPanel.Visible = true;
+                subPanel.BringToFront();
+            }
 
         }
 
@@ -1749,7 +2299,5 @@ namespace PrintAndSnap
             UpdateModeUI();
             CalculateTotal();
         }
-
-        
     }
 }
