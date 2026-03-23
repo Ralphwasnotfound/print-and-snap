@@ -21,6 +21,7 @@ using System.Management;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -96,15 +97,21 @@ namespace PrintAndSnap
         private System.Windows.Forms.Timer captureTimer;
         private int countdown = 3;
 
+        private string lastSavedIdFileName;
+
         // ID SETTINGS STATE
         private string selectedLayout = "2x2";
         private bool isColored = true;
         private bool isMultiple = false;
 
+        private Bitmap finalIdPrintImage;
         private Bitmap selectedPhoto;
 
         private int pricePerSheet = 20; // adjust if needed
         private int totalIdPrice = 0;
+
+        private bool isIdMode = false;
+
 
 
         public PrintAndSnap()
@@ -124,6 +131,8 @@ namespace PrintAndSnap
             numericIdPrintingCopies.ValueChanged += (s, e) => CalculateIdPrice();
 
             numericIdPrintingCopies.Enabled = false;
+
+
 
             //DEFAULT RADIO BUTTONS
             radioBtn2x2.Checked = true;
@@ -185,6 +194,8 @@ namespace PrintAndSnap
 
         //PHOTO BOOTH
         private DateTime lastFrameTime = DateTime.MinValue;
+
+
         private void InitCamera()
         {
             cameraService.OnFrameCaptured += (frame) =>
@@ -556,13 +567,13 @@ namespace PrintAndSnap
                 }
             }
 
-            // 🧹 dispose old
+            // dispose old
             if (idPrintPreviewMini.Image != null)
                 idPrintPreviewMini.Image.Dispose();
 
             idPrintPreviewMini.Image = mini;
 
-            // 🔥 AUTO FIT TO PANEL
+            // AUTO FIT TO PANEL
             idPrintPreviewMini.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
@@ -578,6 +589,37 @@ namespace PrintAndSnap
 
         private void idPrintSettingsContinueBtn_Click(object obj, EventArgs args)
         {
+            if (selectedPhoto == null)
+            {
+                MessageBox.Show("No Photo Selected");
+                return;
+            }
+
+            // GENERATE FINAL PRINT IMAGE
+            finalIdPrintImage = GenerateLayout(selectedPhoto);
+
+            //SAVE IMAGE HERE (IMPORTANT)
+            string saveFolder = @"C:\PrinterVendo\idphotos";
+            Directory.CreateDirectory(saveFolder);
+
+            lastSavedIdFileName = "ID_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+            string filePath = Path.Combine(saveFolder, lastSavedIdFileName);
+
+            finalIdPrintImage.Save(filePath, ImageFormat.Png);
+
+            // SET PRICE
+            totalIdPrice = int.Parse(idPrintingTotal.Text.Replace("₱", ""));
+
+            paymentIDprintingTotal.Text = "₱" + totalIdPrice;
+            paymentIDprintingBalance.Text = "₱" + totalIdPrice;
+
+            insertedMoney = 0;
+            printBtn.Enabled = false;
+
+            downloadBtnPaymentId.Enabled = false;
+            isIdMode = true;
+
+            showPanel(IDpayment);
 
         }
 
@@ -642,14 +684,14 @@ namespace PrintAndSnap
 
             int pricePerUnit = 0;
 
-            if (!isMultiple) // 🟢 SINGLE
+            if (!isMultiple) //SINGLE
             {
                 if (isColored)
                     pricePerUnit = 50;
                 else
                     pricePerUnit = 40;
             }
-            else // 🔵 MULTIPLE (FULL SHEET)
+            else //MULTIPLE (FULL SHEET)
             {
                 if (isColored)
                     pricePerUnit = 60;
@@ -800,6 +842,140 @@ namespace PrintAndSnap
             return sheet;
         }
 
+        private void PrintIdPhoto()
+        {
+            if (finalIdPrintImage == null)
+            {
+                MessageBox.Show("No image to print.");
+                return;
+            }
+
+            try
+            {
+                PrintDocument pd = new PrintDocument();
+                pd.PrinterSettings.PrinterName = "Canon MG3000 series";
+
+                pd.PrintPage += (s, ev) =>
+                {
+                    Rectangle m = ev.MarginBounds;
+
+                    int x = m.X + (m.Width - finalIdPrintImage.Width) / 2;
+                    int y = m.Y + (m.Height - finalIdPrintImage.Height) / 2;
+
+                    ev.Graphics.DrawImage(finalIdPrintImage, x, y);
+                };
+
+                //Enable it for production mode
+                //pd.Print();
+
+                //comment this if you test in production mode
+
+                MessageBox.Show("Printing Simulated successfully!");
+
+                // TEMP
+                string tempFolder = @"C:\PrinterVendo\idphotos";
+                Directory.CreateDirectory(tempFolder);
+
+                string fileName = "ID_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+                string tempPath = Path.Combine(tempFolder, fileName);
+
+                finalIdPrintImage.Save(tempPath, ImageFormat.Png);
+
+                // CODE
+                string code = GenerateRetrivalCode();
+
+                // DOWNLOAD (QR)
+                string idDownloadFolder = @"C:\PrinterVendo\id_download";
+                Directory.CreateDirectory(idDownloadFolder);
+
+                string newFileName = code + "_" + fileName;
+                string downloadPath = Path.Combine(idDownloadFolder, newFileName);
+
+                File.Copy(tempPath, downloadPath, true);
+
+                // ARCHIVE (RETRIEVAL)
+                string idArchiveFolder = @"C:\PrinterVendo\id_archive";
+                Directory.CreateDirectory(idArchiveFolder);
+
+                string archivePath = Path.Combine(idArchiveFolder, newFileName);
+
+                File.Move(tempPath, archivePath);
+
+                // QR
+                GenerateQrForDownload(newFileName);
+
+                // ENABLE DOWNLOAD
+                this.Invoke(new Action(() =>
+                {
+                    downloadBtnPaymentId.Enabled = true;
+                }));
+
+                MessageBox.Show("Printed!\nRetrieval Code: " + code);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Print failed: " + ex.Message);
+            }
+        }
+
+        private void GenerateQrForDownload(string fileName)
+        {
+            try
+            {
+                string localIP = uploadService.GetLocalIPAdress();
+                string url = $"http://{localIP}:3000/download?file={fileName}";
+
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrData);
+
+                Bitmap qrImage = qrCode.GetGraphic(20);
+
+                // 🔥 FORCE UI THREAD UPDATE
+                this.Invoke(new Action(() =>
+                {
+                    qrIdPrintingDownload.Image = qrImage;
+                    qrIdPrintingDownload.SizeMode = PictureBoxSizeMode.Zoom;
+
+                    qrIdPrintingDownload.Visible = true;
+                    qrIdPrintingDownload.BringToFront();
+
+                    IDpayment.Visible = true; // 🔥 ENSURE PANEL IS VISIBLE
+                    IDpayment.BringToFront();
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("QR Error: " + ex.Message);
+            }
+        }
+        private void printBtnPaymentId_CLick(object sender, EventArgs e)
+        {
+            PrintIdPhoto();
+        }
+
+        private void downloadBtnPaymentId_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(lastSavedIdFileName))
+                {
+                    MessageBox.Show("No file available.");
+                    return;
+                }
+
+                uploadService.StartUploadServer();
+
+                GenerateQrForDownload(lastSavedIdFileName);
+
+                showPanel(softCopyDownloadId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Download error: " + ex.Message);
+            }
+        }
+
         private Bitmap GenerateSingleLayout(Bitmap photo)
         {
             if (photo == null)
@@ -883,6 +1059,8 @@ namespace PrintAndSnap
                 g.DrawLine(pen, x, midY, x + width, midY);
             }
         }
+
+
 
         //DOC PRINTING
         //WINDOWS API(DLL IMPORTS)
@@ -1221,56 +1399,42 @@ namespace PrintAndSnap
             if (printingInProgress)
                 return;
 
-            string archiveFolder = @"C:\PrinterVendo\archive";
-            string previewFolder = @"C:\PrinterVendo\preview";
+            // DOC FILES
+            CleanFolder(@"C:\PrinterVendo\archive", 30, currentPdfPath);
+            CleanFolder(@"C:\PrinterVendo\download", 30);
 
-            // CLEAN ARCHIVE (30 minutes)
-            if (Directory.Exists(archiveFolder))
+            // ID FILES
+            CleanFolder(@"C:\PrinterVendo\id_archive", 30);
+
+            // PREVIEW
+            CleanFolder(@"C:\PrinterVendo\preview", 10, currentPdfPath);
+        }
+
+        private void CleanFolder(string folder, int minutes, string excludeFile = null)
+        {
+            if (!Directory.Exists(folder))
+                return;
+
+            foreach (var file in Directory.GetFiles(folder))
             {
-                foreach (var file in Directory.GetFiles(archiveFolder))
+                try
                 {
-                    try
+                    if (excludeFile != null && file == excludeFile)
+                        continue;
+
+                    DateTime created = File.GetCreationTime(file);
+
+                    if (DateTime.Now - created > TimeSpan.FromMinutes(minutes))
                     {
-                        if (file == currentPdfPath)
-                            continue;
-
-                        DateTime created = File.GetCreationTime(file);
-
-                        if (DateTime.Now - created > TimeSpan.FromMinutes(30))
-                        {
-                            File.Delete(file);
-                        }
+                        File.Delete(file);
                     }
-                    catch { }
                 }
-            }
-
-            // CLEAN PREVIEW (10 minutes)
-            if (Directory.Exists(previewFolder))
-            {
-                foreach (var file in Directory.GetFiles(previewFolder))
-                {
-                    try
-                    {
-                        if (file == currentPdfPath)
-                            continue;
-
-                        DateTime created = File.GetCreationTime(file);
-
-                        if (DateTime.Now - created > TimeSpan.FromMinutes(10))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-                    catch { }
-                }
+                catch { }
             }
         }
 
-
-       
         //START/UPLOAD FLOW//
-  
+
         public void startBtn_Click(object sender, EventArgs e)
         {
 
@@ -1885,18 +2049,24 @@ namespace PrintAndSnap
         {
             AddMoney(20);
         }
+
         private void AddMoney(int amount)
         {
-
             insertedMoney += amount;
 
-            int remaining = totalPrice - insertedMoney;
+            int total = isIdMode ? totalIdPrice : totalPrice;
+            int remaining = total - insertedMoney;
 
             if (remaining < 0)
                 remaining = 0;
 
-            paymentBalance.Text = "₱" + remaining.ToString();
+            // UPDATE UI
+            if (isIdMode)
+                paymentIDprintingBalance.Text = "₱" + remaining;
+            else
+                paymentBalance.Text = "₱" + remaining;
 
+            // ENABLE PRINT ONLY
             if (remaining == 0)
             {
                 printBtn.Enabled = true;
@@ -1904,6 +2074,9 @@ namespace PrintAndSnap
             else
             {
                 printBtn.Enabled = false;
+
+                if (isIdMode)
+                    downloadBtnPaymentId.Enabled = false;
             }
         }
 
@@ -2289,7 +2462,7 @@ namespace PrintAndSnap
             receiveTimer.Stop();
 
             showPanel(printingSettingsPanel);
-
+            
             settingsPanel.Visible = true;
             settingsPanel.BringToFront();
 

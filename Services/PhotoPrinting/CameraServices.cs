@@ -63,5 +63,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 catch { }
             }
         }
+
+
     }
 }

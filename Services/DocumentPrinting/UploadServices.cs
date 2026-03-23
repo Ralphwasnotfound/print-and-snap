@@ -18,6 +18,9 @@ namespace PrintAndSnap.Services
 
         private const long MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
         private string watchFolder = @"C:\PrinterVendo\uploads";
+        private string idPhotoFolder = @"C:\PrinterVendo\idphotos";
+        string idArchiveFolder = @"C:\PrinterVendo\id_archive";
+        string idDownloadFolder = @"C:\PrinterVendo\id_download";
 
         public Bitmap GenerateQRCode()
         {
@@ -63,6 +66,8 @@ namespace PrintAndSnap.Services
         {
             if (serverRunning) return;
 
+            Directory.CreateDirectory(idPhotoFolder);
+
             uploadServer = new HttpListener();
             uploadServer.Prefixes.Add("http://*:3000/");
             uploadServer.Start();
@@ -102,6 +107,41 @@ namespace PrintAndSnap.Services
                 try
                 {
                     string token = context.Request.QueryString["token"];
+
+                    if (context.Request.Url.AbsolutePath.StartsWith("/download"))
+                    {
+                        // ✅ PUT IT HERE
+                        Directory.CreateDirectory(idPhotoFolder);
+
+                        string fileName = context.Request.QueryString["file"];
+
+                        if (string.IsNullOrEmpty(fileName))
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.Close();
+                            return;
+                        }
+
+                        string filePath = Path.Combine(idPhotoFolder, fileName);
+
+                        if (!File.Exists(filePath))
+                        {
+                            context.Response.StatusCode = 404;
+                            context.Response.Close();
+                            return;
+                        }
+
+                        byte[] fileBytes = File.ReadAllBytes(filePath);
+
+                        context.Response.ContentType = "application/octet-stream";
+                        context.Response.AddHeader("Content-Disposition", $"attachment; filename=\"{fileName}\"");
+                        context.Response.ContentLength64 = fileBytes.Length;
+
+                        context.Response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
+                        context.Response.OutputStream.Close();
+
+                        return;
+                    }
 
                     if (token != currentUploadToken)
                     {
@@ -278,7 +318,7 @@ document.getElementById('fileInput').addEventListener('change', function(){{
             }
         }
 
-        private string GetLocalIPAdress()
+        public string GetLocalIPAdress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
 
