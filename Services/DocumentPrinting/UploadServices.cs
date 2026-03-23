@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PrintAndSnap.Services
@@ -66,7 +67,7 @@ namespace PrintAndSnap.Services
         {
             if (serverRunning) return;
 
-            Directory.CreateDirectory(idPhotoFolder);
+            Directory.CreateDirectory(idDownloadFolder);
 
             uploadServer = new HttpListener();
             uploadServer.Prefixes.Add("http://*:3000/");
@@ -110,8 +111,7 @@ namespace PrintAndSnap.Services
 
                     if (context.Request.Url.AbsolutePath.StartsWith("/download"))
                     {
-                        // ✅ PUT IT HERE
-                        Directory.CreateDirectory(idPhotoFolder);
+                        Directory.CreateDirectory(idDownloadFolder);
 
                         string fileName = context.Request.QueryString["file"];
 
@@ -122,7 +122,7 @@ namespace PrintAndSnap.Services
                             return;
                         }
 
-                        string filePath = Path.Combine(idPhotoFolder, fileName);
+                        string filePath = Path.Combine(idDownloadFolder, fileName);
 
                         if (!File.Exists(filePath))
                         {
@@ -137,8 +137,28 @@ namespace PrintAndSnap.Services
                         context.Response.AddHeader("Content-Disposition", $"attachment; filename=\"{fileName}\"");
                         context.Response.ContentLength64 = fileBytes.Length;
 
-                        context.Response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
-                        context.Response.OutputStream.Close();
+                        context.Response.SendChunked = false;
+                        context.Response.KeepAlive = false;
+
+                        using (var output = context.Response.OutputStream)
+                        {
+                            output.Write(fileBytes, 0, fileBytes.Length);
+                            output.Flush();
+                        }
+
+                        context.Response.Close();
+
+                        // 🔥 DELETE AFTER DOWNLOAD
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                Thread.Sleep(2000);
+                                if (File.Exists(filePath))
+                                    File.Delete(filePath);
+                            }
+                            catch { }
+                        });
 
                         return;
                     }

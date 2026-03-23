@@ -99,6 +99,8 @@ namespace PrintAndSnap
 
         private string lastSavedIdFileName;
 
+        private string currentRetrievedIdPath;
+
         // ID SETTINGS STATE
         private string selectedLayout = "2x2";
         private bool isColored = true;
@@ -107,11 +109,14 @@ namespace PrintAndSnap
         private Bitmap finalIdPrintImage;
         private Bitmap selectedPhoto;
 
-        private int pricePerSheet = 20; // adjust if needed
+        //private int pricePerSheet = 20; // adjust if needed
         private int totalIdPrice = 0;
 
         private bool isIdMode = false;
 
+        private bool hasUserSelectedPhoto = false;
+
+        private bool isPhotoRetrievalMode = false;
 
 
         public PrintAndSnap()
@@ -289,19 +294,42 @@ namespace PrintAndSnap
             ShowCapturedPhotos();
 
             ShowPhotoPanel(photoIDPanel, idPrintingSettings);
+            ApplyPhotoRetrievalLock();
 
             LoadIdSelectionPhotos();
         }
 
+        private void ApplyPhotoRetrievalLock()
+        {
+            if (!isPhotoRetrievalMode)
+                return;
+
+            // LOCK layout
+            //radioBtn2x2.Enabled = false;
+            //radioBtn2x1.Enabled = false;
+            //radioBtn1x1.Enabled = false;
+
+            // OPTIONAL (recommended)
+            //radioBtnPhotoColored.Enabled = false;
+            //radioBtnPhotoBlack.Enabled = false;
+
+            //radioBtnMultipleCopies.Enabled = false;
+            //radioBtnSinglePhotoCopies.Enabled = false;
+
+            //numericIdPrintingCopies.Enabled = false;
+        }
+
         private void LoadIdSelectionPhotos()
         {
+            hasUserSelectedPhoto = false;
+
             PictureBox[] boxes =
             {
-                idSettingsSelectPicture1,
-                idSettingsSelectPicture2,
-                idSettingsSelectPicture3,
-                idSettingsSelectPicture4
-            };
+        idSettingsSelectPicture1,
+        idSettingsSelectPicture2,
+        idSettingsSelectPicture3,
+        idSettingsSelectPicture4
+    };
 
             for (int i = 0; i < boxes.Length; i++)
             {
@@ -309,7 +337,10 @@ namespace PrintAndSnap
 
                 if (i < capturedPhotos.Count)
                 {
-                    boxes[i].Image = capturedPhotos[i];
+                    if (boxes[i].Image != null)
+                        boxes[i].Image.Dispose();
+
+                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
                     boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
                     boxes[i].Visible = true;
 
@@ -321,13 +352,16 @@ namespace PrintAndSnap
                 }
             }
 
+            // ✅ AUTO SELECT FIRST PHOTO
             if (capturedPhotos.Count > 0)
             {
-                selectedPhoto = capturedPhotos[0];
-                UpdateIdSettings();
-                idSettingsPicturePreview.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
 
+                HighlightSelectedPhoto(boxes[0]); // 🔥 highlight first
+
+                UpdateIdSettings();
+            }
         }
 
         private void SelectPhoto_Click(object sender, EventArgs e)
@@ -337,7 +371,10 @@ namespace PrintAndSnap
             if (clicked?.Image == null)
                 return;
 
-            selectedPhoto = (Bitmap)clicked.Image;
+            hasUserSelectedPhoto = true;
+
+            // 🔥 IMPORTANT: clone to avoid memory issues
+            selectedPhoto = (Bitmap)clicked.Image.Clone();
 
             HighlightSelectedPhoto(clicked);
 
@@ -365,6 +402,7 @@ namespace PrintAndSnap
             selectedBox.BorderStyle = BorderStyle.FixedSingle;
             selectedBox.BackColor = Color.LightBlue; // glow effect
             selectedBox.Padding = new Padding(3);    // spacing = glow illusion
+            selectedBox.BackColor = Color.LightSkyBlue;
         }
 
         private void ShowCapturedPhotos()
@@ -381,7 +419,7 @@ namespace PrintAndSnap
             {
                 if (i < capturedPhotos.Count)
                 {
-                    boxes[i].Image = capturedPhotos[i];
+                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
                     boxes[i].Visible = true;
                     boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
                 }
@@ -428,14 +466,18 @@ namespace PrintAndSnap
                 CameraTimer.Visible = false;
 
                 // TAKE PHOTO HERE (ONLY HERE)
-                Bitmap shot;
 
-                lock (this)
+                Bitmap shot = null;
+
+                if (currentFrame != null)
                 {
-                    if (currentFrame == null)
-                        return;
-                    shot = (Bitmap)currentFrame.Clone();
+                    lock (currentFrame)
+                    {
+                        shot = (Bitmap)currentFrame.Clone();
+                    }
                 }
+
+                if (shot == null) return;
 
                 capturedPhotos.Add(shot);
 
@@ -502,6 +544,8 @@ namespace PrintAndSnap
                 idSettingsPicturePreview.Image.Dispose();
 
             idSettingsPicturePreview.Image = layout;
+
+            idSettingsPicturePreview.SizeMode = PictureBoxSizeMode.Zoom;
 
             UpdateMiniPreview();
         }
@@ -577,6 +621,120 @@ namespace PrintAndSnap
             idPrintPreviewMini.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
+        private void photoBtnRetrieve_Click(object sender, EventArgs e)
+        {
+            // FORCE HIDE EVERYTHING FIRST
+            foreach (Control c in photoPanel.Controls)
+            {
+                c.Visible = false;
+            }
+
+            retrievalPanelPhoto.Visible = true;
+            retrievalPanelPhoto.BringToFront();
+
+            PhotoRetrievePanel.Visible = true;
+            PhotoRetrievePanel.BringToFront();
+        }
+
+
+        private void LoadIdRetrieval(string code)
+        {
+            string folder = @"C:\PrinterVendo\id_archive";
+
+            string codeFolder = Path.Combine(folder, code);
+
+            if (!Directory.Exists(codeFolder))
+            {
+                MessageBox.Show("❌ Invalid or expired code.");
+                return;
+            }
+
+            // META
+            string metaPath = Path.Combine(codeFolder, "meta.txt");
+
+            if (!File.Exists(metaPath))
+            {
+                MessageBox.Show("❌ Code data missing.");
+                return;
+            }
+
+            var lines = File.ReadAllLines(metaPath);
+
+            DateTime created = DateTime.Parse(lines[0].Split('=')[1]);
+            int uses = int.Parse(lines[1].Split('=')[1]);
+            int maxUses = int.Parse(lines[2].Split('=')[1]);
+
+            // ⏳ EXPIRY
+            if ((DateTime.Now - created).TotalMinutes > 60)
+            {
+                MessageBox.Show("❌ Code expired.");
+                return;
+            }
+
+            // 🔁 USAGE
+            if (uses >= maxUses)
+            {
+                MessageBox.Show("❌ Code already used 3 times.");
+                return;
+            }
+
+            // ✅ LOAD ALL PHOTOS
+            capturedPhotos.Clear();
+
+            for (int i = 1; i <= 4; i++)
+            {
+                string photoPath = Path.Combine(codeFolder, $"photo{i}.png");
+
+                if (File.Exists(photoPath))
+                {
+                    capturedPhotos.Add(new Bitmap(photoPath));
+                }
+            }
+
+            if (capturedPhotos.Count == 0)
+            {
+                MessageBox.Show("No photos found.");
+                return;
+            }
+
+            // SET FIRST AS SELECTED
+            selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+            hasUserSelectedPhoto = true;
+
+            // 🔥 IMPORTANT
+            currentRetrievedIdPath = Path.Combine(codeFolder, "photo1.png");
+            isPhotoRetrievalMode = true;
+
+            // UI
+            ShowPhotoPanel(photoIDPanel, idPrintingSettings);
+            LoadIdSelectionPhotos();
+            UpdateIdSettings();
+
+            MessageBox.Show("✅ Photos loaded. You can now print.");
+        }
+
+        private void photoRetrievalBtn_Click(object sender, EventArgs e)
+        {
+            string code = photoRetrievalCodeBox.Text.Trim().ToUpper();
+
+            if (string.IsNullOrEmpty(code))
+            {
+                MessageBox.Show("Enter retrieval code.");
+                return;
+            }
+
+            // ✅ USE THE CORRECT SYSTEM
+            LoadIdRetrieval(code);
+        }
+
+        private void SetLayoutControlsEnabled(bool enabled)
+        {
+            radioBtn2x2.Enabled = enabled;
+            radioBtn2x1.Enabled = enabled;
+            radioBtn1x1.Enabled = enabled;
+        }
+
+
         private void idPrintSettingsCancelBtn_Click(object obj, EventArgs args )
         {
             ResetMachine();
@@ -589,38 +747,91 @@ namespace PrintAndSnap
 
         private void idPrintSettingsContinueBtn_Click(object obj, EventArgs args)
         {
-            if (selectedPhoto == null)
+            DebugLog("=== CONTINUE BUTTON CLICKED ===");
+
+            try
             {
-                MessageBox.Show("No Photo Selected");
-                return;
+                DebugLog("SelectedPhoto NULL? " + (selectedPhoto == null));
+                DebugLog("hasUserSelectedPhoto: " + hasUserSelectedPhoto);
+
+                if (selectedPhoto == null)
+                {
+                    DebugLog("ERROR: selectedPhoto is null");
+                    MessageBox.Show("No Photo Selected");
+                    return;
+                }
+
+                if (!hasUserSelectedPhoto)
+                {
+                    DebugLog("ERROR: user did not select photo");
+                    MessageBox.Show("⚠️ Please select a photo first.");
+                    return;
+                }
+
+                DebugLog("Generating layout...");
+
+                finalIdPrintImage = GenerateLayout(selectedPhoto);
+
+                if (finalIdPrintImage == null)
+                {
+                    DebugLog("ERROR: finalIdPrintImage is null");
+                    MessageBox.Show("Failed to generate image.");
+                    return;
+                }
+
+                DebugLog("Layout generated successfully");
+
+                string saveFolder = @"C:\PrinterVendo\idphotos";
+                Directory.CreateDirectory(saveFolder);
+
+                lastSavedIdFileName = "ID_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+                string filePath = Path.Combine(saveFolder, lastSavedIdFileName);
+
+                DebugLog("Saving file: " + filePath);
+
+                finalIdPrintImage.Save(filePath, ImageFormat.Png);
+
+                DebugLog("File saved successfully");
+
+                // PRICE
+                DebugLog("Reading price label: " + idPrintingTotal.Text);
+
+                totalIdPrice = int.Parse(idPrintingTotal.Text.Replace("₱", ""));
+
+                paymentIDprintingTotal.Text = "₱" + totalIdPrice;
+                paymentIDprintingBalance.Text = "₱" + totalIdPrice;
+
+                insertedMoney = 0;
+                printBtn.Enabled = false;
+                downloadBtnPaymentId.Enabled = false;
+
+                isIdMode = true;
+
+                DebugLog("Switching to PAYMENT PANEL...");
+
+                ShowPhotoPanel(photoIDPanel, IDpayment);
+
+                DebugLog("PAYMENT PANEL SHOULD NOW BE VISIBLE");
             }
+            catch (Exception ex)
+            {
+                DebugLog("CRASH: " + ex.Message);
+                DebugLog("STACK: " + ex.StackTrace);
 
-            // GENERATE FINAL PRINT IMAGE
-            finalIdPrintImage = GenerateLayout(selectedPhoto);
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
 
-            //SAVE IMAGE HERE (IMPORTANT)
-            string saveFolder = @"C:\PrinterVendo\idphotos";
-            Directory.CreateDirectory(saveFolder);
+        private void DebugLog(string message)
+        {
+            Debug.WriteLine("[DEBUG] " + message);
 
-            lastSavedIdFileName = "ID_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
-            string filePath = Path.Combine(saveFolder, lastSavedIdFileName);
-
-            finalIdPrintImage.Save(filePath, ImageFormat.Png);
-
-            // SET PRICE
-            totalIdPrice = int.Parse(idPrintingTotal.Text.Replace("₱", ""));
-
-            paymentIDprintingTotal.Text = "₱" + totalIdPrice;
-            paymentIDprintingBalance.Text = "₱" + totalIdPrice;
-
-            insertedMoney = 0;
-            printBtn.Enabled = false;
-
-            downloadBtnPaymentId.Enabled = false;
-            isIdMode = true;
-
-            showPanel(IDpayment);
-
+            try
+            {
+                File.AppendAllText(@"C:\PrinterVendo\debug_log.txt",
+                    DateTime.Now.ToString("HH:mm:ss") + " - " + message + Environment.NewLine);
+            }
+            catch { }
         }
 
         private void radioBtn2x2_click(object obj, EventArgs args)
@@ -865,57 +1076,158 @@ namespace PrintAndSnap
                     ev.Graphics.DrawImage(finalIdPrintImage, x, y);
                 };
 
-                //Enable it for production mode
-                //pd.Print();
-
-                //comment this if you test in production mode
-
+                // pd.Print(); // enable in production
                 MessageBox.Show("Printing Simulated successfully!");
 
-                // TEMP
-                string tempFolder = @"C:\PrinterVendo\idphotos";
-                Directory.CreateDirectory(tempFolder);
-
-                string fileName = "ID_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
-                string tempPath = Path.Combine(tempFolder, fileName);
-
-                finalIdPrintImage.Save(tempPath, ImageFormat.Png);
-
-                // CODE
-                string code = GenerateRetrivalCode();
-
-                // DOWNLOAD (QR)
-                string idDownloadFolder = @"C:\PrinterVendo\id_download";
-                Directory.CreateDirectory(idDownloadFolder);
-
-                string newFileName = code + "_" + fileName;
-                string downloadPath = Path.Combine(idDownloadFolder, newFileName);
-
-                File.Copy(tempPath, downloadPath, true);
-
-                // ARCHIVE (RETRIEVAL)
                 string idArchiveFolder = @"C:\PrinterVendo\id_archive";
                 Directory.CreateDirectory(idArchiveFolder);
 
-                string archivePath = Path.Combine(idArchiveFolder, newFileName);
+                string idDownloadFolder = @"C:\PrinterVendo\id_download";
+                Directory.CreateDirectory(idDownloadFolder);
 
-                File.Move(tempPath, archivePath);
+                string code = "";
 
-                // QR
-                GenerateQrForDownload(newFileName);
-
-                // ENABLE DOWNLOAD
-                this.Invoke(new Action(() =>
+                // =========================
+                // 🟢 FIRST PRINT
+                // =========================
+                if (!isPhotoRetrievalMode)
                 {
-                    downloadBtnPaymentId.Enabled = true;
-                }));
+                    code = GenerateRetrivalCode();
 
-                MessageBox.Show("Printed!\nRetrieval Code: " + code);
+                    string codeFolder = Path.Combine(idArchiveFolder, code);
+                    Directory.CreateDirectory(codeFolder);
+
+                    // SAVE ORIGINAL PHOTOS
+                    for (int i = 0; i < capturedPhotos.Count; i++)
+                    {
+                        string photoPath = Path.Combine(codeFolder, $"photo{i + 1}.png");
+                        capturedPhotos[i].Save(photoPath, ImageFormat.Png);
+                    }
+
+                    // SAVE LAYOUT (ARCHIVE)
+                    string layoutPath = Path.Combine(codeFolder, "layout.png");
+                    finalIdPrintImage.Save(layoutPath, ImageFormat.Png);
+
+                    // SAVE FOR DOWNLOAD
+                    string downloadFileName = code + ".png";
+                    string downloadPath = Path.Combine(idDownloadFolder, downloadFileName);
+
+                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
+
+                    lastSavedIdFileName = downloadFileName;
+
+                    GenerateQrForDownload(downloadFileName);
+
+                    // META
+                    string metaPath = Path.Combine(codeFolder, "meta.txt");
+
+                    File.WriteAllLines(metaPath, new[]
+                    {
+                $"created={DateTime.Now}",
+                $"uses=0",
+                $"maxUses=3"
+            });
+
+                    MessageBox.Show("Printed!\nRetrieval Code: " + code);
+
+                    this.Invoke(new Action(() =>
+                    {
+                        downloadBtnPaymentId.Enabled = true;
+                    }));
+                }
+
+                // =========================
+                // 🔵 RETRIEVAL MODE
+                // =========================
+                else
+                {
+                    string codeFolder = Path.GetDirectoryName(currentRetrievedIdPath);
+
+                    if (codeFolder == null || !Directory.Exists(codeFolder))
+                    {
+                        MessageBox.Show("Retrieval folder missing.");
+                        return;
+                    }
+
+                    string metaPath = Path.Combine(codeFolder, "meta.txt");
+
+                    if (!File.Exists(metaPath))
+                    {
+                        MessageBox.Show("Meta file missing.");
+                        return;
+                    }
+
+                    var lines = File.ReadAllLines(metaPath);
+
+                    DateTime created = DateTime.Parse(lines[0].Split('=')[1]);
+                    int uses = int.Parse(lines[1].Split('=')[1]);
+                    int maxUses = int.Parse(lines[2].Split('=')[1]);
+
+                    // EXPIRY CHECK
+                    if ((DateTime.Now - created).TotalMinutes > 60)
+                    {
+                        MessageBox.Show("❌ Code expired.");
+                        return;
+                    }
+
+                    // USAGE CHECK
+                    if (uses >= maxUses)
+                    {
+                        MessageBox.Show("❌ Code already used 3 times.");
+                        return;
+                    }
+
+                    // UPDATE USAGE
+                    uses++;
+
+                    File.WriteAllLines(metaPath, new[]
+                    {
+                $"created={created}",
+                $"uses={uses}",
+                $"maxUses={maxUses}"
+            });
+
+                    // 🔥 ALWAYS CREATE NEW DOWNLOAD IMAGE (UPDATED LAYOUT)
+                    string codeName = new DirectoryInfo(codeFolder).Name;
+
+                    string downloadFileName = codeName + ".png";
+                    string downloadPath = Path.Combine(@"C:\PrinterVendo\id_download", downloadFileName);
+
+                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
+
+                    lastSavedIdFileName = downloadFileName;
+
+                    GenerateQrForDownload(downloadFileName);
+
+                    MessageBox.Show("Printed again (Retrieval).");
+
+                    this.Invoke(new Action(() =>
+                    {
+                        downloadBtnPaymentId.Enabled = true;
+                    }));
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Print failed: " + ex.Message);
             }
+
+            // =========================
+            // CLEAN TEMP
+            // =========================
+            try
+            {
+                string tempFolder = @"C:\PrinterVendo\idphotos";
+
+                if (Directory.Exists(tempFolder))
+                {
+                    foreach (var file in Directory.GetFiles(tempFolder))
+                    {
+                        try { File.Delete(file); } catch { }
+                    }
+                }
+            }
+            catch { }
         }
 
         private void GenerateQrForDownload(string fileName)
@@ -954,25 +1266,51 @@ namespace PrintAndSnap
             PrintIdPhoto();
         }
 
-        private void downloadBtnPaymentId_Click(object sender, EventArgs e)
+        private async void downloadBtnPaymentId_Click(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(lastSavedIdFileName))
+
+                string fileToDownload = "";
+
+                if (!string.IsNullOrEmpty(lastSavedIdFileName))
                 {
-                    MessageBox.Show("No file available.");
+                    fileToDownload = lastSavedIdFileName;
+                }
+                else if (!string.IsNullOrEmpty(currentRetrievedIdPath))
+                {
+                    fileToDownload = Path.GetFileName(currentRetrievedIdPath);
+                }
+                else
+                {
+                    DebugLog("ERROR: No file to download");
+                    return;
+                }
+
+                DebugLog("File to download: " + fileToDownload);
+
+                string fullPath = Path.Combine(@"C:\PrinterVendo\id_download", fileToDownload);
+
+                if (!File.Exists(fullPath))
+                {
+                    DebugLog("ERROR: FILE NOT FOUND -> " + fullPath);
                     return;
                 }
 
                 uploadService.StartUploadServer();
+                DebugLog("Server started");
 
-                GenerateQrForDownload(lastSavedIdFileName);
+                await Task.Delay(500); 
 
-                showPanel(softCopyDownloadId);
+                GenerateQrForDownload(fileToDownload);
+                DebugLog("QR generated");
+
+                ShowPhotoPanel(photoIDPanel, softCopyDownloadId);
+                DebugLog("Download panel shown");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Download error: " + ex.Message);
+                DebugLog("DOWNLOAD ERROR: " + ex.Message);
             }
         }
 
@@ -1156,28 +1494,36 @@ namespace PrintAndSnap
 
 
         //PANEL METHODS 
+
         private void ShowPhotoPanel(Control mainPanel, Control subPanel = null)
         {
-            // KEEP ROOT VISIBLE
             photoPanel.Visible = true;
             photoPanel.BringToFront();
 
-            // ONLY SWITCH CHILD PANELS
+            // Hide all main panels
             photoMode.Visible = false;
             photoIDPanel.Visible = false;
+            retrievalPanelPhoto.Visible = false;
+            photoBoothPanel.Visible = false;
 
+            // 🔥 SHOW MAIN PANEL
             mainPanel.Visible = true;
             mainPanel.BringToFront();
 
-            if (mainPanel == photoIDPanel && subPanel != null)
+            // 🔥 HANDLE ID PANEL SUBPANELS
+            if (mainPanel == photoIDPanel)
             {
                 panelCRMidPrinting.Visible = false;
                 idPrintingSettings.Visible = false;
+                IDpayment.Visible = false;
+                softCopyDownloadId.Visible = false; // 🔥 ADD THIS
 
-                subPanel.Visible = true;
-                subPanel.BringToFront();
+                if (subPanel != null)
+                {
+                    subPanel.Visible = true;
+                    subPanel.BringToFront();
+                }
             }
-
         }
 
         private void showPanel(Control panel)
@@ -1401,10 +1747,11 @@ namespace PrintAndSnap
 
             // DOC FILES
             CleanFolder(@"C:\PrinterVendo\archive", 30, currentPdfPath);
-            CleanFolder(@"C:\PrinterVendo\download", 30);
 
             // ID FILES
-            CleanFolder(@"C:\PrinterVendo\id_archive", 30);
+            CleanFolder(@"C:\PrinterVendo\id_archive", 60);
+            // ID DOWNLOAD (5 minutes)
+            CleanFolder(@"C:\PrinterVendo\id_download", 5);
 
             // PREVIEW
             CleanFolder(@"C:\PrinterVendo\preview", 10, currentPdfPath);
@@ -2203,6 +2550,22 @@ namespace PrintAndSnap
         private void ResetMachine()
         {
             //PHOTOBOOTH
+
+            isPhotoRetrievalMode = false;
+
+            // UNLOCK everything again
+            radioBtn2x2.Enabled = true;
+            radioBtn2x1.Enabled = true;
+            radioBtn1x1.Enabled = true;
+
+            radioBtnPhotoColored.Enabled = true;
+            radioBtnPhotoBlack.Enabled = true;
+
+            radioBtnMultipleCopies.Enabled = true;
+            radioBtnSinglePhotoCopies.Enabled = true;
+
+            numericIdPrintingCopies.Enabled = true;
+
             cameraService.StopCamera();
 
             if (idCameraFeed.Image != null)
@@ -2375,6 +2738,8 @@ namespace PrintAndSnap
                 MessageBox.Show("Invalid or expired retrieval code.");
                 return;
             }
+
+            lastSavedIdFileName = Path.GetFileName(currentRetrievedIdPath);
 
             try
             {
