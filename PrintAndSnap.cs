@@ -109,6 +109,17 @@ namespace PrintAndSnap
         private Bitmap finalIdPrintImage;
         private Bitmap selectedPhoto;
 
+        private bool isFunMode = false;
+
+        // FUN SETTINGS STATE
+        private string funFilter = "none";
+        private string funLayout = "none";
+        private string funFrame = "none";
+
+        private int funCopies = 1;
+        private int funPricePerPrint = 10;
+        private int totalFunPrice = 0;
+
         //private int pricePerSheet = 20; // adjust if needed
         private int totalIdPrice = 0;
 
@@ -118,7 +129,12 @@ namespace PrintAndSnap
 
         private bool isPhotoRetrievalMode = false;
 
+        private int retrievalAttempts = 0;
+        private const int MAX_RETRIEVAL_ATTEMPTS = 3;
 
+        private int lastIdCopiesValue = 1;
+
+        private int lastFunCopiesValue = 1;
         public PrintAndSnap()
         {
             InitializeComponent();
@@ -132,12 +148,42 @@ namespace PrintAndSnap
 
             numericIdPrintingCopies.Minimum = 1;
             numericIdPrintingCopies.Value = 1;
+            numericIdPrintingCopies.Maximum = 5;
 
-            numericIdPrintingCopies.ValueChanged += (s, e) => CalculateIdPrice();
+            numericIdPrintingCopies.ValueChanged += (s, e) =>
+            {
+                int current = (int)numericIdPrintingCopies.Value;
+
+                // 🔥 detect "trying to go above 5"
+                if (current == 5 && lastIdCopiesValue == 5)
+                {
+                    MessageBox.Show("Maximum 5 copies only.");
+                }
+
+                lastIdCopiesValue = current;
+
+                CalculateIdPrice();
+            };
 
             numericIdPrintingCopies.Enabled = false;
 
+            funNumericCopies.Minimum = 1;
+            funNumericCopies.Value = 1;
+            funNumericCopies.Maximum = 5;
 
+            funNumericCopies.ValueChanged += (s, e) =>
+            {
+                int current = (int)funNumericCopies.Value;
+
+                if (current == 5 && lastFunCopiesValue == 5)
+                {
+                    MessageBox.Show("Maximum 5 copies only.");
+                }
+
+                lastFunCopiesValue = current;
+
+                CalculateFunPrice();
+            };
 
             //DEFAULT RADIO BUTTONS
             radioBtn2x2.Checked = true;
@@ -152,6 +198,7 @@ namespace PrintAndSnap
             //DEFAULT COPIES
             numericIdPrintingCopies.Minimum = 1;
             numericIdPrintingCopies.Value = 1;
+            numericIdPrintingCopies.Maximum = 5;
 
             //UPDATE UI
             CalculateIdPrice();
@@ -200,33 +247,89 @@ namespace PrintAndSnap
         //PHOTO BOOTH
         private DateTime lastFrameTime = DateTime.MinValue;
 
+        private void DebugLog(string message)
+        {
+            Debug.WriteLine("[DEBUG] " + message);
+
+            try
+            {
+                File.AppendAllText(@"C:\PrinterVendo\debug_log.txt",
+                    DateTime.Now.ToString("HH:mm:ss") + " - " + message + Environment.NewLine);
+            }
+            catch { }
+        }
 
         private void InitCamera()
         {
             cameraService.OnFrameCaptured += (frame) =>
             {
-                // LIMIT FPS 
-                if ((DateTime.Now - lastFrameTime).TotalMilliseconds < 100)
-                    return;
-
-                lastFrameTime = DateTime.Now;
-
-                currentFrame = frame;
-
-                if (idCameraFeed.InvokeRequired)
+                try
                 {
-                    idCameraFeed.Invoke(new Action(() =>
+                    // LIMIT FPS
+                    if ((DateTime.Now - lastFrameTime).TotalMilliseconds < 100)
+                        return;
+
+                    lastFrameTime = DateTime.Now;
+
+                    // 🔥 CLONE FRAME (IMPORTANT - avoid threading issues)
+                    Bitmap safeFrame = null;
+
+                    if (frame != null)
                     {
-                        UpdateCameraFrame(frame);
-                    }));
-                }
-                else
-                {
-                    UpdateCameraFrame(frame);
-                }
+                        lock (frame)
+                        {
+                            safeFrame = (Bitmap)frame.Clone();
+                        }
+                    }
 
+                    if (safeFrame == null)
+                        return;
+
+                    currentFrame = safeFrame;
+
+                    // =========================
+                    // ID CAMERA
+                    // =========================
+                    if (idCameraFeed.Visible)
+                    {
+                        if (idCameraFeed.InvokeRequired)
+                        {
+                            idCameraFeed.Invoke(new Action(() =>
+                            {
+                                UpdateCameraFrame(safeFrame);
+                            }));
+                        }
+                        else
+                        {
+                            UpdateCameraFrame(safeFrame);
+                        }
+                    }
+
+                    // =========================
+                    // FUN CAMERA
+                    // =========================
+                    if (funCameraFeed.Visible)
+                    {
+                        if (funCameraFeed.InvokeRequired)
+                        {
+                            funCameraFeed.Invoke(new Action(() =>
+                            {
+                                FunUpdateCameraFrame(safeFrame);
+                            }));
+                        }
+                        else
+                        {
+                            FunUpdateCameraFrame(safeFrame);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("Camera Error: " + ex.Message);
+                }
             };
         }
+
         private void UpdateCameraFrame(Bitmap frame)
         {
             if (lastFrame != null)
@@ -250,7 +353,9 @@ namespace PrintAndSnap
         private void idModeBtn_Click(object sender, EventArgs e)
         {
             ShowPhotoPanel(photoIDPanel, panelCRMidPrinting);
-     
+
+            isFunMode = false;
+
 
             if (idCameraFeed.Image != null)
             {
@@ -277,6 +382,7 @@ namespace PrintAndSnap
         {
             ResetMachine();
         }
+
         private async void idPrintingContinueBtn_Click(object sender, EventArgs args)
         {
             idPrintingContinueBtn.Enabled = false;
@@ -294,29 +400,8 @@ namespace PrintAndSnap
             ShowCapturedPhotos();
 
             ShowPhotoPanel(photoIDPanel, idPrintingSettings);
-            ApplyPhotoRetrievalLock();
 
             LoadIdSelectionPhotos();
-        }
-
-        private void ApplyPhotoRetrievalLock()
-        {
-            if (!isPhotoRetrievalMode)
-                return;
-
-            // LOCK layout
-            //radioBtn2x2.Enabled = false;
-            //radioBtn2x1.Enabled = false;
-            //radioBtn1x1.Enabled = false;
-
-            // OPTIONAL (recommended)
-            //radioBtnPhotoColored.Enabled = false;
-            //radioBtnPhotoBlack.Enabled = false;
-
-            //radioBtnMultipleCopies.Enabled = false;
-            //radioBtnSinglePhotoCopies.Enabled = false;
-
-            //numericIdPrintingCopies.Enabled = false;
         }
 
         private void LoadIdSelectionPhotos()
@@ -352,7 +437,7 @@ namespace PrintAndSnap
                 }
             }
 
-            // ✅ AUTO SELECT FIRST PHOTO
+            // AUTO SELECT FIRST PHOTO
             if (capturedPhotos.Count > 0)
             {
                 selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
@@ -373,7 +458,7 @@ namespace PrintAndSnap
 
             hasUserSelectedPhoto = true;
 
-            // 🔥 IMPORTANT: clone to avoid memory issues
+            // IMPORTANT: clone to avoid memory issues
             selectedPhoto = (Bitmap)clicked.Image.Clone();
 
             HighlightSelectedPhoto(clicked);
@@ -398,7 +483,7 @@ namespace PrintAndSnap
                 box.Padding = new Padding(0);
             }
 
-            // 🔥 ACTIVE STYLE
+            // ACTIVE STYLE
             selectedBox.BorderStyle = BorderStyle.FixedSingle;
             selectedBox.BackColor = Color.LightBlue; // glow effect
             selectedBox.Padding = new Padding(3);    // spacing = glow illusion
@@ -451,8 +536,16 @@ namespace PrintAndSnap
         {
             if (countdown > 0)
             {
-                CameraTimer.Text = countdown.ToString();
-                CameraTimer.Visible = true;
+                if (isFunMode)
+                {
+                    funCameraTimer.Text = countdown.ToString();
+                    funCameraTimer.Visible = true;
+                }
+                else
+                {
+                    CameraTimer.Text = countdown.ToString();
+                    CameraTimer.Visible = true;
+                }
 
                 countdown--;
             }
@@ -460,45 +553,113 @@ namespace PrintAndSnap
             {
                 captureTimer.Stop();
 
-                CameraTimer.Text = "📸";
-
-                await Task.Delay(500);
-                CameraTimer.Visible = false;
-
-                // TAKE PHOTO HERE (ONLY HERE)
-
-                Bitmap shot = null;
-
-                if (currentFrame != null)
+                if (isFunMode)
                 {
-                    lock (currentFrame)
+                    funCameraTimer.Text = "📸";
+                    await Task.Delay(500);
+                    funCameraTimer.Visible = false;
+                }
+                else
+                {
+                    CameraTimer.Text = "📸";
+                    await Task.Delay(500);
+                    CameraTimer.Visible = false;
+                }
+
+                // =========================
+                // SAFE FRAME CAPTURE
+                // =========================
+                Bitmap shot = null;
+                Bitmap tempFrame = currentFrame;
+
+                if (tempFrame != null)
+                {
+                    try
                     {
-                        shot = (Bitmap)currentFrame.Clone();
+                        shot = new Bitmap(tempFrame); // SAFE COPY
+                    }
+                    catch
+                    {
+                        return;
                     }
                 }
 
-                if (shot == null) return;
+                if (shot == null || shot.Width == 0 || shot.Height == 0)
+                    return;
 
-                capturedPhotos.Add(shot);
+                // =========================
+                // STORE SAFE COPY
+                // =========================
+                capturedPhotos.Add((Bitmap)shot.Clone());
 
-                PictureBox[] boxes =
+                // =========================
+                // SELECT MODE
+                // =========================
+                PictureBox[] boxes;
+
+                if (isFunMode)
                 {
-            idPreviewPictureBox1,
-            idPreviewPictureBox2,
-            idPreviewPictureBox3,
-            idPreviewPictureBox4
-        };
+                    boxes = new PictureBox[]
+                    {
+                funPreview1,
+                funPreview2,
+                funPreview3,
+                funPreview4
+                    };
+                }
+                else
+                {
+                    boxes = new PictureBox[]
+                    {
+                idPreviewPictureBox1,
+                idPreviewPictureBox2,
+                idPreviewPictureBox3,
+                idPreviewPictureBox4
+                    };
+                }
 
                 int index = capturedPhotos.Count - 1;
 
-                boxes[index].Image = shot;
+                // =========================
+                // INDEX SAFETY
+                // =========================
+                if (index < 0 || index >= boxes.Length)
+                    return;
+
+                if (boxes[index] == null)
+                    return;
+
+                // =========================
+                // DISPOSE OLD IMAGE
+                // =========================
+                if (boxes[index].Image != null)
+                    boxes[index].Image.Dispose();
+
+                // =========================
+                // SET IMAGE SAFELY
+                // =========================
+                boxes[index].Image = (Bitmap)shot.Clone();
                 boxes[index].SizeMode = PictureBoxSizeMode.StretchImage;
                 boxes[index].Visible = true;
 
-                if (capturedPhotos.Count > 0)
+                // =========================
+                // ENABLE BUTTONS
+                // =========================
+                if (isFunMode)
+                {
+                    funContinueBtn.Enabled = true;
+                    funCaptureBtn.Enabled = true;
+                }
+                else
+                {
                     idPrintingContinueBtn.Enabled = true;
+                    idCaptureBtn.Enabled = true;
+                }
 
-                idCaptureBtn.Enabled = true;
+                // =========================
+                // CLEANUP
+                // =========================
+                shot.Dispose();
             }
         }
 
@@ -532,7 +693,6 @@ namespace PrintAndSnap
         }
 
         //ID SETTINGS
-
         private void UpdateIdSettings()
         {
             if (selectedPhoto == null)
@@ -574,7 +734,7 @@ namespace PrintAndSnap
                         ? selectedPhoto
                         : ConvertToGrayscale(selectedPhoto);
 
-                    // 🟢 SINGLE MODE
+                    // SINGLE MODE
                     if (!isMultiple)
                     {
                         int w = pageWidth / 3;
@@ -588,7 +748,7 @@ namespace PrintAndSnap
 
                         DrawSingleLayout(g, previewPhoto, x, y, w, h, pen);
                     }
-                    // 🔵 MULTIPLE MODE
+                    // MULTIPLE MODE
                     else
                     {
                         int layoutW = pageWidth / 4;
@@ -636,7 +796,6 @@ namespace PrintAndSnap
             PhotoRetrievePanel.BringToFront();
         }
 
-
         private void LoadIdRetrieval(string code)
         {
             string folder = @"C:\PrinterVendo\id_archive";
@@ -664,21 +823,21 @@ namespace PrintAndSnap
             int uses = int.Parse(lines[1].Split('=')[1]);
             int maxUses = int.Parse(lines[2].Split('=')[1]);
 
-            // ⏳ EXPIRY
+            // EXPIRY
             if ((DateTime.Now - created).TotalMinutes > 60)
             {
                 MessageBox.Show("❌ Code expired.");
                 return;
             }
 
-            // 🔁 USAGE
+            // USAGE
             if (uses >= maxUses)
             {
                 MessageBox.Show("❌ Code already used 3 times.");
                 return;
             }
 
-            // ✅ LOAD ALL PHOTOS
+            // LOAD ALL PHOTOS
             capturedPhotos.Clear();
 
             for (int i = 1; i <= 4; i++)
@@ -723,17 +882,40 @@ namespace PrintAndSnap
                 return;
             }
 
-            // ✅ USE THE CORRECT SYSTEM
+            // 🔴 CHECK MAX ATTEMPTS
+            if (retrievalAttempts >= MAX_RETRIEVAL_ATTEMPTS)
+            {
+                MessageBox.Show("❌ Too many attempts. Please try again later.");
+                ResetMachine();
+                return;
+            }
+
+            string folder = @"C:\PrinterVendo\id_archive";
+            string codeFolder = Path.Combine(folder, code);
+
+            if (!Directory.Exists(codeFolder))
+            {
+                retrievalAttempts++;
+
+                int remaining = MAX_RETRIEVAL_ATTEMPTS - retrievalAttempts;
+
+                MessageBox.Show($"❌ Invalid code. Attempts left: {remaining}");
+
+                return;
+            }
+
+            // ✅ SUCCESS → RESET ATTEMPTS
+            retrievalAttempts = 0;
+
+            // CONTINUE NORMAL FLOW
             LoadIdRetrieval(code);
         }
-
         private void SetLayoutControlsEnabled(bool enabled)
         {
             radioBtn2x2.Enabled = enabled;
             radioBtn2x1.Enabled = enabled;
             radioBtn1x1.Enabled = enabled;
         }
-
 
         private void idPrintSettingsCancelBtn_Click(object obj, EventArgs args )
         {
@@ -822,18 +1004,6 @@ namespace PrintAndSnap
             }
         }
 
-        private void DebugLog(string message)
-        {
-            Debug.WriteLine("[DEBUG] " + message);
-
-            try
-            {
-                File.AppendAllText(@"C:\PrinterVendo\debug_log.txt",
-                    DateTime.Now.ToString("HH:mm:ss") + " - " + message + Environment.NewLine);
-            }
-            catch { }
-        }
-
         private void radioBtn2x2_click(object obj, EventArgs args)
         {
             selectedLayout = "2x2";
@@ -880,7 +1050,6 @@ namespace PrintAndSnap
             CalculateIdPrice();
             UpdateIdSettings();
         }
-
 
         private void radioBtnPhotoColored_click(object obj, EventArgs args)
         {
@@ -1398,7 +1567,614 @@ namespace PrintAndSnap
             }
         }
 
+        //=============
+        //FUN PHOTO
+        //=============
+        private void FunUpdateCameraFrame(Bitmap frame)
+        {
+            if (lastFrame != null)
+                lastFrame.Dispose();
 
+            lastFrame = (Bitmap)frame.Clone();
+
+            funCameraFeed.Image = lastFrame;
+            funCameraFeed.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void funModeBtn_Click(object sender, EventArgs e)
+        {
+            ShowPhotoPanel(photoBoothPanel, panelCMRphotoBooth);
+
+            isFunMode = true;
+
+            if (funCameraFeed.Image != null)
+            {
+                funCameraFeed.Image.Dispose();
+                funCameraFeed.Image = null;
+            }
+
+            try
+            {
+                cameraService.StartCamera();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void funCaptureBtn_Click(object sender, EventArgs args)
+        {
+            if (currentFrame == null)
+                return;
+
+            if (capturedPhotos.Count >= 4)
+            {
+                MessageBox.Show("Maximum of 4 photos only.");
+                return;
+            }
+
+            funCaptureBtn.Enabled = false;
+
+            countdown = 3;
+            captureTimer.Start();
+        }
+
+        private void funCaptureAgainBtn_Click(object obj, EventArgs args)
+        {
+            PictureBox[] boxes =
+            {
+                funPreview1,
+                funPreview2,
+                funPreview3,
+                funPreview4
+            };
+
+            foreach (var box in boxes)
+            {
+                if (box.Image != null)
+                {
+                    box.Image.Dispose();
+                    box.Image = null;
+                }
+            }
+
+            foreach (var img in capturedPhotos)
+                img.Dispose();
+
+            capturedPhotos.Clear();
+
+            cameraService.StartCamera();
+
+            funContinueBtn.Enabled = false;
+        }
+
+        private async void funContinueBtn_Click(object sender, EventArgs args)
+        {
+            funContinueBtn.Enabled = false;
+
+            if (capturedPhotos.Count == 0)
+            {
+                MessageBox.Show("Please capture at least one photo.");
+                return;
+            }
+
+            await Task.Run(() =>
+            {
+                cameraService.StopCamera();
+            });
+
+            await Task.Delay(200);
+
+            ShowFunCapturedPhotos();
+
+            ShowPhotoPanel(photoBoothPanel, photoBoothSettings);
+
+            LoadFunSelectionPhotos();
+        }
+
+        private void ShowFunCapturedPhotos()
+        {
+            PictureBox[] boxes =
+            {
+        funPreview1,
+        funPreview2,
+        funPreview3,
+        funPreview4
+    };
+
+            for (int i = 0; i < boxes.Length; i++)
+            {
+                if (i < capturedPhotos.Count)
+                {
+                    if (boxes[i].Image != null)
+                        boxes[i].Image.Dispose();
+
+                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
+                    boxes[i].Visible = true;
+                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                }
+                else
+                {
+                    boxes[i].Visible = false;
+                }
+            }
+        }
+
+        private void LoadFunSelectionPhotos()
+        {
+            if (capturedPhotos.Count == 0)
+                return;
+
+            hasUserSelectedPhoto = false;
+
+            PictureBox[] boxes =
+            {
+            funSelectPic1,
+            funSelectPic2,
+            funSelectPic3,
+            funSelectPic4
+            };
+
+            for (int i = 0; i < boxes.Length; i++)
+            {
+                if (boxes[i] == null) continue;
+
+                boxes[i].Click -= FunSelectPhoto_Click;
+
+                if (i < capturedPhotos.Count)
+                {
+                    if (boxes[i].Image != null)
+                        boxes[i].Image.Dispose();
+
+                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
+                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                    boxes[i].Visible = true;
+
+                    boxes[i].Click += FunSelectPhoto_Click;
+                }
+                else
+                {
+                    boxes[i].Visible = false;
+                }
+
+                CalculateFunPrice();
+            }
+
+            // SAFE AUTO SELECT
+            if (capturedPhotos.Count > 0 && boxes[0] != null)
+            {
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
+
+                funRadioBtbFilterNone.Checked = true;
+                funRadioBtnFrameNone.Checked = true;
+
+                HighlightFunSelectedPhoto(boxes[0]);
+                UpdateFunSettings();
+            }
+        }
+
+        private void HighlightFunSelectedPhoto(PictureBox selectedBox)
+        {
+            PictureBox[] boxes =
+            {
+            funSelectPic1,
+            funSelectPic2,
+            funSelectPic3,
+            funSelectPic4
+            };
+
+            foreach (var box in boxes)
+            {
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
+            }
+
+            selectedBox.BorderStyle = BorderStyle.FixedSingle;
+            selectedBox.BackColor = Color.LightPink;
+            selectedBox.Padding = new Padding(3);
+        }
+
+        private void FunSelectPhoto_Click(object sender, EventArgs e)
+        {
+            PictureBox clicked = sender as PictureBox;
+
+            if (clicked?.Image == null)
+                return;
+
+            hasUserSelectedPhoto = true;
+
+            selectedPhoto = (Bitmap)clicked.Image.Clone();
+
+            HighlightFunSelectedPhoto(clicked);
+
+            UpdateFunSettings(); // ✅ CORRECT
+        }
+
+        private void UpdateFunSettings()
+        {
+            if (selectedPhoto == null)
+                return;
+
+            // =========================
+            // PROCESS IMAGE (PIPELINE)
+            // =========================
+            Bitmap filtered = ApplyFunFilter(selectedPhoto);
+            Bitmap laidOut = ApplyFunLayout(filtered);
+            Bitmap preview = ApplyFunFrame(laidOut);
+
+            // =========================
+            // MAIN PREVIEW
+            // =========================
+            if (funMainPreview.Image != null)
+                funMainPreview.Image.Dispose();
+
+            funMainPreview.Image = (Bitmap)preview.Clone();
+            funMainPreview.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // =========================
+            // MINI PREVIEW
+            // =========================
+            if (funMiniPreview.Image != null)
+                funMiniPreview.Image.Dispose();
+
+            funMiniPreview.Image = (Bitmap)preview.Clone();
+            funMiniPreview.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // CLEAN MEMORY
+            filtered.Dispose();
+            laidOut.Dispose();
+            preview.Dispose();
+        }
+
+        private Bitmap ApplyFunFrame(Bitmap photo)
+        {
+            if (photo == null)
+                return null;
+
+            Bitmap canvas = new Bitmap(photo.Width, photo.Height);
+
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(Color.White);
+
+                // ALWAYS DRAW PHOTO FIRST
+                g.DrawImage(photo, 0, 0, photo.Width, photo.Height);
+
+                // =====================
+                // FRAME (optional)
+                // =====================
+                if (funFrame == "minimal")
+                {
+                    using (Pen pen = new Pen(Color.Black, 5))
+                    {
+                        g.DrawRectangle(pen, 5, 5, canvas.Width - 10, canvas.Height - 10);
+                    }
+                }
+                else if (funFrame == "cute")
+                {
+                    using (Pen pen = new Pen(Color.Pink, 8))
+                    {
+                        g.DrawRectangle(pen, 5, 5, canvas.Width - 10, canvas.Height - 10);
+                    }
+
+                    using (Brush b = new SolidBrush(Color.Pink))
+                    {
+                        g.FillEllipse(b, 5, 5, 20, 20);
+                        g.FillEllipse(b, canvas.Width - 25, 5, 20, 20);
+                        g.FillEllipse(b, 5, canvas.Height - 25, 20, 20);
+                        g.FillEllipse(b, canvas.Width - 25, canvas.Height - 25, 20, 20);
+                    }
+                }
+
+                // "none" → just skip frame (but photo is already drawn)
+            }
+
+            return canvas;
+        }
+
+        private Bitmap ApplyFunLayout(Bitmap photo)
+        {
+            if (photo == null)
+                return null;
+
+            int width = funMainPreview.Width;
+            int height = funMainPreview.Height;
+
+            Bitmap canvas = new Bitmap(width, height);
+
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(Color.White);
+
+                // QUALITY
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                // =========================
+                // BASE DRAW AREA (FULL WITH MARGIN)
+                // =========================
+                int margin = 20;
+
+                Rectangle drawArea = new Rectangle(
+                    margin,
+                    margin,
+                    width - margin * 2,
+                    height - margin * 2
+                );
+
+                // =========================
+                // VERTICAL STRIP (REAL PHOTOBOOTH)
+                // =========================
+                if (funLayout == "vertical")
+                {
+                    int count = 2;
+
+                    int photoHeight = drawArea.Height / count;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        int y = drawArea.Y + i * photoHeight;
+
+                        Bitmap img;
+
+                        if (capturedPhotos.Count > i)
+                            img = ApplyFunFilter(capturedPhotos[i]); // 🔥 APPLY FILTER HERE
+                        else
+                            img = ApplyFunFilter(photo);
+
+                        g.DrawImage(img,
+                            drawArea.X,
+                            y,
+                            drawArea.Width,
+                            photoHeight);
+
+                        img.Dispose(); // cleanup
+                    }
+                }
+
+                // =========================
+                // GRID (2x2)
+                // =========================
+                else if (funLayout == "grid")
+                {
+                    int cols = 2;
+                    int rows = 2;
+
+                    int cellW = drawArea.Width / cols;
+                    int cellH = drawArea.Height / rows;
+
+                    int index = 0;
+
+                    for (int r = 0; r < rows; r++)
+                    {
+                        for (int c = 0; c < cols; c++)
+                        {
+                            int x = drawArea.X + c * cellW;
+                            int y = drawArea.Y + r * cellH;
+
+                            Bitmap img;
+
+                            if (capturedPhotos.Count > index)
+                                img = ApplyFunFilter(capturedPhotos[index]); // 🔥 APPLY FILTER HERE
+                            else
+                                img = ApplyFunFilter(photo);
+
+                            g.DrawImage(img, x, y, cellW, cellH);
+
+                            img.Dispose(); // cleanup
+
+                            index++;
+                        }
+                    }
+                }
+
+                // =========================
+                // DEFAULT (SAFE FALLBACK)
+                // =========================
+                else
+                {
+                    g.DrawImage(photo, drawArea);
+                }
+            }
+
+            return canvas;
+        }
+
+        private Bitmap ApplyFunFilter(Bitmap original)
+        {
+            if (original == null)
+                return null;
+
+            if (funFilter == "none")
+                return (Bitmap)original.Clone();
+
+            if (funFilter == "black")
+                return ConvertToGrayscale(original);
+
+            if (funFilter == "warm")
+            {
+                Bitmap warm = new Bitmap(original.Width, original.Height);
+
+                using (Graphics g = Graphics.FromImage(warm))
+                {
+                    float[][] matrix =
+                    {
+                new float[] {1.1f, 0, 0, 0, 0},
+                new float[] {0, 1.0f, 0, 0, 0},
+                new float[] {0, 0, 0.9f, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {0.05f, 0.02f, 0, 0, 1}
+            };
+
+                    ColorMatrix cm = new ColorMatrix(matrix);
+                    ImageAttributes ia = new ImageAttributes();
+                    ia.SetColorMatrix(cm);
+
+                    g.DrawImage(original,
+                        new Rectangle(0, 0, original.Width, original.Height),
+                        0, 0, original.Width, original.Height,
+                        GraphicsUnit.Pixel,
+                        ia);
+                }
+
+                return warm;
+            }
+
+            return (Bitmap)original.Clone();
+        }
+
+        //LAYOUT
+        private void funRadioBtnVertical_click(object sender, EventArgs e)
+        {
+            if (funLayout == "vertical")
+            {
+                funLayout = "none";
+                funRadioBtnVertical.Checked = false;
+            }
+            else
+            {
+                funLayout = "vertical";
+                funRadioBtnVertical.Checked = true;
+                funRadioBtnGridBtn.Checked = false;
+            }
+
+            UpdateFunSettings();
+            CalculateFunPrice();
+        }
+
+        private void funRadioBtnGridBtn_click(object sender, EventArgs e)
+        {
+            if (funLayout == "grid")
+            {
+                funLayout = "none";
+                funRadioBtnGridBtn.Checked = false;
+            }
+            else
+            {
+                funLayout = "grid";
+                funRadioBtnGridBtn.Checked = true;
+                funRadioBtnVertical.Checked = false;
+            }
+
+            UpdateFunSettings();
+            CalculateFunPrice();
+        }
+
+        //FRAME
+        private void funRadioBtnFrameNone_click(object sender, EventArgs e)
+        {
+            funFrame = "none";
+            UpdateFunSettings();
+        }
+
+        private void funRadioBtnMinimal_click(object sender, EventArgs e)
+        {
+            funFrame = "minimal";
+            UpdateFunSettings();
+        }
+
+        private void funRadioBtnCute_click(object sender, EventArgs e)
+        {
+            funFrame = "cute";
+            UpdateFunSettings();
+        }
+
+        //FILTER
+        private void funRadioBtbFilterNone_click(object sender, EventArgs e)
+        {
+            funFilter = "none";
+            UpdateFunSettings();
+        }
+        private void funRadioBtnWarm_click(object sender, EventArgs e)
+        {
+            funFilter = "warm";
+            UpdateFunSettings();
+        }
+
+        private void funRadioBtnBlack_click(object sender, EventArgs e)
+        {
+            funFilter = "black";
+            UpdateFunSettings();
+        }
+
+        private Bitmap GenerateFunFinalImage()
+        {
+            if (selectedPhoto == null)
+                return null;
+
+            int width = 1200;   // fixed print size
+            int height = 1800;  // portrait strip
+
+            Bitmap canvas = new Bitmap(width, height);
+
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(Color.White);
+
+                Bitmap filtered = ApplyFunFilter(selectedPhoto);
+
+                // =====================
+                // LAYOUT
+                // =====================
+                if (funLayout == "vertical")
+                {
+                    g.DrawImage(filtered, 200, 50, 800, 1600);
+                }
+                else if (funLayout == "grid")
+                {
+                    g.DrawImage(filtered, 100, 100, 450, 700);
+                    g.DrawImage(filtered, 650, 100, 450, 700);
+                    g.DrawImage(filtered, 100, 900, 450, 700);
+                    g.DrawImage(filtered, 650, 900, 450, 700);
+                }
+
+                // =====================
+                // FRAME
+                // =====================
+                if (funFrame == "minimal")
+                {
+                    using (Pen pen = new Pen(Color.Black, 10))
+                    {
+                        g.DrawRectangle(pen, 10, 10, width - 20, height - 20);
+                    }
+                }
+                else if (funFrame == "cute")
+                {
+                    using (Pen pen = new Pen(Color.Pink, 15))
+                    {
+                        g.DrawRectangle(pen, 10, 10, width - 20, height - 20);
+                    }
+                }
+
+                filtered.Dispose();
+            }
+
+            return canvas;
+        }
+
+        private void CalculateFunPrice()
+        {
+            int copies = (int)funNumericCopies.Value;
+
+            int pricePerUnit = 10; // default
+
+            // 🔥 layout affects price
+            if (funLayout == "grid")
+                pricePerUnit = 15;
+            else if (funLayout == "vertical")
+                pricePerUnit = 10;
+            else
+                pricePerUnit = 10;
+
+            int total = pricePerUnit * copies;
+
+            totalFunPrice = total;
+
+            funTotal.Text = "₱" + total.ToString();
+        }
 
         //DOC PRINTING
         //WINDOWS API(DLL IMPORTS)
@@ -1494,7 +2270,6 @@ namespace PrintAndSnap
 
 
         //PANEL METHODS 
-
         private void ShowPhotoPanel(Control mainPanel, Control subPanel = null)
         {
             photoPanel.Visible = true;
@@ -1517,6 +2292,18 @@ namespace PrintAndSnap
                 idPrintingSettings.Visible = false;
                 IDpayment.Visible = false;
                 softCopyDownloadId.Visible = false; // 🔥 ADD THIS
+
+                if (subPanel != null)
+                {
+                    subPanel.Visible = true;
+                    subPanel.BringToFront();
+                }
+            }
+
+            if (mainPanel == photoBoothPanel)
+            {
+                panelCMRphotoBooth.Visible = false;
+                photoBoothSettings.Visible = false;
 
                 if (subPanel != null)
                 {
