@@ -13,7 +13,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
         public string SavePhoto(Bitmap image)
         {
-            string folder = @"C:\PrinterVendo\photos";
+            string folder = @"C:\PrintAndSnap\photos";
             Directory.CreateDirectory(folder);
 
             string fileName = "photo_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".jpg";
@@ -23,5 +23,9 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
             return fullPath;
         }
+
+        
+
+        
     }
 }
