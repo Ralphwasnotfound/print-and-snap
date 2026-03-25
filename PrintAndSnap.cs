@@ -31,7 +31,6 @@ using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using Word = Microsoft.Office.Interop.Word;
 
-
 namespace PrintAndSnap
 {
 
@@ -77,6 +76,8 @@ namespace PrintAndSnap
         private System.Windows.Forms.Timer inactivityTimer;
         private System.Windows.Forms.Timer qrExpireTimer;
         private System.Windows.Forms.Timer uploadStatusTimer;
+        private bool printerErrorShown = false;
+        private bool sessionActive = false;
 
         //UI STATE
         private int dotCount = 0;
@@ -2850,13 +2851,15 @@ namespace PrintAndSnap
         }
         private void InactivityTimer_Tick(object sender, EventArgs e)
         {
-            if (printingInProgress)
+            // 🔥 DO NOTHING DURING SESSION
+            if (sessionActive)
                 return;
 
             inactivityTimer.Stop();
-
             ResetMachine();
         }
+
+
         private void ReceiveTimer_Tick(object sender, EventArgs e)
         {
             Debug.WriteLine("CONTINUE TIMER FIRED");
@@ -2874,63 +2877,78 @@ namespace PrintAndSnap
 
             DebugPanelState("Timer Fired");
         }
+
         private void PrinterStatusTimer_Tick(object sender, EventArgs e)
+{
+    string printerName = "Canon MG3000 series";
+
+    if (!printerManager.PrinterExists(printerName))
+    {
+        printerStatusLabel.Text = "Printer: Not Detected";
+        printerStatusLabel.ForeColor = Color.Red;
+        continuePaymentBtn.Enabled = false;
+        return;
+    }
+
+    if (!printerManager.IsPrinterOnline(printerName))
+    {
+        printerStatusLabel.Text = "Printer: Offline";
+        printerStatusLabel.ForeColor = Color.Red;
+        continuePaymentBtn.Enabled = false;
+        return;
+    }
+
+    string error = printerManager.GetDetailedPrinterError(printerName);
+
+    DebugLog("Printer Error RAW: " + error);
+
+    if (!string.IsNullOrEmpty(error))
+    {
+        string err = error.ToLower();
+
+        if (err.Contains("paper") ||
+            err.Contains("jam") ||
+            err.Contains("offline") ||
+            err.Contains("door") ||
+            err.Contains("ink"))
         {
-            string printerName = "Canon MG3000 series";
+            printerStatusLabel.Text = "Printer: " + error;
+            printerStatusLabel.ForeColor = Color.Red;
+            continuePaymentBtn.Enabled = false;
 
-            if (!printerManager.PrinterExists(printerName))
+            if (!printingInProgress && !printerErrorShown)
             {
-                printerStatusLabel.Text = "Printer: Not Detected";
-                printerStatusLabel.ForeColor = Color.Red;
-                continuePaymentBtn.Enabled = false;
-                return;
+                printerErrorShown = true;
+                MessageBox.Show("Printer problem detected.\nPlease call staff.");
             }
 
-            if (!printerManager.IsPrinterOnline(printerName))
-            {
-                printerStatusLabel.Text = "Printer: Offline";
-                printerStatusLabel.ForeColor = Color.Red;
-                continuePaymentBtn.Enabled = false;
-                return;
-            }
-
-            string error = printerManager.GetDetailedPrinterError(printerName);
-
-            if (error != "No Error")
-            {
-                printerStatusLabel.Text = "Printer: " + error;
-                printerStatusLabel.ForeColor = Color.Red;
-                continuePaymentBtn.Enabled = false;
-
-                if (paymentPanel.Visible)
-                {
-                    MessageBox.Show("Printer problem detected. \nPlease call staff.");
-                    ResetMachine();
-                }
-
-                return;
-            }
-
-            string status = printerManager.GetPrinterStatus(printerName);
-
-            printerStatusLabel.Text = "Printer: " + status;
-
-            if (status == "Printer Ready")
-            {
-                printerStatusLabel.ForeColor = Color.Green;
-                continuePaymentBtn.Enabled = true;
-            }
-            else if (status == "Printing")
-            {
-                printerStatusLabel.ForeColor = Color.Blue;
-                continuePaymentBtn.Enabled = false;
-            }
-            else
-            {
-                printerStatusLabel.ForeColor = Color.OrangeRed;
-                continuePaymentBtn.Enabled = false;
-            }
+            return;
         }
+    }
+
+    string status = printerManager.GetPrinterStatus(printerName);
+
+    printerStatusLabel.Text = "Printer: " + status;
+
+    if (status.Contains("Ready") || status.Contains("Idle"))
+    {
+        printerStatusLabel.ForeColor = Color.Green;
+        continuePaymentBtn.Enabled = true;
+    }
+    else if (status.Contains("Printing") || status.Contains("Spooling"))
+    {
+        printerStatusLabel.ForeColor = Color.Blue;
+        continuePaymentBtn.Enabled = false;
+    }
+    else
+    {
+        printerStatusLabel.ForeColor = Color.OrangeRed;
+        continuePaymentBtn.Enabled = true;
+    }
+
+    printerErrorShown = false;
+}
+
         private void CleanupTimer_Tick(object sender, EventArgs e)
         {
             if (printingInProgress)
@@ -3666,99 +3684,120 @@ namespace PrintAndSnap
         }
         private async void printBtn_Click(object sender, EventArgs e)
         {
+            if (printingInProgress) return;
+
             printBtn.Enabled = false;
 
             printingStatusLabel.Text = "Printing in progress...";
             printingStatusLabel.Visible = true;
 
             printingInProgress = true;
-
-            await Task.Run(() =>
-            {
-                bool success = documentPrinting.PrintDocumentFile(
-                    currentPdfPath,
-                    "Canon MG3000 series",
-                    totalPages,
-                    radioSinglePage.Checked,
-                    (int)numericSinglePage.Value,
-                    radioPrintRange.Checked,
-                    numericPageRange.Text,
-                    radioColored.Checked,
-                    pageIsColored
-                );
-
-                printSuccess = success;
-            });
-
-            printingInProgress = false;
-
-            if (printSuccess)
-            {
-                printingStatusLabel.Text = "Printing completed.";
-            }
-            else
-            {
-                printingStatusLabel.Text = "Printing failed.";
-                return;
-            }
-
-            string code = "ID-" + GenerateRetrievalCode();
-
-            string archiveFolder = @"C:\PrintAndSnap\DOCS\archive";
-            Directory.CreateDirectory(archiveFolder);
-
-            string newPath = Path.Combine(
-                archiveFolder,
-                code + "_" + Path.GetFileName(currentPdfPath)
-            );
-
+          
             try
             {
-                // RELEASE PDF VIEWER FIRST
-                if (pdfViewer != null)
+                await Task.Run(() =>
                 {
                     try
                     {
-                        if (pdfViewer.Document != null)
-                        {
-                            pdfViewer.Document.Dispose();
-                        }
+                        bool success = documentPrinting.PrintDocumentFile(
+                            currentPdfPath,
+                            "Canon MG3000 series",
+                            totalPages,
+                            radioSinglePage.Checked,
+                            (int)numericSinglePage.Value,
+                            radioPrintRange.Checked,
+                            numericPageRange.Text,
+                            radioColored.Checked,
+                            pageIsColored
+                        );
 
-                        previewPanelSettingLayout.Controls.Remove(pdfViewer);
-                        pdfViewer.Dispose();
-                        pdfViewer = null;
+                        printSuccess = success;
                     }
-                    catch { }
-                }
+                    catch (Exception ex)
+                    {
+                        DebugLog("PRINT ERROR: " + ex.Message);
+                        printSuccess = false;
+                    }
+                });
 
-                // small delay so Windows releases the file lock
-                Thread.Sleep(3000);
-
-                // MOVE FILE TO ARCHIVE
-                if (File.Exists(currentPdfPath))
+                if (!printSuccess)
                 {
-                    File.Move(currentPdfPath, newPath);
+                    printingStatusLabel.Text = "Printing failed.";
+                    printingInProgress = false;
+                    printBtn.Enabled = true;
+                    return;
                 }
+                sessionActive = true;
 
-                string previewFolder = @"C:\PrintAndSnap\DOCS\preview";
+                // ✅ WAIT (SAFE VERSION WITH TIMEOUT)
+                await WaitForPrinterReady("Canon MG3000 series");
 
-                foreach (var file in Directory.GetFiles(previewFolder))
+                // ✅ GENERATE CODE
+                string code = GenerateRetrievalCode();
+
+                printingStatusLabel.Text = "Printing completed.";
+
+                // ✅ MOVE FILE
+                string archiveFolder = @"C:\PrintAndSnap\DOCS\archive";
+                Directory.CreateDirectory(archiveFolder);
+
+                string newPath = Path.Combine(
+                    archiveFolder,
+                    code + "_" + Path.GetFileName(currentPdfPath)
+                );
+
+                try
                 {
-                    File.Delete(file);
+                    if (pdfViewer != null)
+                    {
+                        try
+                        {
+                            if (pdfViewer.Document != null)
+                                pdfViewer.Document.Dispose();
+
+                            previewPanelSettingLayout.Controls.Remove(pdfViewer);
+                            pdfViewer.Dispose();
+                            pdfViewer = null;
+                        }
+                        catch { }
+                    }
+
+                    if (File.Exists(currentPdfPath))
+                    {
+                        File.Move(currentPdfPath, newPath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("FILE MOVE ERROR: " + ex.Message);
                 }
 
-                if (!string.IsNullOrEmpty(currentOriginalPath) && File.Exists(currentOriginalPath))
+                // ✅ SHOW CODE (ON TOP)
+                MessageBox.Show(
+                    this,
+                    "🖨 Printing completed!\n\n" +
+                    "Your Retrieval Code: " + code,
+                    "Printing",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                // ✅ BACKGROUND RESET TIMER (NON-BLOCKING)
+                _ = Task.Run(async () =>
                 {
-                    File.Delete(currentOriginalPath);
-                }
+                    await Task.Delay(120000); // 2 minutes
+
+                    this.Invoke(new Action(() =>
+                    {
+                        //ResetMachine();
+                    }));
+                });
             }
-            catch { }
-
-            MessageBox.Show("Retrieval Code: " + code + "\nYou can reprint within 30 minutes.");
-
-            await Task.Delay(2000);
-
-            ResetMachine();
+            finally
+            {
+                printingInProgress = false;
+                printBtn.Enabled = true;
+            }
         }
         private void printSettingsCancelBtn_Click(object sender, EventArgs e)
         {
@@ -3916,7 +3955,7 @@ namespace PrintAndSnap
                 currentFrame = null;
             }
 
-           
+            sessionActive = false;
 
             //STOP SERVER
             uploadService.StopServer();
@@ -4110,7 +4149,25 @@ namespace PrintAndSnap
             showPanel(retrivalPanel);
         }
 
+        private async Task WaitForPrinterReady(string printerName)
+        {
+            await Task.Run(() =>
+            {
+                bool printing = true;
 
+                while (printing)
+                {
+                    string status = printerManager.GetPrinterStatus(printerName);
+
+                    if (status.Contains("Printing") || status.Contains("Spooling"))
+                        printing = true;
+                    else
+                        printing = false;
+
+                    Thread.Sleep(500);
+                }
+            });
+        }
 
         //OTHERS
         private void DebugPanelState(string location)
@@ -4144,5 +4201,7 @@ namespace PrintAndSnap
             UpdateModeUI();
             CalculateTotal();
         }
+
+
     }
 }
