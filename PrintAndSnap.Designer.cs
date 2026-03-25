@@ -178,34 +178,7 @@ namespace PrintAndSnap
             this.printingPanelTop = new System.Windows.Forms.TableLayoutPanel();
             this.printPanel = new System.Windows.Forms.Panel();
             this.photoPanel = new System.Windows.Forms.Panel();
-            this.photoMode = new System.Windows.Forms.Panel();
-            this.phototop = new System.Windows.Forms.TableLayoutPanel();
-            this.photoLabelTitle = new System.Windows.Forms.Label();
-            this.buttonLayoutPhoto = new System.Windows.Forms.TableLayoutPanel();
-            this.photoBtnRetrieve = new System.Windows.Forms.Button();
-            this.photoModeCancelBtn = new System.Windows.Forms.Button();
-            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
-            this.photoBtnFun = new System.Windows.Forms.Button();
-            this.tableLayoutPanel24 = new System.Windows.Forms.TableLayoutPanel();
-            this.photoBtnID = new System.Windows.Forms.Button();
             this.photoBoothPanel = new System.Windows.Forms.Panel();
-            this.panelCMRphotoBooth = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel31 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel32 = new System.Windows.Forms.TableLayoutPanel();
-            this.funPreview1 = new System.Windows.Forms.PictureBox();
-            this.funPreview2 = new System.Windows.Forms.PictureBox();
-            this.funPreview3 = new System.Windows.Forms.PictureBox();
-            this.funPreview4 = new System.Windows.Forms.PictureBox();
-            this.funCameraFeed = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel30 = new System.Windows.Forms.TableLayoutPanel();
-            this.funCaptureAgainBtn = new System.Windows.Forms.Button();
-            this.funCancelBtn = new System.Windows.Forms.Button();
-            this.funContinueBtn = new System.Windows.Forms.Button();
-            this.funCaptureBtn = new System.Windows.Forms.Button();
-            this.funCameraTimer = new System.Windows.Forms.Label();
             this.photoBoothSettings = new System.Windows.Forms.Panel();
             this.funSettings = new System.Windows.Forms.Panel();
             this.tableLayoutPanel55 = new System.Windows.Forms.TableLayoutPanel();
@@ -243,13 +216,13 @@ namespace PrintAndSnap
             this.funSelectPic2 = new System.Windows.Forms.PictureBox();
             this.funSelectPic1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel54 = new System.Windows.Forms.TableLayoutPanel();
-            this.funSettingContinue = new System.Windows.Forms.Button();
+            this.funSettingContinueBtn = new System.Windows.Forms.Button();
             this.funSettingsBack = new System.Windows.Forms.Button();
             this.funSettingsCancel = new System.Windows.Forms.Button();
             this.tableLayoutPanel50 = new System.Windows.Forms.TableLayoutPanel();
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.funPayment = new System.Windows.Forms.Panel();
+            this.funPaymentPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel71 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel72 = new System.Windows.Forms.TableLayoutPanel();
             this.label39 = new System.Windows.Forms.Label();
@@ -265,7 +238,23 @@ namespace PrintAndSnap
             this.paymentFunPrintBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel68 = new System.Windows.Forms.TableLayoutPanel();
             this.label36 = new System.Windows.Forms.Label();
-            this.funSoftCopyDownload = new System.Windows.Forms.Panel();
+            this.panelCMRphotoBooth = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel31 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel32 = new System.Windows.Forms.TableLayoutPanel();
+            this.funPreview1 = new System.Windows.Forms.PictureBox();
+            this.funPreview2 = new System.Windows.Forms.PictureBox();
+            this.funPreview3 = new System.Windows.Forms.PictureBox();
+            this.funPreview4 = new System.Windows.Forms.PictureBox();
+            this.funCameraFeed = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel30 = new System.Windows.Forms.TableLayoutPanel();
+            this.funCaptureAgainBtn = new System.Windows.Forms.Button();
+            this.funCancelBtn = new System.Windows.Forms.Button();
+            this.funContinueBtn = new System.Windows.Forms.Button();
+            this.funCaptureBtn = new System.Windows.Forms.Button();
+            this.funCameraTimer = new System.Windows.Forms.Label();
+            this.funSoftCopyDownloadPanel = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
             this.qrSoftCopyDownloadFun = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel49 = new System.Windows.Forms.TableLayoutPanel();
@@ -275,6 +264,17 @@ namespace PrintAndSnap
             this.funSoftCopyCancelBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel48 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel70 = new System.Windows.Forms.TableLayoutPanel();
+            this.photoMode = new System.Windows.Forms.Panel();
+            this.phototop = new System.Windows.Forms.TableLayoutPanel();
+            this.photoLabelTitle = new System.Windows.Forms.Label();
+            this.buttonLayoutPhoto = new System.Windows.Forms.TableLayoutPanel();
+            this.photoBtnRetrieve = new System.Windows.Forms.Button();
+            this.photoModeCancelBtn = new System.Windows.Forms.Button();
+            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
+            this.photoBtnFun = new System.Windows.Forms.Button();
+            this.tableLayoutPanel24 = new System.Windows.Forms.TableLayoutPanel();
+            this.photoBtnID = new System.Windows.Forms.Button();
             this.photoIDPanel = new System.Windows.Forms.Panel();
             this.panelCRMidPrinting = new System.Windows.Forms.Panel();
             this.tableLayoutPanel27 = new System.Windows.Forms.TableLayoutPanel();
@@ -376,6 +376,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel77 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel78 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel79 = new System.Windows.Forms.TableLayoutPanel();
+            this.funDownloadBtn = new System.Windows.Forms.Button();
             this.startPanel.SuspendLayout();
             this.startText.SuspendLayout();
             this.startButtonLayout.SuspendLayout();
@@ -432,23 +433,7 @@ namespace PrintAndSnap
             this.MainPrintingPanel.SuspendLayout();
             this.printPanel.SuspendLayout();
             this.photoPanel.SuspendLayout();
-            this.photoMode.SuspendLayout();
-            this.phototop.SuspendLayout();
-            this.buttonLayoutPhoto.SuspendLayout();
-            this.tableLayoutPanel22.SuspendLayout();
-            this.tableLayoutPanel23.SuspendLayout();
-            this.tableLayoutPanel24.SuspendLayout();
             this.photoBoothPanel.SuspendLayout();
-            this.panelCMRphotoBooth.SuspendLayout();
-            this.tableLayoutPanel31.SuspendLayout();
-            this.tableLayoutPanel32.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).BeginInit();
-            this.tableLayoutPanel29.SuspendLayout();
-            this.tableLayoutPanel30.SuspendLayout();
             this.photoBoothSettings.SuspendLayout();
             this.funSettings.SuspendLayout();
             this.tableLayoutPanel55.SuspendLayout();
@@ -473,16 +458,32 @@ namespace PrintAndSnap
             ((System.ComponentModel.ISupportInitialize)(this.funSelectPic1)).BeginInit();
             this.tableLayoutPanel54.SuspendLayout();
             this.tableLayoutPanel50.SuspendLayout();
-            this.funPayment.SuspendLayout();
+            this.funPaymentPanel.SuspendLayout();
             this.tableLayoutPanel71.SuspendLayout();
             this.tableLayoutPanel72.SuspendLayout();
             this.tableLayoutPanel69.SuspendLayout();
             this.tableLayoutPanel68.SuspendLayout();
-            this.funSoftCopyDownload.SuspendLayout();
+            this.panelCMRphotoBooth.SuspendLayout();
+            this.tableLayoutPanel31.SuspendLayout();
+            this.tableLayoutPanel32.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).BeginInit();
+            this.tableLayoutPanel29.SuspendLayout();
+            this.tableLayoutPanel30.SuspendLayout();
+            this.funSoftCopyDownloadPanel.SuspendLayout();
             this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qrSoftCopyDownloadFun)).BeginInit();
             this.tableLayoutPanel49.SuspendLayout();
             this.tableLayoutPanel44.SuspendLayout();
+            this.photoMode.SuspendLayout();
+            this.phototop.SuspendLayout();
+            this.buttonLayoutPhoto.SuspendLayout();
+            this.tableLayoutPanel22.SuspendLayout();
+            this.tableLayoutPanel23.SuspendLayout();
+            this.tableLayoutPanel24.SuspendLayout();
             this.photoIDPanel.SuspendLayout();
             this.panelCRMidPrinting.SuspendLayout();
             this.tableLayoutPanel27.SuspendLayout();
@@ -2574,386 +2575,17 @@ namespace PrintAndSnap
             this.photoPanel.Size = new System.Drawing.Size(1488, 729);
             this.photoPanel.TabIndex = 0;
             // 
-            // photoMode
-            // 
-            this.photoMode.Controls.Add(this.phototop);
-            this.photoMode.Controls.Add(this.buttonLayoutPhoto);
-            this.photoMode.Controls.Add(this.tableLayoutPanel22);
-            this.photoMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoMode.Location = new System.Drawing.Point(0, 0);
-            this.photoMode.Name = "photoMode";
-            this.photoMode.Size = new System.Drawing.Size(1488, 729);
-            this.photoMode.TabIndex = 1;
-            // 
-            // phototop
-            // 
-            this.phototop.ColumnCount = 1;
-            this.phototop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.phototop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.phototop.Controls.Add(this.photoLabelTitle, 0, 0);
-            this.phototop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.phototop.Location = new System.Drawing.Point(0, 0);
-            this.phototop.Name = "phototop";
-            this.phototop.RowCount = 1;
-            this.phototop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.phototop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.phototop.Size = new System.Drawing.Size(1488, 100);
-            this.phototop.TabIndex = 3;
-            // 
-            // photoLabelTitle
-            // 
-            this.photoLabelTitle.AutoSize = true;
-            this.photoLabelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoLabelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.photoLabelTitle.Location = new System.Drawing.Point(3, 0);
-            this.photoLabelTitle.Name = "photoLabelTitle";
-            this.photoLabelTitle.Size = new System.Drawing.Size(1482, 100);
-            this.photoLabelTitle.TabIndex = 0;
-            this.photoLabelTitle.Text = "CHOOSE PHOTO MODE";
-            this.photoLabelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // buttonLayoutPhoto
-            // 
-            this.buttonLayoutPhoto.ColumnCount = 5;
-            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.29491F));
-            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.24661F));
-            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.99F));
-            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.17356F));
-            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.29491F));
-            this.buttonLayoutPhoto.Controls.Add(this.photoBtnRetrieve, 3, 1);
-            this.buttonLayoutPhoto.Controls.Add(this.photoModeCancelBtn, 1, 1);
-            this.buttonLayoutPhoto.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.buttonLayoutPhoto.Location = new System.Drawing.Point(0, 629);
-            this.buttonLayoutPhoto.Name = "buttonLayoutPhoto";
-            this.buttonLayoutPhoto.RowCount = 3;
-            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.buttonLayoutPhoto.Size = new System.Drawing.Size(1488, 100);
-            this.buttonLayoutPhoto.TabIndex = 4;
-            // 
-            // photoBtnRetrieve
-            // 
-            this.photoBtnRetrieve.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoBtnRetrieve.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.photoBtnRetrieve.Location = new System.Drawing.Point(873, 8);
-            this.photoBtnRetrieve.Name = "photoBtnRetrieve";
-            this.photoBtnRetrieve.Size = new System.Drawing.Size(338, 84);
-            this.photoBtnRetrieve.TabIndex = 0;
-            this.photoBtnRetrieve.Text = "RETRIEVE PHOTO";
-            this.photoBtnRetrieve.UseVisualStyleBackColor = true;
-            this.photoBtnRetrieve.Click += new System.EventHandler(this.photoBtnRetrieve_Click);
-            // 
-            // photoModeCancelBtn
-            // 
-            this.photoModeCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoModeCancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.photoModeCancelBtn.Location = new System.Drawing.Point(275, 8);
-            this.photoModeCancelBtn.Name = "photoModeCancelBtn";
-            this.photoModeCancelBtn.Size = new System.Drawing.Size(325, 84);
-            this.photoModeCancelBtn.TabIndex = 1;
-            this.photoModeCancelBtn.Text = "CANCEL";
-            this.photoModeCancelBtn.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel22
-            // 
-            this.tableLayoutPanel22.ColumnCount = 4;
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel22.Controls.Add(this.tableLayoutPanel23, 2, 1);
-            this.tableLayoutPanel22.Controls.Add(this.tableLayoutPanel24, 1, 1);
-            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel22.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
-            this.tableLayoutPanel22.RowCount = 3;
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel22.Size = new System.Drawing.Size(1488, 729);
-            this.tableLayoutPanel22.TabIndex = 5;
-            // 
-            // tableLayoutPanel23
-            // 
-            this.tableLayoutPanel23.ColumnCount = 3;
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.57502F));
-            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
-            this.tableLayoutPanel23.Controls.Add(this.photoBtnFun, 1, 1);
-            this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel23.Location = new System.Drawing.Point(746, 39);
-            this.tableLayoutPanel23.Name = "tableLayoutPanel23";
-            this.tableLayoutPanel23.RowCount = 3;
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.57502F));
-            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
-            this.tableLayoutPanel23.Size = new System.Drawing.Size(663, 650);
-            this.tableLayoutPanel23.TabIndex = 0;
-            // 
-            // photoBtnFun
-            // 
-            this.photoBtnFun.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoBtnFun.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.photoBtnFun.Location = new System.Drawing.Point(163, 160);
-            this.photoBtnFun.Name = "photoBtnFun";
-            this.photoBtnFun.Size = new System.Drawing.Size(335, 329);
-            this.photoBtnFun.TabIndex = 0;
-            this.photoBtnFun.Text = "PHOTOBOOTH\r\n(For fun pictures with frame printing)";
-            this.photoBtnFun.UseVisualStyleBackColor = true;
-            this.photoBtnFun.Click += new System.EventHandler(this.funModeBtn_Click);
-            // 
-            // tableLayoutPanel24
-            // 
-            this.tableLayoutPanel24.ColumnCount = 3;
-            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
-            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.58F));
-            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
-            this.tableLayoutPanel24.Controls.Add(this.photoBtnID, 1, 1);
-            this.tableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel24.Location = new System.Drawing.Point(77, 39);
-            this.tableLayoutPanel24.Name = "tableLayoutPanel24";
-            this.tableLayoutPanel24.RowCount = 3;
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.58F));
-            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
-            this.tableLayoutPanel24.Size = new System.Drawing.Size(663, 650);
-            this.tableLayoutPanel24.TabIndex = 1;
-            // 
-            // photoBtnID
-            // 
-            this.photoBtnID.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.photoBtnID.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.photoBtnID.Location = new System.Drawing.Point(163, 160);
-            this.photoBtnID.Name = "photoBtnID";
-            this.photoBtnID.Size = new System.Drawing.Size(335, 329);
-            this.photoBtnID.TabIndex = 0;
-            this.photoBtnID.Text = "ID PHOTO\r\n(For ID picture printing)";
-            this.photoBtnID.UseVisualStyleBackColor = true;
-            this.photoBtnID.Click += new System.EventHandler(this.idModeBtn_Click);
-            // 
             // photoBoothPanel
             // 
             this.photoBoothPanel.Controls.Add(this.panelCMRphotoBooth);
             this.photoBoothPanel.Controls.Add(this.photoBoothSettings);
-            this.photoBoothPanel.Controls.Add(this.funPayment);
-            this.photoBoothPanel.Controls.Add(this.funSoftCopyDownload);
+            this.photoBoothPanel.Controls.Add(this.funPaymentPanel);
+            this.photoBoothPanel.Controls.Add(this.funSoftCopyDownloadPanel);
             this.photoBoothPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoBoothPanel.Location = new System.Drawing.Point(0, 0);
             this.photoBoothPanel.Name = "photoBoothPanel";
             this.photoBoothPanel.Size = new System.Drawing.Size(1488, 729);
             this.photoBoothPanel.TabIndex = 0;
-            // 
-            // panelCMRphotoBooth
-            // 
-            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel31);
-            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel29);
-            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel30);
-            this.panelCMRphotoBooth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCMRphotoBooth.Location = new System.Drawing.Point(0, 0);
-            this.panelCMRphotoBooth.Name = "panelCMRphotoBooth";
-            this.panelCMRphotoBooth.Size = new System.Drawing.Size(1488, 729);
-            this.panelCMRphotoBooth.TabIndex = 2;
-            // 
-            // tableLayoutPanel31
-            // 
-            this.tableLayoutPanel31.ColumnCount = 7;
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.83417F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.01F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.83417F));
-            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
-            this.tableLayoutPanel31.Controls.Add(this.tableLayoutPanel32, 5, 1);
-            this.tableLayoutPanel31.Controls.Add(this.funCameraFeed, 3, 1);
-            this.tableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel31.Location = new System.Drawing.Point(0, 100);
-            this.tableLayoutPanel31.Name = "tableLayoutPanel31";
-            this.tableLayoutPanel31.RowCount = 3;
-            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
-            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 96F));
-            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
-            this.tableLayoutPanel31.Size = new System.Drawing.Size(1488, 548);
-            this.tableLayoutPanel31.TabIndex = 2;
-            // 
-            // tableLayoutPanel32
-            // 
-            this.tableLayoutPanel32.ColumnCount = 1;
-            this.tableLayoutPanel32.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel32.Controls.Add(this.funPreview1, 0, 0);
-            this.tableLayoutPanel32.Controls.Add(this.funPreview2, 0, 1);
-            this.tableLayoutPanel32.Controls.Add(this.funPreview3, 0, 2);
-            this.tableLayoutPanel32.Controls.Add(this.funPreview4, 0, 3);
-            this.tableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel32.Location = new System.Drawing.Point(1147, 13);
-            this.tableLayoutPanel32.Name = "tableLayoutPanel32";
-            this.tableLayoutPanel32.RowCount = 4;
-            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel32.Size = new System.Drawing.Size(304, 520);
-            this.tableLayoutPanel32.TabIndex = 1;
-            // 
-            // funPreview1
-            // 
-            this.funPreview1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPreview1.Location = new System.Drawing.Point(3, 3);
-            this.funPreview1.Name = "funPreview1";
-            this.funPreview1.Size = new System.Drawing.Size(298, 124);
-            this.funPreview1.TabIndex = 0;
-            this.funPreview1.TabStop = false;
-            // 
-            // funPreview2
-            // 
-            this.funPreview2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPreview2.Location = new System.Drawing.Point(3, 133);
-            this.funPreview2.Name = "funPreview2";
-            this.funPreview2.Size = new System.Drawing.Size(298, 124);
-            this.funPreview2.TabIndex = 1;
-            this.funPreview2.TabStop = false;
-            // 
-            // funPreview3
-            // 
-            this.funPreview3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPreview3.Location = new System.Drawing.Point(3, 263);
-            this.funPreview3.Name = "funPreview3";
-            this.funPreview3.Size = new System.Drawing.Size(298, 124);
-            this.funPreview3.TabIndex = 2;
-            this.funPreview3.TabStop = false;
-            // 
-            // funPreview4
-            // 
-            this.funPreview4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPreview4.Location = new System.Drawing.Point(3, 393);
-            this.funPreview4.Name = "funPreview4";
-            this.funPreview4.Size = new System.Drawing.Size(298, 124);
-            this.funPreview4.TabIndex = 3;
-            this.funPreview4.TabStop = false;
-            // 
-            // funCameraFeed
-            // 
-            this.funCameraFeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funCameraFeed.Location = new System.Drawing.Point(373, 13);
-            this.funCameraFeed.Name = "funCameraFeed";
-            this.funCameraFeed.Size = new System.Drawing.Size(738, 520);
-            this.funCameraFeed.TabIndex = 2;
-            this.funCameraFeed.TabStop = false;
-            // 
-            // tableLayoutPanel29
-            // 
-            this.tableLayoutPanel29.ColumnCount = 1;
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel29.Controls.Add(this.label17, 0, 0);
-            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel29.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
-            this.tableLayoutPanel29.RowCount = 1;
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(1488, 100);
-            this.tableLayoutPanel29.TabIndex = 0;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(3, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(1482, 100);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "PHOTO BOOTH";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel30
-            // 
-            this.tableLayoutPanel30.ColumnCount = 11;
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
-            this.tableLayoutPanel30.Controls.Add(this.funCaptureAgainBtn, 9, 1);
-            this.tableLayoutPanel30.Controls.Add(this.funCancelBtn, 1, 1);
-            this.tableLayoutPanel30.Controls.Add(this.funContinueBtn, 3, 1);
-            this.tableLayoutPanel30.Controls.Add(this.funCaptureBtn, 7, 1);
-            this.tableLayoutPanel30.Controls.Add(this.funCameraTimer, 5, 1);
-            this.tableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel30.Location = new System.Drawing.Point(0, 648);
-            this.tableLayoutPanel30.Name = "tableLayoutPanel30";
-            this.tableLayoutPanel30.RowCount = 3;
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel30.Size = new System.Drawing.Size(1488, 81);
-            this.tableLayoutPanel30.TabIndex = 1;
-            // 
-            // funCaptureAgainBtn
-            // 
-            this.funCaptureAgainBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funCaptureAgainBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funCaptureAgainBtn.Location = new System.Drawing.Point(1222, 7);
-            this.funCaptureAgainBtn.Name = "funCaptureAgainBtn";
-            this.funCaptureAgainBtn.Size = new System.Drawing.Size(206, 66);
-            this.funCaptureAgainBtn.TabIndex = 0;
-            this.funCaptureAgainBtn.Text = "CAPTURE AGAIN";
-            this.funCaptureAgainBtn.UseVisualStyleBackColor = true;
-            // 
-            // funCancelBtn
-            // 
-            this.funCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funCancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funCancelBtn.Location = new System.Drawing.Point(56, 7);
-            this.funCancelBtn.Name = "funCancelBtn";
-            this.funCancelBtn.Size = new System.Drawing.Size(206, 66);
-            this.funCancelBtn.TabIndex = 2;
-            this.funCancelBtn.Text = "CANCEL";
-            this.funCancelBtn.UseVisualStyleBackColor = true;
-            // 
-            // funContinueBtn
-            // 
-            this.funContinueBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funContinueBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funContinueBtn.Location = new System.Drawing.Point(321, 7);
-            this.funContinueBtn.Name = "funContinueBtn";
-            this.funContinueBtn.Size = new System.Drawing.Size(206, 66);
-            this.funContinueBtn.TabIndex = 1;
-            this.funContinueBtn.Text = "CONTINUE";
-            this.funContinueBtn.UseVisualStyleBackColor = true;
-            this.funContinueBtn.Click += new System.EventHandler(this.funContinueBtn_Click);
-            // 
-            // funCaptureBtn
-            // 
-            this.funCaptureBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funCaptureBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funCaptureBtn.Location = new System.Drawing.Point(957, 7);
-            this.funCaptureBtn.Name = "funCaptureBtn";
-            this.funCaptureBtn.Size = new System.Drawing.Size(206, 66);
-            this.funCaptureBtn.TabIndex = 3;
-            this.funCaptureBtn.Text = "CAPTURE";
-            this.funCaptureBtn.UseVisualStyleBackColor = true;
-            this.funCaptureBtn.Click += new System.EventHandler(this.funCaptureBtn_Click);
-            // 
-            // funCameraTimer
-            // 
-            this.funCameraTimer.AutoSize = true;
-            this.funCameraTimer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funCameraTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funCameraTimer.Location = new System.Drawing.Point(639, 4);
-            this.funCameraTimer.Name = "funCameraTimer";
-            this.funCameraTimer.Size = new System.Drawing.Size(206, 72);
-            this.funCameraTimer.TabIndex = 4;
-            this.funCameraTimer.Text = "[TIMER]";
-            this.funCameraTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // photoBoothSettings
             // 
@@ -2987,7 +2619,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel55.Name = "tableLayoutPanel55";
             this.tableLayoutPanel55.RowCount = 1;
             this.tableLayoutPanel55.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel55.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 529F));
+            this.tableLayoutPanel55.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 542F));
             this.tableLayoutPanel55.Size = new System.Drawing.Size(1488, 542);
             this.tableLayoutPanel55.TabIndex = 2;
             // 
@@ -3317,7 +2949,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel66.Name = "tableLayoutPanel66";
             this.tableLayoutPanel66.RowCount = 1;
             this.tableLayoutPanel66.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel66.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel66.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel66.Size = new System.Drawing.Size(438, 29);
             this.tableLayoutPanel66.TabIndex = 13;
             // 
@@ -3484,7 +3116,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel54.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel54.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel54.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel54.Controls.Add(this.funSettingContinue, 5, 1);
+            this.tableLayoutPanel54.Controls.Add(this.funSettingContinueBtn, 5, 1);
             this.tableLayoutPanel54.Controls.Add(this.funSettingsBack, 3, 1);
             this.tableLayoutPanel54.Controls.Add(this.funSettingsCancel, 1, 1);
             this.tableLayoutPanel54.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -3497,16 +3129,17 @@ namespace PrintAndSnap
             this.tableLayoutPanel54.Size = new System.Drawing.Size(1488, 87);
             this.tableLayoutPanel54.TabIndex = 1;
             // 
-            // funSettingContinue
+            // funSettingContinueBtn
             // 
-            this.funSettingContinue.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funSettingContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funSettingContinue.Location = new System.Drawing.Point(1041, 3);
-            this.funSettingContinue.Name = "funSettingContinue";
-            this.funSettingContinue.Size = new System.Drawing.Size(291, 79);
-            this.funSettingContinue.TabIndex = 2;
-            this.funSettingContinue.Text = "CONTINUE";
-            this.funSettingContinue.UseVisualStyleBackColor = true;
+            this.funSettingContinueBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funSettingContinueBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funSettingContinueBtn.Location = new System.Drawing.Point(1041, 3);
+            this.funSettingContinueBtn.Name = "funSettingContinueBtn";
+            this.funSettingContinueBtn.Size = new System.Drawing.Size(291, 79);
+            this.funSettingContinueBtn.TabIndex = 2;
+            this.funSettingContinueBtn.Text = "CONTINUE";
+            this.funSettingContinueBtn.UseVisualStyleBackColor = true;
+            this.funSettingContinueBtn.Click += new System.EventHandler(this.funSettingsContinueBtn_Click);
             // 
             // funSettingsBack
             // 
@@ -3570,16 +3203,16 @@ namespace PrintAndSnap
             this.label30.Text = "PHOTO PREVIEW";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // funPayment
+            // funPaymentPanel
             // 
-            this.funPayment.Controls.Add(this.tableLayoutPanel71);
-            this.funPayment.Controls.Add(this.tableLayoutPanel69);
-            this.funPayment.Controls.Add(this.tableLayoutPanel68);
-            this.funPayment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPayment.Location = new System.Drawing.Point(0, 0);
-            this.funPayment.Name = "funPayment";
-            this.funPayment.Size = new System.Drawing.Size(1488, 729);
-            this.funPayment.TabIndex = 1;
+            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel71);
+            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel69);
+            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel68);
+            this.funPaymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPaymentPanel.Location = new System.Drawing.Point(0, 0);
+            this.funPaymentPanel.Name = "funPaymentPanel";
+            this.funPaymentPanel.Size = new System.Drawing.Size(1488, 729);
+            this.funPaymentPanel.TabIndex = 1;
             // 
             // tableLayoutPanel71
             // 
@@ -3706,17 +3339,20 @@ namespace PrintAndSnap
             // 
             // tableLayoutPanel69
             // 
-            this.tableLayoutPanel69.ColumnCount = 7;
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel69.ColumnCount = 9;
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
             this.tableLayoutPanel69.Controls.Add(this.paymentFunCancelBtn, 1, 1);
             this.tableLayoutPanel69.Controls.Add(this.paymentFunBackBtn, 3, 1);
-            this.tableLayoutPanel69.Controls.Add(this.paymentFunPrintBtn, 5, 1);
+            this.tableLayoutPanel69.Controls.Add(this.paymentFunPrintBtn, 7, 1);
+            this.tableLayoutPanel69.Controls.Add(this.funDownloadBtn, 5, 1);
             this.tableLayoutPanel69.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel69.Location = new System.Drawing.Point(0, 629);
             this.tableLayoutPanel69.Name = "tableLayoutPanel69";
@@ -3731,9 +3367,9 @@ namespace PrintAndSnap
             // 
             this.paymentFunCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.paymentFunCancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunCancelBtn.Location = new System.Drawing.Point(151, 4);
+            this.paymentFunCancelBtn.Location = new System.Drawing.Point(117, 4);
             this.paymentFunCancelBtn.Name = "paymentFunCancelBtn";
-            this.paymentFunCancelBtn.Size = new System.Drawing.Size(291, 92);
+            this.paymentFunCancelBtn.Size = new System.Drawing.Size(222, 92);
             this.paymentFunCancelBtn.TabIndex = 0;
             this.paymentFunCancelBtn.Text = "CANCEL";
             this.paymentFunCancelBtn.UseVisualStyleBackColor = true;
@@ -3742,23 +3378,23 @@ namespace PrintAndSnap
             // 
             this.paymentFunBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.paymentFunBackBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunBackBtn.Location = new System.Drawing.Point(596, 4);
+            this.paymentFunBackBtn.Location = new System.Drawing.Point(459, 4);
             this.paymentFunBackBtn.Name = "paymentFunBackBtn";
-            this.paymentFunBackBtn.Size = new System.Drawing.Size(291, 92);
+            this.paymentFunBackBtn.Size = new System.Drawing.Size(222, 92);
             this.paymentFunBackBtn.TabIndex = 1;
             this.paymentFunBackBtn.Text = "BACK";
             this.paymentFunBackBtn.UseVisualStyleBackColor = true;
             // 
             // paymentFunPrintBtn
             // 
-            this.paymentFunPrintBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.paymentFunPrintBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunPrintBtn.Location = new System.Drawing.Point(1041, 4);
+            this.paymentFunPrintBtn.Location = new System.Drawing.Point(1143, 4);
             this.paymentFunPrintBtn.Name = "paymentFunPrintBtn";
-            this.paymentFunPrintBtn.Size = new System.Drawing.Size(291, 92);
+            this.paymentFunPrintBtn.Size = new System.Drawing.Size(222, 92);
             this.paymentFunPrintBtn.TabIndex = 2;
             this.paymentFunPrintBtn.Text = "PRINT";
             this.paymentFunPrintBtn.UseVisualStyleBackColor = true;
+            this.paymentFunPrintBtn.Click += new System.EventHandler(this.paymentFunPrintBtn_Click);
             // 
             // tableLayoutPanel68
             // 
@@ -3787,18 +3423,229 @@ namespace PrintAndSnap
             this.label36.Text = "PAYMENT";
             this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // funSoftCopyDownload
+            // panelCMRphotoBooth
             // 
-            this.funSoftCopyDownload.Controls.Add(this.panel11);
-            this.funSoftCopyDownload.Controls.Add(this.tableLayoutPanel49);
-            this.funSoftCopyDownload.Controls.Add(this.tableLayoutPanel44);
-            this.funSoftCopyDownload.Controls.Add(this.tableLayoutPanel48);
-            this.funSoftCopyDownload.Controls.Add(this.tableLayoutPanel70);
-            this.funSoftCopyDownload.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funSoftCopyDownload.Location = new System.Drawing.Point(0, 0);
-            this.funSoftCopyDownload.Name = "funSoftCopyDownload";
-            this.funSoftCopyDownload.Size = new System.Drawing.Size(1488, 729);
-            this.funSoftCopyDownload.TabIndex = 4;
+            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel31);
+            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel29);
+            this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel30);
+            this.panelCMRphotoBooth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCMRphotoBooth.Location = new System.Drawing.Point(0, 0);
+            this.panelCMRphotoBooth.Name = "panelCMRphotoBooth";
+            this.panelCMRphotoBooth.Size = new System.Drawing.Size(1488, 729);
+            this.panelCMRphotoBooth.TabIndex = 2;
+            // 
+            // tableLayoutPanel31
+            // 
+            this.tableLayoutPanel31.ColumnCount = 7;
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.83417F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.01F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.83417F));
+            this.tableLayoutPanel31.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.080416F));
+            this.tableLayoutPanel31.Controls.Add(this.tableLayoutPanel32, 5, 1);
+            this.tableLayoutPanel31.Controls.Add(this.funCameraFeed, 3, 1);
+            this.tableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel31.Location = new System.Drawing.Point(0, 100);
+            this.tableLayoutPanel31.Name = "tableLayoutPanel31";
+            this.tableLayoutPanel31.RowCount = 3;
+            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
+            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 96F));
+            this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 2F));
+            this.tableLayoutPanel31.Size = new System.Drawing.Size(1488, 548);
+            this.tableLayoutPanel31.TabIndex = 2;
+            // 
+            // tableLayoutPanel32
+            // 
+            this.tableLayoutPanel32.ColumnCount = 1;
+            this.tableLayoutPanel32.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel32.Controls.Add(this.funPreview1, 0, 0);
+            this.tableLayoutPanel32.Controls.Add(this.funPreview2, 0, 1);
+            this.tableLayoutPanel32.Controls.Add(this.funPreview3, 0, 2);
+            this.tableLayoutPanel32.Controls.Add(this.funPreview4, 0, 3);
+            this.tableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel32.Location = new System.Drawing.Point(1147, 13);
+            this.tableLayoutPanel32.Name = "tableLayoutPanel32";
+            this.tableLayoutPanel32.RowCount = 4;
+            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel32.Size = new System.Drawing.Size(304, 520);
+            this.tableLayoutPanel32.TabIndex = 1;
+            // 
+            // funPreview1
+            // 
+            this.funPreview1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPreview1.Location = new System.Drawing.Point(3, 3);
+            this.funPreview1.Name = "funPreview1";
+            this.funPreview1.Size = new System.Drawing.Size(298, 124);
+            this.funPreview1.TabIndex = 0;
+            this.funPreview1.TabStop = false;
+            // 
+            // funPreview2
+            // 
+            this.funPreview2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPreview2.Location = new System.Drawing.Point(3, 133);
+            this.funPreview2.Name = "funPreview2";
+            this.funPreview2.Size = new System.Drawing.Size(298, 124);
+            this.funPreview2.TabIndex = 1;
+            this.funPreview2.TabStop = false;
+            // 
+            // funPreview3
+            // 
+            this.funPreview3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPreview3.Location = new System.Drawing.Point(3, 263);
+            this.funPreview3.Name = "funPreview3";
+            this.funPreview3.Size = new System.Drawing.Size(298, 124);
+            this.funPreview3.TabIndex = 2;
+            this.funPreview3.TabStop = false;
+            // 
+            // funPreview4
+            // 
+            this.funPreview4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPreview4.Location = new System.Drawing.Point(3, 393);
+            this.funPreview4.Name = "funPreview4";
+            this.funPreview4.Size = new System.Drawing.Size(298, 124);
+            this.funPreview4.TabIndex = 3;
+            this.funPreview4.TabStop = false;
+            // 
+            // funCameraFeed
+            // 
+            this.funCameraFeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funCameraFeed.Location = new System.Drawing.Point(373, 13);
+            this.funCameraFeed.Name = "funCameraFeed";
+            this.funCameraFeed.Size = new System.Drawing.Size(738, 520);
+            this.funCameraFeed.TabIndex = 2;
+            this.funCameraFeed.TabStop = false;
+            // 
+            // tableLayoutPanel29
+            // 
+            this.tableLayoutPanel29.ColumnCount = 1;
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel29.Controls.Add(this.label17, 0, 0);
+            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel29.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
+            this.tableLayoutPanel29.RowCount = 1;
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(1488, 100);
+            this.tableLayoutPanel29.TabIndex = 0;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(3, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(1482, 100);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "PHOTO BOOTH";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel30
+            // 
+            this.tableLayoutPanel30.ColumnCount = 11;
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.142857F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel30.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.571429F));
+            this.tableLayoutPanel30.Controls.Add(this.funCaptureAgainBtn, 9, 1);
+            this.tableLayoutPanel30.Controls.Add(this.funCancelBtn, 1, 1);
+            this.tableLayoutPanel30.Controls.Add(this.funContinueBtn, 3, 1);
+            this.tableLayoutPanel30.Controls.Add(this.funCaptureBtn, 7, 1);
+            this.tableLayoutPanel30.Controls.Add(this.funCameraTimer, 5, 1);
+            this.tableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel30.Location = new System.Drawing.Point(0, 648);
+            this.tableLayoutPanel30.Name = "tableLayoutPanel30";
+            this.tableLayoutPanel30.RowCount = 3;
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel30.Size = new System.Drawing.Size(1488, 81);
+            this.tableLayoutPanel30.TabIndex = 1;
+            // 
+            // funCaptureAgainBtn
+            // 
+            this.funCaptureAgainBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funCaptureAgainBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funCaptureAgainBtn.Location = new System.Drawing.Point(1222, 7);
+            this.funCaptureAgainBtn.Name = "funCaptureAgainBtn";
+            this.funCaptureAgainBtn.Size = new System.Drawing.Size(206, 66);
+            this.funCaptureAgainBtn.TabIndex = 0;
+            this.funCaptureAgainBtn.Text = "CAPTURE AGAIN";
+            this.funCaptureAgainBtn.UseVisualStyleBackColor = true;
+            // 
+            // funCancelBtn
+            // 
+            this.funCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funCancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funCancelBtn.Location = new System.Drawing.Point(56, 7);
+            this.funCancelBtn.Name = "funCancelBtn";
+            this.funCancelBtn.Size = new System.Drawing.Size(206, 66);
+            this.funCancelBtn.TabIndex = 2;
+            this.funCancelBtn.Text = "CANCEL";
+            this.funCancelBtn.UseVisualStyleBackColor = true;
+            // 
+            // funContinueBtn
+            // 
+            this.funContinueBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funContinueBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funContinueBtn.Location = new System.Drawing.Point(321, 7);
+            this.funContinueBtn.Name = "funContinueBtn";
+            this.funContinueBtn.Size = new System.Drawing.Size(206, 66);
+            this.funContinueBtn.TabIndex = 1;
+            this.funContinueBtn.Text = "CONTINUE";
+            this.funContinueBtn.UseVisualStyleBackColor = true;
+            this.funContinueBtn.Click += new System.EventHandler(this.funContinueBtn_Click);
+            // 
+            // funCaptureBtn
+            // 
+            this.funCaptureBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funCaptureBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funCaptureBtn.Location = new System.Drawing.Point(957, 7);
+            this.funCaptureBtn.Name = "funCaptureBtn";
+            this.funCaptureBtn.Size = new System.Drawing.Size(206, 66);
+            this.funCaptureBtn.TabIndex = 3;
+            this.funCaptureBtn.Text = "CAPTURE";
+            this.funCaptureBtn.UseVisualStyleBackColor = true;
+            this.funCaptureBtn.Click += new System.EventHandler(this.funCaptureBtn_Click);
+            // 
+            // funCameraTimer
+            // 
+            this.funCameraTimer.AutoSize = true;
+            this.funCameraTimer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funCameraTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funCameraTimer.Location = new System.Drawing.Point(639, 4);
+            this.funCameraTimer.Name = "funCameraTimer";
+            this.funCameraTimer.Size = new System.Drawing.Size(206, 72);
+            this.funCameraTimer.TabIndex = 4;
+            this.funCameraTimer.Text = "[TIMER]";
+            this.funCameraTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // funSoftCopyDownloadPanel
+            // 
+            this.funSoftCopyDownloadPanel.Controls.Add(this.panel11);
+            this.funSoftCopyDownloadPanel.Controls.Add(this.tableLayoutPanel49);
+            this.funSoftCopyDownloadPanel.Controls.Add(this.tableLayoutPanel44);
+            this.funSoftCopyDownloadPanel.Controls.Add(this.tableLayoutPanel48);
+            this.funSoftCopyDownloadPanel.Controls.Add(this.tableLayoutPanel70);
+            this.funSoftCopyDownloadPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funSoftCopyDownloadPanel.Location = new System.Drawing.Point(0, 0);
+            this.funSoftCopyDownloadPanel.Name = "funSoftCopyDownloadPanel";
+            this.funSoftCopyDownloadPanel.Size = new System.Drawing.Size(1488, 729);
+            this.funSoftCopyDownloadPanel.TabIndex = 4;
             // 
             // panel11
             // 
@@ -3913,6 +3760,164 @@ namespace PrintAndSnap
             this.tableLayoutPanel70.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 729F));
             this.tableLayoutPanel70.Size = new System.Drawing.Size(200, 729);
             this.tableLayoutPanel70.TabIndex = 4;
+            // 
+            // photoMode
+            // 
+            this.photoMode.Controls.Add(this.phototop);
+            this.photoMode.Controls.Add(this.buttonLayoutPhoto);
+            this.photoMode.Controls.Add(this.tableLayoutPanel22);
+            this.photoMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoMode.Location = new System.Drawing.Point(0, 0);
+            this.photoMode.Name = "photoMode";
+            this.photoMode.Size = new System.Drawing.Size(1488, 729);
+            this.photoMode.TabIndex = 1;
+            // 
+            // phototop
+            // 
+            this.phototop.ColumnCount = 1;
+            this.phototop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.phototop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.phototop.Controls.Add(this.photoLabelTitle, 0, 0);
+            this.phototop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.phototop.Location = new System.Drawing.Point(0, 0);
+            this.phototop.Name = "phototop";
+            this.phototop.RowCount = 1;
+            this.phototop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.phototop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.phototop.Size = new System.Drawing.Size(1488, 100);
+            this.phototop.TabIndex = 3;
+            // 
+            // photoLabelTitle
+            // 
+            this.photoLabelTitle.AutoSize = true;
+            this.photoLabelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoLabelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.photoLabelTitle.Location = new System.Drawing.Point(3, 0);
+            this.photoLabelTitle.Name = "photoLabelTitle";
+            this.photoLabelTitle.Size = new System.Drawing.Size(1482, 100);
+            this.photoLabelTitle.TabIndex = 0;
+            this.photoLabelTitle.Text = "CHOOSE PHOTO MODE";
+            this.photoLabelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // buttonLayoutPhoto
+            // 
+            this.buttonLayoutPhoto.ColumnCount = 5;
+            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.29491F));
+            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.24661F));
+            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.99F));
+            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.17356F));
+            this.buttonLayoutPhoto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.29491F));
+            this.buttonLayoutPhoto.Controls.Add(this.photoBtnRetrieve, 3, 1);
+            this.buttonLayoutPhoto.Controls.Add(this.photoModeCancelBtn, 1, 1);
+            this.buttonLayoutPhoto.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonLayoutPhoto.Location = new System.Drawing.Point(0, 629);
+            this.buttonLayoutPhoto.Name = "buttonLayoutPhoto";
+            this.buttonLayoutPhoto.RowCount = 3;
+            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.buttonLayoutPhoto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.buttonLayoutPhoto.Size = new System.Drawing.Size(1488, 100);
+            this.buttonLayoutPhoto.TabIndex = 4;
+            // 
+            // photoBtnRetrieve
+            // 
+            this.photoBtnRetrieve.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoBtnRetrieve.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.photoBtnRetrieve.Location = new System.Drawing.Point(873, 8);
+            this.photoBtnRetrieve.Name = "photoBtnRetrieve";
+            this.photoBtnRetrieve.Size = new System.Drawing.Size(338, 84);
+            this.photoBtnRetrieve.TabIndex = 0;
+            this.photoBtnRetrieve.Text = "RETRIEVE PHOTO";
+            this.photoBtnRetrieve.UseVisualStyleBackColor = true;
+            this.photoBtnRetrieve.Click += new System.EventHandler(this.photoBtnRetrieve_Click);
+            // 
+            // photoModeCancelBtn
+            // 
+            this.photoModeCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoModeCancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.photoModeCancelBtn.Location = new System.Drawing.Point(275, 8);
+            this.photoModeCancelBtn.Name = "photoModeCancelBtn";
+            this.photoModeCancelBtn.Size = new System.Drawing.Size(325, 84);
+            this.photoModeCancelBtn.TabIndex = 1;
+            this.photoModeCancelBtn.Text = "CANCEL";
+            this.photoModeCancelBtn.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel22
+            // 
+            this.tableLayoutPanel22.ColumnCount = 4;
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel22.Controls.Add(this.tableLayoutPanel23, 2, 1);
+            this.tableLayoutPanel22.Controls.Add(this.tableLayoutPanel24, 1, 1);
+            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel22.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
+            this.tableLayoutPanel22.RowCount = 3;
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel22.Size = new System.Drawing.Size(1488, 729);
+            this.tableLayoutPanel22.TabIndex = 5;
+            // 
+            // tableLayoutPanel23
+            // 
+            this.tableLayoutPanel23.ColumnCount = 3;
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.57502F));
+            this.tableLayoutPanel23.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
+            this.tableLayoutPanel23.Controls.Add(this.photoBtnFun, 1, 1);
+            this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel23.Location = new System.Drawing.Point(746, 39);
+            this.tableLayoutPanel23.Name = "tableLayoutPanel23";
+            this.tableLayoutPanel23.RowCount = 3;
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.57502F));
+            this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21249F));
+            this.tableLayoutPanel23.Size = new System.Drawing.Size(663, 650);
+            this.tableLayoutPanel23.TabIndex = 0;
+            // 
+            // photoBtnFun
+            // 
+            this.photoBtnFun.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoBtnFun.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.photoBtnFun.Location = new System.Drawing.Point(163, 160);
+            this.photoBtnFun.Name = "photoBtnFun";
+            this.photoBtnFun.Size = new System.Drawing.Size(335, 329);
+            this.photoBtnFun.TabIndex = 0;
+            this.photoBtnFun.Text = "PHOTOBOOTH\r\n(For fun pictures with frame printing)";
+            this.photoBtnFun.UseVisualStyleBackColor = true;
+            this.photoBtnFun.Click += new System.EventHandler(this.funModeBtn_Click);
+            // 
+            // tableLayoutPanel24
+            // 
+            this.tableLayoutPanel24.ColumnCount = 3;
+            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
+            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.58F));
+            this.tableLayoutPanel24.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
+            this.tableLayoutPanel24.Controls.Add(this.photoBtnID, 1, 1);
+            this.tableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel24.Location = new System.Drawing.Point(77, 39);
+            this.tableLayoutPanel24.Name = "tableLayoutPanel24";
+            this.tableLayoutPanel24.RowCount = 3;
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.58F));
+            this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.21F));
+            this.tableLayoutPanel24.Size = new System.Drawing.Size(663, 650);
+            this.tableLayoutPanel24.TabIndex = 1;
+            // 
+            // photoBtnID
+            // 
+            this.photoBtnID.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.photoBtnID.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.photoBtnID.Location = new System.Drawing.Point(163, 160);
+            this.photoBtnID.Name = "photoBtnID";
+            this.photoBtnID.Size = new System.Drawing.Size(335, 329);
+            this.photoBtnID.TabIndex = 0;
+            this.photoBtnID.Text = "ID PHOTO\r\n(For ID picture printing)";
+            this.photoBtnID.UseVisualStyleBackColor = true;
+            this.photoBtnID.Click += new System.EventHandler(this.idModeBtn_Click);
             // 
             // photoIDPanel
             // 
@@ -5266,6 +5271,18 @@ namespace PrintAndSnap
             this.tableLayoutPanel79.Size = new System.Drawing.Size(1488, 81);
             this.tableLayoutPanel79.TabIndex = 0;
             // 
+            // funDownloadBtn
+            // 
+            this.funDownloadBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funDownloadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funDownloadBtn.Location = new System.Drawing.Point(801, 4);
+            this.funDownloadBtn.Name = "funDownloadBtn";
+            this.funDownloadBtn.Size = new System.Drawing.Size(222, 92);
+            this.funDownloadBtn.TabIndex = 3;
+            this.funDownloadBtn.Text = "DOWNLOAD";
+            this.funDownloadBtn.UseVisualStyleBackColor = true;
+            this.funDownloadBtn.Click += new System.EventHandler(this.funDownloadBtn_Click);
+            // 
             // PrintAndSnap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -5358,26 +5375,7 @@ namespace PrintAndSnap
             this.MainPrintingPanel.ResumeLayout(false);
             this.printPanel.ResumeLayout(false);
             this.photoPanel.ResumeLayout(false);
-            this.photoMode.ResumeLayout(false);
-            this.phototop.ResumeLayout(false);
-            this.phototop.PerformLayout();
-            this.buttonLayoutPhoto.ResumeLayout(false);
-            this.tableLayoutPanel22.ResumeLayout(false);
-            this.tableLayoutPanel23.ResumeLayout(false);
-            this.tableLayoutPanel24.ResumeLayout(false);
             this.photoBoothPanel.ResumeLayout(false);
-            this.panelCMRphotoBooth.ResumeLayout(false);
-            this.tableLayoutPanel31.ResumeLayout(false);
-            this.tableLayoutPanel32.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funPreview4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).EndInit();
-            this.tableLayoutPanel29.ResumeLayout(false);
-            this.tableLayoutPanel29.PerformLayout();
-            this.tableLayoutPanel30.ResumeLayout(false);
-            this.tableLayoutPanel30.PerformLayout();
             this.photoBoothSettings.ResumeLayout(false);
             this.funSettings.ResumeLayout(false);
             this.tableLayoutPanel55.ResumeLayout(false);
@@ -5408,19 +5406,38 @@ namespace PrintAndSnap
             this.tableLayoutPanel54.ResumeLayout(false);
             this.tableLayoutPanel50.ResumeLayout(false);
             this.tableLayoutPanel50.PerformLayout();
-            this.funPayment.ResumeLayout(false);
+            this.funPaymentPanel.ResumeLayout(false);
             this.tableLayoutPanel71.ResumeLayout(false);
             this.tableLayoutPanel72.ResumeLayout(false);
             this.tableLayoutPanel72.PerformLayout();
             this.tableLayoutPanel69.ResumeLayout(false);
             this.tableLayoutPanel68.ResumeLayout(false);
             this.tableLayoutPanel68.PerformLayout();
-            this.funSoftCopyDownload.ResumeLayout(false);
+            this.panelCMRphotoBooth.ResumeLayout(false);
+            this.tableLayoutPanel31.ResumeLayout(false);
+            this.tableLayoutPanel32.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funPreview4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).EndInit();
+            this.tableLayoutPanel29.ResumeLayout(false);
+            this.tableLayoutPanel29.PerformLayout();
+            this.tableLayoutPanel30.ResumeLayout(false);
+            this.tableLayoutPanel30.PerformLayout();
+            this.funSoftCopyDownloadPanel.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.qrSoftCopyDownloadFun)).EndInit();
             this.tableLayoutPanel49.ResumeLayout(false);
             this.tableLayoutPanel49.PerformLayout();
             this.tableLayoutPanel44.ResumeLayout(false);
+            this.photoMode.ResumeLayout(false);
+            this.phototop.ResumeLayout(false);
+            this.phototop.PerformLayout();
+            this.buttonLayoutPhoto.ResumeLayout(false);
+            this.tableLayoutPanel22.ResumeLayout(false);
+            this.tableLayoutPanel23.ResumeLayout(false);
+            this.tableLayoutPanel24.ResumeLayout(false);
             this.photoIDPanel.ResumeLayout(false);
             this.panelCRMidPrinting.ResumeLayout(false);
             this.tableLayoutPanel27.ResumeLayout(false);
@@ -5702,7 +5719,7 @@ namespace PrintAndSnap
         private System.Windows.Forms.Button cancelBtnPaymentId;
         private System.Windows.Forms.Button backBtnPaymentId;
         private System.Windows.Forms.Button printBtnPaymentId;
-        private System.Windows.Forms.Panel funPayment;
+        private System.Windows.Forms.Panel funPaymentPanel;
         private System.Windows.Forms.Panel funSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel54;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel50;
@@ -5712,7 +5729,7 @@ namespace PrintAndSnap
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel56;
         private System.Windows.Forms.Button funSettingsBack;
         private System.Windows.Forms.Button funSettingsCancel;
-        private System.Windows.Forms.Button funSettingContinue;
+        private System.Windows.Forms.Button funSettingContinueBtn;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel57;
         private System.Windows.Forms.Label label32;
@@ -5802,7 +5819,7 @@ namespace PrintAndSnap
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Panel funSoftCopyDownload;
+        private System.Windows.Forms.Panel funSoftCopyDownloadPanel;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel49;
         private System.Windows.Forms.Label label37;
@@ -5831,5 +5848,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button funCaptureBtn;
         private System.Windows.Forms.Label funCameraTimer;
+        private System.Windows.Forms.Button funDownloadBtn;
     }
 }

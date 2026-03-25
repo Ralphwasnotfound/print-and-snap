@@ -18,11 +18,19 @@ namespace PrintAndSnap.Services
         public bool uploadUsed = false;
 
         private const long MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
-        private string watchFolder = @"C:\PrinterVendo\uploads";
-        private string idPhotoFolder = @"C:\PrinterVendo\idphotos";
-        string idArchiveFolder = @"C:\PrinterVendo\id_archive";
-        string idDownloadFolder = @"C:\PrinterVendo\id_download";
+        
+        private string basePath = @"C:\PrintAndSnap";
 
+        private string watchFolder;
+        private string idDownloadFolder;
+        private string funDownloadFolder;
+
+        public UploadServices()
+        {
+            watchFolder = Path.Combine(basePath, "DOCS", "uploads");
+            idDownloadFolder = Path.Combine(basePath, "ID", "download");
+            funDownloadFolder = Path.Combine(basePath, "FUN", "download");
+        }
         public Bitmap GenerateQRCode()
         {
             string localIP = GetLocalIPAdress();
@@ -68,6 +76,7 @@ namespace PrintAndSnap.Services
             if (serverRunning) return;
 
             Directory.CreateDirectory(idDownloadFolder);
+            Directory.CreateDirectory(funDownloadFolder);
 
             uploadServer = new HttpListener();
             uploadServer.Prefixes.Add("http://*:3000/");
@@ -75,7 +84,7 @@ namespace PrintAndSnap.Services
 
             serverRunning = true;
 
-            Task.Run(() => HandleUploadRequests());
+            _ = Task.Run(() => HandleUploadRequests());
         }
 
         private async Task HandleUploadRequests()
@@ -111,24 +120,26 @@ namespace PrintAndSnap.Services
 
                     if (context.Request.Url.AbsolutePath.StartsWith("/download"))
                     {
-                        Directory.CreateDirectory(idDownloadFolder);
-
                         string fileName = context.Request.QueryString["file"];
 
                         if (string.IsNullOrEmpty(fileName))
                         {
                             context.Response.StatusCode = 400;
                             context.Response.Close();
-                            return;
+                            continue;
                         }
 
-                        string filePath = Path.Combine(idDownloadFolder, fileName);
+                        string baseFolder = fileName.StartsWith("FUN_")
+                            ? funDownloadFolder
+                            : idDownloadFolder;
+
+                        string filePath = Path.Combine(baseFolder, fileName);
 
                         if (!File.Exists(filePath))
                         {
                             context.Response.StatusCode = 404;
                             context.Response.Close();
-                            return;
+                            continue;
                         }
 
                         byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -137,30 +148,24 @@ namespace PrintAndSnap.Services
                         context.Response.AddHeader("Content-Disposition", $"attachment; filename=\"{fileName}\"");
                         context.Response.ContentLength64 = fileBytes.Length;
 
-                        context.Response.SendChunked = false;
-                        context.Response.KeepAlive = false;
-
-                        using (var output = context.Response.OutputStream)
-                        {
-                            output.Write(fileBytes, 0, fileBytes.Length);
-                            output.Flush();
-                        }
-
+                        context.Response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
+                        context.Response.OutputStream.Flush();
+                        context.Response.OutputStream.Close();
                         context.Response.Close();
 
-                        // 🔥 DELETE AFTER DOWNLOAD
-                        Task.Run(() =>
+                        // delete after download
+                        _ = Task.Run(async () =>
                         {
+                            await Task.Delay(2000);
                             try
                             {
-                                Thread.Sleep(2000);
                                 if (File.Exists(filePath))
                                     File.Delete(filePath);
                             }
                             catch { }
                         });
 
-                        return;
+                        continue; 
                     }
 
                     if (token != currentUploadToken)
@@ -273,8 +278,7 @@ namespace PrintAndSnap.Services
 
                         uploadUsed = true;
 
-                        // Optional: prepare next session automatically
-                        Task.Delay(2000).ContinueWith(_ =>
+                        _ = Task.Delay(2000).ContinueWith(_ =>
                         {
                             GenerateNewToken();
                         });
