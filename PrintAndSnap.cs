@@ -112,6 +112,8 @@ namespace PrintAndSnap
         //Global Lock
         private bool isProcessing = false;
 
+        private CancellationTokenSource resetTokenSource;
+
         // ID SETTINGS STATE
         private string selectedLayout = "2x2";
         private bool isColored = true;
@@ -125,6 +127,8 @@ namespace PrintAndSnap
         private string funLayout = "none";
         private string funFrame = "none";
         private int totalFunPrice = 0;
+
+
 
         private string currentFunRetrievalCode = null;
 
@@ -145,6 +149,8 @@ namespace PrintAndSnap
         private List<Bitmap> cachedFilteredPhotos = new List<Bitmap>();
         private string lastAppliedFilter = "";
 
+        private string lastPrinterError = "";
+
         enum PhotoMode
         {
             None,
@@ -153,6 +159,16 @@ namespace PrintAndSnap
         }
 
         private PhotoMode currentMode = PhotoMode.None;
+
+        enum SystemMode
+        {
+            None,
+            Docs,
+            Photo
+        }
+
+        private SystemMode currentSystemMode = SystemMode.None;
+
         public PrintAndSnap()
         {
             InitializeComponent();
@@ -416,6 +432,7 @@ namespace PrintAndSnap
 
         private void photoPrintingBtn_Click(Object sender, EventArgs e)
         {
+            currentSystemMode = SystemMode.Photo;
             photoPanel.Visible = true;
             photoPanel.BringToFront();
 
@@ -423,7 +440,6 @@ namespace PrintAndSnap
         }
 
         //ID PHOTO PRINTING
-
 
         private async void idPrintingContinueBtn_Click(object sender, EventArgs args)
         {
@@ -440,10 +456,38 @@ namespace PrintAndSnap
                     return;
                 }
 
+                // 🛑 STOP CAMERA
                 await Task.Run(() => cameraService.StopCamera());
                 await Task.Delay(200);
 
-                // your existing ID logic here...
+                // =========================
+                // 📁 SAVE TEMP (like FUN)
+                // =========================
+                string tempFolder = @"C:\PrintAndSnap\ID\temp";
+                Directory.CreateDirectory(tempFolder);
+
+                foreach (var file in Directory.GetFiles(tempFolder))
+                {
+                    try { File.Delete(file); } catch { }
+                }
+
+                for (int i = 0; i < capturedPhotos.Count; i++)
+                {
+                    string path = Path.Combine(tempFolder, $"temp_{i + 1}.png");
+                    capturedPhotos[i].Save(path, ImageFormat.Png);
+                }
+
+                // =========================
+                // 📸 SHOW PHOTOS IN SETTINGS
+                // =========================
+                ShowCapturedPhotos();          // preview boxes
+                LoadIdSelectionPhotos();       // selection UI
+                UpdateIdSettings();            // generate preview
+
+                // =========================
+                // 🔄 GO TO SETTINGS PANEL
+                // =========================
+                ShowPhotoPanel(photoIDPanel, idPrintingSettings);
             }
             finally
             {
@@ -728,15 +772,26 @@ namespace PrintAndSnap
             string metaPath = Path.Combine(codeFolder, "meta.txt");
 
             if (!File.Exists(metaPath))
-                throw new Exception("Meta file not found.");
+            {
+                // 🔥 AUTO FIX (no exception)
+                DateTime created = DateTime.Now;
+                int uses = 0;
+                int maxUses = 3;
+
+                WriteMeta(metaPath, created, uses, maxUses);
+
+                Debug.WriteLine("META WAS MISSING → RECREATED");
+
+                return (uses, maxUses, created, metaPath);
+            }
 
             var lines = File.ReadAllLines(metaPath);
 
-            DateTime created = DateTime.Parse(lines[0].Split('=')[1]);
-            int uses = int.Parse(lines[1].Split('=')[1]);
-            int maxUses = int.Parse(lines[2].Split('=')[1]);
+            DateTime createdParsed = DateTime.Parse(lines[0].Split('=')[1]);
+            int usesParsed = int.Parse(lines[1].Split('=')[1]);
+            int maxUsesParsed = int.Parse(lines[2].Split('=')[1]);
 
-            return (uses, maxUses, created, metaPath);
+            return (usesParsed, maxUsesParsed, createdParsed, metaPath);
         }
 
         private void WriteMeta(string metaPath, DateTime created, int uses, int maxUses)
@@ -878,7 +933,10 @@ namespace PrintAndSnap
 
                 if (File.Exists(photoPath))
                 {
-                    capturedPhotos.Add(new Bitmap(photoPath));
+                    using (var temp = new Bitmap(photoPath))
+                    {
+                        capturedPhotos.Add(new Bitmap(temp));
+                    }
                 }
             }
 
@@ -887,6 +945,22 @@ namespace PrintAndSnap
                 MessageBox.Show("No photos found.");
                 return;
             }
+
+            // 🔥 NOW UPDATE META (ONLY IF SUCCESS)
+            uses++;
+            created = DateTime.Now;
+            WriteMeta(metaPath, created, uses, maxUses);
+
+            // 🔥 SHOW INFO MESSAGE
+            MessageBox.Show(
+                this,
+                $"✅ Photos loaded!\n\n" +
+                $"Usage: {uses}/{maxUses}\n" +
+                $"⏱ Expires in 30 minutes after last use",
+                "Retrieval Info",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
 
             // SET FIRST AS SELECTED
             selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
@@ -901,11 +975,6 @@ namespace PrintAndSnap
             LoadIdSelectionPhotos();
             UpdateIdSettings();
 
-            MessageBox.Show(
-    $"✅ Photos loaded!\n\n" +
-    $"Usage: {uses}/{maxUses}\n" +
-    $"Remaining: {maxUses - uses}"
-);
         }
 
         private void photoRetrievalBtn_Click(object sender, EventArgs e)
@@ -954,13 +1023,14 @@ namespace PrintAndSnap
 
         private void idPrintSettingsContinueBtn_Click(object obj, EventArgs args)
         {
-            DebugLog("=== CONTINUE BUTTON CLICKED ===");
-
             try
             {
                 DebugLog("SelectedPhoto NULL? " + (selectedPhoto == null));
                 DebugLog("hasUserSelectedPhoto: " + hasUserSelectedPhoto);
 
+                // =========================
+                // ✅ VALIDATION FIRST
+                // =========================
                 if (selectedPhoto == null)
                 {
                     DebugLog("ERROR: selectedPhoto is null");
@@ -975,12 +1045,15 @@ namespace PrintAndSnap
                     return;
                 }
 
+                // =========================
+                // 🔥 GENERATE LAYOUT (ONLY ONCE)
+                // =========================
                 DebugLog("Generating layout...");
 
                 finalIdPrintImage = layoutService.GenerateIdLayout(
                     selectedPhoto,
                     selectedLayout,
-                       isColored,
+                    isColored,
                     isMultiple
                 );
 
@@ -993,6 +1066,9 @@ namespace PrintAndSnap
 
                 DebugLog("Layout generated successfully");
 
+                // =========================
+                // 💾 SAVE TEMP
+                // =========================
                 string saveFolder = @"C:\PrintAndSnap\ID\temp";
                 Directory.CreateDirectory(saveFolder);
 
@@ -1005,10 +1081,16 @@ namespace PrintAndSnap
 
                 DebugLog("File saved successfully");
 
-                // PRICE
-                DebugLog("Reading price label: " + idPrintingTotal.Text);
+                // =========================
+                // 💰 PRICE (SAFE PARSE 🔥)
+                // =========================
+                string priceText = idPrintingTotal.Text.Replace("₱", "").Trim();
 
-                totalIdPrice = int.Parse(idPrintingTotal.Text.Replace("₱", ""));
+                if (!int.TryParse(priceText, out totalIdPrice))
+                {
+                    MessageBox.Show("Invalid price.");
+                    return;
+                }
 
                 paymentIDprintingTotal.Text = "₱" + totalIdPrice;
                 paymentIDprintingBalance.Text = "₱" + totalIdPrice;
@@ -1143,11 +1225,275 @@ namespace PrintAndSnap
             return gray;
         }
 
-        
 
-        private void PrintIdPhoto()
+        private void paymentFunPrintBtn_Click(object sender, EventArgs e)
         {
+            PrintFunPhoto();
+        }
+
+        private void printBtnPaymentId_Click(object sender, EventArgs e)
+        {
+            PrintIdPhoto();
+        }
+
+        private async void PrintIdPhoto()
+        {
+
+            // 🔥 BLOCK IF NOT FULLY PAID
+            if (insertedMoney < totalIdPrice)
+            {
+                MessageBox.Show("Please complete payment first.");
+                return;
+            }
+
             if (finalIdPrintImage == null)
+            {
+                MessageBox.Show("No image to print.");
+                return;
+            }
+
+            try
+            {
+                printingInProgress = true;
+
+                printBtnPaymentId.Enabled = false;
+                // 🔒 disable download until done
+                downloadBtnPaymentId.Enabled = false;
+
+                PrintDocument pd = new PrintDocument();
+                pd.PrinterSettings.PrinterName = "Canon MG3000 series";
+
+                pd.OriginAtMargins = false;
+                pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
+
+                pd.PrintPage += (sender, e) =>
+                {
+                    Graphics g = e.Graphics;
+                    g.PageUnit = GraphicsUnit.Inch;
+
+                    float widthInch = 2f;
+                    float heightInch = 2f;
+
+                    if (!isMultiple)
+                    {
+                        if (selectedLayout == "1x1")
+                        {
+                            widthInch = 1f;
+                            heightInch = 1f;
+                        }
+                        else if (selectedLayout == "2x2")
+                        {
+                            widthInch = 4f;
+                            heightInch = 4f;
+                        }
+                        else if (selectedLayout == "2x1")
+                        {
+                            widthInch = 2f;
+                            heightInch = 2f;
+                        }
+                    }
+                    else
+                    {
+                        widthInch = 8.27f;
+                        heightInch = 11.69f;
+                    }
+
+                    g.DrawImage(finalIdPrintImage, 0f, 0f, widthInch, heightInch);
+                };
+
+                // 🟡 STATUS
+                idprintingStatusLabel.Text = "Printing...";
+                idprintingStatusLabel.Visible = true;
+
+                pd.Print();
+
+                // 🔥 SAFE WAIT
+                await Task.Delay(5000);
+
+                try
+                {
+                    await WaitForPrinterReady("Canon MG3000 series");
+                }
+                catch
+                {
+                    Debug.WriteLine("Printer fallback used.");
+                }
+
+                idprintingStatusLabel.Text = "Done!";
+
+                // =========================
+                // 🧹 CLEAN TEMP
+                // =========================
+                string tempFolder = @"C:\PrintAndSnap\ID\temp";
+                if (Directory.Exists(tempFolder))
+                {
+                    foreach (var file in Directory.GetFiles(tempFolder))
+                    {
+                        try { File.Delete(file); } catch { }
+                    }
+                }
+
+                // =========================
+                // 💾 SAVE FILE
+                // =========================
+                string idArchiveFolder = @"C:\PrintAndSnap\ID\archive";
+                string idDownloadFolder = @"C:\PrintAndSnap\ID\download";
+
+                Directory.CreateDirectory(idArchiveFolder);
+                Directory.CreateDirectory(idDownloadFolder);
+
+                string code = "";
+                string downloadFileName = "";
+
+                if (!isPhotoRetrievalMode)
+                {
+                    code = "ID-" + GenerateRetrievalCode();
+
+                    string codeFolder = Path.Combine(idArchiveFolder, code);
+                    Directory.CreateDirectory(codeFolder);
+
+                    for (int i = 0; i < capturedPhotos.Count; i++)
+                    {
+                        string photoPath = Path.Combine(codeFolder, $"photo{i + 1}.png");
+                        capturedPhotos[i].Save(photoPath, ImageFormat.Png);
+                    }
+
+                    downloadFileName = code + ".png";
+                    string downloadPath = Path.Combine(idDownloadFolder, downloadFileName);
+
+                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
+                    lastSavedIdFileName = downloadFileName;
+
+                    File.WriteAllLines(Path.Combine(codeFolder, "meta.txt"), new[]
+                    {
+                $"created={DateTime.Now}",
+                $"uses=0",
+                $"maxUses=3"
+            });
+                }
+                else
+                {
+                    string codeFolder = Path.GetDirectoryName(currentRetrievedIdPath);
+                    string codeName = new DirectoryInfo(codeFolder).Name;
+
+                    downloadFileName = codeName + ".png";
+                    string downloadPath = Path.Combine(idDownloadFolder, downloadFileName);
+
+                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
+                    lastSavedIdFileName = downloadFileName;
+
+                    code = codeName;
+                }
+
+                // =========================
+                // 📱 SHOW QR FIRST (IMPORTANT FIX)
+                // =========================
+                GenerateQrForDownload(downloadFileName);
+
+                uploadService.uploadUsed = false;
+
+                // ✅ ENABLE BUTTON FIRST
+                this.Invoke(new Action(() =>
+                {
+                    downloadBtnPaymentId.Enabled = true;
+                }));
+
+                printingInProgress = false;
+
+                isPhotoRetrievalMode = false;
+                currentRetrievedIdPath = null;
+
+                // =========================
+                // 🔔 SHOW MESSAGE AFTER UI READY (FIXED)
+                // =========================
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(
+                        this,
+                        $"✅ Printed!\n\n" +
+                        $"Retrieval Code: {code}\n" +
+                        $"Uses: 0/3\n" +
+                        $"⏱ Expires in 30 minutes",
+                        "Print Complete",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }));
+
+                // =========================
+                // 🔐 AUTO DELETE + RESET
+                // =========================
+
+                // 🔥 cancel previous task first
+                resetTokenSource?.Cancel();
+                resetTokenSource = new CancellationTokenSource();
+
+                var token = resetTokenSource.Token;
+
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        string path = Path.Combine(@"C:\PrintAndSnap\ID\download", downloadFileName);
+
+                        //cahnge the time for prod
+                        int timeout = 60;
+
+                        for (int i = 0; i < timeout; i++)
+                        {
+                            if (token.IsCancellationRequested) return;
+
+                            if (uploadService.uploadUsed)
+                                break;
+
+                            try
+                            {
+                                await Task.Delay(1000, token);
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                return; // stop quietly
+                            }
+                        }
+
+                        if (token.IsCancellationRequested) return;
+
+                        // DELETE
+                        try
+                        {
+                            if (File.Exists(path))
+                            {
+                                File.SetAttributes(path, FileAttributes.Normal);
+                                File.Delete(path);
+                            }
+                        }
+                        catch { }
+
+                        await Task.Delay(2000, token);
+
+                        if (token.IsCancellationRequested) return;
+
+                        this.Invoke(new Action(() =>
+                        {
+                            ResetMachine();
+                        }));
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // 🔥 safe cancel
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                printingInProgress = false;
+                MessageBox.Show("Print failed: " + ex.Message);
+            }
+        }
+
+        private void PrintFunPhoto()
+        {
+            if (finalFunImage == null)
             {
                 MessageBox.Show("No image to print.");
                 return;
@@ -1158,149 +1504,78 @@ namespace PrintAndSnap
                 PrintDocument pd = new PrintDocument();
                 pd.PrinterSettings.PrinterName = "Canon MG3000 series";
 
-                pd.PrintPage += (s, ev) =>
+                // ✅ SAME SCALING AS ID
+                pd.PrintPage += (sender, e) =>
                 {
-                    Rectangle m = ev.MarginBounds;
+                    Rectangle m = e.MarginBounds;
 
-                    int x = m.X + (m.Width - finalIdPrintImage.Width) / 2;
-                    int y = m.Y + (m.Height - finalIdPrintImage.Height) / 2;
+                    float ratioX = (float)m.Width / finalFunImage.Width;
+                    float ratioY = (float)m.Height / finalFunImage.Height;
+                    float ratio = Math.Min(ratioX, ratioY);
 
-                    ev.Graphics.DrawImage(finalIdPrintImage, x, y);
+                    int width = (int)(finalFunImage.Width * ratio);
+                    int height = (int)(finalFunImage.Height * ratio);
+
+                    int x = m.X + (m.Width - width) / 2;
+                    int y = m.Y + (m.Height - height) / 2;
+
+                    e.Graphics.DrawImage(finalFunImage, x, y, width, height);
                 };
 
-                // pd.Print(); // enable in production
-                MessageBox.Show("Printing Simulated successfully!");
+                pd.Print();
 
-                string idArchiveFolder = @"C:\PrintAndSnap\ID\archive";
-                Directory.CreateDirectory(idArchiveFolder);
+                string archiveFolder = @"C:\PrintAndSnap\FUN\archive";
+                string downloadFolder = @"C:\PrintAndSnap\FUN\download";
 
-                string idDownloadFolder = @"C:\PrintAndSnap\ID\download";
-                Directory.CreateDirectory(idDownloadFolder);
+                Directory.CreateDirectory(archiveFolder);
+                Directory.CreateDirectory(downloadFolder);
 
                 string code = "";
 
-                // =========================
-                // 🟢 FIRST PRINT
-                // =========================
-                if (!isPhotoRetrievalMode)
+                if (string.IsNullOrEmpty(currentFunRetrievalCode))
                 {
-                    code = GenerateRetrievalCode();
+                    // ✅ ALREADY CORRECT
+                    code = "FUN-" + GenerateRetrievalCode();
 
-                    string codeFolder = Path.Combine(idArchiveFolder, code);
+                    string codeFolder = Path.Combine(archiveFolder, code);
                     Directory.CreateDirectory(codeFolder);
 
-                    // SAVE ORIGINAL PHOTOS
                     for (int i = 0; i < capturedPhotos.Count; i++)
                     {
                         string photoPath = Path.Combine(codeFolder, $"photo{i + 1}.png");
                         capturedPhotos[i].Save(photoPath, ImageFormat.Png);
                     }
 
-                    // SAVE LAYOUT (ARCHIVE)
-                    string layoutPath = Path.Combine(codeFolder, "layout.png");
-                    finalIdPrintImage.Save(layoutPath, ImageFormat.Png);
-
-                    // SAVE FOR DOWNLOAD
-                    string downloadFileName = code + ".png";
-                    string downloadPath = Path.Combine(idDownloadFolder, downloadFileName);
-
-                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
-
-                    lastSavedIdFileName = downloadFileName;
-
-                    GenerateQrForDownload(downloadFileName);
-
-                    // META
-                    string metaPath = Path.Combine(codeFolder, "meta.txt");
-
-                    File.WriteAllLines(metaPath, new[]
+                    File.WriteAllLines(Path.Combine(codeFolder, "meta.txt"), new[]
                     {
                 $"created={DateTime.Now}",
-                $"uses=0",
+                $"uses=1",
                 $"maxUses=3"
             });
-
-                    MessageBox.Show($"Printed!\n\nYour Retrieval Code:\n{code}");
-
-                    this.Invoke(new Action(() =>
-                    {
-                        downloadBtnPaymentId.Enabled = true;
-                    }));
                 }
-
-                // =========================
-                // 🔵 RETRIEVAL MODE
-                // =========================
                 else
                 {
-                    string codeFolder = Path.GetDirectoryName(currentRetrievedIdPath);
-
-                    if (codeFolder == null || !Directory.Exists(codeFolder))
-                    {
-                        MessageBox.Show("Retrieval folder missing.");
-                        return;
-                    }
-
-                    if (!ValidateCode(codeFolder, out int uses, out int maxUses, out DateTime created, out string metaPath))
-                        return;
-
-                    // UPDATE USAGE
-                    uses++;
-
-                    File.WriteAllLines(metaPath, new[]
-                    {
-                $"created={created}",
-                $"uses={uses}",
-                $"maxUses={maxUses}"
-            });
-
-                    // 🔥 ALWAYS CREATE NEW DOWNLOAD IMAGE (UPDATED LAYOUT)
-                    string codeName = new DirectoryInfo(codeFolder).Name;
-
-                    string downloadFileName = codeName + ".png";
-                    string downloadPath = Path.Combine(@"C:\PrintAndSnap\ID\download", downloadFileName);
-
-                    finalIdPrintImage.Save(downloadPath, ImageFormat.Png);
-
-                    lastSavedIdFileName = downloadFileName;
-
-                    GenerateQrForDownload(downloadFileName);
-
-
-                    MessageBox.Show(
-                        $"Printed again!\n\n" +
-                        $"Your Code: {codeName}\n" +
-                        $"Usage: {uses}/{maxUses}"
-                    );
-
-                    this.Invoke(new Action(() =>
-                    {
-                        downloadBtnPaymentId.Enabled = true;
-                    }));
+                    code = currentFunRetrievalCode;
                 }
+
+                string fileName = code + ".png";
+                string downloadPath = Path.Combine(downloadFolder, fileName);
+
+                finalFunImage.Save(downloadPath, ImageFormat.Png);
+
+                lastSavedFunFileName = fileName;
+                currentFunRetrievalCode = code;
+
+                funDownloadBtn.Enabled = true;
+
+                MessageBox.Show($"Printed!\n\nYour Retrieval Code:\n{code}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Print failed: " + ex.Message);
             }
-
-            // =========================
-            // CLEAN TEMP
-            // =========================
-            try
-            {
-                string tempFolder = @"C:\PrintAndSnap\ID\temp";
-
-                if (Directory.Exists(tempFolder))
-                {
-                    foreach (var file in Directory.GetFiles(tempFolder))
-                    {
-                        try { File.Delete(file); } catch { }
-                    }
-                }
-            }
-            catch { }
         }
+
 
         private void GenerateQrForDownload(string fileName)
         {
@@ -1333,16 +1608,13 @@ namespace PrintAndSnap
                 MessageBox.Show("QR Error: " + ex.Message);
             }
         }
-        private void printBtnPaymentId_CLick(object sender, EventArgs e)
-        {
-            PrintIdPhoto();
-        }
+
 
         private async void downloadBtnPaymentId_Click(object sender, EventArgs e)
         {
             try
             {
-                downloadBtnPaymentId.Enabled = false; // 🔥 prevent spam
+                downloadBtnPaymentId.Enabled = false;
 
                 string fileToDownload = "";
 
@@ -1370,7 +1642,7 @@ namespace PrintAndSnap
                     return;
                 }
 
-                // 🔥 HARD RESET SERVER (same as FUN)
+                // 🔥 RESET SERVER
                 uploadService.StopServer();
                 await Task.Delay(500);
 
@@ -1382,6 +1654,64 @@ namespace PrintAndSnap
                 GenerateQrForDownload(fileToDownload);
 
                 ShowPhotoPanel(photoIDPanel, softCopyDownloadId);
+
+                // =========================
+                // 🔐 AUTO DELETE AFTER DOWNLOAD
+                // =========================
+                _ = Task.Run(async () =>
+                {
+                    string path = Path.Combine(@"C:\PrintAndSnap\ID\download", fileToDownload);
+
+                    int timeout = 60;
+                    bool downloaded = false;
+
+                    for (int i = 0; i < timeout; i++)
+                    {
+                        if (uploadService.uploadUsed)
+                        {
+                            downloaded = true;
+
+                            try
+                            {
+                                if (File.Exists(path))
+                                    File.Delete(path);
+                            }
+                            catch { }
+
+                            uploadService.uploadUsed = false;
+
+                            // 🔥 delay before reset (better UX)
+                            await Task.Delay(2000);
+
+                            this.Invoke(new Action(() =>
+                            {
+                                ResetMachine();
+                            }));
+
+                            break;
+                        }
+
+                        await Task.Delay(1000);
+                    }
+
+                    // 🔥 IF NOT DOWNLOADED → fallback reset
+                    if (!downloaded)
+                    {
+                        try
+                        {
+                            if (File.Exists(path))
+                                File.Delete(path);
+                        }
+                        catch { }
+
+                        await Task.Delay(2000);
+
+                        this.Invoke(new Action(() =>
+                        {
+                            ResetMachine();
+                        }));
+                    }
+                });
 
                 downloadBtnPaymentId.Enabled = true;
             }
@@ -1875,61 +2205,6 @@ namespace PrintAndSnap
             UpdateFunSettings();
         }
 
-        private Bitmap GenerateFunFinalImage()
-        {
-            if (selectedPhoto == null)
-                return null;
-
-            int width = 1200;   // fixed print size
-            int height = 1800;  // portrait strip
-
-            Bitmap canvas = new Bitmap(width, height);
-
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.Clear(Color.White);
-
-                Bitmap filtered = filterService.ApplyFunFilter(selectedPhoto, funFilter);
-
-                // =====================
-                // LAYOUT
-                // =====================
-                if (funLayout == "vertical")
-                {
-                    g.DrawImage(filtered, 200, 50, 800, 1600);
-                }
-                else if (funLayout == "grid")
-                {
-                    g.DrawImage(filtered, 100, 100, 450, 700);
-                    g.DrawImage(filtered, 650, 100, 450, 700);
-                    g.DrawImage(filtered, 100, 900, 450, 700);
-                    g.DrawImage(filtered, 650, 900, 450, 700);
-                }
-
-                // =====================
-                // FRAME
-                // =====================
-                if (funFrame == "minimal")
-                {
-                    using (Pen pen = new Pen(Color.Black, 10))
-                    {
-                        g.DrawRectangle(pen, 10, 10, width - 20, height - 20);
-                    }
-                }
-                else if (funFrame == "cute")
-                {
-                    using (Pen pen = new Pen(Color.Pink, 15))
-                    {
-                        g.DrawRectangle(pen, 10, 10, width - 20, height - 20);
-                    }
-                }
-
-                filtered.Dispose();
-            }
-
-            return canvas;
-        }
-
         private void StopDownloadSession()
         {
             try
@@ -1983,118 +2258,6 @@ namespace PrintAndSnap
             funTotal.Text = "₱" + total.ToString();
         }
 
-        private Bitmap GenerateFunPrintImage()
-        {
-            if (selectedPhoto == null)
-                return null;
-
-            int width = 1200;
-            int height = 1800;
-
-            Bitmap canvas = new Bitmap(width, height);
-
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.Clear(Color.White);
-
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-
-                // HIGH QUALITY
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-                int margin = 40;
-
-                Rectangle drawArea = new Rectangle(
-                    margin,
-                    margin,
-                    width - margin * 2,
-                    height - margin * 2
-                );
-
-                // =========================
-                // 🔥 APPLY LAYOUT + FILTER
-                // =========================
-                if (funLayout == "vertical")
-                {
-                    int count = 2;
-                    int photoHeight = drawArea.Height / count;
-
-                    for (int i = 0; i < count; i++)
-                    {
-                        int y = drawArea.Y + i * photoHeight;
-
-                        Bitmap img = (capturedPhotos.Count > i)
-                            ? filterService.ApplyFunFilter(capturedPhotos[i], funFilter)
-                            : filterService.ApplyFunFilter(selectedPhoto, funFilter);
-
-                        g.DrawImage(img, drawArea.X, y, drawArea.Width, photoHeight);
-
-                        img.Dispose();
-                    }
-                }
-                else if (funLayout == "grid")
-                {
-                    int cols = 2;
-                    int rows = 2;
-
-                    int cellW = drawArea.Width / cols;
-                    int cellH = drawArea.Height / rows;
-
-                    int index = 0;
-
-                    for (int r = 0; r < rows; r++)
-                    {
-                        for (int c = 0; c < cols; c++)
-                        {
-                            int x = drawArea.X + c * cellW;
-                            int y = drawArea.Y + r * cellH;
-
-                            Bitmap img = (capturedPhotos.Count > index)
-                                ? filterService.ApplyFunFilter(capturedPhotos[index], funFilter)
-                                : filterService.ApplyFunFilter(selectedPhoto, funFilter);
-
-                            g.DrawImage(img, x, y, cellW, cellH);
-
-                            img.Dispose();
-                            index++;
-                        }
-                    }
-                }
-                else
-                {
-                    Bitmap img = filterService.ApplyFunFilter(selectedPhoto, funFilter);
-
-                    g.DrawImage(img, drawArea);
-
-                    img.Dispose();
-                }
-
-                // =========================
-                // APPLY FRAME (LAST)
-                // =========================
-                if (funFrame == "minimal")
-                {
-                    using (Pen pen = new Pen(Color.Black, 10))
-                    {
-                        g.DrawRectangle(pen, 5, 5, width - 10, height - 10);
-                    }
-                }
-                else if (funFrame == "cute")
-                {
-                    using (Pen pen = new Pen(Color.Pink, 15))
-                    {
-                        g.DrawRectangle(pen, 5, 5, width - 10, height - 10);
-                    }
-                }
-            }
-
-            return canvas;
-        }
-
         private void LoadUniversalRetrieval(string code)
         {
             string idFolder = Path.Combine(@"C:\PrintAndSnap\ID\archive", code);
@@ -2127,135 +2290,7 @@ namespace PrintAndSnap
             pd.Print();
         }
 
-        private void paymentFunPrintBtn_Click(object sender, EventArgs e)
-        {
-            if (finalFunImage == null)
-            {
-                MessageBox.Show("No image to print.");
-                return;
-            }
-
-            if (capturedPhotos.Count == 0)
-            {
-                MessageBox.Show("No captured photos found.");
-                return;
-            }
-
-            int copies = (int)funNumericCopies.Value;
-
-            MessageBox.Show($"Printing simulated! Copies: {copies}");
-
-            // =========================
-            // DOWNLOAD
-            // =========================
-            string downloadFolder = @"C:\PrintAndSnap\FUN\download";
-            Directory.CreateDirectory(downloadFolder);
-
-            string fileName = "FUN_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
-            string downloadPath = Path.Combine(downloadFolder, fileName);
-
-            finalFunImage.Save(downloadPath, ImageFormat.Png);
-
-            lastSavedFunFileName = fileName;
-            funDownloadBtn.Enabled = true;
-
-            // =========================
-            // ARCHIVE
-            // =========================
-            string archiveFolder = @"C:\PrintAndSnap\FUN\archive";
-            Directory.CreateDirectory(archiveFolder);
-
-            string code = !string.IsNullOrEmpty(currentFunRetrievalCode)
-                ? currentFunRetrievalCode
-                : "FUN-" + GenerateRetrievalCode();
-
-            string codeFolder = Path.Combine(archiveFolder, code);
-
-            int uses = 1;
-            int maxUses = 3;
-            DateTime created = DateTime.Now;
-
-            // =========================
-            // 🟢 FIRST TIME
-            // =========================
-            if (!Directory.Exists(codeFolder))
-            {
-                Directory.CreateDirectory(codeFolder);
-
-                // SAVE PHOTOS
-                for (int i = 0; i < capturedPhotos.Count; i++)
-                {
-                    string photoPath = Path.Combine(codeFolder, $"photo{i + 1}.png");
-                    capturedPhotos[i].Save(photoPath, ImageFormat.Png);
-                }
-
-                string metaPath = Path.Combine(codeFolder, "meta.txt");
-
-                File.WriteAllLines(metaPath, new[]
-                {
-            $"created={created}",
-            $"uses={uses}",
-            $"maxUses={maxUses}"
-        });
-            }
-            // =========================
-            // 🔵 RETRIEVAL MODE
-            // =========================
-            else
-            {
-                var meta = ReadMeta(codeFolder);
-
-                uses = meta.uses;
-                maxUses = meta.maxUses;
-                created = meta.created;
-
-                // EXPIRY
-                if ((DateTime.Now - created).TotalMinutes > 60)
-                {
-                    MessageBox.Show("❌ Code expired.");
-                    return;
-                }
-
-                // LIMIT
-                if (uses >= maxUses)
-                {
-                    MessageBox.Show("❌ Code already used 3 times.");
-                    return;
-                }
-
-                uses++;
-
-                File.WriteAllLines(meta.metaPath, new[]
-                {
-            $"created={created}",
-            $"uses={uses}",
-            $"maxUses={maxUses}"
-        });
-            }
-
-            // =========================
-            // FINAL MESSAGE
-            // =========================
-            MessageBox.Show(
-                $"Printed!\n\n" +
-                $"Your Code: {code}\n" +
-                $"Usage: {uses}/{maxUses}"
-            );
-
-            // CLEAN TEMP
-            string tempFolder = @"C:\PrintAndSnap\FUN\temp";
-
-            if (Directory.Exists(tempFolder))
-            {
-                foreach (var file in Directory.GetFiles(tempFolder))
-                {
-                    try { File.Delete(file); } catch { }
-                }
-            }
-
-            currentFunRetrievalCode = null;
-        }
-
+       
         private void LoadFunRetrieval(string code)
         {
             string folder = @"C:\PrintAndSnap\FUN\archive";
@@ -2280,7 +2315,10 @@ namespace PrintAndSnap
 
                 if (File.Exists(photoPath))
                 {
-                    capturedPhotos.Add(new Bitmap(photoPath));
+                    using (var temp = new Bitmap(photoPath))
+                    {
+                        capturedPhotos.Add(new Bitmap(temp));
+                    }
                 }
             }
 
@@ -2314,7 +2352,9 @@ namespace PrintAndSnap
             }
 
             // GENERATE FINAL IMAGE
-            finalFunImage = GenerateFunPrintImage();
+            Bitmap laidOut = layoutService.ApplyFunLayout(cachedFilteredPhotos, funLayout);
+            finalFunImage = frameService.ApplyFunFrame(laidOut, funFrame);
+            laidOut.Dispose();
 
             if (finalFunImage == null)
             {
@@ -2432,9 +2472,14 @@ namespace PrintAndSnap
                 created = meta.created;
                 metaPath = meta.metaPath;
 
-                // EXPIRY
-                if ((DateTime.Now - created).TotalMinutes > 60)
+                if ((DateTime.Now - created).TotalMinutes > 30)
                 {
+                    try
+                    {
+                        Directory.Delete(codeFolder, true);
+                    }
+                    catch { }
+
                     MessageBox.Show("❌ Code expired.");
                     return false;
                 }
@@ -2442,15 +2487,29 @@ namespace PrintAndSnap
                 // LIMIT
                 if (uses >= maxUses)
                 {
-                    MessageBox.Show("❌ Code already used 3 times.");
+                    try
+                    {
+                        Directory.Delete(codeFolder, true);
+                    }
+                    catch { }
+
+                    MessageBox.Show("❌ Code has reached maximum usage.");
                     return false;
                 }
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("❌ Invalid or missing code.");
+                if (ex.Message == "META_MISSING")
+                {
+                    MessageBox.Show("❌ Code data missing. File may be corrupted.");
+                }
+                else
+                {
+                    MessageBox.Show("❌ Invalid code.");
+                }
+
                 return false;
             }
         }
@@ -2604,7 +2663,7 @@ namespace PrintAndSnap
             receiveTimer.Tick += ReceiveTimer_Tick;
 
             cleanupTimer = new System.Windows.Forms.Timer();
-            cleanupTimer.Interval = 600000; // 10 minutes
+            cleanupTimer.Interval = 5000; // change this for prod 10minutes
             cleanupTimer.Tick += CleanupTimer_Tick;
             cleanupTimer.Start();
 
@@ -2900,7 +2959,13 @@ namespace PrintAndSnap
 
     string error = printerManager.GetDetailedPrinterError(printerName);
 
-    DebugLog("Printer Error RAW: " + error);
+            // ✅ LOG ONLY IF CHANGED
+    if (error != lastPrinterError)
+    {
+        DebugLog("Printer Error RAW: " + error);
+        lastPrinterError = error;
+    }
+
 
     if (!string.IsNullOrEmpty(error))
     {
@@ -2910,7 +2975,8 @@ namespace PrintAndSnap
             err.Contains("jam") ||
             err.Contains("offline") ||
             err.Contains("door") ||
-            err.Contains("ink"))
+            err.Contains("ink") ||
+            err.Contains("error")) 
         {
             printerStatusLabel.Text = "Printer: " + error;
             printerStatusLabel.ForeColor = Color.Red;
@@ -2934,6 +3000,7 @@ namespace PrintAndSnap
     {
         printerStatusLabel.ForeColor = Color.Green;
         continuePaymentBtn.Enabled = true;
+        
     }
     else if (status.Contains("Printing") || status.Contains("Spooling"))
     {
@@ -2958,12 +3025,53 @@ namespace PrintAndSnap
             CleanFolder(@"C:\PrintAndSnap\DOCS\archive", 30, currentPdfPath);
 
             // ID FILES
-            CleanFolder(@"C:\PrintAndSnap\ID\archive", 60);
+            string archiveFolder = @"C:\PrintAndSnap\ID\archive";
+
+            foreach (var dir in Directory.GetDirectories(archiveFolder))
+            {
+                Debug.WriteLine($"Checking folder: {dir}");
+
+    
+                try
+                {
+                    string metaPath = Path.Combine(dir, "meta.txt");
+
+                    if (!File.Exists(metaPath))
+                        continue;
+
+                    var meta = ReadMeta(dir);
+                    Debug.WriteLine($"Created: {meta.created}");
+                    Debug.WriteLine($"Now: {DateTime.Now}");
+                    Debug.WriteLine($"Minutes diff: {(DateTime.Now - meta.created).TotalMinutes}");
+                    DateTime created = meta.created;
+
+                    if ((DateTime.Now - created).TotalMinutes > 1)
+                    {
+                        try
+                        {
+                            // 🔥 force GC to release file handles
+                            GC.Collect();
+                            GC.WaitForPendingFinalizers();
+
+                            Directory.Delete(dir, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine("DELETE FAILED: " + ex.Message);
+                        }
+                    }
+                }
+                catch { }
+
+
+            }
             // ID DOWNLOAD (5 minutes)
             CleanFolder(@"C:\PrintAndSnap\ID\download", 5);
 
             // PREVIEW
             CleanFolder(@"C:\PrintAndSnap\DOCS\preview", 10, currentPdfPath);
+
+
         }
 
         private void CleanFolder(string folder, int minutes, string excludeFile = null)
@@ -3001,6 +3109,7 @@ namespace PrintAndSnap
 
         private void docPrintingBtn_Click(Object sender, EventArgs e)
         {
+            currentSystemMode = SystemMode.Docs;
             showPanel(printPanel);
 
             uploadService.GenerateNewToken();
@@ -3610,47 +3719,78 @@ namespace PrintAndSnap
         {
             insertedMoney += amount;
 
-            int total;
+            int total = 0;
 
-            if (currentMode == PhotoMode.Fun)
-                total = totalFunPrice;
-            else if (currentMode == PhotoMode.ID)
-                total = totalIdPrice;
-            else
+            // =========================
+            // 💰 GET TOTAL BASED ON MODE
+            // =========================
+            if (currentSystemMode == SystemMode.Docs)
+            {
                 total = totalPrice;
-
-            int remaining = total - insertedMoney;
-
-            if (remaining <= 0)
+            }
+            else if (currentSystemMode == SystemMode.Photo)
             {
                 if (currentMode == PhotoMode.Fun)
-                    paymentFunPrintBtn.Enabled = true;
+                    total = totalFunPrice;
                 else if (currentMode == PhotoMode.ID)
-                    printBtnPaymentId.Enabled = true;
+                    total = totalIdPrice;
             }
+
+            int remaining = total - insertedMoney;
 
             if (remaining < 0)
                 remaining = 0;
 
-            // UPDATE UI
-            if (currentMode == PhotoMode.Fun)
-                paymentFunBalance.Text = "₱" + remaining;
-            else if (currentMode == PhotoMode.ID)
-                paymentIDprintingBalance.Text = "₱" + remaining;
-            else
-                paymentBalance.Text = "₱" + remaining;
-
-            // ENABLE PRINT ONLY
+            // =========================
+            // 🔘 ENABLE PRINT BUTTON
+            // =========================
             if (remaining == 0)
             {
-                printBtn.Enabled = true;
+                if (currentSystemMode == SystemMode.Docs)
+                {
+                    printBtn.Enabled = true;
+                }
+                else if (currentSystemMode == SystemMode.Photo)
+                {
+                    if (currentMode == PhotoMode.ID)
+                        printBtnPaymentId.Enabled = true;
+                    else if (currentMode == PhotoMode.Fun)
+                        paymentFunPrintBtn.Enabled = true;
+                }
             }
             else
             {
+                // disable all print buttons
                 printBtn.Enabled = false;
+                printBtnPaymentId.Enabled = false;
+                paymentFunPrintBtn.Enabled = false;
 
-                if (currentMode == PhotoMode.ID)
-                    downloadBtnPaymentId.Enabled = false;
+                if (currentSystemMode == SystemMode.Photo && currentMode == PhotoMode.ID)
+                {
+                    if (remaining == 0 && !printingInProgress)
+                    {
+                        printBtnPaymentId.Enabled = true;
+                    }
+                    else
+                    {
+                        printBtnPaymentId.Enabled = false;
+                    }
+                }
+            }
+
+            // =========================
+            // 🖥 UPDATE UI BALANCE
+            // =========================
+            if (currentSystemMode == SystemMode.Docs)
+            {
+                paymentBalance.Text = "₱" + remaining;
+            }
+            else if (currentSystemMode == SystemMode.Photo)
+            {
+                if (currentMode == PhotoMode.Fun)
+                    paymentFunBalance.Text = "₱" + remaining;
+                else if (currentMode == PhotoMode.ID)
+                    paymentIDprintingBalance.Text = "₱" + remaining;
             }
         }
 
@@ -3729,10 +3869,10 @@ namespace PrintAndSnap
                 }
                 sessionActive = true;
 
-                // ✅ WAIT (SAFE VERSION WITH TIMEOUT)
+                // WAIT (SAFE VERSION WITH TIMEOUT)
                 await WaitForPrinterReady("Canon MG3000 series");
 
-                // ✅ GENERATE CODE
+                // GENERATE CODE
                 string code = GenerateRetrievalCode();
 
                 printingStatusLabel.Text = "Printing completed.";
@@ -3808,6 +3948,26 @@ namespace PrintAndSnap
         //RESET MACHINE
         private void ResetMachine()
         {
+            resetTokenSource?.Cancel();
+
+            try
+            {
+                string downloadFolder = @"C:\PrintAndSnap\ID\download";
+
+                if (Directory.Exists(downloadFolder))
+                {
+                    foreach (var file in Directory.GetFiles(downloadFolder))
+                    {
+                        try
+                        {
+                            File.SetAttributes(file, FileAttributes.Normal);
+                            File.Delete(file);
+                        }
+                        catch { }
+                    }
+                }
+            }
+            catch { }
             //PHOTOBOOTH
 
             // =========================
@@ -4153,16 +4313,24 @@ namespace PrintAndSnap
         {
             await Task.Run(() =>
             {
-                bool printing = true;
+                bool wasPrinting = false;
 
-                while (printing)
+                while (true)
                 {
                     string status = printerManager.GetPrinterStatus(printerName);
 
+                    // detect actual printing
                     if (status.Contains("Printing") || status.Contains("Spooling"))
-                        printing = true;
-                    else
-                        printing = false;
+                    {
+                        wasPrinting = true;
+                    }
+
+                    // ONLY exit AFTER it has printed AND returned to ready
+                    if (wasPrinting &&
+                        (status.Contains("Ready") || status.Contains("Idle")))
+                    {
+                        break;
+                    }
 
                     Thread.Sleep(500);
                 }

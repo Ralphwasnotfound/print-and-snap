@@ -149,6 +149,9 @@ namespace PrintAndSnap.Services
                         context.Response.ContentLength64 = fileBytes.Length;
 
                         context.Response.OutputStream.Write(fileBytes, 0, fileBytes.Length);
+
+                        uploadUsed = true;
+
                         context.Response.OutputStream.Flush();
                         context.Response.OutputStream.Close();
                         context.Response.Close();
