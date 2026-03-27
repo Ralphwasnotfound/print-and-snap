@@ -1263,9 +1263,11 @@ namespace PrintAndSnap
                 // 🔒 disable download until done
                 downloadBtnPaymentId.Enabled = false;
 
-                Bitmap readyToPrint = layoutService.ResizeTo4x6(finalIdPrintImage);
+                Bitmap readyToPrint = finalIdPrintImage;
 
-                photoPrinting.PrintPhoto(readyToPrint, "Canon MG3000 series", false);
+                string printMode = isMultiple ? "multiple" : "single";
+
+                photoPrinting.PrintIdPhoto(readyToPrint, "Canon MG3000 series", false, printMode);
 
                 // 🟡 STATUS
                 idprintingStatusLabel.Text = "Printing...";
@@ -1444,7 +1446,7 @@ namespace PrintAndSnap
                     }
                     catch (TaskCanceledException)
                     {
-                        // 🔥 safe cancel
+                        return;
                     }
                 });
             }
@@ -1481,12 +1483,11 @@ namespace PrintAndSnap
 
                 Bitmap readyToPrint = layoutService.ResizeTo4x6(finalFunImage);
 
-                photoPrinting.PrintPhoto(readyToPrint, "Canon MG3000 series", true);
+                photoPrinting.PrintFunPhoto(readyToPrint, "Canon MG3000 series");
 
                 // 🟡 STATUS (OPTIONAL like ID)
                 // funPrintingStatusLabel.Text = "Printing...";
                 // funPrintingStatusLabel.Visible = true;
-
 
 
                 // 🔥 WAIT LIKE ID
@@ -1569,30 +1570,32 @@ namespace PrintAndSnap
                 lastSavedFunFileName = fileName;
                 currentFunRetrievalCode = code;
 
+                resetTokenSource?.Cancel();
+                resetTokenSource = new CancellationTokenSource();
+                var token = resetTokenSource.Token;
                 // =========================
                 // 🔐 AUTO DELETE EVEN IF NO DOWNLOAD CLICK
                 // =========================
                 _ = Task.Run(async () =>
                 {
-                    string path = downloadPath;
-
-                    int timeout = 60; // seconds
-                    bool downloaded = false;
-
-                    for (int i = 0; i < timeout; i++)
+                    try
                     {
-                        if (uploadService.uploadUsed)
+                        string path = downloadPath;
+
+                        int timeout = 60;
+
+                        for (int i = 0; i < timeout; i++)
                         {
-                            downloaded = true;
-                            break;
+                            if (token.IsCancellationRequested) return;
+
+                            if (uploadService.uploadUsed)
+                                return;
+
+                            await Task.Delay(1000, token); // 🔥 IMPORTANT
                         }
 
-                        await Task.Delay(1000);
-                    }
+                        if (token.IsCancellationRequested) return;
 
-                    // 🔥 DELETE IF NOT DOWNLOADED
-                    if (!downloaded)
-                    {
                         try
                         {
                             if (File.Exists(path))
@@ -1600,10 +1603,18 @@ namespace PrintAndSnap
                         }
                         catch { }
 
+                        await Task.Delay(2000, token);
+
+                        if (token.IsCancellationRequested) return;
+
                         this.Invoke(new Action(() =>
                         {
                             ResetMachine();
                         }));
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        return; // ✅ SAFE STOP
                     }
                 });
 
