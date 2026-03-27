@@ -32,20 +32,39 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 // 🔥 VERTICAL STRIP
                 if (layoutType == "vertical")
                 {
-                    int count = Math.Min(photos.Count, 2);
-                    int photoHeight = drawArea.Height / count;
+                    int count = 4; // 🔥 always 4 like photobooth
+
+                    int padding = 20;
+                    int spacing = 10;
+
+                    int totalSpacing = spacing * (count - 1);
+
+                    int availableHeight = canvas.Height - (padding * 2) - totalSpacing;
+                    int photoHeight = availableHeight / count;
+
+                    int photoWidth = canvas.Width - (padding * 2);
+
+                    int startX = padding;
+                    int startY = padding;
 
                     for (int i = 0; i < count; i++)
                     {
-                        int y = drawArea.Y + i * photoHeight;
+                        int y = startY + i * (photoHeight + spacing);
 
-                        g.DrawImage(
-                            photos[i],
-                            drawArea.X,
-                            y,
-                            drawArea.Width,
-                            photoHeight
+                        Bitmap img = photos[i % photos.Count]; // 🔥 LOOP if less photos
+
+                        float ratio = Math.Min(
+                            (float)photoWidth / img.Width,
+                            (float)photoHeight / img.Height
                         );
+
+                        int drawW = (int)(img.Width * ratio);
+                        int drawH = (int)(img.Height * ratio);
+
+                        int offsetX = startX + (photoWidth - drawW) / 2;
+                        int offsetY = y + (photoHeight - drawH) / 2;
+
+                        g.DrawImage(img, offsetX, offsetY, drawW, drawH);
                     }
                 }
 
@@ -55,21 +74,31 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     int cols = 2;
                     int rows = 2;
 
-                    int cellW = drawArea.Width / cols;
-                    int cellH = drawArea.Height / rows;
+                    int padding = 20;   // outer margin
+                    int spacing = 10;   // 🔥 small gap like IG
+
+                    int totalSpacingX = spacing * (cols - 1);
+                    int totalSpacingY = spacing * (rows - 1);
+
+                    int cellWidth = (canvas.Width - (padding * 2) - totalSpacingX) / cols;
+                    int cellHeight = (canvas.Height - (padding * 2) - totalSpacingY) / rows;
+
+                    int startX = padding;
+                    int startY = padding;
 
                     int index = 0;
 
-                    for (int r = 0; r < rows; r++)
+                    for (int row = 0; row < rows; row++)
                     {
-                        for (int c = 0; c < cols; c++)
+                        for (int col = 0; col < cols; col++)
                         {
-                            if (index >= photos.Count) break;
+                            if (index >= photos.Count)
+                                break;
 
-                            int x = drawArea.X + c * cellW;
-                            int y = drawArea.Y + r * cellH;
+                            int x = startX + col * (cellWidth + spacing);
+                            int y = startY + row * (cellHeight + spacing);
 
-                            g.DrawImage(photos[index], x, y, cellW, cellH);
+                            g.DrawImage(photos[index], x, y, cellWidth, cellHeight);
 
                             index++;
                         }

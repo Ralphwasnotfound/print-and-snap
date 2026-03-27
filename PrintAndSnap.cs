@@ -765,6 +765,8 @@ namespace PrintAndSnap
                 // =========================
                 shot.Dispose();
             }
+
+            UpdatePrintTypeAvailability();
         }
 
         private (int uses, int maxUses, DateTime created, string metaPath) ReadMeta(string codeFolder)
@@ -1019,7 +1021,6 @@ namespace PrintAndSnap
             radioBtn2x1.Enabled = enabled;
             radioBtn1x1.Enabled = enabled;
         }
-
 
         private void idPrintSettingsContinueBtn_Click(object obj, EventArgs args)
         {
@@ -1491,8 +1492,15 @@ namespace PrintAndSnap
             }
         }
 
-        private void PrintFunPhoto()
+        private async void PrintFunPhoto()
         {
+            // 🔥 BLOCK IF NOT PAID (LIKE ID)
+            if (insertedMoney < totalFunPrice)
+            {
+                MessageBox.Show("Please complete payment first.");
+                return;
+            }
+
             if (finalFunImage == null)
             {
                 MessageBox.Show("No image to print.");
@@ -1501,29 +1509,65 @@ namespace PrintAndSnap
 
             try
             {
+                printingInProgress = true;
+
+                // 🔒 disable print + download first
+                paymentFunPrintBtn.Enabled = false;
+                funDownloadBtn.Enabled = false;
+                funDownloadBtn.Enabled = false; 
+                lastSavedFunFileName = null;
+
                 PrintDocument pd = new PrintDocument();
                 pd.PrinterSettings.PrinterName = "Canon MG3000 series";
 
-                // ✅ SAME SCALING AS ID
+                pd.OriginAtMargins = false;
+                pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
+
                 pd.PrintPage += (sender, e) =>
                 {
-                    Rectangle m = e.MarginBounds;
+                    Graphics g = e.Graphics;
+                    g.PageUnit = GraphicsUnit.Inch;
 
-                    float ratioX = (float)m.Width / finalFunImage.Width;
-                    float ratioY = (float)m.Height / finalFunImage.Height;
-                    float ratio = Math.Min(ratioX, ratioY);
+                    float imgWidth = 6f;
+                    float imgHeight = 8f;
 
-                    int width = (int)(finalFunImage.Width * ratio);
-                    int height = (int)(finalFunImage.Height * ratio);
+                    float x = (8.27f - imgWidth) / 2;
+                    float y = (11.69f - imgHeight) / 2;
 
-                    int x = m.X + (m.Width - width) / 2;
-                    int y = m.Y + (m.Height - height) / 2;
-
-                    e.Graphics.DrawImage(finalFunImage, x, y, width, height);
+                    g.DrawImage(finalFunImage, x, y, imgWidth, imgHeight);
                 };
+
+                // 🟡 STATUS (OPTIONAL like ID)
+                // funPrintingStatusLabel.Text = "Printing...";
+                // funPrintingStatusLabel.Visible = true;
 
                 pd.Print();
 
+                // 🔥 WAIT LIKE ID
+                await Task.Delay(5000);
+
+                try
+                {
+                    await WaitForPrinterReady("Canon MG3000 series");
+                }
+                catch { }
+
+                // =========================
+                // 🧹 CLEAN TEMP (FUN)
+                // =========================
+                string tempFolder = @"C:\PrintAndSnap\FUN\temp";
+
+                if (Directory.Exists(tempFolder))
+                {
+                    foreach (var file in Directory.GetFiles(tempFolder))
+                    {
+                        try { File.Delete(file); } catch { }
+                    }
+                }
+
+                // =========================
+                // 💾 SAVE FILE (SAME STYLE)
+                // =========================
                 string archiveFolder = @"C:\PrintAndSnap\FUN\archive";
                 string downloadFolder = @"C:\PrintAndSnap\FUN\download";
 
@@ -1534,7 +1578,6 @@ namespace PrintAndSnap
 
                 if (string.IsNullOrEmpty(currentFunRetrievalCode))
                 {
-                    // ✅ ALREADY CORRECT
                     code = "FUN-" + GenerateRetrievalCode();
 
                     string codeFolder = Path.Combine(archiveFolder, code);
@@ -1549,7 +1592,7 @@ namespace PrintAndSnap
                     File.WriteAllLines(Path.Combine(codeFolder, "meta.txt"), new[]
                     {
                 $"created={DateTime.Now}",
-                $"uses=1",
+                $"uses=0",
                 $"maxUses=3"
             });
                 }
@@ -1566,12 +1609,74 @@ namespace PrintAndSnap
                 lastSavedFunFileName = fileName;
                 currentFunRetrievalCode = code;
 
-                funDownloadBtn.Enabled = true;
+                // =========================
+                // 🔐 AUTO DELETE EVEN IF NO DOWNLOAD CLICK
+                // =========================
+                _ = Task.Run(async () =>
+                {
+                    string path = downloadPath;
 
-                MessageBox.Show($"Printed!\n\nYour Retrieval Code:\n{code}");
+                    int timeout = 60; // seconds
+                    bool downloaded = false;
+
+                    for (int i = 0; i < timeout; i++)
+                    {
+                        if (uploadService.uploadUsed)
+                        {
+                            downloaded = true;
+                            break;
+                        }
+
+                        await Task.Delay(1000);
+                    }
+
+                    // 🔥 DELETE IF NOT DOWNLOADED
+                    if (!downloaded)
+                    {
+                        try
+                        {
+                            if (File.Exists(path))
+                                File.Delete(path);
+                        }
+                        catch { }
+
+                        this.Invoke(new Action(() =>
+                        {
+                            ResetMachine();
+                        }));
+                    }
+                });
+
+                // =========================
+                // ✅ ENABLE DOWNLOAD FIRST
+                // =========================
+                this.Invoke(new Action(() =>
+                {
+                    funDownloadBtn.Enabled = true;
+                }));
+
+                printingInProgress = false;
+
+                // =========================
+                // 🔔 MESSAGE (LIKE ID)
+                // =========================
+                this.Invoke(new Action(() =>
+                {
+                    MessageBox.Show(
+                        this,
+                        $"✅ Printed!\n\n" +
+                        $"Retrieval Code: {code}\n" +
+                        $"Uses: 0/3\n" +
+                        $"⏱ Expires in 30 minutes",
+                        "Print Complete",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }));
             }
             catch (Exception ex)
             {
+                printingInProgress = false;
                 MessageBox.Show("Print failed: " + ex.Message);
             }
         }
@@ -1608,7 +1713,6 @@ namespace PrintAndSnap
                 MessageBox.Show("QR Error: " + ex.Message);
             }
         }
-
 
         private async void downloadBtnPaymentId_Click(object sender, EventArgs e)
         {
@@ -1907,8 +2011,6 @@ namespace PrintAndSnap
             captureTimer.Start();
         }
 
-
-
         private async void funContinueBtn_Click(object sender, EventArgs args)
         {
             if (isProcessing) return;
@@ -2029,9 +2131,10 @@ namespace PrintAndSnap
                 selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
                 hasUserSelectedPhoto = true;
 
-                funRadioBtbFilterNone.Checked = true;
+                funRadioBtnFilterNone.Checked = true;
                 funRadioBtnFrameNone.Checked = true;
 
+                UpdatePrintTypeAvailability();
                 HighlightFunSelectedPhoto(boxes[0]);
                 UpdateFunSettings();
             }
@@ -2061,18 +2164,19 @@ namespace PrintAndSnap
 
         private void FunSelectPhoto_Click(object sender, EventArgs e)
         {
+            if (!funRadioPrintTypeSingle.Checked)
+                return; // 🔥 prevent selection in Print All
+
             PictureBox clicked = sender as PictureBox;
 
             if (clicked?.Image == null)
                 return;
 
             hasUserSelectedPhoto = true;
-
             selectedPhoto = (Bitmap)clicked.Image.Clone();
 
             HighlightFunSelectedPhoto(clicked);
-
-            UpdateFunSettings(); // ✅ CORRECT
+            UpdateFunSettings();
         }
 
         private void UpdateFunSettings()
@@ -2085,13 +2189,8 @@ namespace PrintAndSnap
             // =========================
             if (cachedFilteredPhotos.Count == 0 || lastAppliedFilter != funFilter)
             {
-                // CLEAN OLD CACHE
-                foreach (var img in cachedFilteredPhotos)
-                    img.Dispose();
-
                 cachedFilteredPhotos.Clear();
 
-                // REBUILD CACHE
                 foreach (var photo in capturedPhotos)
                 {
                     cachedFilteredPhotos.Add(filterService.ApplyFunFilter(photo, funFilter));
@@ -2101,13 +2200,57 @@ namespace PrintAndSnap
             }
 
             // =========================
-            // APPLY LAYOUT + FRAME
+            // BUILD PHOTOS
             // =========================
-            Bitmap laidOut = layoutService.ApplyFunLayout(cachedFilteredPhotos, funLayout);
-            Bitmap preview = frameService.ApplyFunFrame(laidOut, funFrame);
+            List<Bitmap> photosToUse = new List<Bitmap>();
+
+            bool isSingle = funRadioPrintTypeSingle.Checked;
+
+            int needed = (funLayout == "grid") ? 4 : 2;
+
+            if (isSingle)
+            {
+                for (int i = 0; i < needed; i++)
+                {
+                    photosToUse.Add((Bitmap)selectedPhoto.Clone());
+                }
+            }
+            else
+            {
+                int index = 0;
+
+                while (photosToUse.Count < needed)
+                {
+                    if (cachedFilteredPhotos.Count == 0)
+                        break;
+
+                    photosToUse.Add((Bitmap)cachedFilteredPhotos[index % cachedFilteredPhotos.Count].Clone());
+                    index++;
+                }
+            }
 
             // =========================
-            // MAIN PREVIEW
+            // 🔥 APPLY FRAME PER PHOTO
+            // =========================
+            List<Bitmap> framedPhotos = new List<Bitmap>();
+
+            foreach (var photo in photosToUse)
+            {
+                Bitmap framed = frameService.ApplyFunFrame(photo, funFrame);
+                if (framed != null)
+                    framedPhotos.Add(framed);
+            }
+
+            // =========================
+            // 🔥 APPLY LAYOUT
+            // =========================
+            Bitmap preview = layoutService.ApplyFunLayout(framedPhotos, funLayout);
+
+            if (preview == null)
+                return;
+
+            // =========================
+            // PREVIEW DISPLAY
             // =========================
             if (funMainPreview.Image != null)
                 funMainPreview.Image.Dispose();
@@ -2115,9 +2258,6 @@ namespace PrintAndSnap
             funMainPreview.Image = (Bitmap)preview.Clone();
             funMainPreview.SizeMode = PictureBoxSizeMode.Zoom;
 
-            // =========================
-            // MINI PREVIEW
-            // =========================
             if (funMiniPreview.Image != null)
                 funMiniPreview.Image.Dispose();
 
@@ -2125,14 +2265,61 @@ namespace PrintAndSnap
             funMiniPreview.SizeMode = PictureBoxSizeMode.Zoom;
 
             // =========================
-            // CLEAN TEMP (NOT CACHE)
+            // CLEANUP
             // =========================
-            laidOut.Dispose();
+            foreach (var img in photosToUse)
+                img.Dispose();
+
+            foreach (var img in framedPhotos)
+                img.Dispose();
+
             preview.Dispose();
         }
 
+        private List<Bitmap> BuildFunPhotos()
+        {
+            List<Bitmap> photosToUse;
+
+            bool isSingle = funRadioPrintTypeSingle.Checked;
+
+            if (isSingle)
+            {
+                photosToUse = new List<Bitmap>();
+
+                int needed = (funLayout == "grid") ? 4 : 2;
+
+                for (int i = 0; i < needed; i++)
+                {
+                    photosToUse.Add((Bitmap)selectedPhoto.Clone());
+                }
+            }
+            else
+            {
+                photosToUse = new List<Bitmap>();
+
+                int needed = 1;
+
+                if (funLayout == "grid")
+                    needed = 4;
+                else if (funLayout == "vertical")
+                    needed = 2;
+
+                int index = 0;
+
+                while (photosToUse.Count < needed)
+                {
+                    if (cachedFilteredPhotos.Count == 0)
+                        break;
+
+                    photosToUse.Add((Bitmap)cachedFilteredPhotos[index % cachedFilteredPhotos.Count].Clone());
+                    index++;
+                }
+            }
+
+            return photosToUse;
+        }
         //LAYOUT
-        private void funRadioBtnVertical_click(object sender, EventArgs e)
+        private void funRadioBtnVertical_Click(object sender, EventArgs e)
         {
             if (funLayout == "vertical")
             {
@@ -2150,7 +2337,7 @@ namespace PrintAndSnap
             CalculateFunPrice();
         }
 
-        private void funRadioBtnGridBtn_click(object sender, EventArgs e)
+        private void funRadioBtnGridBtn_Click(object sender, EventArgs e)
         {
             if (funLayout == "grid")
             {
@@ -2168,41 +2355,92 @@ namespace PrintAndSnap
             CalculateFunPrice();
         }
 
+        private void UpdatePrintTypeAvailability()
+        {
+            int count = capturedPhotos.Count;
+
+            if (count <= 1)
+            {
+                // 🔒 FORCE PRINT ALL
+                funRadioPrintTypeAll.Checked = true;
+                UpdateFunSettings();
+
+                funRadioPrintTypeSingle.Enabled = false;
+                funRadioPrintTypeAll.Enabled = false;
+
+                // optional UI feedback
+                funRadioPrintTypeAll.Text = "Print All (Auto)";
+            }
+            else
+            {
+                // 🔓 ENABLE OPTIONS
+                funRadioPrintTypeSingle.Enabled = true;
+                funRadioPrintTypeAll.Enabled = true;
+
+                funRadioPrintTypeAll.Text = "Print All";
+            }
+        }
+
         //FRAME
-        private void funRadioBtnFrameNone_click(object sender, EventArgs e)
+        private void funRadioBtnFrameNone_Click(object sender, EventArgs e)
         {
             funFrame = "none";
             UpdateFunSettings();
         }
 
-        private void funRadioBtnMinimal_click(object sender, EventArgs e)
+        private void funRadioBtnMinimal_Click(object sender, EventArgs e)
         {
             funFrame = "minimal";
             UpdateFunSettings();
         }
 
-        private void funRadioBtnCute_click(object sender, EventArgs e)
+        private void funRadioBtnCute_Click(object sender, EventArgs e)
         {
             funFrame = "cute";
             UpdateFunSettings();
         }
 
         //FILTER
-        private void funRadioBtbFilterNone_click(object sender, EventArgs e)
+        private void funRadioBtbFilterNone_Click(object sender, EventArgs e)
         {
             funFilter = "none";
             UpdateFunSettings();
         }
-        private void funRadioBtnWarm_click(object sender, EventArgs e)
+        private void funRadioBtnWarm_Click(object sender, EventArgs e)
         {
             funFilter = "warm";
             UpdateFunSettings();
         }
 
-        private void funRadioBtnBlack_click(object sender, EventArgs e)
+        private void funRadioBtnBlack_Click(object sender, EventArgs e)
         {
             funFilter = "black";
             UpdateFunSettings();
+        }
+
+        private void funRadioPrintTypeSingle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (funRadioPrintTypeSingle.Checked)
+            {
+                // 🔥 ensure a photo is selected
+                if (selectedPhoto == null && capturedPhotos.Count > 0)
+                {
+                    selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                    hasUserSelectedPhoto = true;
+                }
+
+                UpdatePhotoSelectionState();
+                UpdateFunSettings();
+            }
+        }
+
+        private void funRadioPrintTypeAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (funRadioPrintTypeAll.Checked)
+            {
+                UpdatePhotoSelectionState();
+                UpdateFunSettings();
+            }
         }
 
         private void StopDownloadSession()
@@ -2230,9 +2468,6 @@ namespace PrintAndSnap
 
         private void ResetFunCache()
         {
-            foreach (var img in cachedFilteredPhotos)
-                img.Dispose();
-
             cachedFilteredPhotos.Clear();
             lastAppliedFilter = "";
         }
@@ -2290,7 +2525,6 @@ namespace PrintAndSnap
             pd.Print();
         }
 
-       
         private void LoadFunRetrieval(string code)
         {
             string folder = @"C:\PrintAndSnap\FUN\archive";
@@ -2304,7 +2538,6 @@ namespace PrintAndSnap
 
             if (!ValidateCode(codeFolder, out int uses, out int maxUses, out DateTime created, out string metaPath))
                 return;
-
 
             // LOAD PHOTOS
             capturedPhotos.Clear();
@@ -2328,33 +2561,76 @@ namespace PrintAndSnap
                 return;
             }
 
+            // 🔥 UPDATE USAGE + RESET TIMER
+            uses++;
+            created = DateTime.Now;
+
+            // 🔥 ALWAYS SAVE FIRST (IMPORTANT FIX)
+            WriteMeta(metaPath, created, uses, maxUses);
+
+            // 🔥 DELETE AFTER LAST USE
+            if (uses >= maxUses)
+            {
+                try
+                {
+                    Directory.Delete(codeFolder, true);
+                }
+                catch { }
+
+                MessageBox.Show(
+                    $"✅ Photos loaded!\n\n" +
+                    $"⚠ This was your LAST use.\n" +
+                    $"Code is now expired."
+                );
+            }
+            else
+            {
+                MessageBox.Show(
+                    $"✅ Photos loaded!\n\n" +
+                    $"Usage: {uses}/{maxUses}\n" +
+                    $"Remaining: {maxUses - uses}"
+                );
+            }
+
             selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
             hasUserSelectedPhoto = true;
 
             ShowPhotoPanel(photoBoothPanel, photoBoothSettings);
             LoadFunSelectionPhotos();
             UpdateFunSettings();
-            currentFunRetrievalCode = code;
+            UpdatePrintTypeAvailability();
 
-            MessageBox.Show(
-    $"✅ Photos loaded!\n\n" +
-    $"Usage: {uses}/{maxUses}\n" +
-    $"Remaining: {maxUses - uses}"
-);
+            currentFunRetrievalCode = code;
         }
 
+        private void UpdatePhotoSelectionState()
+        {
+            bool isSingle = funRadioPrintTypeSingle.Checked;
+
+            PictureBox[] boxes =
+            {
+        funSelectPic1,
+        funSelectPic2,
+        funSelectPic3,
+        funSelectPic4
+    };
+
+            foreach (var box in boxes)
+            {
+                box.Enabled = isSingle;
+                box.BackColor = isSingle ? Color.Transparent : Color.LightGray;
+            }
+        }
         private void funSettingsContinueBtn_Click(object sender, EventArgs e)
         {
-            if (selectedPhoto == null || !hasUserSelectedPhoto)
+            if (funMainPreview.Image == null)
             {
-                MessageBox.Show("⚠️ Please select a photo first.");
+                MessageBox.Show("⚠️ No preview available.");
                 return;
             }
 
-            // GENERATE FINAL IMAGE
-            Bitmap laidOut = layoutService.ApplyFunLayout(cachedFilteredPhotos, funLayout);
-            finalFunImage = frameService.ApplyFunFrame(laidOut, funFrame);
-            laidOut.Dispose();
+            // 🔥 USE EXACT PREVIEW (THIS FIXES FRAME ISSUE)
+            finalFunImage = (Bitmap)funMainPreview.Image.Clone();
 
             if (finalFunImage == null)
             {
@@ -2365,16 +2641,16 @@ namespace PrintAndSnap
             // PRICE
             totalFunPrice = int.Parse(funTotal.Text.Replace("₱", ""));
 
-            // ✅ CORRECT UI
             paymentFunTotal.Text = "₱" + totalFunPrice;
             paymentFunBalance.Text = "₱" + totalFunPrice;
 
             insertedMoney = 0;
 
-            // disable print until paid
             paymentFunPrintBtn.Enabled = false;
 
             currentMode = PhotoMode.Fun;
+
+            funDownloadBtn.Enabled = false;
 
             ShowPhotoPanel(photoBoothPanel, funPaymentPanel);
         }
@@ -2383,14 +2659,14 @@ namespace PrintAndSnap
         {
             try
             {
-                funDownloadBtn.Enabled = false; // 🔥 prevent spam
-
-                if (string.IsNullOrEmpty(lastSavedFunFileName))
+                // 🔥 BLOCK IF NOT READY
+                if (printingInProgress || string.IsNullOrEmpty(lastSavedFunFileName))
                 {
-                    MessageBox.Show("No image to download.");
-                    funDownloadBtn.Enabled = true;
+                    MessageBox.Show("⚠️ Please print first before downloading.");
                     return;
                 }
+
+                funDownloadBtn.Enabled = false; // 🔥 prevent spam
 
                 string folder = @"C:\PrintAndSnap\FUN\download";
                 string fullPath = Path.Combine(folder, lastSavedFunFileName);
@@ -2404,18 +2680,76 @@ namespace PrintAndSnap
 
                 // 🔥 HARD RESET SERVER (same as ID)
                 uploadService.StopServer();
-                await Task.Delay(500); // 🔥 increased
+                await Task.Delay(500);
 
                 uploadService.GenerateNewToken();
 
                 uploadService.StartUploadServer();
-                await Task.Delay(1200); // 🔥 ensure server is ready
+                await Task.Delay(1200);
 
                 GenerateQrForFunDownload(lastSavedFunFileName);
 
                 ShowPhotoPanel(photoBoothPanel, funSoftCopyDownloadPanel);
 
+                // ✅ Re-enable after done
                 funDownloadBtn.Enabled = true;
+
+                // =========================
+                // 🔐 AUTO DELETE + RESET (LIKE ID)
+                // =========================
+                _ = Task.Run(async () =>
+                {
+                    string path = Path.Combine(@"C:\PrintAndSnap\FUN\download", lastSavedFunFileName);
+
+                    int timeout = 60;
+                    bool downloaded = false;
+
+                    for (int i = 0; i < timeout; i++)
+                    {
+                        if (uploadService.uploadUsed)
+                        {
+                            downloaded = true;
+
+                            try
+                            {
+                                if (File.Exists(path))
+                                    File.Delete(path);
+                            }
+                            catch { }
+
+                            uploadService.uploadUsed = false;
+
+                            await Task.Delay(2000);
+
+                            this.Invoke(new Action(() =>
+                            {
+                                ResetMachine();
+                            }));
+
+                            break;
+                        }
+
+                        await Task.Delay(1000);
+                    }
+
+                    // 🔥 fallback delete
+                    if (!downloaded)
+                    {
+                        try
+                        {
+                            if (File.Exists(path))
+                                File.Delete(path);
+                        }
+                        catch { }
+
+                        await Task.Delay(2000);
+
+                        this.Invoke(new Action(() =>
+                        {
+                            ResetMachine();
+                        }));
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -2423,7 +2757,6 @@ namespace PrintAndSnap
                 funDownloadBtn.Enabled = true;
             }
         }
-
         private void GenerateQrForFunDownload(string fileName)
         {
             try
@@ -3065,8 +3398,30 @@ namespace PrintAndSnap
 
 
             }
+
+            // FUN ARCHIVE CLEANUP
+            string funArchive = @"C:\PrintAndSnap\FUN\archive";
+
+            foreach (var dir in Directory.GetDirectories(funArchive))
+            {
+                try
+                {
+                    var meta = ReadMeta(dir);
+                    DateTime created = meta.created;
+
+                    if ((DateTime.Now - created).TotalMinutes > 1)
+                    {
+                        Directory.Delete(dir, true);
+                    }
+                }
+                catch { }
+            }
+
             // ID DOWNLOAD (5 minutes)
             CleanFolder(@"C:\PrintAndSnap\ID\download", 5);
+
+            // FUN DOWNLOAD (5 minutes)
+            CleanFolder(@"C:\PrintAndSnap\FUN\download", 5);
 
             // PREVIEW
             CleanFolder(@"C:\PrintAndSnap\DOCS\preview", 10, currentPdfPath);
@@ -4004,9 +4359,6 @@ namespace PrintAndSnap
                 }
             }
 
-            foreach (var img in cachedFilteredPhotos)
-                img.Dispose();
-
             cachedFilteredPhotos.Clear();
             lastAppliedFilter = "";
 
@@ -4369,7 +4721,5 @@ namespace PrintAndSnap
             UpdateModeUI();
             CalculateTotal();
         }
-
-
     }
 }

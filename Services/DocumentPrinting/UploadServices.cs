@@ -129,7 +129,7 @@ namespace PrintAndSnap.Services
                             continue;
                         }
 
-                        string baseFolder = fileName.StartsWith("FUN_")
+                        string baseFolder = fileName.StartsWith("FUN-")
                             ? funDownloadFolder
                             : idDownloadFolder;
 

@@ -9,7 +9,20 @@ namespace PrintAndSnap.Services.PhotoPrinting
             if (photo == null)
                 return null;
 
-            Bitmap canvas = new Bitmap(photo.Width, photo.Height);
+            Bitmap safePhoto;
+
+            try
+            {
+                // 🔥 THIS WILL FAIL if disposed
+                safePhoto = (Bitmap)photo.Clone();
+            }
+            catch
+            {
+                // 💥 photo is disposed or invalid
+                return null;
+            }
+
+            Bitmap canvas = new Bitmap(safePhoto.Width, safePhoto.Height);
 
             using (Graphics g = Graphics.FromImage(canvas))
             {
@@ -20,12 +33,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                 g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 
-                // 🔥 DRAW PHOTO FIRST
-                g.DrawImage(photo, 0, 0, photo.Width, photo.Height);
-
-                // =====================
-                // FRAME STYLES
-                // =====================
+                g.DrawImage(safePhoto, 0, 0, safePhoto.Width, safePhoto.Height);
 
                 if (funFrame == "minimal")
                 {
@@ -49,9 +57,9 @@ namespace PrintAndSnap.Services.PhotoPrinting
                         g.FillEllipse(b, canvas.Width - 25, canvas.Height - 25, 20, 20);
                     }
                 }
-
-                // "none" → no frame, just photo
             }
+
+            safePhoto.Dispose();
 
             return canvas;
         }
