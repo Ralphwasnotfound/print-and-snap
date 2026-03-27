@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management;
+using System.Management.Instrumentation;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -40,6 +41,7 @@ namespace PrintAndSnap
         private UploadServices uploadService = new UploadServices();
         private DocumentPrinting documentPrinting = new DocumentPrinting();
         private PrinterManager printerManager = new PrinterManager();
+        private PhotoPrinting photoPrinting = new PhotoPrinting();
         private PricingService pricingService = new PricingService();
 
         //FILE + DOCUMENTS STATE
@@ -1261,52 +1263,13 @@ namespace PrintAndSnap
                 // 🔒 disable download until done
                 downloadBtnPaymentId.Enabled = false;
 
-                PrintDocument pd = new PrintDocument();
-                pd.PrinterSettings.PrinterName = "Canon MG3000 series";
+                Bitmap readyToPrint = layoutService.ResizeTo4x6(finalIdPrintImage);
 
-                pd.OriginAtMargins = false;
-                pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
-
-                pd.PrintPage += (sender, e) =>
-                {
-                    Graphics g = e.Graphics;
-                    g.PageUnit = GraphicsUnit.Inch;
-
-                    float widthInch = 2f;
-                    float heightInch = 2f;
-
-                    if (!isMultiple)
-                    {
-                        if (selectedLayout == "1x1")
-                        {
-                            widthInch = 1f;
-                            heightInch = 1f;
-                        }
-                        else if (selectedLayout == "2x2")
-                        {
-                            widthInch = 4f;
-                            heightInch = 4f;
-                        }
-                        else if (selectedLayout == "2x1")
-                        {
-                            widthInch = 2f;
-                            heightInch = 2f;
-                        }
-                    }
-                    else
-                    {
-                        widthInch = 8.27f;
-                        heightInch = 11.69f;
-                    }
-
-                    g.DrawImage(finalIdPrintImage, 0f, 0f, widthInch, heightInch);
-                };
+                photoPrinting.PrintPhoto(readyToPrint, "Canon MG3000 series", false);
 
                 // 🟡 STATUS
                 idprintingStatusLabel.Text = "Printing...";
                 idprintingStatusLabel.Visible = true;
-
-                pd.Print();
 
                 // 🔥 SAFE WAIT
                 await Task.Delay(5000);
@@ -1513,35 +1476,18 @@ namespace PrintAndSnap
 
                 // 🔒 disable print + download first
                 paymentFunPrintBtn.Enabled = false;
-                funDownloadBtn.Enabled = false;
                 funDownloadBtn.Enabled = false; 
                 lastSavedFunFileName = null;
 
-                PrintDocument pd = new PrintDocument();
-                pd.PrinterSettings.PrinterName = "Canon MG3000 series";
+                Bitmap readyToPrint = layoutService.ResizeTo4x6(finalFunImage);
 
-                pd.OriginAtMargins = false;
-                pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
-
-                pd.PrintPage += (sender, e) =>
-                {
-                    Graphics g = e.Graphics;
-                    g.PageUnit = GraphicsUnit.Inch;
-
-                    float imgWidth = 6f;
-                    float imgHeight = 8f;
-
-                    float x = (8.27f - imgWidth) / 2;
-                    float y = (11.69f - imgHeight) / 2;
-
-                    g.DrawImage(finalFunImage, x, y, imgWidth, imgHeight);
-                };
+                photoPrinting.PrintPhoto(readyToPrint, "Canon MG3000 series", true);
 
                 // 🟡 STATUS (OPTIONAL like ID)
                 // funPrintingStatusLabel.Text = "Printing...";
                 // funPrintingStatusLabel.Visible = true;
 
-                pd.Print();
+
 
                 // 🔥 WAIT LIKE ID
                 await Task.Delay(5000);
@@ -1604,7 +1550,21 @@ namespace PrintAndSnap
                 string fileName = code + ".png";
                 string downloadPath = Path.Combine(downloadFolder, fileName);
 
-                finalFunImage.Save(downloadPath, ImageFormat.Png);
+                List<Bitmap> photosToUse = BuildFunPhotos();
+
+                Bitmap downloadImage = layoutService.ApplyDownloadLayout(photosToUse, funLayout);
+
+                downloadImage.Save(downloadPath, ImageFormat.Png);
+
+                //DELETE THIS BLOCK AFTER TESTING
+                lastSavedFunFileName = fileName;
+                currentFunRetrievalCode = code;
+
+                // cleanup
+                foreach (var img in photosToUse)
+                    img.Dispose();
+
+                downloadImage.Dispose();
 
                 lastSavedFunFileName = fileName;
                 currentFunRetrievalCode = code;
@@ -2244,7 +2204,7 @@ namespace PrintAndSnap
             // =========================
             // 🔥 APPLY LAYOUT
             // =========================
-            Bitmap preview = layoutService.ApplyFunLayout(framedPhotos, funLayout);
+            Bitmap preview = layoutService.ApplyFunLayout(framedPhotos, funLayout, false);
 
             if (preview == null)
                 return;
@@ -2261,7 +2221,8 @@ namespace PrintAndSnap
             if (funMiniPreview.Image != null)
                 funMiniPreview.Image.Dispose();
 
-            funMiniPreview.Image = (Bitmap)preview.Clone();
+            Bitmap miniPreview = layoutService.ApplyFunLayout(framedPhotos, funLayout, true);
+            funMiniPreview.Image = miniPreview;
             funMiniPreview.SizeMode = PictureBoxSizeMode.Zoom;
 
             // =========================
@@ -2603,6 +2564,8 @@ namespace PrintAndSnap
             currentFunRetrievalCode = code;
         }
 
+        
+
         private void UpdatePhotoSelectionState()
         {
             bool isSingle = funRadioPrintTypeSingle.Checked;
@@ -2630,7 +2593,28 @@ namespace PrintAndSnap
             }
 
             // 🔥 USE EXACT PREVIEW (THIS FIXES FRAME ISSUE)
-            finalFunImage = (Bitmap)funMainPreview.Image.Clone();
+            // rebuild photos (same as preview logic)
+            List<Bitmap> photosToUse = BuildFunPhotos();
+
+            // apply frame
+            List<Bitmap> framedPhotos = new List<Bitmap>();
+
+            foreach (var photo in photosToUse)
+            {
+                Bitmap framed = frameService.ApplyFunFrame(photo, funFrame);
+                if (framed != null)
+                    framedPhotos.Add(framed);
+            }
+
+            // 🔥 FINAL IMAGE WITH CUT LINES (FOR PRINT)
+            finalFunImage = layoutService.ApplyFunLayout(framedPhotos, funLayout, true);
+
+            // cleanup
+            foreach (var img in photosToUse)
+                img.Dispose();
+
+            foreach (var img in framedPhotos)
+                img.Dispose();
 
             if (finalFunImage == null)
             {
@@ -2666,7 +2650,8 @@ namespace PrintAndSnap
                     return;
                 }
 
-                funDownloadBtn.Enabled = false; // 🔥 prevent spam
+              
+                funDownloadBtn.Enabled = false;
 
                 string folder = @"C:\PrintAndSnap\FUN\download";
                 string fullPath = Path.Combine(folder, lastSavedFunFileName);
@@ -3409,7 +3394,7 @@ namespace PrintAndSnap
                     var meta = ReadMeta(dir);
                     DateTime created = meta.created;
 
-                    if ((DateTime.Now - created).TotalMinutes > 1)
+                    if ((DateTime.Now - created).TotalMinutes > 30)
                     {
                         Directory.Delete(dir, true);
                     }

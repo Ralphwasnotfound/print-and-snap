@@ -142,6 +142,7 @@
     <Compile Include="Services\PhotoPrinting\FilterServices.cs" />
     <Compile Include="Services\PhotoPrinting\FrameServices.cs" />
     <Compile Include="Services\PhotoPrinting\PhotoLayoutServices.cs" />
+    <Compile Include="Services\PhotoPrinting\PhotoPrinting.cs" />
     <Compile Include="Services\PhotoPrinting\PhotoServices.cs" />
     <EmbeddedResource Include="PrintAndSnap.resx">
       <DependentUpon>PrintAndSnap.cs</DependentUpon>
