@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Management;
+using System.Printing;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PrintAndSnap.Services
 {
@@ -15,6 +18,7 @@ namespace PrintAndSnap.Services
             }
             return false;
         }
+
 
         public bool IsPrinterOnline(string printerName)
         {
@@ -31,6 +35,7 @@ namespace PrintAndSnap.Services
 
             return false;
         }
+
 
         public string GetPrinterStatus(string printerName)
         {

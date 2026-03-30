@@ -13,12 +13,12 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
             try
             {
-                // 🔥 THIS WILL FAIL if disposed
+                // THIS WILL FAIL if disposed
                 safePhoto = (Bitmap)photo.Clone();
             }
             catch
             {
-                // 💥 photo is disposed or invalid
+                // photo is disposed or invalid
                 return null;
             }
 

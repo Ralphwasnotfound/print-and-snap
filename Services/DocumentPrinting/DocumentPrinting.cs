@@ -1,9 +1,10 @@
-﻿using System;
+﻿using PdfiumViewer;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
-using PdfiumViewer;
+using System.Threading;
 
 namespace PrintAndSnap.Services.Printing
 {
@@ -88,6 +89,7 @@ namespace PrintAndSnap.Services.Printing
                         }
 
                         printDoc.Print();
+                        WaitForActualPrintFinish(printerName);
                     }
 
                     printSuccess = true;
@@ -101,6 +103,38 @@ namespace PrintAndSnap.Services.Printing
             }
 
             return printSuccess;
+        }
+
+        private void WaitForActualPrintFinish(string printerName)
+        {
+            bool started = false;
+            int stableReady = 0;
+
+            while (true)
+            {
+                string status = GetPrinterStatus(printerName);
+
+                Debug.WriteLine("DOC Printer: " + status);
+
+                if (status.Contains("Printing") || status.Contains("Spooling"))
+                {
+                    started = true;
+                    stableReady = 0;
+                }
+
+                if (started && (status.Contains("Ready") || status.Contains("Idle")))
+                {
+                    stableReady++;
+
+                    if (stableReady >= 5)
+                        break;
+                }
+
+                Thread.Sleep(500);
+            }
+
+            // 🔥 FINAL BUFFER (IMPORTANT)
+            Thread.Sleep(2000);
         }
 
         // =========================
@@ -210,5 +244,7 @@ namespace PrintAndSnap.Services.Printing
             }
             catch { }
         }
+
+        
     }
 }

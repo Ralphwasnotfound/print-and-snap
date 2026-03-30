@@ -1,4 +1,5 @@
-﻿using PdfiumViewer;
+﻿using AForge.Imaging.Filters;
+using PdfiumViewer;
 using PrintAndSnap.Services;
 using PrintAndSnap.Services.PhotoPrinting;
 using PrintAndSnap.Services.Printing;
@@ -89,6 +90,8 @@ namespace PrintAndSnap
         private Bitmap selectedPhoto;
 
         private bool hasUserSelectedPhoto = false;
+        bool hasFilter = false;
+        bool hasFrame = false;
 
         // =========================
         // ID MODE STATE
@@ -134,6 +137,7 @@ namespace PrintAndSnap
         private int retrievalAttempts = 0;
         private const int MAX_RETRIEVAL_ATTEMPTS = 3;
 
+        bool allowReset = false;
 
         //LIMITS
         private const long MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
@@ -2362,7 +2366,9 @@ namespace PrintAndSnap
             if (retrievalAttempts >= MAX_RETRIEVAL_ATTEMPTS)
             {
                 MessageBox.Show("❌ Too many attempts.");
-                ResetMachine();
+                printingInProgress = false;
+                allowReset = true;
+                ResetMachine(true);
                 return;
             }
 
@@ -2669,14 +2675,10 @@ namespace PrintAndSnap
 
                 string printMode = isMultiple ? "multiple" : "single";
 
-                photoPrinting.PrintIdPhoto(readyToPrint, "Canon MG3000 series", false, printMode);
-
                 // STATUS
                 idprintingStatusLabel.Text = "Printing...";
                 idprintingStatusLabel.Visible = true;
-
-                // SAFE WAIT
-                await Task.Delay(5000);
+                
 
                 try
                 {
@@ -2686,6 +2688,42 @@ namespace PrintAndSnap
                 {
                     Debug.WriteLine("Printer fallback used.");
                 }
+
+                // =========================
+                // SMART TIMER (ID)
+                // =========================
+                int printTime = 0;
+
+                if (!isMultiple) // SINGLE
+                {
+                    if (selectedLayout == "1x1")
+                        printTime = 10000; // 10 sec
+                    else if (selectedLayout == "2x1")
+                        printTime = 12000; // 15 sec
+                    else if (selectedLayout == "2x2")
+                        printTime = 20000; // 20 sec
+                }
+                else // MULTIPLE
+                {
+                    printTime = 60000; // 70 sec
+                }
+
+                // TIMER LOOP
+                for (int i = printTime / 1000; i > 0; i--)
+                {
+                    idprintingStatusLabel.Text = $"Printing... {i}s";
+
+                    // 🔥 allow cancel
+                    if (!printingInProgress)
+                    {
+                        idprintingStatusLabel.Text = "Cancelled";
+                        return;
+                    }
+
+                    await Task.Delay(1000);
+                }
+
+
 
                 idprintingStatusLabel.Text = "Done!";
 
@@ -2768,6 +2806,9 @@ namespace PrintAndSnap
 
                 printingInProgress = false;
 
+                string path = Path.Combine(ID_DOWNLOAD, downloadFileName);
+                StartAutoCleanup(path);
+
                 isPhotoRetrievalMode = false;
                 currentRetrievedIdPath = null;
 
@@ -2787,12 +2828,7 @@ namespace PrintAndSnap
                         MessageBoxIcon.Information
                     );
                 }));
-
-                // =========================
-                // AUTO DELETE + RESET
-                // =========================
-                string path = Path.Combine(ID_DOWNLOAD, downloadFileName);
-                StartAutoCleanup(path);
+               
             }
             catch (Exception ex)
             {
@@ -2828,24 +2864,41 @@ namespace PrintAndSnap
 
                 // disable print + download first
                 paymentFunPrintBtn.Enabled = false;
-                funDownloadBtn.Enabled = false; 
+                funDownloadBtn.Enabled = false;
                 lastSavedFunFileName = null;
 
                 Bitmap readyToPrint = layoutService.ResizeTo4x6(finalFunImage);
 
-                photoPrinting.PrintFunPhoto(readyToPrint, "Canon MG3000 series");
+                // =========================
+                // START PRINT FIRST
+                // =========================
+                photoPrinting.PrintFunPhoto(readyToPrint, PRINTER_NAME);
 
+                // =========================
                 // STATUS
-                // funPrintingStatusLabel.Text = "Printing...";
-                // funPrintingStatusLabel.Visible = true;
+                // =========================
+                funPrintingStatusLabel.Text = "Printing...";
+                funPrintingStatusLabel.Visible = true;
 
-                await Task.Delay(5000);
+                // =========================
+                // TIME CALCULATION
+                // =========================
+                int basePrintTime = 60000; // 70s base
 
-                try
+                int filterTime = hasFilter ? 5000 : 0;
+                int frameTime = hasFrame ? 5000 : 0;
+                int photoCountTime = capturedPhotos.Count * 1000;
+
+                int funPrintTime = basePrintTime + filterTime + frameTime + photoCountTime;
+
+                // =========================
+                // TIMER (THIS WAS MISSING BEFORE)
+                // =========================
+                for (int i = funPrintTime / 1000; i > 0; i--)
                 {
-                    photoPrinting.PrintFunPhoto(readyToPrint, PRINTER_NAME);
+                    funPrintingStatusLabel.Text = $"Printing... {i}s";
+                    await Task.Delay(1000);
                 }
-                catch { }
 
                 // =========================
                 // CLEAN TEMP (FUN)
@@ -2861,7 +2914,7 @@ namespace PrintAndSnap
                 }
 
                 // =========================
-                // SAVE FILE (SAME STYLE)
+                // SAVE FILE
                 // =========================
                 string archiveFolder = @"C:\PrintAndSnap\FUN\archive";
                 string downloadFolder = @"C:\PrintAndSnap\FUN\download";
@@ -2902,12 +2955,7 @@ namespace PrintAndSnap
                 List<Bitmap> photosToUse = BuildFunPhotos();
 
                 Bitmap downloadImage = layoutService.ApplyDownloadLayout(photosToUse, funLayout);
-
                 downloadImage.Save(downloadPath, ImageFormat.Png);
-
-                //DELETE THIS BLOCK AFTER TESTING
-                lastSavedFunFileName = fileName;
-                currentFunRetrievalCode = code;
 
                 // cleanup
                 foreach (var img in photosToUse)
@@ -2919,31 +2967,38 @@ namespace PrintAndSnap
                 currentFunRetrievalCode = code;
 
                 // =========================
-                // AUTO DELETE EVEN IF NO DOWNLOAD CLICK
+                // AUTO DELETE
                 // =========================
                 StartAutoCleanup(downloadPath);
 
                 // =========================
-                // ENABLE DOWNLOAD FIRST
+                // ENABLE DOWNLOAD
                 // =========================
                 this.Invoke(new Action(() =>
                 {
                     funDownloadBtn.Enabled = true;
                 }));
 
+                // =========================
+                // FINISH STATE
+                // =========================
                 printingInProgress = false;
 
+                funPrintingStatusLabel.Text = "Print complete!";
+
+                StartAutoCleanup(downloadPath);
+
                 // =========================
-                // MESSAGE (LIKE ID)
+                // MESSAGE
                 // =========================
                 this.Invoke(new Action(() =>
                 {
                     MessageBox.Show(
                         this,
-                        $" Printed!\n\n" +
+                        $"Printed!\n\n" +
                         $"Retrieval Code: {code}\n" +
                         $"Uses: 0/3\n" +
-                        $" Expires in 30 minutes",
+                        $"Expires in 30 minutes",
                         "Print Complete",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
@@ -2962,20 +3017,23 @@ namespace PrintAndSnap
         {
             if (printingInProgress) return;
 
+            receiveTimer.Stop();
+
             printBtn.Enabled = false;
 
             printingStatusLabel.Text = "Printing in progress...";
             printingStatusLabel.Visible = true;
 
             printingInProgress = true;
+            allowReset = false;
 
             try
             {
-                await Task.Run(() =>
+                _ = Task.Run(() =>
                 {
                     try
                     {
-                        bool success = documentPrinting.PrintDocumentFile(
+                        documentPrinting.PrintDocumentFile(
                             currentPdfPath,
                             "Canon MG3000 series",
                             totalPages,
@@ -2986,15 +3044,24 @@ namespace PrintAndSnap
                             radioColored.Checked,
                             pageIsColored
                         );
-
-                        printSuccess = success;
                     }
                     catch (Exception ex)
                     {
-                        DebugLog("PRINT ERROR: " + ex.Message);
-                        printSuccess = false;
+                        DebugLog("Print error: " + ex.Message);
                     }
                 });
+
+                // assume success
+                printSuccess = true;
+                sessionActive = true;
+                sessionActive = true;
+
+                // THIS IS THE KEY — WAIT AFTER PRINT
+                await WaitForEstimatedPrintTime(
+                    totalPages,
+                    (int)numericCopies.Value,
+                    radioColored.Checked
+                );
 
                 if (!printSuccess)
                 {
@@ -3003,10 +3070,6 @@ namespace PrintAndSnap
                     printBtn.Enabled = true;
                     return;
                 }
-                sessionActive = true;
-
-                // WAIT (SAFE VERSION WITH TIMEOUT)
-                await WaitForPrinterReady("Canon MG3000 series");
 
                 // GENERATE CODE
                 string code = GenerateRetrievalCode();
@@ -3048,26 +3111,22 @@ namespace PrintAndSnap
                     DebugLog("FILE MOVE ERROR: " + ex.Message);
                 }
 
-                //SHOW CODE (ON TOP)
                 MessageBox.Show(
-                    this,
-                    "Printing completed!\n\n" +
-                    "Your Retrieval Code: " + code,
-                    "Printing",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
+                this,
+                "Printing completed!\n\n" +
+                "Your Retrieval Code: " + code,
+                "Printing",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
                 );
 
-                // BACKGROUND RESET TIMER (NON-BLOCKING)
-                _ = Task.Run(async () =>
-                {
-                    await Task.Delay(120000); // 2 minutes
+                allowReset = true;
 
-                    this.Invoke(new Action(() =>
-                    {
-                        //ResetMachine();
-                    }));
-                });
+                // AFTER USER CLICKS OK → THEN WAIT 10s
+                await Task.Delay(10000);
+
+                sessionActive = false;
+                ForceResetMachine();
             }
             finally
             {
@@ -3075,6 +3134,25 @@ namespace PrintAndSnap
                 printBtn.Enabled = true;
             }
         }
+
+        private void ForceResetMachine()
+        {
+            DebugLog("FORCED RESET");
+
+            try
+            {
+                ResetDownloads();
+                ResetPhoto();
+                ResetDocument();
+                ResetUI();
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Force reset error: " + ex.Message);
+            }
+        }
+
+
 
         // =========================
         // DOWNLOAD / QR METHODS
@@ -3120,7 +3198,7 @@ namespace PrintAndSnap
             {
                 try
                 {
-                    int timeout = 60;
+                    int timeout = 80;
 
                     for (int i = 0; i < timeout; i++)
                     {
@@ -3150,7 +3228,9 @@ namespace PrintAndSnap
 
                     this.Invoke(new Action(() =>
                     {
-                        ResetMachine();
+                        printingInProgress = false;
+                        allowReset = true;
+                        ResetMachine(true);
                     }));
                 }
                 catch (TaskCanceledException)
@@ -3267,7 +3347,9 @@ namespace PrintAndSnap
 
                             this.Invoke(new Action(() =>
                             {
-                                ResetMachine();
+                                printingInProgress = false;
+                                allowReset = true;
+                                ResetMachine(true);
                             }));
 
                             break;
@@ -3289,7 +3371,9 @@ namespace PrintAndSnap
 
                         this.Invoke(new Action(() =>
                         {
-                            ResetMachine();
+                            printingInProgress = false;
+                            allowReset = true;
+                            ResetMachine(true);
                         }));
                     }
                 });
@@ -3372,7 +3456,9 @@ namespace PrintAndSnap
 
                             this.Invoke(new Action(() =>
                             {
-                                ResetMachine();
+                                printingInProgress = false;
+                                allowReset = true;
+                                ResetMachine(true);
                             }));
 
                             break;
@@ -3395,7 +3481,9 @@ namespace PrintAndSnap
 
                         this.Invoke(new Action(() =>
                         {
-                            ResetMachine();
+                            printingInProgress = false;
+                            allowReset = true;
+                            ResetMachine(true);
                         }));
                     }
                 });
@@ -3435,53 +3523,73 @@ namespace PrintAndSnap
         // ======================
         private void photoModeCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void photoCancelRetrievalBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void funCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void funSettingsCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void paymentFunCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void funSoftCopyCancelBtn_Click(object sender, EventArgs e)
         {
             StopDownloadSession();
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void idPrintingCancelBtn_Click(object sender, EventArgs args)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
         private void idPrintSettingsCancelBtn_Click(object obj, EventArgs args)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void cancelBtnPaymentId_Click(object obj, EventArgs args)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void downloadCancelBtn_Click(object obj, EventArgs args)
         {
             StopDownloadSession();
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         // ===================
@@ -3554,7 +3662,9 @@ namespace PrintAndSnap
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
 
-                ResetMachine();
+                printingInProgress = false;
+                allowReset = true;
+                ResetMachine(true);
                 return;
             }
 
@@ -4016,18 +4126,22 @@ namespace PrintAndSnap
             if (!uploadService.uploadUsed)
             {
                 fileUploadStatusLabel.Text = "QR Code expired. Please press Start again.";
-                ResetMachine();
+                printingInProgress = false;
+                allowReset = true;
+                ResetMachine(true);
             }
         }
 
         private void InactivityTimer_Tick(object sender, EventArgs e)
         {
             // DO NOTHING DURING SESSION
-            if (sessionActive)
+            if (sessionActive || printingInProgress)
                 return;
 
             inactivityTimer.Stop();
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void ReceiveTimer_Tick(object sender, EventArgs e)
@@ -4070,60 +4184,69 @@ namespace PrintAndSnap
 
         string error = printerManager.GetDetailedPrinterError(printerName);
 
-        if (error != lastPrinterError)
-        {
-            DebugLog("Printer Error RAW: " + error);
-            lastPrinterError = error;
-        }
-
-
-        if (!string.IsNullOrEmpty(error))
-        {
-            string err = error.ToLower();
-
-        if (err.Contains("paper") ||
-            err.Contains("jam") ||
-            err.Contains("offline") ||
-            err.Contains("door") ||
-            err.Contains("ink") ||
-            err.Contains("error")) 
-        {
-            printerStatusLabel.Text = "Printer: " + error;
-            printerStatusLabel.ForeColor = Color.Red;
-            continuePaymentBtn.Enabled = false;
-
-            if (!printingInProgress && !printerErrorShown)
+            if (error != lastPrinterError)
             {
-                printerErrorShown = true;
-                MessageBox.Show("Printer problem detected.\nPlease call staff.");
+                DebugLog("Printer Error RAW: " + error);
+                lastPrinterError = error;
             }
+
+
+            if (!string.IsNullOrEmpty(error) && error != "No Error")
+            {
+                string err = error.ToLower();
+
+            if (err.Contains("paper") ||
+                err.Contains("jam") ||
+                err.Contains("offline") ||
+                err.Contains("door") ||
+                err.Contains("ink"))
+            {
+                printerStatusLabel.Text = "Printer: " + error;
+                printerStatusLabel.ForeColor = Color.Red;
+                continuePaymentBtn.Enabled = false;
+
+                if (!printingInProgress && !printerErrorShown)
+                {
+                    printerErrorShown = true;
+                    MessageBox.Show("Printer problem detected.\nPlease call staff.");
+                }
 
             return;
         }
     }
 
     string status = printerManager.GetPrinterStatus(printerName);
+            Debug.WriteLine("==== PRINTER DEBUG ====");
+            Debug.WriteLine("Status: " + status);
+            Debug.WriteLine("Error: " + error);
+            Debug.WriteLine("Online: " + printerManager.IsPrinterOnline(printerName));
+            Debug.WriteLine("Exists: " + printerManager.PrinterExists(printerName));
+            Debug.WriteLine("========================");
 
-    printerStatusLabel.Text = "Printer: " + status;
+            printerStatusLabel.Text = "Printer: " + status;
 
-    if (status.Contains("Ready") || status.Contains("Idle"))
-    {
-        printerStatusLabel.ForeColor = Color.Green;
-        continuePaymentBtn.Enabled = true;
-        
-    }
-    else if (status.Contains("Printing") || status.Contains("Spooling"))
-    {
-        printerStatusLabel.ForeColor = Color.Blue;
-        continuePaymentBtn.Enabled = false;
-    }
-    else
-    {
-        printerStatusLabel.ForeColor = Color.OrangeRed;
-        continuePaymentBtn.Enabled = true;
-    }
+            if (status == "Printing")
+            {
+                printerStatusLabel.ForeColor = Color.Blue;
+                continuePaymentBtn.Enabled = false;
+            }
+            else if (status == "Ready")
+            {
+                printerStatusLabel.ForeColor = Color.Green;
+                continuePaymentBtn.Enabled = true;
+            }
+            else if (status == "Offline")
+            {
+                printerStatusLabel.ForeColor = Color.Red;
+                continuePaymentBtn.Enabled = false;
+            }
+            else
+            {
+                printerStatusLabel.ForeColor = Color.OrangeRed;
+                continuePaymentBtn.Enabled = true;
+            }
 
-    printerErrorShown = false;
+            printerErrorShown = false;
 }
 
         private void CleanupTimer_Tick(object sender, EventArgs e)
@@ -4229,42 +4352,90 @@ namespace PrintAndSnap
             }
         }
 
-        private async Task WaitForPrinterReady(string printerName)
+        private async Task WaitForEstimatedPrintTime(int totalPages, int copies, bool isColored)
         {
-            await Task.Run(() =>
+            int pagesToPrint = 0;
+
+            if (radioPrintAll.Checked)
             {
-                bool wasPrinting = false;
+                pagesToPrint = totalPages;
+            }
+            else if (radioSinglePage.Checked)
+            {
+                pagesToPrint = 1;
+            }
+            else if (radioPrintRange.Checked)
+            {
+                string input = numericPageRange.Text.Trim();
 
-                while (true)
+                if (!string.IsNullOrEmpty(input) && input.Contains("-"))
                 {
-                    string status = printerManager.GetPrinterStatus(printerName);
+                    string[] parts = input.Split('-');
 
-                    // detect actual printing
-                    if (status.Contains("Printing") || status.Contains("Spooling"))
+                    if (parts.Length == 2 &&
+                        int.TryParse(parts[0], out int start) &&
+                        int.TryParse(parts[1], out int end))
                     {
-                        wasPrinting = true;
-                    }
+                        // 🔥 FIX: normalize values
+                        if (start > end)
+                        {
+                            int temp = start;
+                            start = end;
+                            end = temp;
+                        }
 
-                    // ONLY exit AFTER it has printed AND returned to ready
-                    if (wasPrinting &&
-                        (status.Contains("Ready") || status.Contains("Idle")))
+                        // 🔥 LIMIT to valid pages
+                        start = Math.Max(1, start);
+                        end = Math.Min(totalPages, end);
+
+                        pagesToPrint = end - start + 1;
+                    }
+                    else
                     {
-                        break;
+                        pagesToPrint = 0;
                     }
-
-                    Thread.Sleep(500);
                 }
-            });
+            }
+
+            int totalWork = pagesToPrint * copies;
+
+            // ⏱ TIME SETTINGS
+            int perPage = isColored ? 35000 : 25000; // 35s color, 25s B&W
+            int baseTime = 3000; // small delay (3 sec)
+
+            int finalTime = baseTime + (totalWork * perPage);
+
+            // DEBUG (optional)
+            DebugLog($"PagesToPrint: {pagesToPrint}");
+            DebugLog($"TotalWork: {totalWork}");
+            DebugLog($"FinalTime(ms): {finalTime}");
+
+            // ⏳ WAIT
+            for (int i = finalTime / 1000; i > 0; i--)
+            {
+                printingStatusLabel.Text = $"Printing... {i}s";
+                await Task.Delay(1000);
+            }
         }
 
 
         // =========================
         // RESET SYSTEM
         // =========================
-        private void ResetMachine()
+        private void ResetMachine(bool force = false)
         {
+            if (!force)
+            {
+                if (printingInProgress) return;
+                if (!allowReset) return;
+            }
+
+            DebugLog("RESET TRIGGERED");
+
             if (isResetting)
                 return;
+
+            isResetting = true;
 
             resetTokenSource?.Cancel();
 
@@ -4422,7 +4593,9 @@ namespace PrintAndSnap
 
         private void uploadCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void continueBtn_Click(object sender, EventArgs e)
@@ -4477,7 +4650,9 @@ namespace PrintAndSnap
 
         private void printSettingsCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         // =========
@@ -4565,7 +4740,9 @@ namespace PrintAndSnap
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
         
         private void retrievalCodeTextBox_Keypress(object sender, KeyPressEventArgs e)
@@ -4578,7 +4755,9 @@ namespace PrintAndSnap
 
         private void retrieveCancelBtn_Click(object sender, EventArgs e)
         {
-            ResetMachine();
+            printingInProgress = false;
+            allowReset = true;
+            ResetMachine(true);
         }
 
         private void retrieveBtn_click(object sender, EventArgs e)

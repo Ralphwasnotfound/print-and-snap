@@ -382,6 +382,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel77 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel78 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel79 = new System.Windows.Forms.TableLayoutPanel();
+            this.funPrintingStatusLabel = new System.Windows.Forms.Label();
             this.startPanel.SuspendLayout();
             this.startText.SuspendLayout();
             this.startButtonLayout.SuspendLayout();
@@ -2572,8 +2573,8 @@ namespace PrintAndSnap
             // photoPanel
             // 
             this.photoPanel.Controls.Add(this.photoMode);
-            this.photoPanel.Controls.Add(this.photoIDPanel);
             this.photoPanel.Controls.Add(this.photoBoothPanel);
+            this.photoPanel.Controls.Add(this.photoIDPanel);
             this.photoPanel.Controls.Add(this.retrievalPanelPhoto);
             this.photoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoPanel.Location = new System.Drawing.Point(0, 0);
@@ -4865,6 +4866,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel72.Controls.Add(this.button4, 2, 0);
             this.tableLayoutPanel72.Controls.Add(this.button5, 2, 1);
             this.tableLayoutPanel72.Controls.Add(this.button6, 2, 2);
+            this.tableLayoutPanel72.Controls.Add(this.funPrintingStatusLabel, 1, 6);
             this.tableLayoutPanel72.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel72.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel72.Name = "tableLayoutPanel72";
@@ -5361,6 +5363,17 @@ namespace PrintAndSnap
             this.tableLayoutPanel79.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
             this.tableLayoutPanel79.Size = new System.Drawing.Size(1488, 81);
             this.tableLayoutPanel79.TabIndex = 0;
+            // 
+            // funPrintingStatusLabel
+            // 
+            this.funPrintingStatusLabel.AutoSize = true;
+            this.funPrintingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPrintingStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funPrintingStatusLabel.Location = new System.Drawing.Point(299, 444);
+            this.funPrintingStatusLabel.Name = "funPrintingStatusLabel";
+            this.funPrintingStatusLabel.Size = new System.Drawing.Size(883, 79);
+            this.funPrintingStatusLabel.TabIndex = 7;
+            this.funPrintingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PrintAndSnap
             // 
@@ -5935,5 +5948,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel62;
         private System.Windows.Forms.RadioButton funRadioPrintTypeAll;
         private System.Windows.Forms.RadioButton funRadioPrintTypeSingle;
+        private System.Windows.Forms.Label funPrintingStatusLabel;
     }
 }
