@@ -47,7 +47,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
             using (Graphics g = Graphics.FromImage(canvas))
             {
-                g.Clear(Color.White); // ✅ background
+                g.Clear(Color.White);
 
                 int outerPaddingTop = 20;
                 int outerPaddingBottom = 20;
@@ -55,7 +55,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 int outerPaddingRight = 10;
 
                 // =========================
-                // 🔥 VERTICAL STRIP
+                // VERTICAL STRIP
                 // =========================
                 if (layoutType == "vertical")
                 {
@@ -97,12 +97,12 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 }
 
                 // =========================
-                // 🔥 GRID
+                // GRID
                 // =========================
                 else if (layoutType == "grid")
                 {
-                    int rows = 3; // 3 big sections
-                    int outerGap = 20; // space BETWEEN sections only
+                    int rows = 3; 
+                    int outerGap = 20; 
 
                     int totalGapY = outerGap * (rows - 1);
 
@@ -116,7 +116,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                         int x = outerPaddingLeft;
                         int y = outerPaddingTop + r * (cellHeight + outerGap);
 
-                        // 🔥 EACH CELL = 2x2 (4 photos)
+                        // EACH CELL = 2x2 (4 photos)
                         int miniCols = 2;
                         int miniRows = 2;
 
@@ -129,7 +129,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                                 int mx = x + (mc * cellWidth / miniCols);
                                 int my = y + (mr * cellHeight / miniRows);
 
-                                // 🔥 FIX: last column/row takes remaining pixels
+                                // FIX: last column/row takes remaining pixels
                                 int miniW = (mc == miniCols - 1)
                                     ? (x + cellWidth) - mx
                                     : (cellWidth / miniCols);
@@ -138,7 +138,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                                     ? (y + cellHeight) - my
                                     : (cellHeight / miniRows);
 
-                                // ✅ FULL BLEED (NO MARGIN AT ALL)
+                                // FULL BLEED (NO MARGIN AT ALL)
                                 int contentW = miniW;
                                 int contentH = miniH;
 
@@ -164,6 +164,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
             return canvas;
         }
+
         public Bitmap ApplyFunLayout(List<Bitmap> photos, string layoutType, bool showCutLines)
         {
             if (photos == null || photos.Count == 0)
@@ -178,7 +179,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
             {
                 g.Clear(Color.White);
 
-                // 🔥 QUALITY
+                // QUALITY
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
@@ -257,7 +258,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     }
 
                     // =========================
-                    // ✂️ CUT GUIDES
+                    // CUT GUIDES
                     // =========================
 
                     if (showCutLines)
@@ -277,7 +278,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                             g.DrawLine(cutPen, left, top, left, bottom);
                             g.DrawLine(cutPen, right, top, right, bottom);
 
-                            // 🔥 ONLY vertical middle cut
+                            // ONLY vertical middle cut
                             int midX = padding + cellWidth + (spacing / 2);
                             g.DrawLine(cutPen, midX, top, midX, bottom);
                         }
@@ -286,14 +287,14 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 }
 
                 // =========================
-                // GRID 2x2 (with cut lines)
+                // GRID 2x2 
                 // =========================
                 else if (layoutType == "grid")
                 {
                     int cols = 2;
                     int rows = 3;
 
-                    // 🔥 COPY FROM VERTICAL (balanced cut margins)
+                    // COPY FROM VERTICAL (balanced cut margins)
                     int outerPaddingTop = 40;
                     int outerPaddingBottom = 70;
                     int outerPaddingLeft = 20;
@@ -347,7 +348,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     }
 
                     // =========================
-                    // ✂️ CUT LINES 
+                    // CUT LINES 
                     // =========================
                     if (showCutLines)
                     {
@@ -374,7 +375,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     
                 }
                 // =========================
-                // EFAULT
+                // DEFAULT
                 // =========================
                 else
                 {
@@ -404,7 +405,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
             int photoHeight = dpi;
 
             // =========================
-            // 📏 SIZE SETUP
+            // SIZE SETUP
             // =========================
             if (selectedLayout == "1x1")
             {
@@ -423,12 +424,12 @@ namespace PrintAndSnap.Services.PhotoPrinting
             }
 
             // =========================
-            // 🟢 SINGLE MODE
+            // SINGLE MODE
             // =========================
             if (!isMultiple)
             {
                 // =========================
-                // 🔥 2x2 GRID (4 PHOTOS)
+                // 2x2 GRID (4 PHOTOS)
                 // =========================
                 if (selectedLayout == "2x2")
                 {
@@ -454,7 +455,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
                                 g.DrawImage(photo, x, y, photoWidth, photoHeight);
 
-                                // ✂️ border
+                                // border
                                 g.DrawRectangle(Pens.Black, x, y, photoWidth, photoHeight);
                             }
                         }
@@ -464,7 +465,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 }
 
                 // =========================
-                // 🔥 2x1 (FIXED)
+                // 2x1
                 // =========================
                 else if (selectedLayout == "2x1")
                 {
@@ -487,7 +488,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
                             g.DrawImage(photo, x, y, photoWidth, photoHeight);
 
-                            // ✂️ border
+                            // ✂border
                             g.DrawRectangle(Pens.Black, x, y, photoWidth, photoHeight);
                         }
                     }
@@ -496,7 +497,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 }
 
                 // =========================
-                // 🔥 1x1
+                // 1x1
                 // =========================
                 else
                 {
@@ -519,7 +520,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
             }
 
             // =========================
-            // 🔵 MULTIPLE MODE (A4)
+            // MULTIPLE MODE (A4)
             // =========================
             int pageWidth = (int)(8.27 * dpi);
             int pageHeight = (int)(11.69 * dpi);

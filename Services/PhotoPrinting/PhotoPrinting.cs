@@ -14,7 +14,7 @@ namespace PrintAndSnap.Services.Printing
             PrintDocument pd = new PrintDocument();
             pd.PrinterSettings.PrinterName = printerName;
 
-            // ✅ KEEP THIS (important for printer)
+            // KEEP THIS (important for printer)
             pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
 
             pd.DefaultPageSettings.Margins = new Margins(20, 20, 20, 20);
@@ -51,7 +51,7 @@ namespace PrintAndSnap.Services.Printing
 
                     bool isMultiple = photoSize == "multiple";
 
-                    // 🔥 SCALE IMAGE TO FIT PRINT AREA
+                    // SCALE IMAGE TO FIT PRINT AREA
                     float ratio = Math.Min(
                         (float)area.Width / image.Width,
                         (float)area.Height / image.Height
@@ -62,7 +62,7 @@ namespace PrintAndSnap.Services.Printing
 
                     if (isMultiple)
                     {
-                        // ✅ CENTER MULTIPLE
+                        // CENTER MULTIPLE
                         int x = area.Left + (area.Width - drawW) / 2;
                         int y = area.Top + (area.Height - drawH) / 2;
 
@@ -91,7 +91,7 @@ namespace PrintAndSnap.Services.Printing
 
             pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
 
-            // ✅ SET MARGINS (you can tweak this)
+            // SET MARGINS (you can tweak this)
             pd.DefaultPageSettings.Margins = new Margins(30, 30, 30, 30);
             pd.OriginAtMargins = true;
 
@@ -104,7 +104,7 @@ namespace PrintAndSnap.Services.Printing
 
                 Rectangle area = e.MarginBounds;
 
-                // 🔥 SCALE TO FIT (no stretching)
+                // SCALE TO FIT (no stretching)
                 float ratio = Math.Min(
                     (float)area.Width / image.Width,
                     (float)area.Height / image.Height
@@ -113,7 +113,7 @@ namespace PrintAndSnap.Services.Printing
                 int drawW = (int)(image.Width * ratio);
                 int drawH = (int)(image.Height * ratio);
 
-                // 🔥 CENTER IT
+                // CENTER IT
                 int x = area.Left + (area.Width - drawW) / 2;
                 int y = area.Top + (area.Height - drawH) / 2;
 
