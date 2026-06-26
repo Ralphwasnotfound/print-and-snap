@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,190 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="printPreviewFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printPreviewFile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FINALBG1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FINALBG1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rounded-corner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rounded-corner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="aspect-ratio-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\aspect-ratio-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-user-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-user-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-text-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-text-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cash-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cash-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FinalBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FinalBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="reset-left-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\reset-left-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-copy-2-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-copy-2-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="peso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\peso.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-history-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-history-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="payment-method (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\payment-method (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="layout-4-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\layout-4-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="peso-sign" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\peso-sign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bgcolor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bgcolor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IDphotoBg1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IDphotoBg1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera-lens-ai-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera-lens-ai-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PhotoboothSettingsbg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PhotoboothSettingsbg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printCancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printCancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PrintSettings1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PrintSettings1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera-fill (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera-fill (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IDPBSBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IDPBSBG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit-circle-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\edit-circle-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printContinue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printContinue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FunPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FunPhoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="color-filter-ai-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\color-filter-ai-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="peso (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\peso (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IDphotoBg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IDphotoBg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="payment-method (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\payment-method (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="color-filter-ai-line1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\color-filter-ai-line1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cash-line (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cash-line (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-received-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-received-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PBSBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PBSBG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="file-copy-2-line (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file-copy-2-line (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="snapAndPrintLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\snapAndPrintLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IDPhoto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IDPhoto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer-line (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer-line (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FINALBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FINALBG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera-fill (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera-fill (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mail-download-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mail-download-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="layout-2-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\layout-2-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-history-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-history-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="all" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\all.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer-cloud-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer-cloud-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printSelectPage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printSelectPage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PhotoBooth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PhotoBooth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PRNTSTNGBG" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PRNTSTNGBG.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder-history-line (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder-history-line (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera-lens-ai-line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera-lens-ai-line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PBSBG1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PBSBG1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="camera-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="printer-fill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\printer-fill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SnapAndPrintBg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SnapAndPrintBg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

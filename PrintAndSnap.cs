@@ -1,4 +1,5 @@
 ﻿using AForge.Imaging.Filters;
+using FontAwesome.Sharp;
 using PdfiumViewer;
 using PrintAndSnap.Services;
 using PrintAndSnap.Services.PhotoPrinting;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
@@ -18,6 +20,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
+
+
 
 namespace PrintAndSnap
 {
@@ -172,6 +176,8 @@ namespace PrintAndSnap
         private string lastPrinterError = "";
         private DateTime lastFrameTime = DateTime.MinValue;
 
+        
+
         // =========================
         // CONSTRUCTOR
         // =========================
@@ -248,9 +254,13 @@ namespace PrintAndSnap
             // =========================
             // FORM UI SETTINGS
             // =========================
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
-            this.TopMost = true;
+            //enable this for  prod
+            //this.FormBorderStyle = FormBorderStyle.None;
+            //this.WindowState = FormWindowState.Maximized;
+            //this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.WindowState = FormWindowState.Normal;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             // =========================
             // DOC DEFAULT SETTINGS
@@ -315,9 +325,28 @@ namespace PrintAndSnap
                 MessageBox.Show("Fatal error occurred.");
             };
 
-
         }
 
+        // ====================
+        // DESIGN
+        // ====================
+        //private void MakeRoundedButton(Button btn)
+        //{
+        //    GraphicsPath path = new GraphicsPath();
+
+        //    int radius = 15;
+        //    int diameter = radius * 2;
+
+        //    path.AddArc(0, 0, diameter, diameter, 180, 90);
+        //    path.AddArc(btn.Width - diameter, 0, diameter, diameter, 270, 90);
+        //    path.AddArc(btn.Width - diameter, btn.Height - diameter, diameter, diameter, 0, 90);
+        //    path.AddArc(0, btn.Height - diameter, diameter, diameter, 90, 90);
+
+        //    path.CloseFigure();
+
+        //    btn.Region = new Region(path);
+        //}
+        
         // ====================
         // TASKBAR METHODS
         // ====================
@@ -341,9 +370,9 @@ namespace PrintAndSnap
             //if not show for production and testing
             base.OnShown(e);
             //HideTaskbar();
-#if !DEBUG
-              HideTaskbar(); 
-#endif
+//#if !DEBUG
+//              HideTaskbar(); 
+//#endif
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -439,12 +468,13 @@ namespace PrintAndSnap
         // =======================
         private void Print_And_Snap_Load(object sender, EventArgs e)
         {
-#if !DEBUG
-            //enable this for production
-            {
-                Process.Start("taskkill", "/f /im explorer.exe");
-            }  
-#endif
+            //#if !DEBUG
+            //            //enable this for production
+            //            {
+            //                Process.Start("taskkill", "/f /im explorer.exe");
+            //            }  
+            //#endif
+
             printerManager.ClearPrinterQueue();
             numericCopies.Minimum = 1;
             numericCopies.Maximum = 50;
@@ -461,21 +491,17 @@ namespace PrintAndSnap
             // Setup timer that waits for uploaded file preview
             receiveTimer = new System.Windows.Forms.Timer();
             receiveTimer.Interval = 3000;
-            receiveTimer.Tick += ReceiveTimer_Tick;
 
             cleanupTimer = new System.Windows.Forms.Timer();
             cleanupTimer.Interval = 5000; // change this for prod 10minutes
-            cleanupTimer.Tick += CleanupTimer_Tick;
             cleanupTimer.Start();
 
             printerStatusTimer = new System.Windows.Forms.Timer();
             printerStatusTimer.Interval = 2000;
-            printerStatusTimer.Tick += PrinterStatusTimer_Tick;
             printerStatusTimer.Start();
 
             inactivityTimer = new System.Windows.Forms.Timer();
             inactivityTimer.Interval = 120000; // 12 minutes
-            inactivityTimer.Tick += InactivityTimer_Tick;
 
             uploadStatusTimer = new System.Windows.Forms.Timer();
             uploadStatusTimer.Interval = 500; // half second
@@ -484,6 +510,13 @@ namespace PrintAndSnap
             qrExpireTimer = new System.Windows.Forms.Timer();
             qrExpireTimer.Interval = 60000; // 60 seconds
             qrExpireTimer.Tick += QrExpireTimer_Tick;
+
+            instructionLabel.Text = "Please select a service to continue";
+
+            instructionLabelPhoto.Text = "Please select a photo service to continue";
+
+            instructionLabelDocs.Text = "Scan the QR Code to continue";
+
         }
 
         // =========================
@@ -538,11 +571,11 @@ namespace PrintAndSnap
             retrievalPanelPhoto.Visible = false;
             photoBoothPanel.Visible = false;
 
-            // 🔥 SHOW MAIN PANEL
+            // SHOW MAIN PANEL
             mainPanel.Visible = true;
             mainPanel.BringToFront();
 
-            // 🔥 HANDLE ID PANEL SUBPANELS
+            // HANDLE ID PANEL SUBPANELS
             if (mainPanel == photoIDPanel)
             {
                 panelCRMidPrinting.Visible = false;
@@ -628,11 +661,14 @@ namespace PrintAndSnap
         // =================
         private void photoPrintingBtn_Click(Object sender, EventArgs e)
         {
+
+          
             currentSystemMode = SystemMode.Photo;
             photoPanel.Visible = true;
             photoPanel.BringToFront();
 
-            ShowPhotoPanel(photoMode);
+            ShowPhotoPanel(photoMode); 
+
         }
 
         // =========================
@@ -742,144 +778,7 @@ namespace PrintAndSnap
 
         private async void CaptureTimer_Tick(object sender, EventArgs e)
         {
-            if (countdown > 0)
-            {
-                if (currentMode == PhotoMode.Fun)
-                {
-                    funCameraTimer.Text = countdown.ToString();
-                    funCameraTimer.Visible = true;
-                }
-                else if (currentMode == PhotoMode.ID)
-                {
-                    CameraTimer.Text = countdown.ToString();
-                    CameraTimer.Visible = true;
-                }
 
-                countdown--;
-            }
-            else
-            {
-                captureTimer.Stop();
-
-                // =========================
-                // SHOW FLASH ICON
-                // =========================
-                if (currentMode == PhotoMode.Fun)
-                {
-                    funCameraTimer.Text = "📸";
-                    await Task.Delay(500);
-                    funCameraTimer.Visible = false;
-                }
-                else if (currentMode == PhotoMode.ID)
-                {
-                    CameraTimer.Text = "📸";
-                    await Task.Delay(500);
-                    CameraTimer.Visible = false;
-                }
-
-                // =========================
-                // SAFETY: PREVENT OVERFLOW
-                // =========================
-                if (capturedPhotos.Count >= 4)
-                    return;
-
-                // =========================
-                // SAFE FRAME CAPTURE
-                // =========================
-                Bitmap shot = null;
-                Bitmap tempFrame = currentFrame;
-
-                if (tempFrame != null)
-                {
-                    try
-                    {
-                        shot = new Bitmap(tempFrame);
-                    }
-                    catch
-                    {
-                        return;
-                    }
-                }
-
-                if (shot == null || shot.Width == 0 || shot.Height == 0)
-                    return;
-
-                // =========================
-                // STORE SAFE COPY
-                // =========================
-                capturedPhotos.Add((Bitmap)shot.Clone());
-
-                // =========================
-                // SELECT MODE PREVIEW BOXES
-                // =========================
-                PictureBox[] boxes;
-
-                if (currentMode == PhotoMode.Fun)
-                {
-                    boxes = new PictureBox[]
-                    {
-                funPreview1,
-                funPreview2,
-                funPreview3,
-                funPreview4
-                    };
-                }
-                else // ID
-                {
-                    boxes = new PictureBox[]
-                    {
-                idPreviewPictureBox1,
-                idPreviewPictureBox2,
-                idPreviewPictureBox3,
-                idPreviewPictureBox4
-                    };
-                }
-
-                int index = capturedPhotos.Count - 1;
-
-                // =========================
-                // INDEX SAFETY
-                // =========================
-                if (index < 0 || index >= boxes.Length)
-                    return;
-
-                if (boxes[index] == null)
-                    return;
-
-                // =========================
-                // DISPOSE OLD IMAGE
-                // =========================
-                if (boxes[index].Image != null)
-                    boxes[index].Image.Dispose();
-
-                // =========================
-                // SET IMAGE
-                // =========================
-                boxes[index].Image = (Bitmap)shot.Clone();
-                boxes[index].SizeMode = PictureBoxSizeMode.StretchImage;
-                boxes[index].Visible = true;
-
-                // =========================
-                // ENABLE BUTTONS
-                // =========================
-                if (currentMode == PhotoMode.Fun)
-                {
-                    funContinueBtn.Enabled = true;
-                    funCaptureBtn.Enabled = true;
-                }
-                else if (currentMode == PhotoMode.ID)
-                {
-                    idPrintingContinueBtn.Enabled = true;
-                    idCaptureBtn.Enabled = true;
-                }
-
-                // =========================
-                // CLEANUP
-                // =========================
-                shot.Dispose();
-            }
-
-            UpdatePrintTypeAvailability();
         }
 
         private void SafeDisposePictureBox(PictureBox box)
@@ -1102,6 +1001,34 @@ namespace PrintAndSnap
 
             countdown = 3;
             captureTimer.Start();
+        }
+
+
+        //===========
+        // QR TIMER
+        //===========
+        private void UploadStatusTimer_Tick(object sender, EventArgs e)
+        {
+            dotCount = (dotCount + 1) % 4;
+
+            fileUploadStatusLabel.Text =
+                baseStatusText + new string('.', dotCount);
+        }
+
+        private void QrExpireTimer_Tick(object sender, EventArgs e)
+        {
+            qrExpireTimer.Stop();
+
+            try
+            {
+                uploadService.GenerateNewToken();
+
+                qrPictureBox.Image = uploadService.GenerateQRCode();
+            }
+            catch (Exception ex)
+            {
+                DebugLog("QR Refresh Error: " + ex.Message);
+            }
         }
 
         private void UpdateIdSettings()
@@ -1332,7 +1259,7 @@ namespace PrintAndSnap
                 // =========================
                 // PRICE (SAFE PARSE)
                 // =========================
-                string priceText = idPrintingTotal.Text.Replace("₱", "").Trim();
+                string priceText = idPrintingTotal.Text.Trim();
 
                 if (!int.TryParse(priceText, out totalIdPrice))
                 {
@@ -1340,8 +1267,8 @@ namespace PrintAndSnap
                     return;
                 }
 
-                paymentIDprintingTotal.Text = "₱" + totalIdPrice;
-                paymentIDprintingBalance.Text = "₱" + totalIdPrice;
+                paymentIDprintingTotal.Text = totalIdPrice.ToString();
+                paymentIDprintingBalance.Text = totalIdPrice.ToString();
 
                 insertedMoney = 0;
                 printBtn.Enabled = false;
@@ -1449,7 +1376,7 @@ namespace PrintAndSnap
 
             int total = pricePerUnit * copies;
 
-            idPrintingTotal.Text = "₱" + total.ToString();
+            idPrintingTotal.Text = total.ToString();
         }
 
         private Bitmap ConvertToGrayscale(Bitmap original)
@@ -2027,10 +1954,10 @@ namespace PrintAndSnap
             }
 
             // PRICE
-            totalFunPrice = int.Parse(funTotal.Text.Replace("₱", ""));
+            totalFunPrice = int.Parse(funTotal.Text.Trim());
 
-            paymentFunTotal.Text = "₱" + totalFunPrice;
-            paymentFunBalance.Text = "₱" + totalFunPrice;
+            paymentFunTotal.Text = totalFunPrice.ToString();
+            paymentFunBalance.Text = totalFunPrice.ToString();
 
             insertedMoney = 0;
 
@@ -2207,7 +2134,7 @@ namespace PrintAndSnap
 
             totalFunPrice = total;
 
-            funTotal.Text = "₱" + total.ToString();
+            funTotal.Text = total.ToString();
         }
 
         private void ResetFunCache()
@@ -2630,14 +2557,14 @@ namespace PrintAndSnap
             // =========================
             if (currentSystemMode == SystemMode.Docs)
             {
-                paymentBalance.Text = "₱" + remaining;
+                paymentBalance.Text = remaining.ToString();
             }
             else if (currentSystemMode == SystemMode.Photo)
             {
                 if (currentMode == PhotoMode.Fun)
-                    paymentFunBalance.Text = "₱" + remaining;
+                    paymentFunBalance.Text = remaining.ToString();
                 else if (currentMode == PhotoMode.ID)
-                    paymentIDprintingBalance.Text = "₱" + remaining;
+                    paymentIDprintingBalance.Text = remaining.ToString();
             }
         }
 
@@ -3152,7 +3079,7 @@ namespace PrintAndSnap
             }
         }
 
-
+        
 
         // =========================
         // DOWNLOAD / QR METHODS
@@ -3913,7 +3840,7 @@ namespace PrintAndSnap
             );
 
             totalPrice = total;
-            totalLabel.Text = "₱" + total;
+            totalLabel.Text = total.ToString();
         }
 
         private void UpdateModeUI()
@@ -4109,225 +4036,6 @@ namespace PrintAndSnap
             inactivityTimer.Start();
         }
 
-        private void UploadStatusTimer_Tick(object sender, EventArgs e)
-        {
-            dotCount++;
-
-            if (dotCount > 3)
-                dotCount = 1;
-
-            fileUploadStatusLabel.Text = baseStatusText + new string('.', dotCount);
-        }
-
-        private void QrExpireTimer_Tick(object sender, EventArgs e)
-        {
-            qrExpireTimer.Stop();
-
-            if (!uploadService.uploadUsed)
-            {
-                fileUploadStatusLabel.Text = "QR Code expired. Please press Start again.";
-                printingInProgress = false;
-                allowReset = true;
-                ResetMachine(true);
-            }
-        }
-
-        private void InactivityTimer_Tick(object sender, EventArgs e)
-        {
-            // DO NOTHING DURING SESSION
-            if (sessionActive || printingInProgress)
-                return;
-
-            inactivityTimer.Stop();
-            printingInProgress = false;
-            allowReset = true;
-            ResetMachine(true);
-        }
-
-        private void ReceiveTimer_Tick(object sender, EventArgs e)
-        {
-            Debug.WriteLine("CONTINUE TIMER FIRED");
-
-            receiveTimer.Stop();
-
-            // DO NOT override if settings already open
-            if (printingSettingsPanel.Visible)
-                return;
-
-            if (isRetrievalMode)
-                return;
-
-            showPanel(continuePanel);
-
-            DebugPanelState("Timer Fired");
-        }
-
-        private void PrinterStatusTimer_Tick(object sender, EventArgs e)
-        {
-            string printerName = "Canon MG3000 series";
-
-        if (!printerManager.PrinterExists(printerName))
-        {
-            printerStatusLabel.Text = "Printer: Not Detected";
-            printerStatusLabel.ForeColor = Color.Red;
-            continuePaymentBtn.Enabled = false;
-            return;
-        }
-
-        if (!printerManager.IsPrinterOnline(printerName))
-        {
-            printerStatusLabel.Text = "Printer: Offline";
-            printerStatusLabel.ForeColor = Color.Red;
-            continuePaymentBtn.Enabled = false;
-            return;
-        }
-
-        string error = printerManager.GetDetailedPrinterError(printerName);
-
-            if (error != lastPrinterError)
-            {
-                DebugLog("Printer Error RAW: " + error);
-                lastPrinterError = error;
-            }
-
-
-            if (!string.IsNullOrEmpty(error) && error != "No Error")
-            {
-                string err = error.ToLower();
-
-            if (err.Contains("paper") ||
-                err.Contains("jam") ||
-                err.Contains("offline") ||
-                err.Contains("door") ||
-                err.Contains("ink"))
-            {
-                printerStatusLabel.Text = "Printer: " + error;
-                printerStatusLabel.ForeColor = Color.Red;
-                continuePaymentBtn.Enabled = false;
-
-                if (!printingInProgress && !printerErrorShown)
-                {
-                    printerErrorShown = true;
-                    MessageBox.Show("Printer problem detected.\nPlease call staff.");
-                }
-
-            return;
-        }
-    }
-
-    string status = printerManager.GetPrinterStatus(printerName);
-            Debug.WriteLine("==== PRINTER DEBUG ====");
-            Debug.WriteLine("Status: " + status);
-            Debug.WriteLine("Error: " + error);
-            Debug.WriteLine("Online: " + printerManager.IsPrinterOnline(printerName));
-            Debug.WriteLine("Exists: " + printerManager.PrinterExists(printerName));
-            Debug.WriteLine("========================");
-
-            printerStatusLabel.Text = "Printer: " + status;
-
-            if (status == "Printing")
-            {
-                printerStatusLabel.ForeColor = Color.Blue;
-                continuePaymentBtn.Enabled = false;
-            }
-            else if (status == "Ready")
-            {
-                printerStatusLabel.ForeColor = Color.Green;
-                continuePaymentBtn.Enabled = true;
-            }
-            else if (status == "Offline")
-            {
-                printerStatusLabel.ForeColor = Color.Red;
-                continuePaymentBtn.Enabled = false;
-            }
-            else
-            {
-                printerStatusLabel.ForeColor = Color.OrangeRed;
-                continuePaymentBtn.Enabled = true;
-            }
-
-            printerErrorShown = false;
-}
-
-        private void CleanupTimer_Tick(object sender, EventArgs e)
-        {
-            if (printingInProgress)
-                return;
-
-            // DOC FILES
-            CleanFolder(@"C:\PrintAndSnap\DOCS\archive", 30, currentPdfPath);
-
-            // ID FILES
-            string archiveFolder = @"C:\PrintAndSnap\ID\archive";
-
-            foreach (var dir in Directory.GetDirectories(archiveFolder))
-            {
-                Debug.WriteLine($"Checking folder: {dir}");
-
-    
-                try
-                {
-                    string metaPath = Path.Combine(dir, "meta.txt");
-
-                    if (!File.Exists(metaPath))
-                        continue;
-
-                    var meta = ReadMeta(dir);
-                    Debug.WriteLine($"Created: {meta.created}");
-                    Debug.WriteLine($"Now: {DateTime.Now}");
-                    Debug.WriteLine($"Minutes diff: {(DateTime.Now - meta.created).TotalMinutes}");
-                    DateTime created = meta.created;
-
-                    if ((DateTime.Now - created).TotalMinutes > 1)
-                    {
-                        try
-                        {
-                            // 🔥 force GC to release file handles
-                            GC.Collect();
-                            GC.WaitForPendingFinalizers();
-
-                            Directory.Delete(dir, true);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine("DELETE FAILED: " + ex.Message);
-                        }
-                    }
-                }
-                catch { }
-
-
-            }
-
-            // FUN ARCHIVE CLEANUP
-            string funArchive = @"C:\PrintAndSnap\FUN\archive";
-
-            foreach (var dir in Directory.GetDirectories(funArchive))
-            {
-                try
-                {
-                    var meta = ReadMeta(dir);
-                    DateTime created = meta.created;
-
-                    if ((DateTime.Now - created).TotalMinutes > 30)
-                    {
-                        Directory.Delete(dir, true);
-                    }
-                }
-                catch { }
-            }
-
-            // ID DOWNLOAD (5 minutes)
-            CleanFolder(@"C:\PrintAndSnap\ID\download", 5);
-
-            // FUN DOWNLOAD (5 minutes)
-            CleanFolder(@"C:\PrintAndSnap\FUN\download", 5);
-
-            // PREVIEW
-            CleanFolder(@"C:\PrintAndSnap\DOCS\preview", 10, currentPdfPath);
-
-
-        }
 
         private void CleanFolder(string folder, int minutes, string excludeFile = null)
         {
@@ -4376,7 +4084,7 @@ namespace PrintAndSnap
                         int.TryParse(parts[0], out int start) &&
                         int.TryParse(parts[1], out int end))
                     {
-                        // 🔥 FIX: normalize values
+                        // FIX: normalize values
                         if (start > end)
                         {
                             int temp = start;
@@ -4384,7 +4092,7 @@ namespace PrintAndSnap
                             end = temp;
                         }
 
-                        // 🔥 LIMIT to valid pages
+                        // LIMIT to valid pages
                         start = Math.Max(1, start);
                         end = Math.Min(totalPages, end);
 
@@ -4399,7 +4107,7 @@ namespace PrintAndSnap
 
             int totalWork = pagesToPrint * copies;
 
-            // ⏱ TIME SETTINGS
+            // TIME SETTINGS
             int perPage = isColored ? 35000 : 25000; // 35s color, 25s B&W
             int baseTime = 3000; // small delay (3 sec)
 
@@ -4410,7 +4118,7 @@ namespace PrintAndSnap
             DebugLog($"TotalWork: {totalWork}");
             DebugLog($"FinalTime(ms): {finalTime}");
 
-            // ⏳ WAIT
+            // WAIT
             for (int i = finalTime / 1000; i > 0; i--)
             {
                 printingStatusLabel.Text = $"Printing... {i}s";
@@ -4533,8 +4241,8 @@ namespace PrintAndSnap
             totalPrice = 0;
             insertedMoney = 0;
 
-            totalLabel.Text = "₱0";
-            paymentBalance.Text = "₱0";
+            totalLabel.Text = "0";
+            paymentBalance.Text = "0";
         }
 
         private void ResetUI()
@@ -4560,27 +4268,21 @@ namespace PrintAndSnap
             inactivityTimer.Start();
         }
 
-        private void docPrintingBtn_Click(Object sender, EventArgs e)
+        private void InitializeDocumentPrinting()
         {
-            currentSystemMode = SystemMode.Docs;
-            showPanel(printPanel);
-
             uploadService.GenerateNewToken();
 
-            //CLEAN UPLOAD FOLDER
             foreach (var file in Directory.GetFiles(watchFolder))
             {
-                try { File.Delete(file); } catch { } 
+                try { File.Delete(file); } catch { }
             }
 
-            //START WATCHER
             if (fileWatcher == null)
                 StartWatchingFolder();
 
             fileWatcher.EnableRaisingEvents = false;
             fileWatcher.EnableRaisingEvents = true;
 
-            //QR
             qrPictureBox.Image = uploadService.GenerateQRCode();
 
             uploadService.StartUploadServer();
@@ -4589,6 +4291,117 @@ namespace PrintAndSnap
             inactivityTimer.Start();
 
             uploadPanel.Visible = true;
+            uploadPanel.BringToFront();
+
+        }
+
+        private void docPrintingBtn_Click(object sender, EventArgs e)
+        {
+            currentSystemMode = SystemMode.Docs;
+            
+            showPanel(printingSettingsPanel);
+
+            InitializeDocumentPrinting();
+
+        }
+
+        private void docPrintingBtn_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabel.Text = "Print PDF, Word, and Documents";
+        }
+
+        // =========================
+        // Printing Options Button Events
+        // =========================
+        private void photoPrintingBtn_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabel.Text = "Print ID Photos and Fun Photos";
+        }
+
+        private void docPrintingBtn_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabel.Text = "Select a service to continue";
+        }
+
+        private void photoPrintingBtn_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabel.Text = "Select a service to continue";
+        }
+
+        // =========================
+        // Printing Photo Options Button Events
+        // =========================
+        private void photoBtnID_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Printing ID 2x2, 1x1 and Passport Size";
+        }
+
+        private void photoBtnID_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Select a photo service to continue";
+        }
+
+        private void photoBtnFun_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Printing Fun Photos, Filter and Backgrounds";
+        }
+
+        private void photoBtnFun_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Select a photo service to continue";
+        }
+
+        private void photoBtnRetrieve_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Retrieve your Photos with retrieval code given";
+        }
+
+        private void photoBtnRetrieve_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Select a photo service to continue";
+        }
+
+        private void photoModeCancelBtn_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Cancel back to start";
+        }
+
+        private void photoModeCancelBtn_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelPhoto.Text = "Select a photo service to continue";
+        }
+
+        // =========================
+        // Printing DOCS Options Button Events
+        // =========================
+        private void retrievalBtn_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Retrieve your Document with retrieval code given";
+        }
+
+        private void retrievalBtn_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Scan the QR Code to upload the file";
+        }
+
+        private void uploadCancelBtn_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Cancel back to start";
+        }
+
+        private void uploadCancelBtn_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Scan the QR Code to upload the file";
+        }
+
+        private void qrPictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Scan Me";
+        }
+
+        private void qrPictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            instructionLabelDocs.Text = "Scan the QR Code to upload the file";
         }
 
         private void uploadCancelBtn_Click(object sender, EventArgs e)
@@ -4705,7 +4518,7 @@ namespace PrintAndSnap
         {
             insertedMoney = 0;
 
-            paymentBalance.Text = "₱" + totalPrice.ToString();
+            paymentBalance.Text = totalPrice.ToString();
             printBtn.Enabled = false;
 
             CalculateTotal();
@@ -4726,10 +4539,10 @@ namespace PrintAndSnap
                 return;
             }
 
-            totalPayment.Text = "₱" + totalPrice.ToString();
+            totalPayment.Text = totalPrice.ToString();
 
             insertedMoney = 0;
-            paymentBalance.Text = "₱" + totalPrice.ToString();
+            paymentBalance.Text = totalPrice.ToString();
 
             printBtn.Enabled = false;
 
@@ -4781,6 +4594,5 @@ namespace PrintAndSnap
 
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
-        
     }
 }

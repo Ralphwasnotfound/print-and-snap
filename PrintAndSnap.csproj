@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{35ED129D-FDE4-4E6F-B6BB-67018DB1FC61}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Printer_Vendo</RootNamespace>
-    <AssemblyName>Printer_Vendo</AssemblyName>
+    <RootNamespace>Snap_and_Print</RootNamespace>
+    <AssemblyName>Snap&amp;Print</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -76,6 +76,12 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>PrintAndSnap.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <HintPath>packages\AForge.2.2.5\lib\AForge.dll</HintPath>
@@ -91,6 +97,9 @@
     </Reference>
     <Reference Include="AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL">
       <HintPath>packages\AForge.Video.DirectShow.2.2.5\lib\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.Sharp, Version=6.6.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
+      <HintPath>packages\FontAwesome.Sharp.6.6.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
     </Reference>
     <Reference Include="InTheHand.Net.Bluetooth, Version=4.2.3.0, Culture=neutral, PublicKeyToken=ea38caa273134499, processorArchitecture=MSIL">
       <HintPath>packages\InTheHand.Net.Bluetooth.4.2.3\lib\net462\InTheHand.Net.Bluetooth.dll</HintPath>
@@ -115,6 +124,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -135,6 +145,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\DocumentPrinting\DocumentPrinting.cs" />
     <Compile Include="Services\DocumentPrinting\PricingService.cs" />
     <Compile Include="Services\DocumentPrinting\PrinterManager.cs" />
@@ -150,13 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -202,6 +213,68 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="logo.ico" />
+    <None Include="Resources\snapAndPrintLogo.png" />
+    <None Include="Resources\background.png" />
+    <None Include="Resources\FinalBackground.png" />
+    <None Include="Resources\FINALBG.png" />
+    <None Include="Resources\FINALBG1.png" />
+    <None Include="Resources\printer.png" />
+    <None Include="Resources\camera.png" />
+    <None Include="Resources\IDPhoto.png" />
+    <None Include="Resources\FunPhoto.png" />
+    <None Include="Resources\PrintSettings1.png" />
+    <None Include="Resources\printPreviewFile.png" />
+    <None Include="Resources\edit-circle-line.png" />
+    <None Include="Resources\printContinue.png" />
+    <None Include="Resources\printBack.png" />
+    <None Include="Resources\printCancel.png" />
+    <None Include="Resources\printer-line.png" />
+    <None Include="Resources\file-copy-2-line.png" />
+    <None Include="Resources\cash-line.png" />
+    <None Include="Resources\file-text-line.png" />
+    <None Include="Resources\printer-cloud-line.png" />
+    <None Include="Resources\printSelectPage.png" />
+    <None Include="Resources\bgcolor.png" />
+    <None Include="Resources\peso.png" />
+    <None Include="Resources\folder-history-line.png" />
+    <None Include="Resources\folder-history-line %281%29.png" />
+    <None Include="Resources\folder-history-fill.png" />
+    <None Include="Resources\folder-received-fill.png" />
+    <None Include="Resources\all.png" />
+    <None Include="Resources\payment-method %281%29.png" />
+    <None Include="Resources\payment-method %282%29.png" />
+    <None Include="Resources\cash.png" />
+    <None Include="Resources\peso-sign.png" />
+    <None Include="Resources\printer-fill.png" />
+    <None Include="Resources\PhotoBooth.png" />
+    <None Include="Resources\reset-left-fill.png" />
+    <None Include="Resources\camera-fill.png" />
+    <None Include="Resources\file-user-line.png" />
+    <None Include="Resources\IDphotoBg.png" />
+    <None Include="Resources\PhotoboothSettingsbg.png" />
+    <None Include="Resources\PBSBG.png" />
+    <None Include="Resources\PBSBG1.png" />
+    <None Include="Resources\layout-2-line.png" />
+    <None Include="Resources\rounded-corner.png" />
+    <None Include="Resources\color-filter-ai-line.png" />
+    <None Include="Resources\color-filter-ai-line1.png" />
+    <None Include="Resources\printer-line %281%29.png" />
+    <None Include="Resources\file-copy-2-line %281%29.png" />
+    <None Include="Resources\camera-lens-ai-line.png" />
+    <None Include="Resources\camera-lens-ai-fill.png" />
+    <None Include="Resources\camera-fill %281%29.png" />
+    <None Include="Resources\camera-fill %282%29.png" />
+    <None Include="Resources\peso %281%29.png" />
+    <None Include="Resources\mail-download-fill.png" />
+    <None Include="Resources\IDPBSBG.png" />
+    <None Include="Resources\IDphotoBg1.png" />
+    <None Include="Resources\aspect-ratio-line.png" />
+    <None Include="Resources\layout-4-line.png" />
+    <None Include="Resources\cash-line %281%29.png" />
+    <None Include="Resources\PRNTSTNGBG.png" />
+    <None Include="Resources\SnapAndPrintBg.png" />
+    <Content Include="underthetitle.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
