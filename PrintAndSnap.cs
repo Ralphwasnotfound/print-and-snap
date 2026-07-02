@@ -20,7 +20,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-
+using System.IO.Ports;
+using Snap_and_Print.Services;
 
 
 namespace PrintAndSnap
@@ -28,6 +29,7 @@ namespace PrintAndSnap
 
     public partial class PrintAndSnap : Form
     {
+     
         // =========================
         // SERVICES
         // =========================
@@ -43,9 +45,6 @@ namespace PrintAndSnap
         private bool isProcessing = false;
         private bool isResetting = false;
         private bool printingInProgress = false;
-
-        private int insertedMoney = 0;
-        private int totalPrice = 0;
 
         private readonly string BASE_PATH = @"C:\PrintAndSnap";
         private const string PRINTER_NAME = "Canon MG3000 series";
@@ -176,7 +175,10 @@ namespace PrintAndSnap
         private string lastPrinterError = "";
         private DateTime lastFrameTime = DateTime.MinValue;
 
-        
+        private PaymentController paymentController = new PaymentController();
+
+
+
 
         // =========================
         // CONSTRUCTOR
@@ -254,7 +256,7 @@ namespace PrintAndSnap
             // =========================
             // FORM UI SETTINGS
             // =========================
-            //enable this for  prod
+            //enable this for  prod "DEBUG for Windowed"
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.WindowState = FormWindowState.Maximized;
             //this.TopMost = true;
@@ -376,6 +378,7 @@ namespace PrintAndSnap
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
+            paymentController.Disconnect();
             ShowTaskbar();
             base.OnFormClosed(e);
         }
@@ -468,6 +471,7 @@ namespace PrintAndSnap
         // =======================
         private void Print_And_Snap_Load(object sender, EventArgs e)
         {
+           
             //#if !DEBUG
             //            //enable this for production
             //            {
@@ -511,12 +515,55 @@ namespace PrintAndSnap
             qrExpireTimer.Interval = 60000; // 60 seconds
             qrExpireTimer.Tick += QrExpireTimer_Tick;
 
+            if (!paymentController.Connect())
+            {
+                MessageBox.Show("Coin Acceptor not detected.");
+            }
+            else
+            {
+                paymentController.PaymentUpdated += PaymentController_PaymentUpdated;
+                paymentController.GetStatus();
+            }
+
             instructionLabel.Text = "Please select a service to continue";
 
             instructionLabelPhoto.Text = "Please select a photo service to continue";
 
             instructionLabelDocs.Text = "Scan the QR Code to continue";
 
+        }
+
+        private void PaymentController_PaymentUpdated()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(PaymentController_PaymentUpdated));
+                return;
+            }
+
+            // DOCUMENT
+            totalDocInserted.Text = paymentController.InsertedPayment.ToString();
+            paymentDocBalance.Text = paymentController.Balance.ToString();
+            totalDocChange.Text = paymentController.Change.ToString();
+
+            // ID
+            paymentInsertedID.Text = paymentController.InsertedPayment.ToString();
+            paymentIDBalance.Text = paymentController.Balance.ToString();
+            paymentChangeID.Text = paymentController.Change.ToString();
+
+            // FUN
+            paymentFunInserted.Text = paymentController.InsertedPayment.ToString();
+            paymentFunBalance.Text = paymentController.Balance.ToString();
+            paymentFunChange.Text = paymentController.Change.ToString();
+
+            printBtn.Enabled =
+            paymentController.InsertedPayment >= paymentController.TotalAmount;
+
+            printBtnPaymentId.Enabled =
+                paymentController.InsertedPayment >= paymentController.TotalAmount;
+
+            paymentFunPrintBtn.Enabled =
+                paymentController.InsertedPayment >= paymentController.TotalAmount;
         }
 
         // =========================
@@ -1267,10 +1314,8 @@ namespace PrintAndSnap
                     return;
                 }
 
-                paymentIDprintingTotal.Text = totalIdPrice.ToString();
-                paymentIDprintingBalance.Text = totalIdPrice.ToString();
-
-                insertedMoney = 0;
+                paymentIDTotal.Text = totalIdPrice.ToString();
+                paymentController.StartPayment(totalIdPrice); 
                 printBtn.Enabled = false;
                 downloadBtnPaymentId.Enabled = false;
 
@@ -1957,9 +2002,7 @@ namespace PrintAndSnap
             totalFunPrice = int.Parse(funTotal.Text.Trim());
 
             paymentFunTotal.Text = totalFunPrice.ToString();
-            paymentFunBalance.Text = totalFunPrice.ToString();
-
-            insertedMoney = 0;
+            paymentController.StartPayment(totalFunPrice);
 
             paymentFunPrintBtn.Enabled = false;
 
@@ -2472,113 +2515,18 @@ namespace PrintAndSnap
             LoadRetrievalFile(code);
         }
 
-
-        // =========================
-        // PAYMENT METHODS
-        // =========================
-        private void btn5_Click(object sender, EventArgs e)
-        {
-            AddMoney(5);
-        }
-        private void btn10_Click(object sender, EventArgs e)
-        {
-            AddMoney(10);
-        }
-        private void btn20_Click(object sender, EventArgs e)
-        {
-            AddMoney(20);
-        }
-
-        private void AddMoney(int amount)
-        {
-            insertedMoney += amount;
-
-            int total = 0;
-
-            // =========================
-            // GET TOTAL BASED ON MODE
-            // =========================
-            if (currentSystemMode == SystemMode.Docs)
-            {
-                total = totalPrice;
-            }
-            else if (currentSystemMode == SystemMode.Photo)
-            {
-                if (currentMode == PhotoMode.Fun)
-                    total = totalFunPrice;
-                else if (currentMode == PhotoMode.ID)
-                    total = totalIdPrice;
-            }
-
-            int remaining = total - insertedMoney;
-
-            if (remaining < 0)
-                remaining = 0;
-
-            // =========================
-            // ENABLE PRINT BUTTON
-            // =========================
-            if (remaining == 0)
-            {
-                if (currentSystemMode == SystemMode.Docs)
-                {
-                    printBtn.Enabled = true;
-                }
-                else if (currentSystemMode == SystemMode.Photo)
-                {
-                    if (currentMode == PhotoMode.ID)
-                        printBtnPaymentId.Enabled = true;
-                    else if (currentMode == PhotoMode.Fun)
-                        paymentFunPrintBtn.Enabled = true;
-                }
-            }
-            else
-            {
-                // disable all print buttons
-                printBtn.Enabled = false;
-                printBtnPaymentId.Enabled = false;
-                paymentFunPrintBtn.Enabled = false;
-
-                if (currentSystemMode == SystemMode.Photo && currentMode == PhotoMode.ID)
-                {
-                    if (remaining == 0 && !printingInProgress)
-                    {
-                        printBtnPaymentId.Enabled = true;
-                    }
-                    else
-                    {
-                        printBtnPaymentId.Enabled = false;
-                    }
-                }
-            }
-
-            // =========================
-            // UPDATE UI BALANCE
-            // =========================
-            if (currentSystemMode == SystemMode.Docs)
-            {
-                paymentBalance.Text = remaining.ToString();
-            }
-            else if (currentSystemMode == SystemMode.Photo)
-            {
-                if (currentMode == PhotoMode.Fun)
-                    paymentFunBalance.Text = remaining.ToString();
-                else if (currentMode == PhotoMode.ID)
-                    paymentIDprintingBalance.Text = remaining.ToString();
-            }
-        }
-
         // ID PAYMENT
         private void printBtnPaymentId_Click(object sender, EventArgs e)
         {
             PrintIdPhoto();
+            paymentController.ResetPayment();
         }
 
         private async void PrintIdPhoto()
         {
 
             // BLOCK IF NOT FULLY PAID
-            if (insertedMoney < totalIdPrice)
+            if (paymentController.InsertedPayment < paymentController.TotalAmount)
             {
                 MessageBox.Show("Please complete payment first.");
                 return;
@@ -2773,7 +2721,7 @@ namespace PrintAndSnap
         private async void PrintFunPhoto()
         {
             // BLOCK IF NOT PAID 
-            if (insertedMoney < totalFunPrice)
+            if (paymentController.InsertedPayment < paymentController.TotalAmount)
             {
                 MessageBox.Show("Please complete payment first.");
                 return;
@@ -2981,7 +2929,7 @@ namespace PrintAndSnap
                 // assume success
                 printSuccess = true;
                 sessionActive = true;
-                sessionActive = true;
+
 
                 // THIS IS THE KEY — WAIT AFTER PRINT
                 await WaitForEstimatedPrintTime(
@@ -3839,7 +3787,6 @@ namespace PrintAndSnap
                 pageIsColored
             );
 
-            totalPrice = total;
             totalLabel.Text = total.ToString();
         }
 
@@ -4158,6 +4105,8 @@ namespace PrintAndSnap
             {
                 isResetting = false;
             }
+
+            paymentController.ResetPayment();
         }
 
         private void ResetDownloads()
@@ -4238,11 +4187,8 @@ namespace PrintAndSnap
             currentEditablePath = null;
             currentOriginalPath = null;
 
-            totalPrice = 0;
-            insertedMoney = 0;
-
             totalLabel.Text = "0";
-            paymentBalance.Text = "0";
+            paymentDocBalance.Text = "0";
         }
 
         private void ResetUI()
@@ -4290,15 +4236,18 @@ namespace PrintAndSnap
             qrExpireTimer.Start();
             inactivityTimer.Start();
 
-            uploadPanel.Visible = true;
-            uploadPanel.BringToFront();
+            paymentPanel.Visible = true;
+            paymentPanel.BringToFront();
+
+            //uploadPanel.Visible = true;
+            //uploadPanel.BringToFront();
 
         }
 
         private void docPrintingBtn_Click(object sender, EventArgs e)
         {
             currentSystemMode = SystemMode.Docs;
-            
+
             showPanel(printingSettingsPanel);
 
             InitializeDocumentPrinting();
@@ -4516,9 +4465,6 @@ namespace PrintAndSnap
 
         private void paymentBackBtn_Click(object sender, EventArgs e)
         {
-            insertedMoney = 0;
-
-            paymentBalance.Text = totalPrice.ToString();
             printBtn.Enabled = false;
 
             CalculateTotal();
@@ -4539,10 +4485,11 @@ namespace PrintAndSnap
                 return;
             }
 
-            totalPayment.Text = totalPrice.ToString();
+            int total = int.Parse(totalLabel.Text);
 
-            insertedMoney = 0;
-            paymentBalance.Text = totalPrice.ToString();
+            paymentDocTotal.Text = total.ToString();
+
+            paymentController.StartPayment(total);
 
             printBtn.Enabled = false;
 
@@ -4579,6 +4526,10 @@ namespace PrintAndSnap
             showPanel(retrivalPanel);
         }
 
+        //====================
+        //PAYMENT FUNCTION COINSLOT
+        //====================
+        
 
         // DEBUG
         private void DebugPanelState(string location)
