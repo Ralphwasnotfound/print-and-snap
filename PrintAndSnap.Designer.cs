@@ -54,34 +54,6 @@ namespace PrintAndSnap
             this.label40 = new System.Windows.Forms.Label();
             this.printPanel = new System.Windows.Forms.Panel();
             this.printingSettingsPanel = new System.Windows.Forms.Panel();
-            this.paymentPanel = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.tableLayoutPayment = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel104 = new System.Windows.Forms.TableLayoutPanel();
-            this.cancelPrintBtn = new System.Windows.Forms.Button();
-            this.printBtn = new System.Windows.Forms.Button();
-            this.paymentBackBtn = new System.Windows.Forms.Button();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel103 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel102 = new System.Windows.Forms.TableLayoutPanel();
-            this.printingStatusLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel101 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel100 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel98 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel105 = new System.Windows.Forms.TableLayoutPanel();
-            this.paymentDocTotal = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel106 = new System.Windows.Forms.TableLayoutPanel();
-            this.paymentDocBalance = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel107 = new System.Windows.Forms.TableLayoutPanel();
-            this.totalDocInserted = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel140 = new System.Windows.Forms.TableLayoutPanel();
-            this.totalDocChange = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.uploadPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.instructionLabelDocs = new System.Windows.Forms.Label();
@@ -161,6 +133,34 @@ namespace PrintAndSnap
             this.tableLayoutPanel77 = new System.Windows.Forms.TableLayoutPanel();
             this.settingsBackBtn = new System.Windows.Forms.Button();
             this.printSettingsCancelBtn = new System.Windows.Forms.Button();
+            this.paymentPanel = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tableLayoutPayment = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel104 = new System.Windows.Forms.TableLayoutPanel();
+            this.cancelPrintBtn = new System.Windows.Forms.Button();
+            this.printBtn = new System.Windows.Forms.Button();
+            this.paymentBackBtn = new System.Windows.Forms.Button();
+            this.panel22 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel103 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel102 = new System.Windows.Forms.TableLayoutPanel();
+            this.printingStatusLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel101 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel100 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel98 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel105 = new System.Windows.Forms.TableLayoutPanel();
+            this.paymentDocTotal = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel106 = new System.Windows.Forms.TableLayoutPanel();
+            this.paymentDocBalance = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel107 = new System.Windows.Forms.TableLayoutPanel();
+            this.totalDocInserted = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel140 = new System.Windows.Forms.TableLayoutPanel();
+            this.totalDocChange = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.retrivalPanel = new System.Windows.Forms.Panel();
             this.retrivalMain = new System.Windows.Forms.TableLayoutPanel();
             this.retrivalCodeLabel = new System.Windows.Forms.Label();
@@ -172,41 +172,6 @@ namespace PrintAndSnap
             this.continueBtn = new System.Windows.Forms.Button();
             this.photoPanel = new System.Windows.Forms.Panel();
             this.photoIDPanel = new System.Windows.Forms.Panel();
-            this.IDpayment = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel51 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel47 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel53 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel125 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel52 = new System.Windows.Forms.TableLayoutPanel();
-            this.cancelBtnPaymentId = new System.Windows.Forms.Button();
-            this.backBtnPaymentId = new System.Windows.Forms.Button();
-            this.downloadBtnPaymentId = new System.Windows.Forms.Button();
-            this.printBtnPaymentId = new System.Windows.Forms.Button();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel126 = new System.Windows.Forms.TableLayoutPanel();
-            this.idprintingStatusLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel123 = new System.Windows.Forms.TableLayoutPanel();
-            this.label27 = new System.Windows.Forms.Label();
-            this.paymentIDBalance = new System.Windows.Forms.Label();
-            this.tableLayoutPanel127 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel113 = new System.Windows.Forms.TableLayoutPanel();
-            this.paymentIDTotal = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel128 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel129 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel130 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel131 = new System.Windows.Forms.TableLayoutPanel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel124 = new System.Windows.Forms.TableLayoutPanel();
-            this.label15 = new System.Windows.Forms.Label();
-            this.paymentInsertedID = new System.Windows.Forms.Label();
-            this.tableLayoutPanel132 = new System.Windows.Forms.TableLayoutPanel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.paymentChangeID = new System.Windows.Forms.Label();
             this.panelCRMidPrinting = new System.Windows.Forms.Panel();
             this.tableLayoutPanel27 = new System.Windows.Forms.TableLayoutPanel();
             this.panel15 = new System.Windows.Forms.Panel();
@@ -273,6 +238,37 @@ namespace PrintAndSnap
             this.idPrintSettingsCancelBtn = new System.Windows.Forms.Button();
             this.idPrintSettingsBackBtn = new System.Windows.Forms.Button();
             this.idPrintSettingsConintueBtn = new System.Windows.Forms.Button();
+            this.IDpayment = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel47 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel53 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel125 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel52 = new System.Windows.Forms.TableLayoutPanel();
+            this.cancelBtnPaymentId = new System.Windows.Forms.Button();
+            this.backBtnPaymentId = new System.Windows.Forms.Button();
+            this.downloadBtnPaymentId = new System.Windows.Forms.Button();
+            this.printBtnPaymentId = new System.Windows.Forms.Button();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel126 = new System.Windows.Forms.TableLayoutPanel();
+            this.idprintingStatusLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel123 = new System.Windows.Forms.TableLayoutPanel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.paymentIDBalance = new System.Windows.Forms.Label();
+            this.tableLayoutPanel127 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel113 = new System.Windows.Forms.TableLayoutPanel();
+            this.paymentIDTotal = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel128 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel129 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel130 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel131 = new System.Windows.Forms.TableLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel124 = new System.Windows.Forms.TableLayoutPanel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.paymentInsertedID = new System.Windows.Forms.Label();
+            this.tableLayoutPanel132 = new System.Windows.Forms.TableLayoutPanel();
+            this.label16 = new System.Windows.Forms.Label();
+            this.paymentChangeID = new System.Windows.Forms.Label();
             this.softCopyDownloadId = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel39 = new System.Windows.Forms.TableLayoutPanel();
@@ -282,39 +278,6 @@ namespace PrintAndSnap
             this.qrIdPrintingDownload = new System.Windows.Forms.PictureBox();
             this.label28 = new System.Windows.Forms.Label();
             this.photoBoothPanel = new System.Windows.Forms.Panel();
-            this.funPaymentPanel = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel111 = new System.Windows.Forms.TableLayoutPanel();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel72 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel114 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel71 = new System.Windows.Forms.TableLayoutPanel();
-            this.funDownloadBtn = new System.Windows.Forms.Button();
-            this.paymentFunBackBtn = new System.Windows.Forms.Button();
-            this.paymentFunPrintBtn = new System.Windows.Forms.Button();
-            this.paymentFunCancelBtn = new System.Windows.Forms.Button();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel115 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel116 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel69 = new System.Windows.Forms.TableLayoutPanel();
-            this.label41 = new System.Windows.Forms.Label();
-            this.paymentFunBalance = new System.Windows.Forms.Label();
-            this.tableLayoutPanel68 = new System.Windows.Forms.TableLayoutPanel();
-            this.label39 = new System.Windows.Forms.Label();
-            this.paymentFunTotal = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel117 = new System.Windows.Forms.TableLayoutPanel();
-            this.funPrintingStatusLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel118 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel119 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel120 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel121 = new System.Windows.Forms.TableLayoutPanel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.paymentFunInserted = new System.Windows.Forms.Label();
-            this.tableLayoutPanel122 = new System.Windows.Forms.TableLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.paymentFunChange = new System.Windows.Forms.Label();
             this.panelCMRphotoBooth = new System.Windows.Forms.Panel();
             this.tableLayoutPanel31 = new System.Windows.Forms.TableLayoutPanel();
             this.funCaptureAgainBtn = new System.Windows.Forms.Button();
@@ -390,6 +353,35 @@ namespace PrintAndSnap
             this.funSettingsCancelBtn = new System.Windows.Forms.Button();
             this.funSettingsBackBtn = new System.Windows.Forms.Button();
             this.funSettingContinueBtn = new System.Windows.Forms.Button();
+            this.funPaymentPanel = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel72 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel114 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel71 = new System.Windows.Forms.TableLayoutPanel();
+            this.funDownloadBtn = new System.Windows.Forms.Button();
+            this.paymentFunBackBtn = new System.Windows.Forms.Button();
+            this.paymentFunPrintBtn = new System.Windows.Forms.Button();
+            this.paymentFunCancelBtn = new System.Windows.Forms.Button();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel115 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel116 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel69 = new System.Windows.Forms.TableLayoutPanel();
+            this.label41 = new System.Windows.Forms.Label();
+            this.paymentFunBalance = new System.Windows.Forms.Label();
+            this.tableLayoutPanel68 = new System.Windows.Forms.TableLayoutPanel();
+            this.label39 = new System.Windows.Forms.Label();
+            this.paymentFunTotal = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel117 = new System.Windows.Forms.TableLayoutPanel();
+            this.funPrintingStatusLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel118 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel119 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel120 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel121 = new System.Windows.Forms.TableLayoutPanel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.paymentFunInserted = new System.Windows.Forms.Label();
+            this.tableLayoutPanel122 = new System.Windows.Forms.TableLayoutPanel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.paymentFunChange = new System.Windows.Forms.Label();
             this.funSoftCopyDownloadPanel = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel48 = new System.Windows.Forms.TableLayoutPanel();
@@ -425,16 +417,6 @@ namespace PrintAndSnap
             this.MainPrintingPanel.SuspendLayout();
             this.printPanel.SuspendLayout();
             this.printingSettingsPanel.SuspendLayout();
-            this.paymentPanel.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.tableLayoutPayment.SuspendLayout();
-            this.tableLayoutPanel104.SuspendLayout();
-            this.panel22.SuspendLayout();
-            this.tableLayoutPanel17.SuspendLayout();
-            this.tableLayoutPanel105.SuspendLayout();
-            this.tableLayoutPanel106.SuspendLayout();
-            this.tableLayoutPanel107.SuspendLayout();
-            this.tableLayoutPanel140.SuspendLayout();
             this.uploadPanel.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -481,25 +463,22 @@ namespace PrintAndSnap
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel77.SuspendLayout();
+            this.paymentPanel.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.tableLayoutPayment.SuspendLayout();
+            this.tableLayoutPanel104.SuspendLayout();
+            this.panel22.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.tableLayoutPanel105.SuspendLayout();
+            this.tableLayoutPanel106.SuspendLayout();
+            this.tableLayoutPanel107.SuspendLayout();
+            this.tableLayoutPanel140.SuspendLayout();
             this.retrivalPanel.SuspendLayout();
             this.retrivalMain.SuspendLayout();
             this.tableLayoutPanel97.SuspendLayout();
             this.continuePanel.SuspendLayout();
             this.photoPanel.SuspendLayout();
             this.photoIDPanel.SuspendLayout();
-            this.IDpayment.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.tableLayoutPanel51.SuspendLayout();
-            this.tableLayoutPanel47.SuspendLayout();
-            this.tableLayoutPanel53.SuspendLayout();
-            this.tableLayoutPanel125.SuspendLayout();
-            this.tableLayoutPanel52.SuspendLayout();
-            this.panel20.SuspendLayout();
-            this.tableLayoutPanel126.SuspendLayout();
-            this.tableLayoutPanel123.SuspendLayout();
-            this.tableLayoutPanel113.SuspendLayout();
-            this.tableLayoutPanel124.SuspendLayout();
-            this.tableLayoutPanel132.SuspendLayout();
             this.panelCRMidPrinting.SuspendLayout();
             this.tableLayoutPanel27.SuspendLayout();
             this.panel15.SuspendLayout();
@@ -542,23 +521,24 @@ namespace PrintAndSnap
             this.tableLayoutPanel13.SuspendLayout();
             this.tableLayoutPanel34.SuspendLayout();
             this.tableLayoutPanel40.SuspendLayout();
+            this.IDpayment.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tableLayoutPanel47.SuspendLayout();
+            this.tableLayoutPanel53.SuspendLayout();
+            this.tableLayoutPanel125.SuspendLayout();
+            this.tableLayoutPanel52.SuspendLayout();
+            this.panel20.SuspendLayout();
+            this.tableLayoutPanel126.SuspendLayout();
+            this.tableLayoutPanel123.SuspendLayout();
+            this.tableLayoutPanel113.SuspendLayout();
+            this.tableLayoutPanel124.SuspendLayout();
+            this.tableLayoutPanel132.SuspendLayout();
             this.softCopyDownloadId.SuspendLayout();
             this.panel10.SuspendLayout();
             this.tableLayoutPanel39.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.qrIdPrintingDownload)).BeginInit();
             this.photoBoothPanel.SuspendLayout();
-            this.funPaymentPanel.SuspendLayout();
-            this.tableLayoutPanel111.SuspendLayout();
-            this.tableLayoutPanel72.SuspendLayout();
-            this.tableLayoutPanel114.SuspendLayout();
-            this.tableLayoutPanel71.SuspendLayout();
-            this.panel19.SuspendLayout();
-            this.tableLayoutPanel115.SuspendLayout();
-            this.tableLayoutPanel69.SuspendLayout();
-            this.tableLayoutPanel68.SuspendLayout();
-            this.tableLayoutPanel121.SuspendLayout();
-            this.tableLayoutPanel122.SuspendLayout();
             this.panelCMRphotoBooth.SuspendLayout();
             this.tableLayoutPanel31.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).BeginInit();
@@ -605,6 +585,16 @@ namespace PrintAndSnap
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.tableLayoutPanel54.SuspendLayout();
             this.tableLayoutPanel42.SuspendLayout();
+            this.funPaymentPanel.SuspendLayout();
+            this.tableLayoutPanel72.SuspendLayout();
+            this.tableLayoutPanel114.SuspendLayout();
+            this.tableLayoutPanel71.SuspendLayout();
+            this.panel19.SuspendLayout();
+            this.tableLayoutPanel115.SuspendLayout();
+            this.tableLayoutPanel69.SuspendLayout();
+            this.tableLayoutPanel68.SuspendLayout();
+            this.tableLayoutPanel121.SuspendLayout();
+            this.tableLayoutPanel122.SuspendLayout();
             this.funSoftCopyDownloadPanel.SuspendLayout();
             this.panel11.SuspendLayout();
             this.tableLayoutPanel48.SuspendLayout();
@@ -895,471 +885,15 @@ namespace PrintAndSnap
             // 
             this.printingSettingsPanel.BackgroundImage = global::Snap_and_Print.Properties.Resources.SnapAndPrintBg;
             this.printingSettingsPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.printingSettingsPanel.Controls.Add(this.paymentPanel);
             this.printingSettingsPanel.Controls.Add(this.uploadPanel);
             this.printingSettingsPanel.Controls.Add(this.settingsPanel);
+            this.printingSettingsPanel.Controls.Add(this.paymentPanel);
             this.printingSettingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.printingSettingsPanel.Location = new System.Drawing.Point(0, 0);
             this.printingSettingsPanel.Margin = new System.Windows.Forms.Padding(2);
             this.printingSettingsPanel.Name = "printingSettingsPanel";
             this.printingSettingsPanel.Size = new System.Drawing.Size(1456, 729);
             this.printingSettingsPanel.TabIndex = 2;
-            // 
-            // paymentPanel
-            // 
-            this.paymentPanel.BackgroundImage = global::Snap_and_Print.Properties.Resources.SnapAndPrintBg;
-            this.paymentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.paymentPanel.Controls.Add(this.panel2);
-            this.paymentPanel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.paymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentPanel.Location = new System.Drawing.Point(0, 0);
-            this.paymentPanel.Margin = new System.Windows.Forms.Padding(2);
-            this.paymentPanel.Name = "paymentPanel";
-            this.paymentPanel.Size = new System.Drawing.Size(1456, 729);
-            this.paymentPanel.TabIndex = 4;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tableLayoutPayment);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.ForeColor = System.Drawing.Color.Black;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1456, 729);
-            this.panel2.TabIndex = 11;
-            // 
-            // tableLayoutPayment
-            // 
-            this.tableLayoutPayment.ColumnCount = 3;
-            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPayment.Controls.Add(this.tableLayoutPanel104, 1, 1);
-            this.tableLayoutPayment.Controls.Add(this.panel22, 1, 0);
-            this.tableLayoutPayment.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPayment.Location = new System.Drawing.Point(0, 274);
-            this.tableLayoutPayment.Margin = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPayment.Name = "tableLayoutPayment";
-            this.tableLayoutPayment.RowCount = 2;
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPayment.Size = new System.Drawing.Size(1456, 455);
-            this.tableLayoutPayment.TabIndex = 5;
-            // 
-            // tableLayoutPanel104
-            // 
-            this.tableLayoutPanel104.ColumnCount = 3;
-            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel104.Controls.Add(this.cancelPrintBtn, 0, 0);
-            this.tableLayoutPanel104.Controls.Add(this.printBtn, 2, 0);
-            this.tableLayoutPanel104.Controls.Add(this.paymentBackBtn, 1, 0);
-            this.tableLayoutPanel104.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel104.Location = new System.Drawing.Point(294, 367);
-            this.tableLayoutPanel104.Name = "tableLayoutPanel104";
-            this.tableLayoutPanel104.RowCount = 1;
-            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
-            this.tableLayoutPanel104.Size = new System.Drawing.Size(867, 85);
-            this.tableLayoutPanel104.TabIndex = 8;
-            // 
-            // cancelPrintBtn
-            // 
-            this.cancelPrintBtn.BackColor = System.Drawing.Color.Silver;
-            this.cancelPrintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cancelPrintBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cancelPrintBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.cancelPrintBtn.FlatAppearance.BorderSize = 2;
-            this.cancelPrintBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.cancelPrintBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.cancelPrintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelPrintBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelPrintBtn.Image = global::Snap_and_Print.Properties.Resources.printCancel;
-            this.cancelPrintBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cancelPrintBtn.Location = new System.Drawing.Point(50, 10);
-            this.cancelPrintBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
-            this.cancelPrintBtn.Name = "cancelPrintBtn";
-            this.cancelPrintBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.cancelPrintBtn.Size = new System.Drawing.Size(189, 65);
-            this.cancelPrintBtn.TabIndex = 2;
-            this.cancelPrintBtn.Text = "CANCEL";
-            this.cancelPrintBtn.UseVisualStyleBackColor = false;
-            this.cancelPrintBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-            // 
-            // printBtn
-            // 
-            this.printBtn.BackColor = System.Drawing.Color.Silver;
-            this.printBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.printBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.printBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.printBtn.FlatAppearance.BorderSize = 2;
-            this.printBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.printBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.printBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.printBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printBtn.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
-            this.printBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.printBtn.Location = new System.Drawing.Point(628, 10);
-            this.printBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
-            this.printBtn.Name = "printBtn";
-            this.printBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.printBtn.Size = new System.Drawing.Size(189, 65);
-            this.printBtn.TabIndex = 3;
-            this.printBtn.Text = "PRINT";
-            this.printBtn.UseVisualStyleBackColor = false;
-            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
-            // 
-            // paymentBackBtn
-            // 
-            this.paymentBackBtn.BackColor = System.Drawing.Color.Silver;
-            this.paymentBackBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.paymentBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentBackBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.paymentBackBtn.FlatAppearance.BorderSize = 2;
-            this.paymentBackBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.paymentBackBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
-            this.paymentBackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paymentBackBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentBackBtn.Image = global::Snap_and_Print.Properties.Resources.printBack;
-            this.paymentBackBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentBackBtn.Location = new System.Drawing.Point(339, 10);
-            this.paymentBackBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
-            this.paymentBackBtn.Name = "paymentBackBtn";
-            this.paymentBackBtn.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
-            this.paymentBackBtn.Size = new System.Drawing.Size(189, 65);
-            this.paymentBackBtn.TabIndex = 9;
-            this.paymentBackBtn.Text = "BACK";
-            this.paymentBackBtn.UseVisualStyleBackColor = false;
-            this.paymentBackBtn.Click += new System.EventHandler(this.paymentBackBtn_Click);
-            // 
-            // panel22
-            // 
-            this.panel22.BackColor = System.Drawing.Color.Silver;
-            this.panel22.Controls.Add(this.tableLayoutPanel17);
-            this.panel22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel22.Location = new System.Drawing.Point(431, 10);
-            this.panel22.Margin = new System.Windows.Forms.Padding(140, 10, 140, 10);
-            this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(593, 344);
-            this.panel22.TabIndex = 9;
-            // 
-            // tableLayoutPanel17
-            // 
-            this.tableLayoutPanel17.ColumnCount = 1;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel103, 0, 9);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel102, 0, 7);
-            this.tableLayoutPanel17.Controls.Add(this.printingStatusLabel, 0, 10);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel101, 0, 5);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel100, 0, 3);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel98, 0, 1);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel105, 0, 2);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel106, 0, 4);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel107, 0, 6);
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel140, 0, 8);
-            this.tableLayoutPanel17.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
-            this.tableLayoutPanel17.RowCount = 11;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(593, 344);
-            this.tableLayoutPanel17.TabIndex = 0;
-            // 
-            // tableLayoutPanel103
-            // 
-            this.tableLayoutPanel103.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel103.ColumnCount = 1;
-            this.tableLayoutPanel103.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel103.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel103.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel103.Location = new System.Drawing.Point(150, 300);
-            this.tableLayoutPanel103.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
-            this.tableLayoutPanel103.Name = "tableLayoutPanel103";
-            this.tableLayoutPanel103.RowCount = 1;
-            this.tableLayoutPanel103.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel103.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel103.Size = new System.Drawing.Size(293, 1);
-            this.tableLayoutPanel103.TabIndex = 4;
-            // 
-            // tableLayoutPanel102
-            // 
-            this.tableLayoutPanel102.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel102.ColumnCount = 1;
-            this.tableLayoutPanel102.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel102.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel102.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel102.Location = new System.Drawing.Point(80, 240);
-            this.tableLayoutPanel102.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel102.Name = "tableLayoutPanel102";
-            this.tableLayoutPanel102.RowCount = 1;
-            this.tableLayoutPanel102.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel102.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel102.Size = new System.Drawing.Size(433, 1);
-            this.tableLayoutPanel102.TabIndex = 3;
-            // 
-            // printingStatusLabel
-            // 
-            this.printingStatusLabel.AutoSize = true;
-            this.printingStatusLabel.BackColor = System.Drawing.Color.Transparent;
-            this.printingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.printingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printingStatusLabel.ForeColor = System.Drawing.Color.DimGray;
-            this.printingStatusLabel.Location = new System.Drawing.Point(150, 310);
-            this.printingStatusLabel.Margin = new System.Windows.Forms.Padding(150, 10, 150, 10);
-            this.printingStatusLabel.Name = "printingStatusLabel";
-            this.printingStatusLabel.Size = new System.Drawing.Size(293, 24);
-            this.printingStatusLabel.TabIndex = 11;
-            this.printingStatusLabel.Text = "[Status]";
-            this.printingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel101
-            // 
-            this.tableLayoutPanel101.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel101.ColumnCount = 1;
-            this.tableLayoutPanel101.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel101.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel101.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel101.Location = new System.Drawing.Point(80, 180);
-            this.tableLayoutPanel101.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel101.Name = "tableLayoutPanel101";
-            this.tableLayoutPanel101.RowCount = 1;
-            this.tableLayoutPanel101.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel101.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel101.Size = new System.Drawing.Size(433, 1);
-            this.tableLayoutPanel101.TabIndex = 2;
-            // 
-            // tableLayoutPanel100
-            // 
-            this.tableLayoutPanel100.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel100.ColumnCount = 1;
-            this.tableLayoutPanel100.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel100.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel100.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel100.Location = new System.Drawing.Point(80, 120);
-            this.tableLayoutPanel100.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel100.Name = "tableLayoutPanel100";
-            this.tableLayoutPanel100.RowCount = 1;
-            this.tableLayoutPanel100.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel100.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel100.Size = new System.Drawing.Size(433, 1);
-            this.tableLayoutPanel100.TabIndex = 1;
-            // 
-            // tableLayoutPanel98
-            // 
-            this.tableLayoutPanel98.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel98.ColumnCount = 1;
-            this.tableLayoutPanel98.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel98.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel98.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel98.Location = new System.Drawing.Point(110, 60);
-            this.tableLayoutPanel98.Margin = new System.Windows.Forms.Padding(110, 3, 110, 3);
-            this.tableLayoutPanel98.Name = "tableLayoutPanel98";
-            this.tableLayoutPanel98.RowCount = 1;
-            this.tableLayoutPanel98.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel98.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel98.Size = new System.Drawing.Size(373, 1);
-            this.tableLayoutPanel98.TabIndex = 0;
-            // 
-            // tableLayoutPanel105
-            // 
-            this.tableLayoutPanel105.BackColor = System.Drawing.Color.Silver;
-            this.tableLayoutPanel105.ColumnCount = 2;
-            this.tableLayoutPanel105.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel105.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel105.Controls.Add(this.paymentDocTotal, 1, 0);
-            this.tableLayoutPanel105.Controls.Add(this.label29, 0, 0);
-            this.tableLayoutPanel105.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel105.Location = new System.Drawing.Point(3, 63);
-            this.tableLayoutPanel105.Name = "tableLayoutPanel105";
-            this.tableLayoutPanel105.RowCount = 1;
-            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
-            this.tableLayoutPanel105.Size = new System.Drawing.Size(587, 51);
-            this.tableLayoutPanel105.TabIndex = 5;
-            // 
-            // paymentDocTotal
-            // 
-            this.paymentDocTotal.AutoSize = true;
-            this.paymentDocTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentDocTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentDocTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentDocTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentDocTotal.Location = new System.Drawing.Point(295, 2);
-            this.paymentDocTotal.Margin = new System.Windows.Forms.Padding(2);
-            this.paymentDocTotal.Name = "paymentDocTotal";
-            this.paymentDocTotal.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
-            this.paymentDocTotal.Size = new System.Drawing.Size(290, 47);
-            this.paymentDocTotal.TabIndex = 4;
-            this.paymentDocTotal.Text = "[0]";
-            this.paymentDocTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(3, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(287, 51);
-            this.label29.TabIndex = 5;
-            this.label29.Text = "Total Amount :";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel106
-            // 
-            this.tableLayoutPanel106.ColumnCount = 2;
-            this.tableLayoutPanel106.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel106.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel106.Controls.Add(this.paymentDocBalance, 1, 0);
-            this.tableLayoutPanel106.Controls.Add(this.label30, 0, 0);
-            this.tableLayoutPanel106.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel106.Location = new System.Drawing.Point(3, 123);
-            this.tableLayoutPanel106.Name = "tableLayoutPanel106";
-            this.tableLayoutPanel106.RowCount = 1;
-            this.tableLayoutPanel106.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel106.Size = new System.Drawing.Size(587, 51);
-            this.tableLayoutPanel106.TabIndex = 6;
-            // 
-            // paymentDocBalance
-            // 
-            this.paymentDocBalance.AutoSize = true;
-            this.paymentDocBalance.BackColor = System.Drawing.Color.Transparent;
-            this.paymentDocBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentDocBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentDocBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentDocBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentDocBalance.Location = new System.Drawing.Point(295, 2);
-            this.paymentDocBalance.Margin = new System.Windows.Forms.Padding(2);
-            this.paymentDocBalance.Name = "paymentDocBalance";
-            this.paymentDocBalance.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
-            this.paymentDocBalance.Size = new System.Drawing.Size(290, 47);
-            this.paymentDocBalance.TabIndex = 5;
-            this.paymentDocBalance.Text = "[0]";
-            this.paymentDocBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label30.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(3, 0);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(287, 51);
-            this.label30.TabIndex = 6;
-            this.label30.Text = "Balance :";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel107
-            // 
-            this.tableLayoutPanel107.ColumnCount = 2;
-            this.tableLayoutPanel107.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel107.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel107.Controls.Add(this.totalDocInserted, 1, 0);
-            this.tableLayoutPanel107.Controls.Add(this.label31, 0, 0);
-            this.tableLayoutPanel107.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel107.Location = new System.Drawing.Point(3, 183);
-            this.tableLayoutPanel107.Name = "tableLayoutPanel107";
-            this.tableLayoutPanel107.RowCount = 1;
-            this.tableLayoutPanel107.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel107.Size = new System.Drawing.Size(587, 51);
-            this.tableLayoutPanel107.TabIndex = 7;
-            // 
-            // totalDocInserted
-            // 
-            this.totalDocInserted.AutoSize = true;
-            this.totalDocInserted.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalDocInserted.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalDocInserted.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.totalDocInserted.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.totalDocInserted.Location = new System.Drawing.Point(296, 0);
-            this.totalDocInserted.Name = "totalDocInserted";
-            this.totalDocInserted.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
-            this.totalDocInserted.Size = new System.Drawing.Size(288, 51);
-            this.totalDocInserted.TabIndex = 0;
-            this.totalDocInserted.Text = "[0]";
-            this.totalDocInserted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label31.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(3, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(287, 51);
-            this.label31.TabIndex = 1;
-            this.label31.Text = "Payment Inserted :";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel140
-            // 
-            this.tableLayoutPanel140.ColumnCount = 2;
-            this.tableLayoutPanel140.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel140.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel140.Controls.Add(this.totalDocChange, 1, 0);
-            this.tableLayoutPanel140.Controls.Add(this.label32, 0, 0);
-            this.tableLayoutPanel140.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel140.Location = new System.Drawing.Point(3, 243);
-            this.tableLayoutPanel140.Name = "tableLayoutPanel140";
-            this.tableLayoutPanel140.RowCount = 1;
-            this.tableLayoutPanel140.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel140.Size = new System.Drawing.Size(587, 51);
-            this.tableLayoutPanel140.TabIndex = 8;
-            // 
-            // totalDocChange
-            // 
-            this.totalDocChange.AutoSize = true;
-            this.totalDocChange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalDocChange.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalDocChange.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.totalDocChange.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.totalDocChange.Location = new System.Drawing.Point(296, 0);
-            this.totalDocChange.Name = "totalDocChange";
-            this.totalDocChange.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
-            this.totalDocChange.Size = new System.Drawing.Size(288, 51);
-            this.totalDocChange.TabIndex = 0;
-            this.totalDocChange.Text = "[0]";
-            this.totalDocChange.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label32.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(3, 0);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(287, 51);
-            this.label32.TabIndex = 1;
-            this.label32.Text = "Change :";
-            this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(587, 57);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Payment";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // uploadPanel
             // 
@@ -2624,6 +2158,462 @@ namespace PrintAndSnap
             this.printSettingsCancelBtn.UseVisualStyleBackColor = false;
             this.printSettingsCancelBtn.Click += new System.EventHandler(this.printSettingsCancelBtn_Click);
             // 
+            // paymentPanel
+            // 
+            this.paymentPanel.BackgroundImage = global::Snap_and_Print.Properties.Resources.SnapAndPrintBg;
+            this.paymentPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.paymentPanel.Controls.Add(this.panel2);
+            this.paymentPanel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.paymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentPanel.Location = new System.Drawing.Point(0, 0);
+            this.paymentPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.paymentPanel.Name = "paymentPanel";
+            this.paymentPanel.Size = new System.Drawing.Size(1456, 729);
+            this.paymentPanel.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tableLayoutPayment);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel2.ForeColor = System.Drawing.Color.Black;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1456, 729);
+            this.panel2.TabIndex = 11;
+            // 
+            // tableLayoutPayment
+            // 
+            this.tableLayoutPayment.ColumnCount = 3;
+            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPayment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPayment.Controls.Add(this.tableLayoutPanel104, 1, 1);
+            this.tableLayoutPayment.Controls.Add(this.panel22, 1, 0);
+            this.tableLayoutPayment.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPayment.Location = new System.Drawing.Point(0, 274);
+            this.tableLayoutPayment.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPayment.Name = "tableLayoutPayment";
+            this.tableLayoutPayment.RowCount = 2;
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPayment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPayment.Size = new System.Drawing.Size(1456, 455);
+            this.tableLayoutPayment.TabIndex = 5;
+            // 
+            // tableLayoutPanel104
+            // 
+            this.tableLayoutPanel104.ColumnCount = 3;
+            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel104.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel104.Controls.Add(this.cancelPrintBtn, 0, 0);
+            this.tableLayoutPanel104.Controls.Add(this.printBtn, 2, 0);
+            this.tableLayoutPanel104.Controls.Add(this.paymentBackBtn, 1, 0);
+            this.tableLayoutPanel104.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel104.Location = new System.Drawing.Point(294, 367);
+            this.tableLayoutPanel104.Name = "tableLayoutPanel104";
+            this.tableLayoutPanel104.RowCount = 1;
+            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel104.Size = new System.Drawing.Size(867, 85);
+            this.tableLayoutPanel104.TabIndex = 8;
+            // 
+            // cancelPrintBtn
+            // 
+            this.cancelPrintBtn.BackColor = System.Drawing.Color.Silver;
+            this.cancelPrintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cancelPrintBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cancelPrintBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.cancelPrintBtn.FlatAppearance.BorderSize = 2;
+            this.cancelPrintBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.cancelPrintBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.cancelPrintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelPrintBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cancelPrintBtn.Image = global::Snap_and_Print.Properties.Resources.printCancel;
+            this.cancelPrintBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cancelPrintBtn.Location = new System.Drawing.Point(50, 10);
+            this.cancelPrintBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
+            this.cancelPrintBtn.Name = "cancelPrintBtn";
+            this.cancelPrintBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.cancelPrintBtn.Size = new System.Drawing.Size(189, 65);
+            this.cancelPrintBtn.TabIndex = 2;
+            this.cancelPrintBtn.Text = "CANCEL";
+            this.cancelPrintBtn.UseVisualStyleBackColor = false;
+            this.cancelPrintBtn.Click += new System.EventHandler(this.cancelBtn_Click);
+            // 
+            // printBtn
+            // 
+            this.printBtn.BackColor = System.Drawing.Color.Silver;
+            this.printBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.printBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.printBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.printBtn.FlatAppearance.BorderSize = 2;
+            this.printBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.printBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.printBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.printBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printBtn.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
+            this.printBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.printBtn.Location = new System.Drawing.Point(628, 10);
+            this.printBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
+            this.printBtn.Name = "printBtn";
+            this.printBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.printBtn.Size = new System.Drawing.Size(189, 65);
+            this.printBtn.TabIndex = 3;
+            this.printBtn.Text = "PRINT";
+            this.printBtn.UseVisualStyleBackColor = false;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
+            // 
+            // paymentBackBtn
+            // 
+            this.paymentBackBtn.BackColor = System.Drawing.Color.Silver;
+            this.paymentBackBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.paymentBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentBackBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.paymentBackBtn.FlatAppearance.BorderSize = 2;
+            this.paymentBackBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.paymentBackBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkGray;
+            this.paymentBackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paymentBackBtn.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentBackBtn.Image = global::Snap_and_Print.Properties.Resources.printBack;
+            this.paymentBackBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentBackBtn.Location = new System.Drawing.Point(339, 10);
+            this.paymentBackBtn.Margin = new System.Windows.Forms.Padding(50, 10, 50, 10);
+            this.paymentBackBtn.Name = "paymentBackBtn";
+            this.paymentBackBtn.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
+            this.paymentBackBtn.Size = new System.Drawing.Size(189, 65);
+            this.paymentBackBtn.TabIndex = 9;
+            this.paymentBackBtn.Text = "BACK";
+            this.paymentBackBtn.UseVisualStyleBackColor = false;
+            this.paymentBackBtn.Click += new System.EventHandler(this.paymentBackBtn_Click);
+            // 
+            // panel22
+            // 
+            this.panel22.BackColor = System.Drawing.Color.Silver;
+            this.panel22.Controls.Add(this.tableLayoutPanel17);
+            this.panel22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel22.Location = new System.Drawing.Point(431, 10);
+            this.panel22.Margin = new System.Windows.Forms.Padding(140, 10, 140, 10);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(593, 344);
+            this.panel22.TabIndex = 9;
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 1;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel103, 0, 9);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel102, 0, 7);
+            this.tableLayoutPanel17.Controls.Add(this.printingStatusLabel, 0, 10);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel101, 0, 5);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel100, 0, 3);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel98, 0, 1);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel105, 0, 2);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel106, 0, 4);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel107, 0, 6);
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel140, 0, 8);
+            this.tableLayoutPanel17.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 11;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1.111111F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(593, 344);
+            this.tableLayoutPanel17.TabIndex = 0;
+            // 
+            // tableLayoutPanel103
+            // 
+            this.tableLayoutPanel103.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel103.ColumnCount = 1;
+            this.tableLayoutPanel103.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel103.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel103.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel103.Location = new System.Drawing.Point(150, 300);
+            this.tableLayoutPanel103.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
+            this.tableLayoutPanel103.Name = "tableLayoutPanel103";
+            this.tableLayoutPanel103.RowCount = 1;
+            this.tableLayoutPanel103.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel103.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel103.Size = new System.Drawing.Size(293, 1);
+            this.tableLayoutPanel103.TabIndex = 4;
+            // 
+            // tableLayoutPanel102
+            // 
+            this.tableLayoutPanel102.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel102.ColumnCount = 1;
+            this.tableLayoutPanel102.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel102.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel102.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel102.Location = new System.Drawing.Point(80, 240);
+            this.tableLayoutPanel102.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel102.Name = "tableLayoutPanel102";
+            this.tableLayoutPanel102.RowCount = 1;
+            this.tableLayoutPanel102.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel102.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel102.Size = new System.Drawing.Size(433, 1);
+            this.tableLayoutPanel102.TabIndex = 3;
+            // 
+            // printingStatusLabel
+            // 
+            this.printingStatusLabel.AutoSize = true;
+            this.printingStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.printingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.printingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printingStatusLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.printingStatusLabel.Location = new System.Drawing.Point(150, 310);
+            this.printingStatusLabel.Margin = new System.Windows.Forms.Padding(150, 10, 150, 10);
+            this.printingStatusLabel.Name = "printingStatusLabel";
+            this.printingStatusLabel.Size = new System.Drawing.Size(293, 24);
+            this.printingStatusLabel.TabIndex = 11;
+            this.printingStatusLabel.Text = "[Status]";
+            this.printingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel101
+            // 
+            this.tableLayoutPanel101.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel101.ColumnCount = 1;
+            this.tableLayoutPanel101.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel101.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel101.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel101.Location = new System.Drawing.Point(80, 180);
+            this.tableLayoutPanel101.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel101.Name = "tableLayoutPanel101";
+            this.tableLayoutPanel101.RowCount = 1;
+            this.tableLayoutPanel101.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel101.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel101.Size = new System.Drawing.Size(433, 1);
+            this.tableLayoutPanel101.TabIndex = 2;
+            // 
+            // tableLayoutPanel100
+            // 
+            this.tableLayoutPanel100.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel100.ColumnCount = 1;
+            this.tableLayoutPanel100.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel100.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel100.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel100.Location = new System.Drawing.Point(80, 120);
+            this.tableLayoutPanel100.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel100.Name = "tableLayoutPanel100";
+            this.tableLayoutPanel100.RowCount = 1;
+            this.tableLayoutPanel100.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel100.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel100.Size = new System.Drawing.Size(433, 1);
+            this.tableLayoutPanel100.TabIndex = 1;
+            // 
+            // tableLayoutPanel98
+            // 
+            this.tableLayoutPanel98.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel98.ColumnCount = 1;
+            this.tableLayoutPanel98.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel98.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel98.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel98.Location = new System.Drawing.Point(110, 60);
+            this.tableLayoutPanel98.Margin = new System.Windows.Forms.Padding(110, 3, 110, 3);
+            this.tableLayoutPanel98.Name = "tableLayoutPanel98";
+            this.tableLayoutPanel98.RowCount = 1;
+            this.tableLayoutPanel98.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel98.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel98.Size = new System.Drawing.Size(373, 1);
+            this.tableLayoutPanel98.TabIndex = 0;
+            // 
+            // tableLayoutPanel105
+            // 
+            this.tableLayoutPanel105.BackColor = System.Drawing.Color.Silver;
+            this.tableLayoutPanel105.ColumnCount = 2;
+            this.tableLayoutPanel105.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel105.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel105.Controls.Add(this.paymentDocTotal, 1, 0);
+            this.tableLayoutPanel105.Controls.Add(this.label29, 0, 0);
+            this.tableLayoutPanel105.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel105.Location = new System.Drawing.Point(3, 63);
+            this.tableLayoutPanel105.Name = "tableLayoutPanel105";
+            this.tableLayoutPanel105.RowCount = 1;
+            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.tableLayoutPanel105.Size = new System.Drawing.Size(587, 51);
+            this.tableLayoutPanel105.TabIndex = 5;
+            // 
+            // paymentDocTotal
+            // 
+            this.paymentDocTotal.AutoSize = true;
+            this.paymentDocTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentDocTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentDocTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentDocTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentDocTotal.Location = new System.Drawing.Point(295, 2);
+            this.paymentDocTotal.Margin = new System.Windows.Forms.Padding(2);
+            this.paymentDocTotal.Name = "paymentDocTotal";
+            this.paymentDocTotal.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
+            this.paymentDocTotal.Size = new System.Drawing.Size(290, 47);
+            this.paymentDocTotal.TabIndex = 4;
+            this.paymentDocTotal.Text = "[0]";
+            this.paymentDocTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(3, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(287, 51);
+            this.label29.TabIndex = 5;
+            this.label29.Text = "Total Amount :";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel106
+            // 
+            this.tableLayoutPanel106.ColumnCount = 2;
+            this.tableLayoutPanel106.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel106.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel106.Controls.Add(this.paymentDocBalance, 1, 0);
+            this.tableLayoutPanel106.Controls.Add(this.label30, 0, 0);
+            this.tableLayoutPanel106.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel106.Location = new System.Drawing.Point(3, 123);
+            this.tableLayoutPanel106.Name = "tableLayoutPanel106";
+            this.tableLayoutPanel106.RowCount = 1;
+            this.tableLayoutPanel106.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel106.Size = new System.Drawing.Size(587, 51);
+            this.tableLayoutPanel106.TabIndex = 6;
+            // 
+            // paymentDocBalance
+            // 
+            this.paymentDocBalance.AutoSize = true;
+            this.paymentDocBalance.BackColor = System.Drawing.Color.Transparent;
+            this.paymentDocBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentDocBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentDocBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentDocBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentDocBalance.Location = new System.Drawing.Point(295, 2);
+            this.paymentDocBalance.Margin = new System.Windows.Forms.Padding(2);
+            this.paymentDocBalance.Name = "paymentDocBalance";
+            this.paymentDocBalance.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
+            this.paymentDocBalance.Size = new System.Drawing.Size(290, 47);
+            this.paymentDocBalance.TabIndex = 5;
+            this.paymentDocBalance.Text = "[0]";
+            this.paymentDocBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(3, 0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(287, 51);
+            this.label30.TabIndex = 6;
+            this.label30.Text = "Balance :";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel107
+            // 
+            this.tableLayoutPanel107.ColumnCount = 2;
+            this.tableLayoutPanel107.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel107.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel107.Controls.Add(this.totalDocInserted, 1, 0);
+            this.tableLayoutPanel107.Controls.Add(this.label31, 0, 0);
+            this.tableLayoutPanel107.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel107.Location = new System.Drawing.Point(3, 183);
+            this.tableLayoutPanel107.Name = "tableLayoutPanel107";
+            this.tableLayoutPanel107.RowCount = 1;
+            this.tableLayoutPanel107.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel107.Size = new System.Drawing.Size(587, 51);
+            this.tableLayoutPanel107.TabIndex = 7;
+            // 
+            // totalDocInserted
+            // 
+            this.totalDocInserted.AutoSize = true;
+            this.totalDocInserted.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totalDocInserted.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalDocInserted.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.totalDocInserted.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.totalDocInserted.Location = new System.Drawing.Point(296, 0);
+            this.totalDocInserted.Name = "totalDocInserted";
+            this.totalDocInserted.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
+            this.totalDocInserted.Size = new System.Drawing.Size(288, 51);
+            this.totalDocInserted.TabIndex = 0;
+            this.totalDocInserted.Text = "[0]";
+            this.totalDocInserted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label31.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(3, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(287, 51);
+            this.label31.TabIndex = 1;
+            this.label31.Text = "Payment Inserted :";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel140
+            // 
+            this.tableLayoutPanel140.ColumnCount = 2;
+            this.tableLayoutPanel140.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel140.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel140.Controls.Add(this.totalDocChange, 1, 0);
+            this.tableLayoutPanel140.Controls.Add(this.label32, 0, 0);
+            this.tableLayoutPanel140.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel140.Location = new System.Drawing.Point(3, 243);
+            this.tableLayoutPanel140.Name = "tableLayoutPanel140";
+            this.tableLayoutPanel140.RowCount = 1;
+            this.tableLayoutPanel140.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel140.Size = new System.Drawing.Size(587, 51);
+            this.tableLayoutPanel140.TabIndex = 8;
+            // 
+            // totalDocChange
+            // 
+            this.totalDocChange.AutoSize = true;
+            this.totalDocChange.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totalDocChange.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.totalDocChange.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.totalDocChange.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.totalDocChange.Location = new System.Drawing.Point(296, 0);
+            this.totalDocChange.Name = "totalDocChange";
+            this.totalDocChange.Padding = new System.Windows.Forms.Padding(3, 3, 150, 3);
+            this.totalDocChange.Size = new System.Drawing.Size(288, 51);
+            this.totalDocChange.TabIndex = 0;
+            this.totalDocChange.Text = "[0]";
+            this.totalDocChange.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label32.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(3, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(287, 51);
+            this.label32.TabIndex = 1;
+            this.label32.Text = "Change :";
+            this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(587, 57);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Payment";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // retrivalPanel
             // 
             this.retrivalPanel.Controls.Add(this.retrivalMain);
@@ -2796,563 +2786,15 @@ namespace PrintAndSnap
             this.photoIDPanel.BackColor = System.Drawing.Color.Transparent;
             this.photoIDPanel.BackgroundImage = global::Snap_and_Print.Properties.Resources.IDphotoBg1;
             this.photoIDPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.photoIDPanel.Controls.Add(this.IDpayment);
             this.photoIDPanel.Controls.Add(this.panelCRMidPrinting);
             this.photoIDPanel.Controls.Add(this.idPrintingSettings);
+            this.photoIDPanel.Controls.Add(this.IDpayment);
             this.photoIDPanel.Controls.Add(this.softCopyDownloadId);
             this.photoIDPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoIDPanel.Location = new System.Drawing.Point(0, 0);
             this.photoIDPanel.Name = "photoIDPanel";
             this.photoIDPanel.Size = new System.Drawing.Size(1456, 729);
             this.photoIDPanel.TabIndex = 2;
-            // 
-            // IDpayment
-            // 
-            this.IDpayment.Controls.Add(this.panel4);
-            this.IDpayment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.IDpayment.Location = new System.Drawing.Point(0, 0);
-            this.IDpayment.Name = "IDpayment";
-            this.IDpayment.Size = new System.Drawing.Size(1456, 729);
-            this.IDpayment.TabIndex = 0;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.tableLayoutPanel51);
-            this.panel4.Controls.Add(this.tableLayoutPanel47);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1456, 729);
-            this.panel4.TabIndex = 6;
-            // 
-            // tableLayoutPanel51
-            // 
-            this.tableLayoutPanel51.ColumnCount = 1;
-            this.tableLayoutPanel51.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel51.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel51.Controls.Add(this.button1, 0, 0);
-            this.tableLayoutPanel51.Controls.Add(this.button2, 0, 1);
-            this.tableLayoutPanel51.Controls.Add(this.button3, 0, 2);
-            this.tableLayoutPanel51.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutPanel51.Location = new System.Drawing.Point(1256, 0);
-            this.tableLayoutPanel51.Name = "tableLayoutPanel51";
-            this.tableLayoutPanel51.RowCount = 3;
-            this.tableLayoutPanel51.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel51.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel51.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel51.Size = new System.Drawing.Size(200, 230);
-            this.tableLayoutPanel51.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "5";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(3, 79);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "10";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(3, 155);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "20";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel47
-            // 
-            this.tableLayoutPanel47.ColumnCount = 1;
-            this.tableLayoutPanel47.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel47.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel47.Controls.Add(this.tableLayoutPanel53, 0, 0);
-            this.tableLayoutPanel47.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel47.Location = new System.Drawing.Point(0, 230);
-            this.tableLayoutPanel47.Name = "tableLayoutPanel47";
-            this.tableLayoutPanel47.RowCount = 1;
-            this.tableLayoutPanel47.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel47.Size = new System.Drawing.Size(1456, 499);
-            this.tableLayoutPanel47.TabIndex = 0;
-            // 
-            // tableLayoutPanel53
-            // 
-            this.tableLayoutPanel53.ColumnCount = 3;
-            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel53.Controls.Add(this.tableLayoutPanel125, 1, 0);
-            this.tableLayoutPanel53.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel53.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel53.Name = "tableLayoutPanel53";
-            this.tableLayoutPanel53.RowCount = 1;
-            this.tableLayoutPanel53.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel53.Size = new System.Drawing.Size(1450, 493);
-            this.tableLayoutPanel53.TabIndex = 6;
-            // 
-            // tableLayoutPanel125
-            // 
-            this.tableLayoutPanel125.ColumnCount = 1;
-            this.tableLayoutPanel125.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel125.Controls.Add(this.tableLayoutPanel52, 0, 1);
-            this.tableLayoutPanel125.Controls.Add(this.panel20, 0, 0);
-            this.tableLayoutPanel125.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel125.Location = new System.Drawing.Point(293, 3);
-            this.tableLayoutPanel125.Name = "tableLayoutPanel125";
-            this.tableLayoutPanel125.RowCount = 2;
-            this.tableLayoutPanel125.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel125.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel125.Size = new System.Drawing.Size(864, 487);
-            this.tableLayoutPanel125.TabIndex = 0;
-            // 
-            // tableLayoutPanel52
-            // 
-            this.tableLayoutPanel52.ColumnCount = 4;
-            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel52.Controls.Add(this.cancelBtnPaymentId, 0, 0);
-            this.tableLayoutPanel52.Controls.Add(this.backBtnPaymentId, 1, 0);
-            this.tableLayoutPanel52.Controls.Add(this.downloadBtnPaymentId, 3, 0);
-            this.tableLayoutPanel52.Controls.Add(this.printBtnPaymentId, 2, 0);
-            this.tableLayoutPanel52.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel52.Location = new System.Drawing.Point(3, 392);
-            this.tableLayoutPanel52.Name = "tableLayoutPanel52";
-            this.tableLayoutPanel52.RowCount = 1;
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel52.Size = new System.Drawing.Size(858, 92);
-            this.tableLayoutPanel52.TabIndex = 2;
-            // 
-            // cancelBtnPaymentId
-            // 
-            this.cancelBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
-            this.cancelBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cancelBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cancelBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.cancelBtnPaymentId.FlatAppearance.BorderSize = 2;
-            this.cancelBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.cancelBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.cancelBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printCancel;
-            this.cancelBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cancelBtnPaymentId.Location = new System.Drawing.Point(20, 10);
-            this.cancelBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.cancelBtnPaymentId.Name = "cancelBtnPaymentId";
-            this.cancelBtnPaymentId.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.cancelBtnPaymentId.Size = new System.Drawing.Size(174, 72);
-            this.cancelBtnPaymentId.TabIndex = 0;
-            this.cancelBtnPaymentId.Text = "CANCEL";
-            this.cancelBtnPaymentId.UseVisualStyleBackColor = false;
-            this.cancelBtnPaymentId.Click += new System.EventHandler(this.cancelBtnPaymentId_Click);
-            // 
-            // backBtnPaymentId
-            // 
-            this.backBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
-            this.backBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.backBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.backBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.backBtnPaymentId.FlatAppearance.BorderSize = 2;
-            this.backBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.backBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.backBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.backBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.backBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printBack;
-            this.backBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.backBtnPaymentId.Location = new System.Drawing.Point(234, 10);
-            this.backBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.backBtnPaymentId.Name = "backBtnPaymentId";
-            this.backBtnPaymentId.Padding = new System.Windows.Forms.Padding(30, 0, 10, 0);
-            this.backBtnPaymentId.Size = new System.Drawing.Size(174, 72);
-            this.backBtnPaymentId.TabIndex = 1;
-            this.backBtnPaymentId.Text = "BACK";
-            this.backBtnPaymentId.UseVisualStyleBackColor = false;
-            this.backBtnPaymentId.Click += new System.EventHandler(this.backBtnPaymentId_Click);
-            // 
-            // downloadBtnPaymentId
-            // 
-            this.downloadBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
-            this.downloadBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.downloadBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.downloadBtnPaymentId.FlatAppearance.BorderSize = 2;
-            this.downloadBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.downloadBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.downloadBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.downloadBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.downloadBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.mail_download_fill;
-            this.downloadBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.downloadBtnPaymentId.Location = new System.Drawing.Point(662, 10);
-            this.downloadBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.downloadBtnPaymentId.Name = "downloadBtnPaymentId";
-            this.downloadBtnPaymentId.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.downloadBtnPaymentId.Size = new System.Drawing.Size(176, 72);
-            this.downloadBtnPaymentId.TabIndex = 3;
-            this.downloadBtnPaymentId.Text = "DOWNLOAD";
-            this.downloadBtnPaymentId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.downloadBtnPaymentId.UseVisualStyleBackColor = false;
-            this.downloadBtnPaymentId.Click += new System.EventHandler(this.downloadBtnPaymentId_Click);
-            // 
-            // printBtnPaymentId
-            // 
-            this.printBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
-            this.printBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.printBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.printBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.printBtnPaymentId.FlatAppearance.BorderSize = 2;
-            this.printBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.printBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.printBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.printBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
-            this.printBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.printBtnPaymentId.Location = new System.Drawing.Point(448, 10);
-            this.printBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.printBtnPaymentId.Name = "printBtnPaymentId";
-            this.printBtnPaymentId.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
-            this.printBtnPaymentId.Size = new System.Drawing.Size(174, 72);
-            this.printBtnPaymentId.TabIndex = 2;
-            this.printBtnPaymentId.Text = "PRINT";
-            this.printBtnPaymentId.UseVisualStyleBackColor = false;
-            this.printBtnPaymentId.Click += new System.EventHandler(this.printBtnPaymentId_Click);
-            // 
-            // panel20
-            // 
-            this.panel20.BackColor = System.Drawing.Color.Silver;
-            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel20.Controls.Add(this.tableLayoutPanel126);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel20.Location = new System.Drawing.Point(160, 10);
-            this.panel20.Margin = new System.Windows.Forms.Padding(160, 10, 160, 10);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(544, 369);
-            this.panel20.TabIndex = 0;
-            // 
-            // tableLayoutPanel126
-            // 
-            this.tableLayoutPanel126.ColumnCount = 1;
-            this.tableLayoutPanel126.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel126.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel126.Controls.Add(this.idprintingStatusLabel, 0, 10);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel123, 0, 4);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel127, 0, 1);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel113, 0, 2);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel128, 0, 3);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel129, 0, 5);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel130, 0, 7);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel131, 0, 9);
-            this.tableLayoutPanel126.Controls.Add(this.label14, 0, 0);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel124, 0, 6);
-            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel132, 0, 8);
-            this.tableLayoutPanel126.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel126.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel126.Name = "tableLayoutPanel126";
-            this.tableLayoutPanel126.RowCount = 11;
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.79802F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
-            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.89901F));
-            this.tableLayoutPanel126.Size = new System.Drawing.Size(542, 367);
-            this.tableLayoutPanel126.TabIndex = 0;
-            // 
-            // idprintingStatusLabel
-            // 
-            this.idprintingStatusLabel.AutoSize = true;
-            this.idprintingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.idprintingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.idprintingStatusLabel.ForeColor = System.Drawing.Color.Black;
-            this.idprintingStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.idprintingStatusLabel.Location = new System.Drawing.Point(160, 328);
-            this.idprintingStatusLabel.Margin = new System.Windows.Forms.Padding(160, 5, 160, 5);
-            this.idprintingStatusLabel.Name = "idprintingStatusLabel";
-            this.idprintingStatusLabel.Size = new System.Drawing.Size(222, 34);
-            this.idprintingStatusLabel.TabIndex = 7;
-            this.idprintingStatusLabel.Text = "...";
-            this.idprintingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel123
-            // 
-            this.tableLayoutPanel123.ColumnCount = 2;
-            this.tableLayoutPanel123.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel123.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel123.Controls.Add(this.label27, 0, 0);
-            this.tableLayoutPanel123.Controls.Add(this.paymentIDBalance, 1, 0);
-            this.tableLayoutPanel123.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel123.Location = new System.Drawing.Point(3, 140);
-            this.tableLayoutPanel123.Name = "tableLayoutPanel123";
-            this.tableLayoutPanel123.RowCount = 1;
-            this.tableLayoutPanel123.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel123.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel123.Size = new System.Drawing.Size(536, 53);
-            this.tableLayoutPanel123.TabIndex = 8;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label27.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(3, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(262, 53);
-            this.label27.TabIndex = 2;
-            this.label27.Text = "Balance :";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentIDBalance
-            // 
-            this.paymentIDBalance.AutoSize = true;
-            this.paymentIDBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentIDBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentIDBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentIDBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentIDBalance.Location = new System.Drawing.Point(271, 0);
-            this.paymentIDBalance.Name = "paymentIDBalance";
-            this.paymentIDBalance.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentIDBalance.Size = new System.Drawing.Size(262, 53);
-            this.paymentIDBalance.TabIndex = 3;
-            this.paymentIDBalance.Text = "[0]";
-            this.paymentIDBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel127
-            // 
-            this.tableLayoutPanel127.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel127.ColumnCount = 1;
-            this.tableLayoutPanel127.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel127.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel127.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel127.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tableLayoutPanel127.Location = new System.Drawing.Point(120, 75);
-            this.tableLayoutPanel127.Margin = new System.Windows.Forms.Padding(120, 3, 120, 3);
-            this.tableLayoutPanel127.Name = "tableLayoutPanel127";
-            this.tableLayoutPanel127.RowCount = 1;
-            this.tableLayoutPanel127.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel127.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel127.Size = new System.Drawing.Size(302, 1);
-            this.tableLayoutPanel127.TabIndex = 0;
-            // 
-            // tableLayoutPanel113
-            // 
-            this.tableLayoutPanel113.ColumnCount = 2;
-            this.tableLayoutPanel113.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel113.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel113.Controls.Add(this.paymentIDTotal, 1, 0);
-            this.tableLayoutPanel113.Controls.Add(this.label25, 0, 0);
-            this.tableLayoutPanel113.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel113.Location = new System.Drawing.Point(3, 78);
-            this.tableLayoutPanel113.Name = "tableLayoutPanel113";
-            this.tableLayoutPanel113.RowCount = 1;
-            this.tableLayoutPanel113.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel113.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel113.Size = new System.Drawing.Size(536, 53);
-            this.tableLayoutPanel113.TabIndex = 3;
-            // 
-            // paymentIDTotal
-            // 
-            this.paymentIDTotal.AutoSize = true;
-            this.paymentIDTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentIDTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentIDTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentIDTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentIDTotal.Location = new System.Drawing.Point(271, 0);
-            this.paymentIDTotal.Name = "paymentIDTotal";
-            this.paymentIDTotal.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentIDTotal.Size = new System.Drawing.Size(262, 53);
-            this.paymentIDTotal.TabIndex = 1;
-            this.paymentIDTotal.Text = "[0]";
-            this.paymentIDTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label25.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(3, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(262, 53);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "Total Payment :";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel128
-            // 
-            this.tableLayoutPanel128.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel128.ColumnCount = 1;
-            this.tableLayoutPanel128.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel128.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel128.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel128.Location = new System.Drawing.Point(80, 137);
-            this.tableLayoutPanel128.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel128.Name = "tableLayoutPanel128";
-            this.tableLayoutPanel128.RowCount = 1;
-            this.tableLayoutPanel128.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel128.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel128.Size = new System.Drawing.Size(382, 1);
-            this.tableLayoutPanel128.TabIndex = 1;
-            // 
-            // tableLayoutPanel129
-            // 
-            this.tableLayoutPanel129.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel129.ColumnCount = 1;
-            this.tableLayoutPanel129.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel129.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel129.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel129.Location = new System.Drawing.Point(80, 199);
-            this.tableLayoutPanel129.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel129.Name = "tableLayoutPanel129";
-            this.tableLayoutPanel129.RowCount = 1;
-            this.tableLayoutPanel129.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel129.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel129.Size = new System.Drawing.Size(382, 1);
-            this.tableLayoutPanel129.TabIndex = 2;
-            // 
-            // tableLayoutPanel130
-            // 
-            this.tableLayoutPanel130.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel130.ColumnCount = 1;
-            this.tableLayoutPanel130.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel130.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel130.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel130.Location = new System.Drawing.Point(80, 261);
-            this.tableLayoutPanel130.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel130.Name = "tableLayoutPanel130";
-            this.tableLayoutPanel130.RowCount = 1;
-            this.tableLayoutPanel130.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel130.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel130.Size = new System.Drawing.Size(382, 1);
-            this.tableLayoutPanel130.TabIndex = 3;
-            // 
-            // tableLayoutPanel131
-            // 
-            this.tableLayoutPanel131.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel131.ColumnCount = 1;
-            this.tableLayoutPanel131.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel131.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel131.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel131.Location = new System.Drawing.Point(150, 323);
-            this.tableLayoutPanel131.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
-            this.tableLayoutPanel131.Name = "tableLayoutPanel131";
-            this.tableLayoutPanel131.RowCount = 1;
-            this.tableLayoutPanel131.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel131.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel131.Size = new System.Drawing.Size(242, 1);
-            this.tableLayoutPanel131.TabIndex = 4;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Font = new System.Drawing.Font("Segoe UI Black", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(3, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(536, 72);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Payment";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel124
-            // 
-            this.tableLayoutPanel124.ColumnCount = 2;
-            this.tableLayoutPanel124.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel124.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel124.Controls.Add(this.label15, 0, 0);
-            this.tableLayoutPanel124.Controls.Add(this.paymentInsertedID, 1, 0);
-            this.tableLayoutPanel124.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel124.Location = new System.Drawing.Point(3, 202);
-            this.tableLayoutPanel124.Name = "tableLayoutPanel124";
-            this.tableLayoutPanel124.RowCount = 1;
-            this.tableLayoutPanel124.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel124.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel124.Size = new System.Drawing.Size(536, 53);
-            this.tableLayoutPanel124.TabIndex = 9;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(3, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(262, 53);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Payment Inserted :";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentInsertedID
-            // 
-            this.paymentInsertedID.AutoSize = true;
-            this.paymentInsertedID.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentInsertedID.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentInsertedID.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentInsertedID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentInsertedID.Location = new System.Drawing.Point(271, 0);
-            this.paymentInsertedID.Name = "paymentInsertedID";
-            this.paymentInsertedID.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentInsertedID.Size = new System.Drawing.Size(262, 53);
-            this.paymentInsertedID.TabIndex = 1;
-            this.paymentInsertedID.Text = "[0]";
-            this.paymentInsertedID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel132
-            // 
-            this.tableLayoutPanel132.ColumnCount = 2;
-            this.tableLayoutPanel132.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel132.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel132.Controls.Add(this.label16, 0, 0);
-            this.tableLayoutPanel132.Controls.Add(this.paymentChangeID, 1, 0);
-            this.tableLayoutPanel132.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel132.Location = new System.Drawing.Point(3, 264);
-            this.tableLayoutPanel132.Name = "tableLayoutPanel132";
-            this.tableLayoutPanel132.RowCount = 1;
-            this.tableLayoutPanel132.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel132.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel132.Size = new System.Drawing.Size(536, 53);
-            this.tableLayoutPanel132.TabIndex = 10;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(3, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(262, 53);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Change :";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentChangeID
-            // 
-            this.paymentChangeID.AutoSize = true;
-            this.paymentChangeID.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentChangeID.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentChangeID.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentChangeID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentChangeID.Location = new System.Drawing.Point(271, 0);
-            this.paymentChangeID.Name = "paymentChangeID";
-            this.paymentChangeID.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentChangeID.Size = new System.Drawing.Size(262, 53);
-            this.paymentChangeID.TabIndex = 1;
-            this.paymentChangeID.Text = "[0]";
-            this.paymentChangeID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelCRMidPrinting
             // 
@@ -4408,6 +3850,508 @@ namespace PrintAndSnap
             this.idPrintSettingsConintueBtn.UseVisualStyleBackColor = false;
             this.idPrintSettingsConintueBtn.Click += new System.EventHandler(this.idPrintSettingsContinueBtn_Click);
             // 
+            // IDpayment
+            // 
+            this.IDpayment.Controls.Add(this.panel4);
+            this.IDpayment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.IDpayment.Location = new System.Drawing.Point(0, 0);
+            this.IDpayment.Name = "IDpayment";
+            this.IDpayment.Size = new System.Drawing.Size(1456, 729);
+            this.IDpayment.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.tableLayoutPanel47);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1456, 729);
+            this.panel4.TabIndex = 6;
+            // 
+            // tableLayoutPanel47
+            // 
+            this.tableLayoutPanel47.ColumnCount = 1;
+            this.tableLayoutPanel47.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel47.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel47.Controls.Add(this.tableLayoutPanel53, 0, 0);
+            this.tableLayoutPanel47.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel47.Location = new System.Drawing.Point(0, 230);
+            this.tableLayoutPanel47.Name = "tableLayoutPanel47";
+            this.tableLayoutPanel47.RowCount = 1;
+            this.tableLayoutPanel47.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel47.Size = new System.Drawing.Size(1456, 499);
+            this.tableLayoutPanel47.TabIndex = 0;
+            // 
+            // tableLayoutPanel53
+            // 
+            this.tableLayoutPanel53.ColumnCount = 3;
+            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel53.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel53.Controls.Add(this.tableLayoutPanel125, 1, 0);
+            this.tableLayoutPanel53.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel53.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel53.Name = "tableLayoutPanel53";
+            this.tableLayoutPanel53.RowCount = 1;
+            this.tableLayoutPanel53.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel53.Size = new System.Drawing.Size(1450, 493);
+            this.tableLayoutPanel53.TabIndex = 6;
+            // 
+            // tableLayoutPanel125
+            // 
+            this.tableLayoutPanel125.ColumnCount = 1;
+            this.tableLayoutPanel125.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel125.Controls.Add(this.tableLayoutPanel52, 0, 1);
+            this.tableLayoutPanel125.Controls.Add(this.panel20, 0, 0);
+            this.tableLayoutPanel125.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel125.Location = new System.Drawing.Point(293, 3);
+            this.tableLayoutPanel125.Name = "tableLayoutPanel125";
+            this.tableLayoutPanel125.RowCount = 2;
+            this.tableLayoutPanel125.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel125.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel125.Size = new System.Drawing.Size(864, 487);
+            this.tableLayoutPanel125.TabIndex = 0;
+            // 
+            // tableLayoutPanel52
+            // 
+            this.tableLayoutPanel52.ColumnCount = 4;
+            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel52.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel52.Controls.Add(this.cancelBtnPaymentId, 0, 0);
+            this.tableLayoutPanel52.Controls.Add(this.backBtnPaymentId, 1, 0);
+            this.tableLayoutPanel52.Controls.Add(this.downloadBtnPaymentId, 3, 0);
+            this.tableLayoutPanel52.Controls.Add(this.printBtnPaymentId, 2, 0);
+            this.tableLayoutPanel52.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel52.Location = new System.Drawing.Point(3, 392);
+            this.tableLayoutPanel52.Name = "tableLayoutPanel52";
+            this.tableLayoutPanel52.RowCount = 1;
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.tableLayoutPanel52.Size = new System.Drawing.Size(858, 92);
+            this.tableLayoutPanel52.TabIndex = 2;
+            // 
+            // cancelBtnPaymentId
+            // 
+            this.cancelBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
+            this.cancelBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cancelBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cancelBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.cancelBtnPaymentId.FlatAppearance.BorderSize = 2;
+            this.cancelBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.cancelBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.cancelBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cancelBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printCancel;
+            this.cancelBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cancelBtnPaymentId.Location = new System.Drawing.Point(20, 10);
+            this.cancelBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.cancelBtnPaymentId.Name = "cancelBtnPaymentId";
+            this.cancelBtnPaymentId.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.cancelBtnPaymentId.Size = new System.Drawing.Size(174, 72);
+            this.cancelBtnPaymentId.TabIndex = 0;
+            this.cancelBtnPaymentId.Text = "CANCEL";
+            this.cancelBtnPaymentId.UseVisualStyleBackColor = false;
+            this.cancelBtnPaymentId.Click += new System.EventHandler(this.cancelBtnPaymentId_Click);
+            // 
+            // backBtnPaymentId
+            // 
+            this.backBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
+            this.backBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.backBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.backBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.backBtnPaymentId.FlatAppearance.BorderSize = 2;
+            this.backBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.backBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.backBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printBack;
+            this.backBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.backBtnPaymentId.Location = new System.Drawing.Point(234, 10);
+            this.backBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.backBtnPaymentId.Name = "backBtnPaymentId";
+            this.backBtnPaymentId.Padding = new System.Windows.Forms.Padding(30, 0, 10, 0);
+            this.backBtnPaymentId.Size = new System.Drawing.Size(174, 72);
+            this.backBtnPaymentId.TabIndex = 1;
+            this.backBtnPaymentId.Text = "BACK";
+            this.backBtnPaymentId.UseVisualStyleBackColor = false;
+            this.backBtnPaymentId.Click += new System.EventHandler(this.backBtnPaymentId_Click);
+            // 
+            // downloadBtnPaymentId
+            // 
+            this.downloadBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
+            this.downloadBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.downloadBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.downloadBtnPaymentId.FlatAppearance.BorderSize = 2;
+            this.downloadBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.downloadBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.downloadBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.downloadBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downloadBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.mail_download_fill;
+            this.downloadBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.downloadBtnPaymentId.Location = new System.Drawing.Point(662, 10);
+            this.downloadBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.downloadBtnPaymentId.Name = "downloadBtnPaymentId";
+            this.downloadBtnPaymentId.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.downloadBtnPaymentId.Size = new System.Drawing.Size(176, 72);
+            this.downloadBtnPaymentId.TabIndex = 3;
+            this.downloadBtnPaymentId.Text = "DOWNLOAD";
+            this.downloadBtnPaymentId.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.downloadBtnPaymentId.UseVisualStyleBackColor = false;
+            this.downloadBtnPaymentId.Click += new System.EventHandler(this.downloadBtnPaymentId_Click);
+            // 
+            // printBtnPaymentId
+            // 
+            this.printBtnPaymentId.BackColor = System.Drawing.Color.DarkGray;
+            this.printBtnPaymentId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.printBtnPaymentId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.printBtnPaymentId.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.printBtnPaymentId.FlatAppearance.BorderSize = 2;
+            this.printBtnPaymentId.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.printBtnPaymentId.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.printBtnPaymentId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.printBtnPaymentId.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printBtnPaymentId.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
+            this.printBtnPaymentId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.printBtnPaymentId.Location = new System.Drawing.Point(448, 10);
+            this.printBtnPaymentId.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.printBtnPaymentId.Name = "printBtnPaymentId";
+            this.printBtnPaymentId.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
+            this.printBtnPaymentId.Size = new System.Drawing.Size(174, 72);
+            this.printBtnPaymentId.TabIndex = 2;
+            this.printBtnPaymentId.Text = "PRINT";
+            this.printBtnPaymentId.UseVisualStyleBackColor = false;
+            this.printBtnPaymentId.Click += new System.EventHandler(this.printBtnPaymentId_Click);
+            // 
+            // panel20
+            // 
+            this.panel20.BackColor = System.Drawing.Color.Silver;
+            this.panel20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel20.Controls.Add(this.tableLayoutPanel126);
+            this.panel20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel20.Location = new System.Drawing.Point(160, 10);
+            this.panel20.Margin = new System.Windows.Forms.Padding(160, 10, 160, 10);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(544, 369);
+            this.panel20.TabIndex = 0;
+            // 
+            // tableLayoutPanel126
+            // 
+            this.tableLayoutPanel126.ColumnCount = 1;
+            this.tableLayoutPanel126.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel126.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel126.Controls.Add(this.idprintingStatusLabel, 0, 10);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel123, 0, 4);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel127, 0, 1);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel113, 0, 2);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel128, 0, 3);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel129, 0, 5);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel130, 0, 7);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel131, 0, 9);
+            this.tableLayoutPanel126.Controls.Add(this.label14, 0, 0);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel124, 0, 6);
+            this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel132, 0, 8);
+            this.tableLayoutPanel126.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel126.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel126.Name = "tableLayoutPanel126";
+            this.tableLayoutPanel126.RowCount = 11;
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.79802F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33837F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.9899009F));
+            this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.89901F));
+            this.tableLayoutPanel126.Size = new System.Drawing.Size(542, 367);
+            this.tableLayoutPanel126.TabIndex = 0;
+            // 
+            // idprintingStatusLabel
+            // 
+            this.idprintingStatusLabel.AutoSize = true;
+            this.idprintingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.idprintingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.idprintingStatusLabel.ForeColor = System.Drawing.Color.Black;
+            this.idprintingStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.idprintingStatusLabel.Location = new System.Drawing.Point(160, 328);
+            this.idprintingStatusLabel.Margin = new System.Windows.Forms.Padding(160, 5, 160, 5);
+            this.idprintingStatusLabel.Name = "idprintingStatusLabel";
+            this.idprintingStatusLabel.Size = new System.Drawing.Size(222, 34);
+            this.idprintingStatusLabel.TabIndex = 7;
+            this.idprintingStatusLabel.Text = "...";
+            this.idprintingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel123
+            // 
+            this.tableLayoutPanel123.ColumnCount = 2;
+            this.tableLayoutPanel123.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel123.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel123.Controls.Add(this.label27, 0, 0);
+            this.tableLayoutPanel123.Controls.Add(this.paymentIDBalance, 1, 0);
+            this.tableLayoutPanel123.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel123.Location = new System.Drawing.Point(3, 140);
+            this.tableLayoutPanel123.Name = "tableLayoutPanel123";
+            this.tableLayoutPanel123.RowCount = 1;
+            this.tableLayoutPanel123.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel123.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel123.Size = new System.Drawing.Size(536, 53);
+            this.tableLayoutPanel123.TabIndex = 8;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label27.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(3, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(262, 53);
+            this.label27.TabIndex = 2;
+            this.label27.Text = "Balance :";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentIDBalance
+            // 
+            this.paymentIDBalance.AutoSize = true;
+            this.paymentIDBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentIDBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentIDBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentIDBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentIDBalance.Location = new System.Drawing.Point(271, 0);
+            this.paymentIDBalance.Name = "paymentIDBalance";
+            this.paymentIDBalance.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentIDBalance.Size = new System.Drawing.Size(262, 53);
+            this.paymentIDBalance.TabIndex = 3;
+            this.paymentIDBalance.Text = "[0]";
+            this.paymentIDBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel127
+            // 
+            this.tableLayoutPanel127.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel127.ColumnCount = 1;
+            this.tableLayoutPanel127.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel127.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel127.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel127.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tableLayoutPanel127.Location = new System.Drawing.Point(120, 75);
+            this.tableLayoutPanel127.Margin = new System.Windows.Forms.Padding(120, 3, 120, 3);
+            this.tableLayoutPanel127.Name = "tableLayoutPanel127";
+            this.tableLayoutPanel127.RowCount = 1;
+            this.tableLayoutPanel127.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel127.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel127.Size = new System.Drawing.Size(302, 1);
+            this.tableLayoutPanel127.TabIndex = 0;
+            // 
+            // tableLayoutPanel113
+            // 
+            this.tableLayoutPanel113.ColumnCount = 2;
+            this.tableLayoutPanel113.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel113.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel113.Controls.Add(this.paymentIDTotal, 1, 0);
+            this.tableLayoutPanel113.Controls.Add(this.label25, 0, 0);
+            this.tableLayoutPanel113.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel113.Location = new System.Drawing.Point(3, 78);
+            this.tableLayoutPanel113.Name = "tableLayoutPanel113";
+            this.tableLayoutPanel113.RowCount = 1;
+            this.tableLayoutPanel113.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel113.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel113.Size = new System.Drawing.Size(536, 53);
+            this.tableLayoutPanel113.TabIndex = 3;
+            // 
+            // paymentIDTotal
+            // 
+            this.paymentIDTotal.AutoSize = true;
+            this.paymentIDTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentIDTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentIDTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentIDTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentIDTotal.Location = new System.Drawing.Point(271, 0);
+            this.paymentIDTotal.Name = "paymentIDTotal";
+            this.paymentIDTotal.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentIDTotal.Size = new System.Drawing.Size(262, 53);
+            this.paymentIDTotal.TabIndex = 1;
+            this.paymentIDTotal.Text = "[0]";
+            this.paymentIDTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(3, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(262, 53);
+            this.label25.TabIndex = 0;
+            this.label25.Text = "Total Payment :";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel128
+            // 
+            this.tableLayoutPanel128.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel128.ColumnCount = 1;
+            this.tableLayoutPanel128.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel128.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel128.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel128.Location = new System.Drawing.Point(80, 137);
+            this.tableLayoutPanel128.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel128.Name = "tableLayoutPanel128";
+            this.tableLayoutPanel128.RowCount = 1;
+            this.tableLayoutPanel128.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel128.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel128.Size = new System.Drawing.Size(382, 1);
+            this.tableLayoutPanel128.TabIndex = 1;
+            // 
+            // tableLayoutPanel129
+            // 
+            this.tableLayoutPanel129.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel129.ColumnCount = 1;
+            this.tableLayoutPanel129.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel129.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel129.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel129.Location = new System.Drawing.Point(80, 199);
+            this.tableLayoutPanel129.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel129.Name = "tableLayoutPanel129";
+            this.tableLayoutPanel129.RowCount = 1;
+            this.tableLayoutPanel129.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel129.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel129.Size = new System.Drawing.Size(382, 1);
+            this.tableLayoutPanel129.TabIndex = 2;
+            // 
+            // tableLayoutPanel130
+            // 
+            this.tableLayoutPanel130.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel130.ColumnCount = 1;
+            this.tableLayoutPanel130.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel130.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel130.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel130.Location = new System.Drawing.Point(80, 261);
+            this.tableLayoutPanel130.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel130.Name = "tableLayoutPanel130";
+            this.tableLayoutPanel130.RowCount = 1;
+            this.tableLayoutPanel130.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel130.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel130.Size = new System.Drawing.Size(382, 1);
+            this.tableLayoutPanel130.TabIndex = 3;
+            // 
+            // tableLayoutPanel131
+            // 
+            this.tableLayoutPanel131.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel131.ColumnCount = 1;
+            this.tableLayoutPanel131.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel131.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel131.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel131.Location = new System.Drawing.Point(150, 323);
+            this.tableLayoutPanel131.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
+            this.tableLayoutPanel131.Name = "tableLayoutPanel131";
+            this.tableLayoutPanel131.RowCount = 1;
+            this.tableLayoutPanel131.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel131.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel131.Size = new System.Drawing.Size(242, 1);
+            this.tableLayoutPanel131.TabIndex = 4;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label14.Font = new System.Drawing.Font("Segoe UI Black", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(536, 72);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "Payment";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel124
+            // 
+            this.tableLayoutPanel124.ColumnCount = 2;
+            this.tableLayoutPanel124.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel124.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel124.Controls.Add(this.label15, 0, 0);
+            this.tableLayoutPanel124.Controls.Add(this.paymentInsertedID, 1, 0);
+            this.tableLayoutPanel124.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel124.Location = new System.Drawing.Point(3, 202);
+            this.tableLayoutPanel124.Name = "tableLayoutPanel124";
+            this.tableLayoutPanel124.RowCount = 1;
+            this.tableLayoutPanel124.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel124.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel124.Size = new System.Drawing.Size(536, 53);
+            this.tableLayoutPanel124.TabIndex = 9;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(3, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(262, 53);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Payment Inserted :";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentInsertedID
+            // 
+            this.paymentInsertedID.AutoSize = true;
+            this.paymentInsertedID.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentInsertedID.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentInsertedID.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentInsertedID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentInsertedID.Location = new System.Drawing.Point(271, 0);
+            this.paymentInsertedID.Name = "paymentInsertedID";
+            this.paymentInsertedID.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentInsertedID.Size = new System.Drawing.Size(262, 53);
+            this.paymentInsertedID.TabIndex = 1;
+            this.paymentInsertedID.Text = "[0]";
+            this.paymentInsertedID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel132
+            // 
+            this.tableLayoutPanel132.ColumnCount = 2;
+            this.tableLayoutPanel132.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel132.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel132.Controls.Add(this.label16, 0, 0);
+            this.tableLayoutPanel132.Controls.Add(this.paymentChangeID, 1, 0);
+            this.tableLayoutPanel132.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel132.Location = new System.Drawing.Point(3, 264);
+            this.tableLayoutPanel132.Name = "tableLayoutPanel132";
+            this.tableLayoutPanel132.RowCount = 1;
+            this.tableLayoutPanel132.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel132.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel132.Size = new System.Drawing.Size(536, 53);
+            this.tableLayoutPanel132.TabIndex = 10;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(3, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(262, 53);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "Change :";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentChangeID
+            // 
+            this.paymentChangeID.AutoSize = true;
+            this.paymentChangeID.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentChangeID.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentChangeID.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentChangeID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentChangeID.Location = new System.Drawing.Point(271, 0);
+            this.paymentChangeID.Name = "paymentChangeID";
+            this.paymentChangeID.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentChangeID.Size = new System.Drawing.Size(262, 53);
+            this.paymentChangeID.TabIndex = 1;
+            this.paymentChangeID.Text = "[0]";
+            this.paymentChangeID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // softCopyDownloadId
             // 
             this.softCopyDownloadId.Controls.Add(this.panel10);
@@ -4531,538 +4475,15 @@ namespace PrintAndSnap
             // 
             this.photoBoothPanel.BackgroundImage = global::Snap_and_Print.Properties.Resources.PhotoBooth;
             this.photoBoothPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.photoBoothPanel.Controls.Add(this.funPaymentPanel);
             this.photoBoothPanel.Controls.Add(this.panelCMRphotoBooth);
             this.photoBoothPanel.Controls.Add(this.photoBoothSettings);
+            this.photoBoothPanel.Controls.Add(this.funPaymentPanel);
             this.photoBoothPanel.Controls.Add(this.funSoftCopyDownloadPanel);
             this.photoBoothPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoBoothPanel.Location = new System.Drawing.Point(0, 0);
             this.photoBoothPanel.Name = "photoBoothPanel";
             this.photoBoothPanel.Size = new System.Drawing.Size(1456, 729);
             this.photoBoothPanel.TabIndex = 0;
-            // 
-            // funPaymentPanel
-            // 
-            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel111);
-            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel72);
-            this.funPaymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPaymentPanel.Location = new System.Drawing.Point(0, 0);
-            this.funPaymentPanel.Name = "funPaymentPanel";
-            this.funPaymentPanel.Size = new System.Drawing.Size(1456, 729);
-            this.funPaymentPanel.TabIndex = 1;
-            // 
-            // tableLayoutPanel111
-            // 
-            this.tableLayoutPanel111.ColumnCount = 1;
-            this.tableLayoutPanel111.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel111.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel111.Controls.Add(this.button6, 0, 2);
-            this.tableLayoutPanel111.Controls.Add(this.button5, 0, 1);
-            this.tableLayoutPanel111.Controls.Add(this.button4, 0, 0);
-            this.tableLayoutPanel111.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutPanel111.Location = new System.Drawing.Point(1256, 0);
-            this.tableLayoutPanel111.Name = "tableLayoutPanel111";
-            this.tableLayoutPanel111.RowCount = 3;
-            this.tableLayoutPanel111.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel111.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel111.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel111.Size = new System.Drawing.Size(200, 235);
-            this.tableLayoutPanel111.TabIndex = 1;
-            // 
-            // button6
-            // 
-            this.button6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button6.Location = new System.Drawing.Point(3, 159);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(194, 73);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "20";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(3, 81);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(194, 72);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "10";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Location = new System.Drawing.Point(3, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(194, 72);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "5";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel72
-            // 
-            this.tableLayoutPanel72.ColumnCount = 3;
-            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel72.Controls.Add(this.tableLayoutPanel114, 1, 0);
-            this.tableLayoutPanel72.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel72.Location = new System.Drawing.Point(0, 235);
-            this.tableLayoutPanel72.Name = "tableLayoutPanel72";
-            this.tableLayoutPanel72.RowCount = 1;
-            this.tableLayoutPanel72.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel72.Size = new System.Drawing.Size(1456, 494);
-            this.tableLayoutPanel72.TabIndex = 0;
-            // 
-            // tableLayoutPanel114
-            // 
-            this.tableLayoutPanel114.ColumnCount = 1;
-            this.tableLayoutPanel114.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel114.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel114.Controls.Add(this.tableLayoutPanel71, 0, 1);
-            this.tableLayoutPanel114.Controls.Add(this.panel19, 0, 0);
-            this.tableLayoutPanel114.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel114.Location = new System.Drawing.Point(294, 3);
-            this.tableLayoutPanel114.Name = "tableLayoutPanel114";
-            this.tableLayoutPanel114.RowCount = 2;
-            this.tableLayoutPanel114.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel114.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel114.Size = new System.Drawing.Size(867, 488);
-            this.tableLayoutPanel114.TabIndex = 0;
-            // 
-            // tableLayoutPanel71
-            // 
-            this.tableLayoutPanel71.ColumnCount = 4;
-            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel71.Controls.Add(this.funDownloadBtn, 3, 0);
-            this.tableLayoutPanel71.Controls.Add(this.paymentFunBackBtn, 1, 0);
-            this.tableLayoutPanel71.Controls.Add(this.paymentFunPrintBtn, 2, 0);
-            this.tableLayoutPanel71.Controls.Add(this.paymentFunCancelBtn, 0, 0);
-            this.tableLayoutPanel71.Location = new System.Drawing.Point(3, 393);
-            this.tableLayoutPanel71.Name = "tableLayoutPanel71";
-            this.tableLayoutPanel71.RowCount = 1;
-            this.tableLayoutPanel71.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel71.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 91F));
-            this.tableLayoutPanel71.Size = new System.Drawing.Size(861, 91);
-            this.tableLayoutPanel71.TabIndex = 10;
-            // 
-            // funDownloadBtn
-            // 
-            this.funDownloadBtn.BackColor = System.Drawing.Color.DarkGray;
-            this.funDownloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.funDownloadBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funDownloadBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.funDownloadBtn.FlatAppearance.BorderSize = 2;
-            this.funDownloadBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.funDownloadBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.funDownloadBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.funDownloadBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funDownloadBtn.Image = global::Snap_and_Print.Properties.Resources.mail_download_fill;
-            this.funDownloadBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.funDownloadBtn.Location = new System.Drawing.Point(665, 10);
-            this.funDownloadBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.funDownloadBtn.Name = "funDownloadBtn";
-            this.funDownloadBtn.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.funDownloadBtn.Size = new System.Drawing.Size(176, 71);
-            this.funDownloadBtn.TabIndex = 3;
-            this.funDownloadBtn.Text = "DOWNLOAD";
-            this.funDownloadBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.funDownloadBtn.UseVisualStyleBackColor = false;
-            this.funDownloadBtn.Click += new System.EventHandler(this.funDownloadBtn_Click);
-            // 
-            // paymentFunBackBtn
-            // 
-            this.paymentFunBackBtn.BackColor = System.Drawing.Color.DarkGray;
-            this.paymentFunBackBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.paymentFunBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunBackBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.paymentFunBackBtn.FlatAppearance.BorderSize = 2;
-            this.paymentFunBackBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.paymentFunBackBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.paymentFunBackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paymentFunBackBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunBackBtn.Image = global::Snap_and_Print.Properties.Resources.printBack;
-            this.paymentFunBackBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunBackBtn.Location = new System.Drawing.Point(235, 10);
-            this.paymentFunBackBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.paymentFunBackBtn.Name = "paymentFunBackBtn";
-            this.paymentFunBackBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.paymentFunBackBtn.Size = new System.Drawing.Size(175, 71);
-            this.paymentFunBackBtn.TabIndex = 1;
-            this.paymentFunBackBtn.Text = "BACK";
-            this.paymentFunBackBtn.UseVisualStyleBackColor = false;
-            this.paymentFunBackBtn.Click += new System.EventHandler(this.paymentFunBackBtn_Click);
-            // 
-            // paymentFunPrintBtn
-            // 
-            this.paymentFunPrintBtn.BackColor = System.Drawing.Color.DarkGray;
-            this.paymentFunPrintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.paymentFunPrintBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunPrintBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.paymentFunPrintBtn.FlatAppearance.BorderSize = 2;
-            this.paymentFunPrintBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.paymentFunPrintBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.paymentFunPrintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paymentFunPrintBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunPrintBtn.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
-            this.paymentFunPrintBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunPrintBtn.Location = new System.Drawing.Point(450, 10);
-            this.paymentFunPrintBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.paymentFunPrintBtn.Name = "paymentFunPrintBtn";
-            this.paymentFunPrintBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.paymentFunPrintBtn.Size = new System.Drawing.Size(175, 71);
-            this.paymentFunPrintBtn.TabIndex = 2;
-            this.paymentFunPrintBtn.Text = "PRINT";
-            this.paymentFunPrintBtn.UseVisualStyleBackColor = false;
-            this.paymentFunPrintBtn.Click += new System.EventHandler(this.paymentFunPrintBtn_Click);
-            // 
-            // paymentFunCancelBtn
-            // 
-            this.paymentFunCancelBtn.BackColor = System.Drawing.Color.DarkGray;
-            this.paymentFunCancelBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.paymentFunCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunCancelBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.paymentFunCancelBtn.FlatAppearance.BorderSize = 2;
-            this.paymentFunCancelBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
-            this.paymentFunCancelBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.paymentFunCancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paymentFunCancelBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunCancelBtn.Image = global::Snap_and_Print.Properties.Resources.printCancel;
-            this.paymentFunCancelBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunCancelBtn.Location = new System.Drawing.Point(20, 10);
-            this.paymentFunCancelBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
-            this.paymentFunCancelBtn.Name = "paymentFunCancelBtn";
-            this.paymentFunCancelBtn.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.paymentFunCancelBtn.Size = new System.Drawing.Size(175, 71);
-            this.paymentFunCancelBtn.TabIndex = 0;
-            this.paymentFunCancelBtn.Text = "CANCEL";
-            this.paymentFunCancelBtn.UseVisualStyleBackColor = false;
-            this.paymentFunCancelBtn.Click += new System.EventHandler(this.paymentFunCancelBtn_Click);
-            // 
-            // panel19
-            // 
-            this.panel19.BackColor = System.Drawing.Color.Silver;
-            this.panel19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel19.Controls.Add(this.tableLayoutPanel115);
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel19.Location = new System.Drawing.Point(160, 10);
-            this.panel19.Margin = new System.Windows.Forms.Padding(160, 10, 160, 10);
-            this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(547, 370);
-            this.panel19.TabIndex = 0;
-            // 
-            // tableLayoutPanel115
-            // 
-            this.tableLayoutPanel115.ColumnCount = 1;
-            this.tableLayoutPanel115.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel116, 0, 1);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel69, 0, 4);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel68, 0, 2);
-            this.tableLayoutPanel115.Controls.Add(this.label9, 0, 0);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel117, 0, 3);
-            this.tableLayoutPanel115.Controls.Add(this.funPrintingStatusLabel, 0, 10);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel118, 0, 5);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel119, 0, 7);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel120, 0, 9);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel121, 0, 6);
-            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel122, 0, 8);
-            this.tableLayoutPanel115.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel115.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel115.Name = "tableLayoutPanel115";
-            this.tableLayoutPanel115.RowCount = 11;
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.80198F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
-            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.90099F));
-            this.tableLayoutPanel115.Size = new System.Drawing.Size(545, 368);
-            this.tableLayoutPanel115.TabIndex = 0;
-            // 
-            // tableLayoutPanel116
-            // 
-            this.tableLayoutPanel116.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel116.ColumnCount = 1;
-            this.tableLayoutPanel116.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel116.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel116.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel116.Location = new System.Drawing.Point(120, 75);
-            this.tableLayoutPanel116.Margin = new System.Windows.Forms.Padding(120, 3, 120, 3);
-            this.tableLayoutPanel116.Name = "tableLayoutPanel116";
-            this.tableLayoutPanel116.RowCount = 1;
-            this.tableLayoutPanel116.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel116.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel116.Size = new System.Drawing.Size(305, 1);
-            this.tableLayoutPanel116.TabIndex = 0;
-            // 
-            // tableLayoutPanel69
-            // 
-            this.tableLayoutPanel69.ColumnCount = 2;
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel69.Controls.Add(this.label41, 0, 0);
-            this.tableLayoutPanel69.Controls.Add(this.paymentFunBalance, 1, 0);
-            this.tableLayoutPanel69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel69.Location = new System.Drawing.Point(3, 141);
-            this.tableLayoutPanel69.Name = "tableLayoutPanel69";
-            this.tableLayoutPanel69.RowCount = 1;
-            this.tableLayoutPanel69.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel69.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel69.Size = new System.Drawing.Size(539, 54);
-            this.tableLayoutPanel69.TabIndex = 9;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label41.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.Location = new System.Drawing.Point(3, 0);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(263, 54);
-            this.label41.TabIndex = 2;
-            this.label41.Text = "Balance :";
-            this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentFunBalance
-            // 
-            this.paymentFunBalance.AutoSize = true;
-            this.paymentFunBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentFunBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunBalance.Location = new System.Drawing.Point(272, 0);
-            this.paymentFunBalance.Name = "paymentFunBalance";
-            this.paymentFunBalance.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentFunBalance.Size = new System.Drawing.Size(264, 54);
-            this.paymentFunBalance.TabIndex = 3;
-            this.paymentFunBalance.Text = "[0]";
-            this.paymentFunBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel68
-            // 
-            this.tableLayoutPanel68.ColumnCount = 2;
-            this.tableLayoutPanel68.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel68.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel68.Controls.Add(this.label39, 0, 0);
-            this.tableLayoutPanel68.Controls.Add(this.paymentFunTotal, 1, 0);
-            this.tableLayoutPanel68.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel68.Location = new System.Drawing.Point(3, 78);
-            this.tableLayoutPanel68.Name = "tableLayoutPanel68";
-            this.tableLayoutPanel68.RowCount = 1;
-            this.tableLayoutPanel68.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel68.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel68.Size = new System.Drawing.Size(539, 54);
-            this.tableLayoutPanel68.TabIndex = 8;
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label39.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label39.Location = new System.Drawing.Point(3, 0);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(263, 54);
-            this.label39.TabIndex = 0;
-            this.label39.Text = "Total Amount :";
-            this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentFunTotal
-            // 
-            this.paymentFunTotal.AutoSize = true;
-            this.paymentFunTotal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentFunTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunTotal.Location = new System.Drawing.Point(272, 0);
-            this.paymentFunTotal.Name = "paymentFunTotal";
-            this.paymentFunTotal.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentFunTotal.Size = new System.Drawing.Size(264, 54);
-            this.paymentFunTotal.TabIndex = 1;
-            this.paymentFunTotal.Text = "[0]";
-            this.paymentFunTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Black", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(3, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(539, 72);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Payment";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel117
-            // 
-            this.tableLayoutPanel117.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel117.ColumnCount = 1;
-            this.tableLayoutPanel117.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel117.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel117.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel117.Location = new System.Drawing.Point(80, 138);
-            this.tableLayoutPanel117.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel117.Name = "tableLayoutPanel117";
-            this.tableLayoutPanel117.RowCount = 1;
-            this.tableLayoutPanel117.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel117.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel117.Size = new System.Drawing.Size(385, 1);
-            this.tableLayoutPanel117.TabIndex = 2;
-            // 
-            // funPrintingStatusLabel
-            // 
-            this.funPrintingStatusLabel.AutoSize = true;
-            this.funPrintingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.funPrintingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.funPrintingStatusLabel.Location = new System.Drawing.Point(160, 332);
-            this.funPrintingStatusLabel.Margin = new System.Windows.Forms.Padding(160, 5, 160, 5);
-            this.funPrintingStatusLabel.Name = "funPrintingStatusLabel";
-            this.funPrintingStatusLabel.Size = new System.Drawing.Size(225, 31);
-            this.funPrintingStatusLabel.TabIndex = 12;
-            this.funPrintingStatusLabel.Text = "...";
-            this.funPrintingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel118
-            // 
-            this.tableLayoutPanel118.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel118.ColumnCount = 1;
-            this.tableLayoutPanel118.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel118.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel118.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel118.Location = new System.Drawing.Point(80, 201);
-            this.tableLayoutPanel118.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel118.Name = "tableLayoutPanel118";
-            this.tableLayoutPanel118.RowCount = 1;
-            this.tableLayoutPanel118.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel118.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel118.Size = new System.Drawing.Size(385, 1);
-            this.tableLayoutPanel118.TabIndex = 3;
-            // 
-            // tableLayoutPanel119
-            // 
-            this.tableLayoutPanel119.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel119.ColumnCount = 1;
-            this.tableLayoutPanel119.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel119.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel119.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel119.Location = new System.Drawing.Point(80, 264);
-            this.tableLayoutPanel119.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
-            this.tableLayoutPanel119.Name = "tableLayoutPanel119";
-            this.tableLayoutPanel119.RowCount = 1;
-            this.tableLayoutPanel119.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel119.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel119.Size = new System.Drawing.Size(385, 1);
-            this.tableLayoutPanel119.TabIndex = 4;
-            // 
-            // tableLayoutPanel120
-            // 
-            this.tableLayoutPanel120.BackColor = System.Drawing.Color.Black;
-            this.tableLayoutPanel120.ColumnCount = 1;
-            this.tableLayoutPanel120.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel120.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel120.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel120.Location = new System.Drawing.Point(150, 327);
-            this.tableLayoutPanel120.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
-            this.tableLayoutPanel120.Name = "tableLayoutPanel120";
-            this.tableLayoutPanel120.RowCount = 1;
-            this.tableLayoutPanel120.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel120.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
-            this.tableLayoutPanel120.Size = new System.Drawing.Size(245, 1);
-            this.tableLayoutPanel120.TabIndex = 5;
-            // 
-            // tableLayoutPanel121
-            // 
-            this.tableLayoutPanel121.ColumnCount = 2;
-            this.tableLayoutPanel121.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel121.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel121.Controls.Add(this.label10, 0, 0);
-            this.tableLayoutPanel121.Controls.Add(this.paymentFunInserted, 1, 0);
-            this.tableLayoutPanel121.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel121.Location = new System.Drawing.Point(3, 204);
-            this.tableLayoutPanel121.Name = "tableLayoutPanel121";
-            this.tableLayoutPanel121.RowCount = 1;
-            this.tableLayoutPanel121.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel121.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel121.Size = new System.Drawing.Size(539, 54);
-            this.tableLayoutPanel121.TabIndex = 13;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(263, 54);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Payment Inserted :";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentFunInserted
-            // 
-            this.paymentFunInserted.AutoSize = true;
-            this.paymentFunInserted.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunInserted.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunInserted.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentFunInserted.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunInserted.Location = new System.Drawing.Point(272, 0);
-            this.paymentFunInserted.Name = "paymentFunInserted";
-            this.paymentFunInserted.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentFunInserted.Size = new System.Drawing.Size(264, 54);
-            this.paymentFunInserted.TabIndex = 1;
-            this.paymentFunInserted.Text = "[0]";
-            this.paymentFunInserted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel122
-            // 
-            this.tableLayoutPanel122.ColumnCount = 2;
-            this.tableLayoutPanel122.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel122.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel122.Controls.Add(this.label11, 0, 0);
-            this.tableLayoutPanel122.Controls.Add(this.paymentFunChange, 1, 0);
-            this.tableLayoutPanel122.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel122.Location = new System.Drawing.Point(3, 267);
-            this.tableLayoutPanel122.Name = "tableLayoutPanel122";
-            this.tableLayoutPanel122.RowCount = 1;
-            this.tableLayoutPanel122.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel122.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel122.Size = new System.Drawing.Size(539, 54);
-            this.tableLayoutPanel122.TabIndex = 14;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(263, 54);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Change :";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // paymentFunChange
-            // 
-            this.paymentFunChange.AutoSize = true;
-            this.paymentFunChange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentFunChange.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.paymentFunChange.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
-            this.paymentFunChange.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.paymentFunChange.Location = new System.Drawing.Point(272, 0);
-            this.paymentFunChange.Name = "paymentFunChange";
-            this.paymentFunChange.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
-            this.paymentFunChange.Size = new System.Drawing.Size(264, 54);
-            this.paymentFunChange.TabIndex = 1;
-            this.paymentFunChange.Text = "[0]";
-            this.paymentFunChange.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelCMRphotoBooth
             // 
@@ -5113,6 +4534,7 @@ namespace PrintAndSnap
             this.funCaptureAgainBtn.Size = new System.Drawing.Size(92, 85);
             this.funCaptureAgainBtn.TabIndex = 0;
             this.funCaptureAgainBtn.UseVisualStyleBackColor = false;
+            this.funCaptureAgainBtn.Click += new System.EventHandler(this.funCaptureAgainBtn_Click);
             // 
             // funCameraFeed
             // 
@@ -6279,6 +5701,480 @@ namespace PrintAndSnap
             this.funSettingContinueBtn.UseVisualStyleBackColor = false;
             this.funSettingContinueBtn.Click += new System.EventHandler(this.funSettingsContinueBtn_Click);
             // 
+            // funPaymentPanel
+            // 
+            this.funPaymentPanel.Controls.Add(this.tableLayoutPanel72);
+            this.funPaymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPaymentPanel.Location = new System.Drawing.Point(0, 0);
+            this.funPaymentPanel.Name = "funPaymentPanel";
+            this.funPaymentPanel.Size = new System.Drawing.Size(1456, 729);
+            this.funPaymentPanel.TabIndex = 1;
+            // 
+            // tableLayoutPanel72
+            // 
+            this.tableLayoutPanel72.ColumnCount = 3;
+            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel72.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel72.Controls.Add(this.tableLayoutPanel114, 1, 0);
+            this.tableLayoutPanel72.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel72.Location = new System.Drawing.Point(0, 235);
+            this.tableLayoutPanel72.Name = "tableLayoutPanel72";
+            this.tableLayoutPanel72.RowCount = 1;
+            this.tableLayoutPanel72.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel72.Size = new System.Drawing.Size(1456, 494);
+            this.tableLayoutPanel72.TabIndex = 0;
+            // 
+            // tableLayoutPanel114
+            // 
+            this.tableLayoutPanel114.ColumnCount = 1;
+            this.tableLayoutPanel114.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel114.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel114.Controls.Add(this.tableLayoutPanel71, 0, 1);
+            this.tableLayoutPanel114.Controls.Add(this.panel19, 0, 0);
+            this.tableLayoutPanel114.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel114.Location = new System.Drawing.Point(294, 3);
+            this.tableLayoutPanel114.Name = "tableLayoutPanel114";
+            this.tableLayoutPanel114.RowCount = 2;
+            this.tableLayoutPanel114.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel114.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel114.Size = new System.Drawing.Size(867, 488);
+            this.tableLayoutPanel114.TabIndex = 0;
+            // 
+            // tableLayoutPanel71
+            // 
+            this.tableLayoutPanel71.ColumnCount = 4;
+            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel71.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel71.Controls.Add(this.funDownloadBtn, 3, 0);
+            this.tableLayoutPanel71.Controls.Add(this.paymentFunBackBtn, 1, 0);
+            this.tableLayoutPanel71.Controls.Add(this.paymentFunPrintBtn, 2, 0);
+            this.tableLayoutPanel71.Controls.Add(this.paymentFunCancelBtn, 0, 0);
+            this.tableLayoutPanel71.Location = new System.Drawing.Point(3, 393);
+            this.tableLayoutPanel71.Name = "tableLayoutPanel71";
+            this.tableLayoutPanel71.RowCount = 1;
+            this.tableLayoutPanel71.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel71.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tableLayoutPanel71.Size = new System.Drawing.Size(861, 91);
+            this.tableLayoutPanel71.TabIndex = 10;
+            // 
+            // funDownloadBtn
+            // 
+            this.funDownloadBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.funDownloadBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.funDownloadBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funDownloadBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.funDownloadBtn.FlatAppearance.BorderSize = 2;
+            this.funDownloadBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.funDownloadBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.funDownloadBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.funDownloadBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funDownloadBtn.Image = global::Snap_and_Print.Properties.Resources.mail_download_fill;
+            this.funDownloadBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.funDownloadBtn.Location = new System.Drawing.Point(665, 10);
+            this.funDownloadBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.funDownloadBtn.Name = "funDownloadBtn";
+            this.funDownloadBtn.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.funDownloadBtn.Size = new System.Drawing.Size(176, 71);
+            this.funDownloadBtn.TabIndex = 3;
+            this.funDownloadBtn.Text = "DOWNLOAD";
+            this.funDownloadBtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.funDownloadBtn.UseVisualStyleBackColor = false;
+            this.funDownloadBtn.Click += new System.EventHandler(this.funDownloadBtn_Click);
+            // 
+            // paymentFunBackBtn
+            // 
+            this.paymentFunBackBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.paymentFunBackBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.paymentFunBackBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunBackBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.paymentFunBackBtn.FlatAppearance.BorderSize = 2;
+            this.paymentFunBackBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.paymentFunBackBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.paymentFunBackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paymentFunBackBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunBackBtn.Image = global::Snap_and_Print.Properties.Resources.printBack;
+            this.paymentFunBackBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunBackBtn.Location = new System.Drawing.Point(235, 10);
+            this.paymentFunBackBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.paymentFunBackBtn.Name = "paymentFunBackBtn";
+            this.paymentFunBackBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.paymentFunBackBtn.Size = new System.Drawing.Size(175, 71);
+            this.paymentFunBackBtn.TabIndex = 1;
+            this.paymentFunBackBtn.Text = "BACK";
+            this.paymentFunBackBtn.UseVisualStyleBackColor = false;
+            this.paymentFunBackBtn.Click += new System.EventHandler(this.paymentFunBackBtn_Click);
+            // 
+            // paymentFunPrintBtn
+            // 
+            this.paymentFunPrintBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.paymentFunPrintBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.paymentFunPrintBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunPrintBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.paymentFunPrintBtn.FlatAppearance.BorderSize = 2;
+            this.paymentFunPrintBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.paymentFunPrintBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.paymentFunPrintBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paymentFunPrintBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunPrintBtn.Image = global::Snap_and_Print.Properties.Resources.printer_fill;
+            this.paymentFunPrintBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunPrintBtn.Location = new System.Drawing.Point(450, 10);
+            this.paymentFunPrintBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.paymentFunPrintBtn.Name = "paymentFunPrintBtn";
+            this.paymentFunPrintBtn.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.paymentFunPrintBtn.Size = new System.Drawing.Size(175, 71);
+            this.paymentFunPrintBtn.TabIndex = 2;
+            this.paymentFunPrintBtn.Text = "PRINT";
+            this.paymentFunPrintBtn.UseVisualStyleBackColor = false;
+            this.paymentFunPrintBtn.Click += new System.EventHandler(this.paymentFunPrintBtn_Click);
+            // 
+            // paymentFunCancelBtn
+            // 
+            this.paymentFunCancelBtn.BackColor = System.Drawing.Color.DarkGray;
+            this.paymentFunCancelBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.paymentFunCancelBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunCancelBtn.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.paymentFunCancelBtn.FlatAppearance.BorderSize = 2;
+            this.paymentFunCancelBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.paymentFunCancelBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.paymentFunCancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paymentFunCancelBtn.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunCancelBtn.Image = global::Snap_and_Print.Properties.Resources.printCancel;
+            this.paymentFunCancelBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunCancelBtn.Location = new System.Drawing.Point(20, 10);
+            this.paymentFunCancelBtn.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.paymentFunCancelBtn.Name = "paymentFunCancelBtn";
+            this.paymentFunCancelBtn.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.paymentFunCancelBtn.Size = new System.Drawing.Size(175, 71);
+            this.paymentFunCancelBtn.TabIndex = 0;
+            this.paymentFunCancelBtn.Text = "CANCEL";
+            this.paymentFunCancelBtn.UseVisualStyleBackColor = false;
+            this.paymentFunCancelBtn.Click += new System.EventHandler(this.paymentFunCancelBtn_Click);
+            // 
+            // panel19
+            // 
+            this.panel19.BackColor = System.Drawing.Color.Silver;
+            this.panel19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel19.Controls.Add(this.tableLayoutPanel115);
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel19.Location = new System.Drawing.Point(160, 10);
+            this.panel19.Margin = new System.Windows.Forms.Padding(160, 10, 160, 10);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(547, 370);
+            this.panel19.TabIndex = 0;
+            // 
+            // tableLayoutPanel115
+            // 
+            this.tableLayoutPanel115.ColumnCount = 1;
+            this.tableLayoutPanel115.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel116, 0, 1);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel69, 0, 4);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel68, 0, 2);
+            this.tableLayoutPanel115.Controls.Add(this.label9, 0, 0);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel117, 0, 3);
+            this.tableLayoutPanel115.Controls.Add(this.funPrintingStatusLabel, 0, 10);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel118, 0, 5);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel119, 0, 7);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel120, 0, 9);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel121, 0, 6);
+            this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel122, 0, 8);
+            this.tableLayoutPanel115.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel115.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel115.Name = "tableLayoutPanel115";
+            this.tableLayoutPanel115.RowCount = 11;
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.80198F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.33663F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0.990099F));
+            this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.90099F));
+            this.tableLayoutPanel115.Size = new System.Drawing.Size(545, 368);
+            this.tableLayoutPanel115.TabIndex = 0;
+            // 
+            // tableLayoutPanel116
+            // 
+            this.tableLayoutPanel116.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel116.ColumnCount = 1;
+            this.tableLayoutPanel116.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel116.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel116.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel116.Location = new System.Drawing.Point(120, 75);
+            this.tableLayoutPanel116.Margin = new System.Windows.Forms.Padding(120, 3, 120, 3);
+            this.tableLayoutPanel116.Name = "tableLayoutPanel116";
+            this.tableLayoutPanel116.RowCount = 1;
+            this.tableLayoutPanel116.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel116.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel116.Size = new System.Drawing.Size(305, 1);
+            this.tableLayoutPanel116.TabIndex = 0;
+            // 
+            // tableLayoutPanel69
+            // 
+            this.tableLayoutPanel69.ColumnCount = 2;
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel69.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel69.Controls.Add(this.label41, 0, 0);
+            this.tableLayoutPanel69.Controls.Add(this.paymentFunBalance, 1, 0);
+            this.tableLayoutPanel69.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel69.Location = new System.Drawing.Point(3, 141);
+            this.tableLayoutPanel69.Name = "tableLayoutPanel69";
+            this.tableLayoutPanel69.RowCount = 1;
+            this.tableLayoutPanel69.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel69.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel69.Size = new System.Drawing.Size(539, 54);
+            this.tableLayoutPanel69.TabIndex = 9;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label41.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(3, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(263, 54);
+            this.label41.TabIndex = 2;
+            this.label41.Text = "Balance :";
+            this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentFunBalance
+            // 
+            this.paymentFunBalance.AutoSize = true;
+            this.paymentFunBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunBalance.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunBalance.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentFunBalance.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunBalance.Location = new System.Drawing.Point(272, 0);
+            this.paymentFunBalance.Name = "paymentFunBalance";
+            this.paymentFunBalance.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentFunBalance.Size = new System.Drawing.Size(264, 54);
+            this.paymentFunBalance.TabIndex = 3;
+            this.paymentFunBalance.Text = "[0]";
+            this.paymentFunBalance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel68
+            // 
+            this.tableLayoutPanel68.ColumnCount = 2;
+            this.tableLayoutPanel68.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel68.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel68.Controls.Add(this.label39, 0, 0);
+            this.tableLayoutPanel68.Controls.Add(this.paymentFunTotal, 1, 0);
+            this.tableLayoutPanel68.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel68.Location = new System.Drawing.Point(3, 78);
+            this.tableLayoutPanel68.Name = "tableLayoutPanel68";
+            this.tableLayoutPanel68.RowCount = 1;
+            this.tableLayoutPanel68.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel68.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel68.Size = new System.Drawing.Size(539, 54);
+            this.tableLayoutPanel68.TabIndex = 8;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label39.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Location = new System.Drawing.Point(3, 0);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(263, 54);
+            this.label39.TabIndex = 0;
+            this.label39.Text = "Total Amount :";
+            this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentFunTotal
+            // 
+            this.paymentFunTotal.AutoSize = true;
+            this.paymentFunTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunTotal.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentFunTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunTotal.Location = new System.Drawing.Point(272, 0);
+            this.paymentFunTotal.Name = "paymentFunTotal";
+            this.paymentFunTotal.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentFunTotal.Size = new System.Drawing.Size(264, 54);
+            this.paymentFunTotal.TabIndex = 1;
+            this.paymentFunTotal.Text = "[0]";
+            this.paymentFunTotal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Black", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(539, 72);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Payment";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel117
+            // 
+            this.tableLayoutPanel117.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel117.ColumnCount = 1;
+            this.tableLayoutPanel117.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel117.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel117.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel117.Location = new System.Drawing.Point(80, 138);
+            this.tableLayoutPanel117.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel117.Name = "tableLayoutPanel117";
+            this.tableLayoutPanel117.RowCount = 1;
+            this.tableLayoutPanel117.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel117.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel117.Size = new System.Drawing.Size(385, 1);
+            this.tableLayoutPanel117.TabIndex = 2;
+            // 
+            // funPrintingStatusLabel
+            // 
+            this.funPrintingStatusLabel.AutoSize = true;
+            this.funPrintingStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.funPrintingStatusLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funPrintingStatusLabel.Location = new System.Drawing.Point(160, 332);
+            this.funPrintingStatusLabel.Margin = new System.Windows.Forms.Padding(160, 5, 160, 5);
+            this.funPrintingStatusLabel.Name = "funPrintingStatusLabel";
+            this.funPrintingStatusLabel.Size = new System.Drawing.Size(225, 31);
+            this.funPrintingStatusLabel.TabIndex = 12;
+            this.funPrintingStatusLabel.Text = "...";
+            this.funPrintingStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel118
+            // 
+            this.tableLayoutPanel118.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel118.ColumnCount = 1;
+            this.tableLayoutPanel118.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel118.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel118.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel118.Location = new System.Drawing.Point(80, 201);
+            this.tableLayoutPanel118.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel118.Name = "tableLayoutPanel118";
+            this.tableLayoutPanel118.RowCount = 1;
+            this.tableLayoutPanel118.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel118.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel118.Size = new System.Drawing.Size(385, 1);
+            this.tableLayoutPanel118.TabIndex = 3;
+            // 
+            // tableLayoutPanel119
+            // 
+            this.tableLayoutPanel119.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel119.ColumnCount = 1;
+            this.tableLayoutPanel119.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel119.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel119.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel119.Location = new System.Drawing.Point(80, 264);
+            this.tableLayoutPanel119.Margin = new System.Windows.Forms.Padding(80, 3, 80, 3);
+            this.tableLayoutPanel119.Name = "tableLayoutPanel119";
+            this.tableLayoutPanel119.RowCount = 1;
+            this.tableLayoutPanel119.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel119.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel119.Size = new System.Drawing.Size(385, 1);
+            this.tableLayoutPanel119.TabIndex = 4;
+            // 
+            // tableLayoutPanel120
+            // 
+            this.tableLayoutPanel120.BackColor = System.Drawing.Color.Black;
+            this.tableLayoutPanel120.ColumnCount = 1;
+            this.tableLayoutPanel120.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel120.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel120.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel120.Location = new System.Drawing.Point(150, 327);
+            this.tableLayoutPanel120.Margin = new System.Windows.Forms.Padding(150, 3, 150, 3);
+            this.tableLayoutPanel120.Name = "tableLayoutPanel120";
+            this.tableLayoutPanel120.RowCount = 1;
+            this.tableLayoutPanel120.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel120.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
+            this.tableLayoutPanel120.Size = new System.Drawing.Size(245, 1);
+            this.tableLayoutPanel120.TabIndex = 5;
+            // 
+            // tableLayoutPanel121
+            // 
+            this.tableLayoutPanel121.ColumnCount = 2;
+            this.tableLayoutPanel121.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel121.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel121.Controls.Add(this.label10, 0, 0);
+            this.tableLayoutPanel121.Controls.Add(this.paymentFunInserted, 1, 0);
+            this.tableLayoutPanel121.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel121.Location = new System.Drawing.Point(3, 204);
+            this.tableLayoutPanel121.Name = "tableLayoutPanel121";
+            this.tableLayoutPanel121.RowCount = 1;
+            this.tableLayoutPanel121.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel121.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel121.Size = new System.Drawing.Size(539, 54);
+            this.tableLayoutPanel121.TabIndex = 13;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(3, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(263, 54);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Payment Inserted :";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentFunInserted
+            // 
+            this.paymentFunInserted.AutoSize = true;
+            this.paymentFunInserted.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunInserted.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunInserted.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentFunInserted.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunInserted.Location = new System.Drawing.Point(272, 0);
+            this.paymentFunInserted.Name = "paymentFunInserted";
+            this.paymentFunInserted.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentFunInserted.Size = new System.Drawing.Size(264, 54);
+            this.paymentFunInserted.TabIndex = 1;
+            this.paymentFunInserted.Text = "[0]";
+            this.paymentFunInserted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel122
+            // 
+            this.tableLayoutPanel122.ColumnCount = 2;
+            this.tableLayoutPanel122.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel122.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel122.Controls.Add(this.label11, 0, 0);
+            this.tableLayoutPanel122.Controls.Add(this.paymentFunChange, 1, 0);
+            this.tableLayoutPanel122.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel122.Location = new System.Drawing.Point(3, 267);
+            this.tableLayoutPanel122.Name = "tableLayoutPanel122";
+            this.tableLayoutPanel122.RowCount = 1;
+            this.tableLayoutPanel122.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel122.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel122.Size = new System.Drawing.Size(539, 54);
+            this.tableLayoutPanel122.TabIndex = 14;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(3, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(263, 54);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Change :";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paymentFunChange
+            // 
+            this.paymentFunChange.AutoSize = true;
+            this.paymentFunChange.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentFunChange.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.paymentFunChange.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
+            this.paymentFunChange.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.paymentFunChange.Location = new System.Drawing.Point(272, 0);
+            this.paymentFunChange.Name = "paymentFunChange";
+            this.paymentFunChange.Padding = new System.Windows.Forms.Padding(0, 0, 140, 0);
+            this.paymentFunChange.Size = new System.Drawing.Size(264, 54);
+            this.paymentFunChange.TabIndex = 1;
+            this.paymentFunChange.Text = "[0]";
+            this.paymentFunChange.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // funSoftCopyDownloadPanel
             // 
             this.funSoftCopyDownloadPanel.Controls.Add(this.panel11);
@@ -6730,10 +6626,10 @@ namespace PrintAndSnap
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1456, 729);
+            this.Controls.Add(this.startPanel);
             this.Controls.Add(this.printPanel);
             this.Controls.Add(this.printingOptionsPanel);
             this.Controls.Add(this.photoPanel);
-            this.Controls.Add(this.startPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "PrintAndSnap";
@@ -6752,21 +6648,6 @@ namespace PrintAndSnap
             this.MainPrintingPanel.PerformLayout();
             this.printPanel.ResumeLayout(false);
             this.printingSettingsPanel.ResumeLayout(false);
-            this.paymentPanel.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.tableLayoutPayment.ResumeLayout(false);
-            this.tableLayoutPanel104.ResumeLayout(false);
-            this.panel22.ResumeLayout(false);
-            this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel17.PerformLayout();
-            this.tableLayoutPanel105.ResumeLayout(false);
-            this.tableLayoutPanel105.PerformLayout();
-            this.tableLayoutPanel106.ResumeLayout(false);
-            this.tableLayoutPanel106.PerformLayout();
-            this.tableLayoutPanel107.ResumeLayout(false);
-            this.tableLayoutPanel107.PerformLayout();
-            this.tableLayoutPanel140.ResumeLayout(false);
-            this.tableLayoutPanel140.PerformLayout();
             this.uploadPanel.ResumeLayout(false);
             this.tableLayoutPanel18.ResumeLayout(false);
             this.tableLayoutPanel18.PerformLayout();
@@ -6829,6 +6710,21 @@ namespace PrintAndSnap
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel77.ResumeLayout(false);
+            this.paymentPanel.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.tableLayoutPayment.ResumeLayout(false);
+            this.tableLayoutPanel104.ResumeLayout(false);
+            this.panel22.ResumeLayout(false);
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel17.PerformLayout();
+            this.tableLayoutPanel105.ResumeLayout(false);
+            this.tableLayoutPanel105.PerformLayout();
+            this.tableLayoutPanel106.ResumeLayout(false);
+            this.tableLayoutPanel106.PerformLayout();
+            this.tableLayoutPanel107.ResumeLayout(false);
+            this.tableLayoutPanel107.PerformLayout();
+            this.tableLayoutPanel140.ResumeLayout(false);
+            this.tableLayoutPanel140.PerformLayout();
             this.retrivalPanel.ResumeLayout(false);
             this.retrivalMain.ResumeLayout(false);
             this.retrivalMain.PerformLayout();
@@ -6836,24 +6732,6 @@ namespace PrintAndSnap
             this.continuePanel.ResumeLayout(false);
             this.photoPanel.ResumeLayout(false);
             this.photoIDPanel.ResumeLayout(false);
-            this.IDpayment.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.tableLayoutPanel51.ResumeLayout(false);
-            this.tableLayoutPanel47.ResumeLayout(false);
-            this.tableLayoutPanel53.ResumeLayout(false);
-            this.tableLayoutPanel125.ResumeLayout(false);
-            this.tableLayoutPanel52.ResumeLayout(false);
-            this.panel20.ResumeLayout(false);
-            this.tableLayoutPanel126.ResumeLayout(false);
-            this.tableLayoutPanel126.PerformLayout();
-            this.tableLayoutPanel123.ResumeLayout(false);
-            this.tableLayoutPanel123.PerformLayout();
-            this.tableLayoutPanel113.ResumeLayout(false);
-            this.tableLayoutPanel113.PerformLayout();
-            this.tableLayoutPanel124.ResumeLayout(false);
-            this.tableLayoutPanel124.PerformLayout();
-            this.tableLayoutPanel132.ResumeLayout(false);
-            this.tableLayoutPanel132.PerformLayout();
             this.panelCRMidPrinting.ResumeLayout(false);
             this.tableLayoutPanel27.ResumeLayout(false);
             this.panel15.ResumeLayout(false);
@@ -6904,6 +6782,23 @@ namespace PrintAndSnap
             this.tableLayoutPanel13.PerformLayout();
             this.tableLayoutPanel34.ResumeLayout(false);
             this.tableLayoutPanel40.ResumeLayout(false);
+            this.IDpayment.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.tableLayoutPanel47.ResumeLayout(false);
+            this.tableLayoutPanel53.ResumeLayout(false);
+            this.tableLayoutPanel125.ResumeLayout(false);
+            this.tableLayoutPanel52.ResumeLayout(false);
+            this.panel20.ResumeLayout(false);
+            this.tableLayoutPanel126.ResumeLayout(false);
+            this.tableLayoutPanel126.PerformLayout();
+            this.tableLayoutPanel123.ResumeLayout(false);
+            this.tableLayoutPanel123.PerformLayout();
+            this.tableLayoutPanel113.ResumeLayout(false);
+            this.tableLayoutPanel113.PerformLayout();
+            this.tableLayoutPanel124.ResumeLayout(false);
+            this.tableLayoutPanel124.PerformLayout();
+            this.tableLayoutPanel132.ResumeLayout(false);
+            this.tableLayoutPanel132.PerformLayout();
             this.softCopyDownloadId.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.tableLayoutPanel39.ResumeLayout(false);
@@ -6911,22 +6806,6 @@ namespace PrintAndSnap
             this.tableLayoutPanel14.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.qrIdPrintingDownload)).EndInit();
             this.photoBoothPanel.ResumeLayout(false);
-            this.funPaymentPanel.ResumeLayout(false);
-            this.tableLayoutPanel111.ResumeLayout(false);
-            this.tableLayoutPanel72.ResumeLayout(false);
-            this.tableLayoutPanel114.ResumeLayout(false);
-            this.tableLayoutPanel71.ResumeLayout(false);
-            this.panel19.ResumeLayout(false);
-            this.tableLayoutPanel115.ResumeLayout(false);
-            this.tableLayoutPanel115.PerformLayout();
-            this.tableLayoutPanel69.ResumeLayout(false);
-            this.tableLayoutPanel69.PerformLayout();
-            this.tableLayoutPanel68.ResumeLayout(false);
-            this.tableLayoutPanel68.PerformLayout();
-            this.tableLayoutPanel121.ResumeLayout(false);
-            this.tableLayoutPanel121.PerformLayout();
-            this.tableLayoutPanel122.ResumeLayout(false);
-            this.tableLayoutPanel122.PerformLayout();
             this.panelCMRphotoBooth.ResumeLayout(false);
             this.tableLayoutPanel31.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.funCameraFeed)).EndInit();
@@ -6984,6 +6863,21 @@ namespace PrintAndSnap
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.tableLayoutPanel54.ResumeLayout(false);
             this.tableLayoutPanel42.ResumeLayout(false);
+            this.funPaymentPanel.ResumeLayout(false);
+            this.tableLayoutPanel72.ResumeLayout(false);
+            this.tableLayoutPanel114.ResumeLayout(false);
+            this.tableLayoutPanel71.ResumeLayout(false);
+            this.panel19.ResumeLayout(false);
+            this.tableLayoutPanel115.ResumeLayout(false);
+            this.tableLayoutPanel115.PerformLayout();
+            this.tableLayoutPanel69.ResumeLayout(false);
+            this.tableLayoutPanel69.PerformLayout();
+            this.tableLayoutPanel68.ResumeLayout(false);
+            this.tableLayoutPanel68.PerformLayout();
+            this.tableLayoutPanel121.ResumeLayout(false);
+            this.tableLayoutPanel121.PerformLayout();
+            this.tableLayoutPanel122.ResumeLayout(false);
+            this.tableLayoutPanel122.PerformLayout();
             this.funSoftCopyDownloadPanel.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.tableLayoutPanel48.ResumeLayout(false);
@@ -7149,9 +7043,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel39;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.PictureBox qrIdPrintingDownload;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Panel funSoftCopyDownloadPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel44;
         private System.Windows.Forms.Button funSoftCopyCancelBtn;
@@ -7166,9 +7057,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.PictureBox funPreview3;
         private System.Windows.Forms.PictureBox funPreview4;
         private System.Windows.Forms.PictureBox funCameraFeed;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button funCaptureBtn;
         private System.Windows.Forms.Button funDownloadBtn;
         private System.Windows.Forms.Label idprintingStatusLabel;
@@ -7277,7 +7165,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel112;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel68;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel111;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel69;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel71;
         private System.Windows.Forms.Label label9;
@@ -7296,7 +7183,6 @@ namespace PrintAndSnap
         private System.Windows.Forms.Label paymentFunInserted;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label paymentFunChange;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel51;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel52;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel113;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel123;

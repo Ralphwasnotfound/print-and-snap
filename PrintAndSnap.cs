@@ -177,7 +177,179 @@ namespace PrintAndSnap
 
         private PaymentController paymentController = new PaymentController();
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
 
+                // Reduce flickering when switching/painting panels
+                cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+
+                return cp;
+            }
+        }
+
+        private void ShutdownApplication()
+        {
+            try
+            {
+                DebugLog("APPLICATION SHUTDOWN STARTED");
+
+                // =========================
+                // STOP CAMERA
+                // =========================
+                try
+                {
+                    cameraService.StopCamera();
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("Camera shutdown error: " + ex.Message);
+                }
+
+                // =========================
+                // STOP TIMERS
+                // =========================
+                try { cleanupTimer?.Stop(); } catch { }
+                try { printerStatusTimer?.Stop(); } catch { }
+                try { inactivityTimer?.Stop(); } catch { }
+                try { qrExpireTimer?.Stop(); } catch { }
+                try { uploadStatusTimer?.Stop(); } catch { }
+                try { captureTimer?.Stop(); } catch { }
+                try { receiveTimer?.Stop(); } catch { }
+
+                // =========================
+                // STOP FILE WATCHER
+                // =========================
+                try
+                {
+                    if (fileWatcher != null)
+                    {
+                        fileWatcher.EnableRaisingEvents = false;
+                        fileWatcher.Dispose();
+                        fileWatcher = null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("File watcher shutdown error: " + ex.Message);
+                }
+
+                // =========================
+                // STOP DOWNLOAD SERVER
+                // =========================
+                try
+                {
+                    uploadService.StopServer();
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("Upload server shutdown error: " + ex.Message);
+                }
+
+                // =========================
+                // CANCEL BACKGROUND TASKS
+                // =========================
+                try
+                {
+                    resetTokenSource?.Cancel();
+                    resetTokenSource?.Dispose();
+                    resetTokenSource = null;
+                }
+                catch { }
+
+                // =========================
+                // STOP CAMERA IMAGES
+                // =========================
+                try
+                {
+                    SafeDisposePictureBox(idCameraFeed);
+                    SafeDisposePictureBox(funCameraFeed);
+
+                    SafeDispose(ref currentFrame);
+                    SafeDispose(ref lastFrame);
+                }
+                catch { }
+
+                // =========================
+                // CLOSE PDF VIEWER
+                // =========================
+                try
+                {
+                    ResetPdfViewer();
+                }
+                catch { }
+
+                // =========================
+                // RELEASE PHOTO MEMORY
+                // =========================
+                try
+                {
+                    foreach (var photo in capturedPhotos)
+                    {
+                        photo?.Dispose();
+                    }
+
+                    capturedPhotos.Clear();
+
+                    SafeDispose(ref selectedPhoto);
+                    SafeDispose(ref finalIdPrintImage);
+                    SafeDispose(ref finalFunImage);
+
+                    foreach (var photo in cachedFilteredPhotos)
+                    {
+                        photo?.Dispose();
+                    }
+
+                    cachedFilteredPhotos.Clear();
+                }
+                catch { }
+
+                // =========================
+                // DISCONNECT COIN ACCEPTOR
+                // =========================
+                try
+                {
+                    paymentController.Disconnect();
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("Payment controller shutdown error: " + ex.Message);
+                }
+
+                // =========================
+                // REMOVE WINDOWS HOOK
+                // =========================
+                try
+                {
+                    if (hookID != IntPtr.Zero)
+                    {
+                        UnhookWindowsHookEx(hookID);
+                        hookID = IntPtr.Zero;
+                    }
+                }
+                catch { }
+
+                DebugLog("APPLICATION SHUTDOWN CLEANUP COMPLETE");
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Shutdown error: " + ex.Message);
+            }
+            finally
+            {
+                // Make absolutely sure the application exits
+                Application.Exit();
+            }
+        }
+
+        private void PrintAndSnap_FormClosing(
+    object sender,
+    FormClosingEventArgs e)
+        {
+            ShutdownApplication();
+        }
 
 
         // =========================
@@ -352,6 +524,7 @@ namespace PrintAndSnap
         // ====================
         // TASKBAR METHODS
         // ====================
+
         private void HideTaskbar()
         {
             IntPtr taskbarHandle = FindWindow("Shell_TrayWnd", null);
@@ -652,19 +825,25 @@ namespace PrintAndSnap
 
         private void showPanel(Control panel)
         {
-            // DOC PANELS
-            startPanel.Visible = false;
-            printingOptionsPanel.Visible = false;
-            uploadPanel.Visible = false;
-            continuePanel.Visible = false;
-            printingSettingsPanel.Visible = false;
-            paymentPanel.Visible = false;
-            retrivalPanel.Visible = false;
+            this.SuspendLayout();
 
+            try
+            {
+                startPanel.Visible = false;
+                printingOptionsPanel.Visible = false;
+                uploadPanel.Visible = false;
+                continuePanel.Visible = false;
+                printingSettingsPanel.Visible = false;
+                paymentPanel.Visible = false;
+                retrivalPanel.Visible = false;
 
-            // SHOW target
-            panel.Visible = true;
-            panel.BringToFront();
+                panel.Visible = true;
+                panel.BringToFront();
+            }
+            finally
+            {
+                this.ResumeLayout(true);
+            }
         }
 
         private void HidePanelsRecursive(Control parent)
@@ -825,7 +1004,65 @@ namespace PrintAndSnap
 
         private async void CaptureTimer_Tick(object sender, EventArgs e)
         {
+            bool isFunMode = currentMode == PhotoMode.Fun;
+            Button captureButton = isFunMode
+                ? (!funCaptureAgainBtn.Enabled ? funCaptureAgainBtn : funCaptureBtn)
+                : (!idCapctureAgainBtn.Enabled ? idCapctureAgainBtn : idCaptureBtn);
 
+            if (countdown > 0)
+            {
+                captureButton.Text = countdown.ToString();
+                countdown--;
+                return;
+            }
+
+            captureTimer.Stop();
+            countdown = -1;
+            captureButton.Text = "📸";
+
+            try
+            {
+                await Task.Delay(500);
+
+                if (countdown != -1 || currentFrame == null)
+                    return;
+
+                Bitmap shot = photoService.Capture(currentFrame);
+
+                if (shot == null || shot.Width == 0 || shot.Height == 0)
+                {
+                    shot?.Dispose();
+                    return;
+                }
+
+                capturedPhotos.Add(shot);
+
+                if (isFunMode)
+                {
+                    ShowFunCapturedPhotos();
+                    funContinueBtn.Enabled = true;
+                }
+                else
+                {
+                    ShowCapturedPhotos();
+                    idPrintingContinueBtn.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Capture error: " + ex.Message);
+            }
+            finally
+            {
+                if (countdown == -1)
+                    countdown = 3;
+
+                captureButton.Text = "";
+                if (captureButton == idCaptureBtn || captureButton == funCaptureBtn)
+                    captureButton.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
+
+                captureButton.Enabled = true;
+            }
         }
 
         private void SafeDisposePictureBox(PictureBox box)
@@ -1045,6 +1282,7 @@ namespace PrintAndSnap
             }
 
             idCaptureBtn.Enabled = false;
+            idCaptureBtn.BackgroundImage = null;
 
             countdown = 3;
             captureTimer.Start();
@@ -1338,9 +1576,15 @@ namespace PrintAndSnap
 
         private void idCaptureAgainBtn_Click(object obj, EventArgs args)
         {
-            ResetPhotoSession(); // replaces everything
+            captureTimer.Stop();
+            countdown = 3;
+            ResetPhotoSession();
 
-            cameraService.StartCamera();
+            idCaptureBtn.Text = "";
+            idCapctureAgainBtn.Text = "";
+            idCaptureBtn.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
+            idCaptureBtn.Enabled = true;
+            idCapctureAgainBtn.Enabled = true;
         }
 
         // ID RADIO BUTTONS
@@ -1637,6 +1881,7 @@ namespace PrintAndSnap
             }
 
             funCaptureBtn.Enabled = false;
+            funCaptureBtn.BackgroundImage = null;
 
             countdown = 3;
             captureTimer.Start();
@@ -1953,11 +2198,15 @@ namespace PrintAndSnap
 
         private void funCaptureAgainBtn_Click(object obj, EventArgs args)
         {
-            ResetPhotoSession(); // replaces everything
+            captureTimer.Stop();
+            countdown = 3;
+            ResetPhotoSession();
 
-            cameraService.StartCamera();
-
-            ResetFunCache(); // keep this (FUN only)
+            funCaptureBtn.Text = "";
+            funCaptureAgainBtn.Text = "";
+            funCaptureBtn.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
+            funCaptureBtn.Enabled = true;
+            funCaptureAgainBtn.Enabled = true;
         }
 
         private void funSettingsContinueBtn_Click(object sender, EventArgs e)
@@ -4239,8 +4488,8 @@ namespace PrintAndSnap
             paymentPanel.Visible = true;
             paymentPanel.BringToFront();
 
-            //uploadPanel.Visible = true;
-            //uploadPanel.BringToFront();
+            uploadPanel.Visible = true;
+            uploadPanel.BringToFront();
 
         }
 
@@ -4545,5 +4794,6 @@ namespace PrintAndSnap
 
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
+
     }
 }
