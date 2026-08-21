@@ -428,10 +428,11 @@ namespace PrintAndSnap
             // =========================
             // FORM UI SETTINGS
             // =========================
-            //enable this for  prod "DEBUG for Windowed"
-            //this.FormBorderStyle = FormBorderStyle.None;
-            //this.WindowState = FormWindowState.Maximized;
-            //this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
+            this.TopMost = true;
+
+            //COMMENT THIS/DELETE FOR PROD
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.WindowState = FormWindowState.Normal;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -529,26 +530,6 @@ namespace PrintAndSnap
             };
 
         }
-
-        // ====================
-        // DESIGN
-        // ====================
-        //private void MakeRoundedButton(Button btn)
-        //{
-        //    GraphicsPath path = new GraphicsPath();
-
-        //    int radius = 15;
-        //    int diameter = radius * 2;
-
-        //    path.AddArc(0, 0, diameter, diameter, 180, 90);
-        //    path.AddArc(btn.Width - diameter, 0, diameter, diameter, 270, 90);
-        //    path.AddArc(btn.Width - diameter, btn.Height - diameter, diameter, diameter, 0, 90);
-        //    path.AddArc(0, btn.Height - diameter, diameter, diameter, 90, 90);
-
-        //    path.CloseFigure();
-
-        //    btn.Region = new Region(path);
-        //}
         
         // ====================
         // TASKBAR METHODS
@@ -1680,16 +1661,16 @@ namespace PrintAndSnap
             if (!isMultiple) //SINGLE
             {
                 if (isColored)
-                    pricePerUnit = 50;
+                    pricePerUnit = 10;
                 else
-                    pricePerUnit = 40;
+                    pricePerUnit = 15;
             }
             else //MULTIPLE (FULL SHEET)
             {
                 if (isColored)
-                    pricePerUnit = 60;
+                    pricePerUnit = 20;
                 else
-                    pricePerUnit = 50;
+                    pricePerUnit = 25;
             }
 
             int total = pricePerUnit * copies;

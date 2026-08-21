@@ -7,8 +7,8 @@ namespace PrintAndSnap.Services
 {
     public class PricingService
     {
-        public int BwPrice { get; set; } = 5;
-        public int ColorPrice { get; set; } = 10;
+        public int BwPrice { get; set; } = 3;
+        public int ColorPrice { get; set; } = 5;
 
         // =========================
         // CALCULATE TOTAL
