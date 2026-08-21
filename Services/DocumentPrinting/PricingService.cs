@@ -25,49 +25,77 @@ namespace PrintAndSnap.Services
             List<bool> pageIsColored
         )
         {
-            int pagesToPrint = totalPages;
-
-            if (singlePage)
-                pagesToPrint = 1;
-            else if (printRange)
-                pagesToPrint = CountSelectedPages(pageRange, totalPages);
+            if (totalPages <= 0 || copies <= 0)
+                return 0;
 
             int total = 0;
 
+            // =========================
+            // BLACK & WHITE
+            // =========================
             if (!isColored)
             {
+                int pagesToPrint = 0;
+
+                if (printAll)
+                {
+                    pagesToPrint = totalPages;
+                }
+                else if (singlePage)
+                {
+                    // Example: page 2 = exactly 1 page
+                    if (singlePageNumber >= 1 && singlePageNumber <= totalPages)
+                        pagesToPrint = 1;
+                }
+                else if (printRange)
+                {
+                    // Example: 1-5 = 5 pages
+                    pagesToPrint = CountSelectedPages(pageRange, totalPages);
+                }
+
                 total = pagesToPrint * copies * BwPrice;
             }
+
+            // =========================
+            // COLOR / MIXED DOCUMENT
+            // =========================
             else
             {
                 int selectedTotal = 0;
 
                 if (printAll)
                 {
-                    foreach (var isColor in pageIsColored)
-                        selectedTotal += isColor ? ColorPrice : BwPrice;
+                    for (int i = 0; i < pageIsColored.Count && i < totalPages; i++)
+                    {
+                        selectedTotal += pageIsColored[i]
+                            ? ColorPrice
+                            : BwPrice;
+                    }
                 }
                 else if (singlePage)
                 {
+                    // Example: user enters 2 → print/pricing is for page 2
                     int index = singlePageNumber - 1;
 
                     if (index >= 0 && index < pageIsColored.Count)
-                        selectedTotal = pageIsColored[index] ? ColorPrice : BwPrice;
+                    {
+                        selectedTotal = pageIsColored[index]
+                            ? ColorPrice
+                            : BwPrice;
+                    }
                 }
                 else if (printRange)
                 {
-                    var parts = pageRange.Split('-');
-
-                    if (parts.Length == 2 &&
-                        int.TryParse(parts[0], out int start) &&
-                        int.TryParse(parts[1], out int end))
+                    if (TryParsePageRange(pageRange, totalPages, out int start, out int end))
                     {
-                        start -= 1;
-                        end -= 1;
+                        start--; // Convert to zero-based
+                        end--;
 
                         for (int i = start; i <= end && i < pageIsColored.Count; i++)
                         {
-                            selectedTotal += pageIsColored[i] ? ColorPrice : BwPrice;
+                            selectedTotal += pageIsColored[i]
+                                ? ColorPrice
+                                : BwPrice;
                         }
                     }
                 }
@@ -78,42 +106,68 @@ namespace PrintAndSnap.Services
             return total;
         }
 
+
         // =========================
         // COUNT PAGES
         // =========================
         public int CountSelectedPages(string input, int totalPages)
         {
-            if (string.IsNullOrWhiteSpace(input) || input == "e.g. 1-5")
+            if (!TryParsePageRange(input, totalPages, out int start, out int end))
                 return 0;
 
-            try
-            {
-                if (input.Contains("-"))
-                {
-                    var parts = input.Replace(" ", "").Split('-');
+            return end - start + 1;
+        }
 
-                    if (parts.Length != 2)
-                        return 0;
 
-                    if (!int.TryParse(parts[0], out int start) ||
-                        !int.TryParse(parts[1], out int end))
-                        return 0;
+        // =========================
+        // PARSE PAGE RANGE
+        // =========================
+        private bool TryParsePageRange(
+            string input,
+            int totalPages,
+            out int start,
+            out int end)
+        {
+            start = 0;
+            end = 0;
 
-                    if (start >= 1 && end <= totalPages && start <= end)
-                        return end - start + 1;
-                }
-                else
-                {
-                    if (int.TryParse(input, out int single))
-                    {
-                        if (single >= 1 && single <= totalPages)
-                            return 1;
-                    }
-                }
-            }
-            catch { }
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
 
-            return 0;
+            input = input.Trim().Replace(" ", "");
+
+            if (input == "e.g.1-5" || input == "e.g.1-5")
+                return false;
+
+            // Must contain exactly one "-"
+            var parts = input.Split('-');
+
+            if (parts.Length != 2)
+                return false;
+
+            if (!int.TryParse(parts[0], out start))
+                return false;
+
+            if (!int.TryParse(parts[1], out end))
+                return false;
+
+            // Valid page range
+            if (start < 1)
+                return false;
+
+            if (end < 1)
+                return false;
+
+            if (start > end)
+                return false;
+
+            if (start > totalPages)
+                return false;
+
+            if (end > totalPages)
+                return false;
+
+            return true;
         }
 
         // =========================

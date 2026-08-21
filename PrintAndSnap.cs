@@ -144,7 +144,7 @@ namespace PrintAndSnap
 
         //LIMITS
         private const long MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
-        private const int MAX_ALLOWED_PAGES = 50;
+        private const int MAX_ALLOWED_PAGES = 200;
 
         // =========================
         // TIMERS
@@ -458,9 +458,38 @@ namespace PrintAndSnap
             // =========================
             // DOC RADIO EVENTS
             // =========================
-            radioPrintAll.CheckedChanged += (s, e) => { UpdateModeUI(); CalculateTotal(); };
-            radioSinglePage.CheckedChanged += (s, e) => { UpdateModeUI(); CalculateTotal(); };
-            radioPrintRange.CheckedChanged += (s, e) => { UpdateModeUI(); CalculateTotal(); };
+            radioPrintAll.CheckedChanged += (s, e) =>
+            {
+                if (radioPrintAll.Checked)
+                {
+                    radioSinglePage.Checked = false;
+                    radioPrintRange.Checked = false;
+                    UpdateModeUI();
+                    CalculateTotal();
+                }
+            };
+
+            radioSinglePage.CheckedChanged += (s, e) =>
+            {
+                if (radioSinglePage.Checked)
+                {
+                    radioPrintAll.Checked = false;
+                    radioPrintRange.Checked = false;
+                    UpdateModeUI();
+                    CalculateTotal();
+                }
+            };
+
+            radioPrintRange.CheckedChanged += (s, e) =>
+            {
+                if (radioPrintRange.Checked)
+                {
+                    radioPrintAll.Checked = false;
+                    radioSinglePage.Checked = false;
+                    UpdateModeUI();
+                    CalculateTotal();
+                }
+            };
 
             // =========================
             // DOC COLOR ANALYSIS
@@ -3829,6 +3858,8 @@ namespace PrintAndSnap
 
             try
             {
+                Directory.CreateDirectory(Path.GetDirectoryName(newPdfPath));
+
                 // REMOVE READ-ONLY ATTRIBUTE
                 File.SetAttributes(docPath, FileAttributes.Normal);
 
@@ -3845,28 +3876,69 @@ namespace PrintAndSnap
                 // OPEN WORD FILE AS READONLY
                 doc = wordApp.Documents.Open(docPath, ReadOnly: true, Visible: false);
 
+                if (doc == null)
+                    throw new InvalidOperationException("Microsoft Word could not open the document.");
+
                 doc.ExportAsFixedFormat(
                     newPdfPath,
                     Word.WdExportFormat.wdExportFormatPDF
                 );
+
+                if (!File.Exists(newPdfPath) || new FileInfo(newPdfPath).Length == 0)
+                    throw new IOException("Microsoft Word did not create a PDF preview.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Word-to-PDF conversion failed: " + ex);
+
+                Invoke(new Action(() =>
+                {
+                    uploadStatusTimer.Stop();
+                    fileUploadStatusLabel.Text = "Word-to-PDF conversion failed.";
+                    MessageBox.Show(
+                        "The Word document could not be converted to PDF.\n\n" +
+                        "Make sure Microsoft Word is installed and that the document can be opened.\n\n" +
+                        ex.Message,
+                        "Word Conversion Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }));
+
+                return;
             }
             finally
             {
-                try
+                if (doc != null)
                 {
-                    if (doc != null)
+                    try
                     {
                         doc.Close(false);
-                        Marshal.ReleaseComObject(doc);
                     }
-
-                    if (wordApp != null)
+                    catch (Exception cleanupException)
                     {
-                        wordApp.Quit();
-                        Marshal.ReleaseComObject(wordApp);
+                        Debug.WriteLine("Unable to close Word document: " + cleanupException);
+                    }
+                    finally
+                    {
+                        Marshal.FinalReleaseComObject(doc);
                     }
                 }
-                catch { }
+
+                if (wordApp != null)
+                {
+                    try
+                    {
+                        wordApp.Quit(Word.WdSaveOptions.wdDoNotSaveChanges);
+                    }
+                    catch (Exception cleanupException)
+                    {
+                        Debug.WriteLine("Unable to quit Microsoft Word: " + cleanupException);
+                    }
+                    finally
+                    {
+                        Marshal.FinalReleaseComObject(wordApp);
+                    }
+                }
 
                 doc = null;
                 wordApp = null;
@@ -3901,18 +3973,30 @@ namespace PrintAndSnap
             totalPages = newDoc.PageCount;
             totalPagesLabel.Text = totalPages.ToString();
 
-            if (!isRetrievalMode && !printingSettingsPanel.Visible)
-            {
-                receiveTimer.Start();
-                showPanel(continuePanel);
-            }
-            else if (printingSettingsPanel.Visible)
+            if (totalPages > MAX_ALLOWED_PAGES)
             {
                 MessageBox.Show(
-                    "Document Updated successfully.",
-                    "File updated",
+                    "This document has " + totalPages + " pages.\n" +
+                    "Maximum allowed pages is " + MAX_ALLOWED_PAGES + ".",
+                    "Document Too Large",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    MessageBoxIcon.Warning);
+
+                printingInProgress = false;
+                allowReset = true;
+                ResetMachine(true);
+                return;
+            }
+
+            numericSinglePage.Minimum = 1;
+            numericSinglePage.Maximum = totalPages;
+            numericSinglePage.Value = 1;
+            uploadStatusTimer.Stop();
+
+            if (!isRetrievalMode)
+            {
+                receiveTimer.Stop();
+                showPanel(continuePanel);
             }
 
             DebugPanelState("LoadNewPreview");
@@ -4163,10 +4247,10 @@ namespace PrintAndSnap
                         editBtn.Enabled = false;
                         ProcessPdf(currentPdfPath);
 
-                        receiveTimer.Start();
+                        showPanel(continuePanel);
                     }));
                 }
-                else if (extension == ".docx")
+                else if (extension == ".docx" || ext == ".doc")
                 {
                     Invoke(new Action(() =>
                     {
