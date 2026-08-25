@@ -685,6 +685,7 @@ namespace PrintAndSnap
 
             printerStatusTimer = new System.Windows.Forms.Timer();
             printerStatusTimer.Interval = 2000;
+            printerStatusTimer.Tick += PrinterStatusTimer_Tick;
             printerStatusTimer.Start();
 
             inactivityTimer = new System.Windows.Forms.Timer();
@@ -1495,6 +1496,21 @@ namespace PrintAndSnap
         {
             try
             {
+                //==========
+                //Printer Check
+                //==========
+
+                if (!IsPrinterReady(PRINTER_NAME))
+                {
+                    MessageBox.Show(
+                        this,
+                "Printer is not ready.\n\nPlease check the printer connection, paper, or printer status.",
+                "Printer Not Ready",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+                        );
+                    return;
+                }
                 DebugLog("SelectedPhoto NULL? " + (selectedPhoto == null));
                 DebugLog("hasUserSelectedPhoto: " + hasUserSelectedPhoto);
 
@@ -1595,6 +1611,48 @@ namespace PrintAndSnap
             idCaptureBtn.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
             idCaptureBtn.Enabled = true;
             idCapctureAgainBtn.Enabled = true;
+        }
+
+        private void PrinterStatusTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                string printerName = PRINTER_NAME;
+
+                if (!printerManager.PrinterExists(printerName))
+                {
+                    printerStatusLabel.Text = "● PRINTER NOT FOUND";
+                    printerStatusLabel.ForeColor = Color.Red;
+                    return;
+                }
+
+                if (!printerManager.IsPrinterOnline(printerName))
+                {
+                    printerStatusLabel.Text = "● PRINTER OFFLINE";
+                    printerStatusLabel.ForeColor = Color.Red;
+                    return;
+                }
+
+                string status = printerManager.GetPrinterStatus(printerName);
+
+                if (status == "Printer Ready" || status == "Printing")
+                {
+                    printerStatusLabel.Text = "● PRINTER READY";
+                    printerStatusLabel.ForeColor = Color.Green;
+                }
+                else
+                {
+                    printerStatusLabel.Text = "● " + status.ToUpper();
+                    printerStatusLabel.ForeColor = Color.Orange;
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Printer status error: " + ex.Message);
+
+                printerStatusLabel.Text = "● PRINTER ERROR";
+                printerStatusLabel.ForeColor = Color.Orange;
+            }
         }
 
         // ID RADIO BUTTONS
@@ -2221,6 +2279,22 @@ namespace PrintAndSnap
 
         private void funSettingsContinueBtn_Click(object sender, EventArgs e)
         {
+            //=================
+            //PRINTER CHECK
+            //=================
+            if (!IsPrinterReady(PRINTER_NAME))
+            {
+                MessageBox.Show(
+                    this,
+                    "Printer is not ready.\n\nPlease check the printer connection, paper, or printer status.",
+                    "Printer Not Ready",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                return;
+            }
+
             if (funMainPreview.Image == null)
             {
                 MessageBox.Show("⚠️ No preview available.");
@@ -4795,7 +4869,15 @@ namespace PrintAndSnap
 
             if (!printerManager.IsPrinterReady(printerName))
             {
-                MessageBox.Show("Printer is not ready.\nPlease check paper or printer connection.");
+                MessageBox.Show(
+                    this,
+                    "⚠️ Printer is not ready.\n\n" +
+                    "Please check the printer connection, paper, or printer status.",
+                    "Printer Not Ready",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
                 return;
             }
 
@@ -4859,6 +4941,5 @@ namespace PrintAndSnap
 
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
-
     }
 }
