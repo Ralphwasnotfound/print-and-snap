@@ -136,6 +136,7 @@ namespace PrintAndSnap
         // =========================
         private bool isRetrievalMode = false;
         private bool printSuccess = false;
+        private bool billDialogOpen = false;
 
         private int retrievalAttempts = 0;
         private const int MAX_RETRIEVAL_ATTEMPTS = 3;
@@ -699,14 +700,21 @@ namespace PrintAndSnap
             qrExpireTimer.Interval = 60000; // 60 seconds
             qrExpireTimer.Tick += QrExpireTimer_Tick;
 
-            if (!paymentController.Connect())
+            if (paymentController.Connect())
             {
-                MessageBox.Show("Coin Acceptor not detected.");
+                paymentController.PaymentUpdated += PaymentController_PaymentUpdated;
+                paymentController.BillDetected += PaymentController_BillDetected;
+
+                paymentController.CheckHardware();
             }
             else
             {
-                paymentController.PaymentUpdated += PaymentController_PaymentUpdated;
-                paymentController.GetStatus();
+                MessageBox.Show(
+                    "Hardware connection failed!",
+                    "Snap and Print",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
             }
 
             instructionLabel.Text = "Please select a service to continue";
@@ -748,6 +756,324 @@ namespace PrintAndSnap
 
             paymentFunPrintBtn.Enabled =
                 paymentController.InsertedPayment >= paymentController.TotalAmount;
+        }
+
+        private void PaymentController_BillDetected()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(PaymentController_BillDetected));
+                return;
+            }
+
+            // ============================================
+            // PREVENT MULTIPLE BILL WINDOWS
+            // ============================================
+
+            if (billDialogOpen)
+                return;
+
+            billDialogOpen = true;
+
+            try
+            {
+                using (Form billForm = new Form())
+                {
+                    billForm.Text = "Bill Detected";
+                    billForm.StartPosition = FormStartPosition.CenterParent;
+                    billForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    billForm.MinimizeBox = false;
+                    billForm.MaximizeBox = false;
+                    billForm.Width = 420;
+                    billForm.Height = 340;
+
+                    // ============================================
+                    // TITLE
+                    // ============================================
+
+                    Label title = new Label();
+
+                    title.Text = "BILL DETECTED";
+                    title.Dock = DockStyle.Top;
+                    title.Height = 55;
+                    title.TextAlign = ContentAlignment.MiddleCenter;
+                    title.Font = new Font(
+                        "Segoe UI",
+                        16,
+                        FontStyle.Bold
+                    );
+
+                    // ============================================
+                    // MESSAGE
+                    // ============================================
+
+                    Label message = new Label();
+
+                    message.Text = "Select the bill denomination:";
+                    message.Dock = DockStyle.Top;
+                    message.Height = 40;
+                    message.TextAlign = ContentAlignment.MiddleCenter;
+                    message.Font = new Font(
+                        "Segoe UI",
+                        11
+                    );
+
+                    // ============================================
+                    // SELECTED LABEL
+                    // ============================================
+
+                    Label selectedLabel = new Label();
+
+                    selectedLabel.Text = "Selected: None";
+                    selectedLabel.Dock = DockStyle.Top;
+                    selectedLabel.Height = 35;
+                    selectedLabel.TextAlign = ContentAlignment.MiddleCenter;
+                    selectedLabel.Font = new Font(
+                        "Segoe UI",
+                        11,
+                        FontStyle.Bold
+                    );
+
+                    // ============================================
+                    // DENOMINATION BUTTONS
+                    // ============================================
+
+                    TableLayoutPanel buttons = new TableLayoutPanel();
+
+                    buttons.Dock = DockStyle.Top;
+                    buttons.Height = 120;
+                    buttons.ColumnCount = 2;
+                    buttons.RowCount = 2;
+                    buttons.Padding = new Padding(20, 5, 20, 5);
+
+                    buttons.ColumnStyles.Add(
+                        new ColumnStyle(SizeType.Percent, 50));
+
+                    buttons.ColumnStyles.Add(
+                        new ColumnStyle(SizeType.Percent, 50));
+
+                    buttons.RowStyles.Add(
+                        new RowStyle(SizeType.Percent, 50));
+
+                    buttons.RowStyles.Add(
+                        new RowStyle(SizeType.Percent, 50));
+
+                    // ============================================
+                    // CREATE BUTTONS
+                    // ============================================
+
+                    Button btn50 = new Button();
+                    btn50.Text = "₱50";
+                    btn50.Dock = DockStyle.Fill;
+                    btn50.Font = new Font(
+                        "Segoe UI",
+                        14,
+                        FontStyle.Bold
+                    );
+
+                    Button btn100 = new Button();
+                    btn100.Text = "₱100";
+                    btn100.Dock = DockStyle.Fill;
+                    btn100.Font = new Font(
+                        "Segoe UI",
+                        14,
+                        FontStyle.Bold
+                    );
+
+                    Button btn500 = new Button();
+                    btn500.Text = "₱500";
+                    btn500.Dock = DockStyle.Fill;
+                    btn500.Font = new Font(
+                        "Segoe UI",
+                        14,
+                        FontStyle.Bold
+                    );
+
+                    Button btn1000 = new Button();
+                    btn1000.Text = "₱1000";
+                    btn1000.Dock = DockStyle.Fill;
+                    btn1000.Font = new Font(
+                        "Segoe UI",
+                        14,
+                        FontStyle.Bold
+                    );
+
+                    // ============================================
+                    // CONFIRM / CHANGE
+                    // ============================================
+
+                    FlowLayoutPanel actionPanel = new FlowLayoutPanel();
+
+                    actionPanel.Dock = DockStyle.Fill;
+                    actionPanel.FlowDirection = FlowDirection.RightToLeft;
+                    actionPanel.Padding = new Padding(20, 5, 20, 10);
+
+                    Button confirmButton = new Button();
+
+                    confirmButton.Text = "CONFIRM";
+                    confirmButton.Width = 150;
+                    confirmButton.Height = 45;
+                    confirmButton.Font = new Font(
+                        "Segoe UI",
+                        11,
+                        FontStyle.Bold
+                    );
+
+                    Button changeButton = new Button();
+
+                    changeButton.Text = "CHANGE";
+                    changeButton.Width = 150;
+                    changeButton.Height = 45;
+                    changeButton.Font = new Font(
+                        "Segoe UI",
+                        11,
+                        FontStyle.Bold
+                    );
+
+                    // ============================================
+                    // SELECTED DENOMINATION
+                    // ============================================
+
+                    int selectedAmount = 0;
+
+                    // ============================================
+                    // LOCK / UNLOCK DENOMINATION BUTTONS
+                    // ============================================
+
+                    Action lockDenominationButtons = () =>
+                    {
+                        btn50.Enabled = false;
+                        btn100.Enabled = false;
+                        btn500.Enabled = false;
+                        btn1000.Enabled = false;
+
+                        changeButton.Enabled = true;
+                        confirmButton.Enabled = true;
+                    };
+
+                    Action unlockDenominationButtons = () =>
+                    {
+                        btn50.Enabled = true;
+                        btn100.Enabled = true;
+                        btn500.Enabled = true;
+                        btn1000.Enabled = true;
+
+                        changeButton.Enabled = false;
+                        confirmButton.Enabled = false;
+
+                        selectedAmount = 0;
+
+                        selectedLabel.Text = "Selected: None";
+                    };
+
+                    // ============================================
+                    // DENOMINATION SELECTION
+                    // ============================================
+
+                    btn50.Click += (s, e) =>
+                    {
+                        selectedAmount = 50;
+
+                        selectedLabel.Text = "Selected: ₱50";
+
+                        lockDenominationButtons();
+                    };
+
+                    btn100.Click += (s, e) =>
+                    {
+                        selectedAmount = 100;
+
+                        selectedLabel.Text = "Selected: ₱100";
+
+                        lockDenominationButtons();
+                    };
+
+                    btn500.Click += (s, e) =>
+                    {
+                        selectedAmount = 500;
+
+                        selectedLabel.Text = "Selected: ₱500";
+
+                        lockDenominationButtons();
+                    };
+
+                    btn1000.Click += (s, e) =>
+                    {
+                        selectedAmount = 1000;
+
+                        selectedLabel.Text = "Selected: ₱1000";
+
+                        lockDenominationButtons();
+                    };
+
+                    // ============================================
+                    // CHANGE BUTTON
+                    // ============================================
+
+                    changeButton.Click += (s, e) =>
+                    {
+                        unlockDenominationButtons();
+                    };
+
+                    // ============================================
+                    // CONFIRM BUTTON
+                    // ============================================
+
+                    confirmButton.Click += (s, e) =>
+                    {
+                        if (selectedAmount <= 0)
+                            return;
+
+                        // ========================================
+                        // SEND PAYMENT ONLY ONCE
+                        // ========================================
+
+                        paymentController.AddBillPayment(selectedAmount);
+
+                        billForm.DialogResult = DialogResult.OK;
+                        billForm.Close();
+                    };
+
+                    // ============================================
+                    // INITIAL STATE
+                    // ============================================
+
+                    changeButton.Enabled = false;
+                    confirmButton.Enabled = false;
+
+                    // ============================================
+                    // ADD CONTROLS
+                    // ============================================
+
+                    buttons.Controls.Add(btn50, 0, 0);
+                    buttons.Controls.Add(btn100, 1, 0);
+                    buttons.Controls.Add(btn500, 0, 1);
+                    buttons.Controls.Add(btn1000, 1, 1);
+
+                    actionPanel.Controls.Add(confirmButton);
+                    actionPanel.Controls.Add(changeButton);
+
+                    billForm.Controls.Add(actionPanel);
+                    billForm.Controls.Add(buttons);
+                    billForm.Controls.Add(selectedLabel);
+                    billForm.Controls.Add(message);
+                    billForm.Controls.Add(title);
+
+                    // ============================================
+                    // SHOW
+                    // ============================================
+
+                    billForm.ShowDialog(this);
+                }
+            }
+            finally
+            {
+                // ============================================
+                // ALLOW NEXT BILL AFTER DIALOG CLOSES
+                // ============================================
+
+                billDialogOpen = false;
+            }
         }
 
         // =========================
