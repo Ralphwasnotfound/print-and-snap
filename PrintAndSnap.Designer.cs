@@ -697,7 +697,7 @@ namespace PrintAndSnap
             this.startBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startBtn.Font = new System.Drawing.Font("Segoe UI Black", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startBtn.Location = new System.Drawing.Point(683, 4);
-            this.startBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.startBtn.Margin = new System.Windows.Forms.Padding(4);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(574, 127);
             this.startBtn.TabIndex = 0;
@@ -748,7 +748,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel74.Controls.Add(this.instructionLabel, 1, 0);
             this.tableLayoutPanel74.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel74.Location = new System.Drawing.Point(0, 467);
-            this.tableLayoutPanel74.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel74.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel74.Name = "tableLayoutPanel74";
             this.tableLayoutPanel74.RowCount = 1;
             this.tableLayoutPanel74.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -883,7 +883,7 @@ namespace PrintAndSnap
             this.printPanel.Controls.Add(this.continuePanel);
             this.printPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.printPanel.Location = new System.Drawing.Point(0, 0);
-            this.printPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.printPanel.Margin = new System.Windows.Forms.Padding(4);
             this.printPanel.Name = "printPanel";
             this.printPanel.Size = new System.Drawing.Size(1941, 897);
             this.printPanel.TabIndex = 0;
@@ -925,7 +925,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel18.Controls.Add(this.instructionLabelDocs, 1, 0);
             this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel18.Location = new System.Drawing.Point(0, 332);
-            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel18.Name = "tableLayoutPanel18";
             this.tableLayoutPanel18.RowCount = 1;
             this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -958,7 +958,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel1.Controls.Add(this.qrPictureBox, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 381);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -992,7 +992,7 @@ namespace PrintAndSnap
             this.uploadMainLayout.Controls.Add(this.retrievalBtn, 3, 0);
             this.uploadMainLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uploadMainLayout.Location = new System.Drawing.Point(0, 765);
-            this.uploadMainLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.uploadMainLayout.Margin = new System.Windows.Forms.Padding(4);
             this.uploadMainLayout.Name = "uploadMainLayout";
             this.uploadMainLayout.RowCount = 2;
             this.uploadMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
@@ -1033,7 +1033,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel11.Controls.Add(this.fileUploadStatusLabel, 0, 1);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(780, 4);
-            this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
             this.tableLayoutPanel11.RowCount = 2;
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1121,7 +1121,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel9.Controls.Add(this.panel3, 0, 2);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 3;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -1189,11 +1189,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel5.Controls.Add(this.numericPageRange, 0, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(384, 152);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(373, 41);
             this.tableLayoutPanel5.TabIndex = 10;
             // 
@@ -1217,11 +1217,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel4.Controls.Add(this.numericSinglePage, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(384, 201);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(373, 41);
             this.tableLayoutPanel4.TabIndex = 9;
             // 
@@ -1296,7 +1296,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel81.Controls.Add(this.radioSinglePage, 1, 0);
             this.tableLayoutPanel81.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel81.Location = new System.Drawing.Point(4, 201);
-            this.tableLayoutPanel81.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel81.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel81.Name = "tableLayoutPanel81";
             this.tableLayoutPanel81.RowCount = 1;
             this.tableLayoutPanel81.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1329,11 +1329,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel6.Controls.Add(this.numericCopies, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(384, 4);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(373, 41);
             this.tableLayoutPanel6.TabIndex = 11;
             // 
@@ -1360,7 +1360,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel80.Controls.Add(this.radioPrintRange, 1, 0);
             this.tableLayoutPanel80.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel80.Location = new System.Drawing.Point(4, 152);
-            this.tableLayoutPanel80.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel80.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel80.Name = "tableLayoutPanel80";
             this.tableLayoutPanel80.RowCount = 1;
             this.tableLayoutPanel80.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1394,11 +1394,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel86.Controls.Add(this.pictureBox2, 0, 0);
             this.tableLayoutPanel86.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel86.Location = new System.Drawing.Point(4, 54);
-            this.tableLayoutPanel86.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel86.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel86.Name = "tableLayoutPanel86";
             this.tableLayoutPanel86.RowCount = 1;
             this.tableLayoutPanel86.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel86.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel86.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel86.Size = new System.Drawing.Size(372, 41);
             this.tableLayoutPanel86.TabIndex = 2;
             // 
@@ -1421,7 +1421,7 @@ namespace PrintAndSnap
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox2.Image = global::Snap_and_Print.Properties.Resources.file_text_line;
             this.pictureBox2.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(66, 33);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1436,7 +1436,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel7.Controls.Add(this.radioPrintAll, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(4, 103);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1469,11 +1469,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel87.Controls.Add(this.pictureBox3, 0, 0);
             this.tableLayoutPanel87.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel87.Location = new System.Drawing.Point(4, 251);
-            this.tableLayoutPanel87.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel87.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel87.Name = "tableLayoutPanel87";
             this.tableLayoutPanel87.RowCount = 1;
             this.tableLayoutPanel87.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel87.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel87.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tableLayoutPanel87.Size = new System.Drawing.Size(372, 41);
             this.tableLayoutPanel87.TabIndex = 2;
             // 
@@ -1495,7 +1495,7 @@ namespace PrintAndSnap
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox3.Image = global::Snap_and_Print.Properties.Resources.printer_line;
             this.pictureBox3.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(66, 33);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1543,7 +1543,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel85.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel85.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel85.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel85.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel85.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel85.Name = "tableLayoutPanel85";
             this.tableLayoutPanel85.RowCount = 1;
             this.tableLayoutPanel85.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1571,7 +1571,7 @@ namespace PrintAndSnap
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Image = global::Snap_and_Print.Properties.Resources.printer_cloud_line;
             this.pictureBox1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(66, 33);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1622,7 +1622,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel12.Controls.Add(this.tableLayoutPanel89, 1, 2);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel12.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 3;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.49995F));
@@ -1656,7 +1656,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel88.Controls.Add(this.pictureBox6, 0, 0);
             this.tableLayoutPanel88.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel88.Location = new System.Drawing.Point(4, 109);
-            this.tableLayoutPanel88.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel88.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel88.Name = "tableLayoutPanel88";
             this.tableLayoutPanel88.RowCount = 1;
             this.tableLayoutPanel88.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1713,7 +1713,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel20.Controls.Add(this.pictureBox5, 0, 0);
             this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel20.Location = new System.Drawing.Point(384, 4);
-            this.tableLayoutPanel20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel20.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel20.Name = "tableLayoutPanel20";
             this.tableLayoutPanel20.RowCount = 1;
             this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1729,7 +1729,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel21.Controls.Add(this.printerStatusLabel, 0, 1);
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(115, 4);
-            this.tableLayoutPanel21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel21.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel21.Name = "tableLayoutPanel21";
             this.tableLayoutPanel21.RowCount = 2;
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1787,7 +1787,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel19.Controls.Add(this.pictureBox4, 0, 0);
             this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel19.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel19.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel19.Name = "tableLayoutPanel19";
             this.tableLayoutPanel19.RowCount = 1;
             this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1803,7 +1803,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel24.Controls.Add(this.totalPagesLabelLabel, 0, 0);
             this.tableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel24.Location = new System.Drawing.Point(115, 4);
-            this.tableLayoutPanel24.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel24.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel24.Name = "tableLayoutPanel24";
             this.tableLayoutPanel24.RowCount = 2;
             this.tableLayoutPanel24.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -1859,11 +1859,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel89.Controls.Add(this.pictureBox8, 0, 0);
             this.tableLayoutPanel89.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel89.Location = new System.Drawing.Point(384, 109);
-            this.tableLayoutPanel89.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel89.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel89.Name = "tableLayoutPanel89";
             this.tableLayoutPanel89.RowCount = 1;
             this.tableLayoutPanel89.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel89.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+            this.tableLayoutPanel89.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanel89.Size = new System.Drawing.Size(373, 96);
             this.tableLayoutPanel89.TabIndex = 2;
             // 
@@ -1900,7 +1900,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel16.Controls.Add(this.panel14, 0, 1);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel16.Location = new System.Drawing.Point(1106, 4);
-            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel16.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 2;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -1932,7 +1932,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel92.Controls.Add(this.previewPanelSettingLayout, 0, 1);
             this.tableLayoutPanel92.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel92.Location = new System.Drawing.Point(7, 6);
-            this.tableLayoutPanel92.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel92.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel92.Name = "tableLayoutPanel92";
             this.tableLayoutPanel92.RowCount = 3;
             this.tableLayoutPanel92.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
@@ -2010,7 +2010,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel84.Controls.Add(this.pictureBox7, 0, 0);
             this.tableLayoutPanel84.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel84.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel84.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel84.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel84.Name = "tableLayoutPanel84";
             this.tableLayoutPanel84.RowCount = 1;
             this.tableLayoutPanel84.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -2038,7 +2038,7 @@ namespace PrintAndSnap
             this.pictureBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox7.Image = global::Snap_and_Print.Properties.Resources.printPreviewFile;
             this.pictureBox7.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox7.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(81, 26);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -2054,7 +2054,7 @@ namespace PrintAndSnap
             this.pagesPreviewLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pagesPreviewLabel.ForeColor = System.Drawing.Color.Silver;
             this.pagesPreviewLabel.Location = new System.Drawing.Point(460, 4);
-            this.pagesPreviewLabel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pagesPreviewLabel.Margin = new System.Windows.Forms.Padding(4);
             this.pagesPreviewLabel.Name = "pagesPreviewLabel";
             this.pagesPreviewLabel.Size = new System.Drawing.Size(144, 34);
             this.pagesPreviewLabel.TabIndex = 2;
@@ -2070,7 +2070,7 @@ namespace PrintAndSnap
             this.filesizepreview.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filesizepreview.ForeColor = System.Drawing.Color.Silver;
             this.filesizepreview.Location = new System.Drawing.Point(612, 4);
-            this.filesizepreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.filesizepreview.Margin = new System.Windows.Forms.Padding(4);
             this.filesizepreview.Name = "filesizepreview";
             this.filesizepreview.Size = new System.Drawing.Size(145, 34);
             this.filesizepreview.TabIndex = 3;
@@ -2138,11 +2138,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel77.Controls.Add(this.printSettingsCancelBtn, 0, 0);
             this.tableLayoutPanel77.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel77.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel77.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel77.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel77.Name = "tableLayoutPanel77";
             this.tableLayoutPanel77.RowCount = 1;
             this.tableLayoutPanel77.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel77.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel77.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.tableLayoutPanel77.Size = new System.Drawing.Size(639, 99);
             this.tableLayoutPanel77.TabIndex = 4;
             // 
@@ -2212,7 +2212,7 @@ namespace PrintAndSnap
             this.panel2.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel2.ForeColor = System.Drawing.Color.Black;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1941, 897);
             this.panel2.TabIndex = 11;
@@ -2250,11 +2250,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel104.Controls.Add(this.paymentBackBtn, 1, 0);
             this.tableLayoutPanel104.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel104.Location = new System.Drawing.Point(392, 452);
-            this.tableLayoutPanel104.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel104.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel104.Name = "tableLayoutPanel104";
             this.tableLayoutPanel104.RowCount = 1;
             this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 105F));
+            this.tableLayoutPanel104.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel104.Size = new System.Drawing.Size(1156, 104);
             this.tableLayoutPanel104.TabIndex = 8;
             // 
@@ -2355,7 +2355,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel17.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel17.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel17.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 11;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -2477,11 +2477,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel105.Controls.Add(this.label29, 0, 0);
             this.tableLayoutPanel105.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel105.Location = new System.Drawing.Point(4, 78);
-            this.tableLayoutPanel105.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel105.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel105.Name = "tableLayoutPanel105";
             this.tableLayoutPanel105.RowCount = 1;
             this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.tableLayoutPanel105.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel105.Size = new System.Drawing.Size(782, 62);
             this.tableLayoutPanel105.TabIndex = 5;
             // 
@@ -2523,7 +2523,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel106.Controls.Add(this.label30, 0, 0);
             this.tableLayoutPanel106.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel106.Location = new System.Drawing.Point(4, 152);
-            this.tableLayoutPanel106.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel106.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel106.Name = "tableLayoutPanel106";
             this.tableLayoutPanel106.RowCount = 1;
             this.tableLayoutPanel106.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -2569,7 +2569,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel107.Controls.Add(this.label31, 0, 0);
             this.tableLayoutPanel107.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel107.Location = new System.Drawing.Point(4, 226);
-            this.tableLayoutPanel107.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel107.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel107.Name = "tableLayoutPanel107";
             this.tableLayoutPanel107.RowCount = 1;
             this.tableLayoutPanel107.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -2614,7 +2614,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel140.Controls.Add(this.label32, 0, 0);
             this.tableLayoutPanel140.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel140.Location = new System.Drawing.Point(4, 300);
-            this.tableLayoutPanel140.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel140.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel140.Name = "tableLayoutPanel140";
             this.tableLayoutPanel140.RowCount = 1;
             this.tableLayoutPanel140.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -2731,7 +2731,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel97.Controls.Add(this.loadRetrievalBtn, 1, 0);
             this.tableLayoutPanel97.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel97.Location = new System.Drawing.Point(250, 330);
-            this.tableLayoutPanel97.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel97.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel97.Name = "tableLayoutPanel97";
             this.tableLayoutPanel97.RowCount = 1;
             this.tableLayoutPanel97.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -2836,7 +2836,7 @@ namespace PrintAndSnap
             this.photoMode.Controls.Add(this.tableLayoutPanel23);
             this.photoMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoMode.Location = new System.Drawing.Point(0, 0);
-            this.photoMode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.photoMode.Margin = new System.Windows.Forms.Padding(4);
             this.photoMode.Name = "photoMode";
             this.photoMode.Size = new System.Drawing.Size(1941, 897);
             this.photoMode.TabIndex = 1;
@@ -2850,7 +2850,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel22.Controls.Add(this.instructionLabelPhoto, 1, 0);
             this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel22.Location = new System.Drawing.Point(0, 401);
-            this.tableLayoutPanel22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel22.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel22.Name = "tableLayoutPanel22";
             this.tableLayoutPanel22.RowCount = 1;
             this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -2886,7 +2886,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel23.Controls.Add(this.label43, 2, 1);
             this.tableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel23.Location = new System.Drawing.Point(0, 461);
-            this.tableLayoutPanel23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel23.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel23.Name = "tableLayoutPanel23";
             this.tableLayoutPanel23.RowCount = 4;
             this.tableLayoutPanel23.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -3032,7 +3032,7 @@ namespace PrintAndSnap
             this.photoIDPanel.Controls.Add(this.softCopyDownloadId);
             this.photoIDPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoIDPanel.Location = new System.Drawing.Point(0, 0);
-            this.photoIDPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.photoIDPanel.Margin = new System.Windows.Forms.Padding(4);
             this.photoIDPanel.Name = "photoIDPanel";
             this.photoIDPanel.Size = new System.Drawing.Size(1941, 897);
             this.photoIDPanel.TabIndex = 2;
@@ -3042,7 +3042,7 @@ namespace PrintAndSnap
             this.panelCRMidPrinting.Controls.Add(this.tableLayoutPanel27);
             this.panelCRMidPrinting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCRMidPrinting.Location = new System.Drawing.Point(0, 0);
-            this.panelCRMidPrinting.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelCRMidPrinting.Margin = new System.Windows.Forms.Padding(4);
             this.panelCRMidPrinting.Name = "panelCRMidPrinting";
             this.panelCRMidPrinting.Size = new System.Drawing.Size(1941, 897);
             this.panelCRMidPrinting.TabIndex = 2;
@@ -3061,7 +3061,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel27.Controls.Add(this.tableLayoutPanel32, 1, 1);
             this.tableLayoutPanel27.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel27.Location = new System.Drawing.Point(0, 253);
-            this.tableLayoutPanel27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel27.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel27.Name = "tableLayoutPanel27";
             this.tableLayoutPanel27.RowCount = 3;
             this.tableLayoutPanel27.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.20792F));
@@ -3076,7 +3076,7 @@ namespace PrintAndSnap
             this.panel15.Controls.Add(this.tableLayoutPanel25);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel15.Location = new System.Drawing.Point(445, 4);
-            this.panel15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel15.Margin = new System.Windows.Forms.Padding(4);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(1050, 502);
             this.panel15.TabIndex = 6;
@@ -3089,7 +3089,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel28.Controls.Add(this.idCameraFeed, 0, 0);
             this.tableLayoutPanel28.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel28.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel28.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel28.Name = "tableLayoutPanel28";
             this.tableLayoutPanel28.RowCount = 1;
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3105,7 +3105,7 @@ namespace PrintAndSnap
             this.idCameraFeed.Location = new System.Drawing.Point(253, 12);
             this.idCameraFeed.Margin = new System.Windows.Forms.Padding(253, 12, 253, 12);
             this.idCameraFeed.Name = "idCameraFeed";
-            this.idCameraFeed.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idCameraFeed.Padding = new System.Windows.Forms.Padding(4);
             this.idCameraFeed.Size = new System.Drawing.Size(544, 355);
             this.idCameraFeed.TabIndex = 2;
             this.idCameraFeed.TabStop = false;
@@ -3123,7 +3123,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel25.Controls.Add(this.idPreviewPictureBox1, 0, 0);
             this.tableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel25.Location = new System.Drawing.Point(0, 379);
-            this.tableLayoutPanel25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel25.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel25.Name = "tableLayoutPanel25";
             this.tableLayoutPanel25.RowCount = 1;
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3142,7 +3142,7 @@ namespace PrintAndSnap
             this.idPreviewPictureBox4.Location = new System.Drawing.Point(813, 6);
             this.idPreviewPictureBox4.Margin = new System.Windows.Forms.Padding(27, 6, 27, 6);
             this.idPreviewPictureBox4.Name = "idPreviewPictureBox4";
-            this.idPreviewPictureBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPreviewPictureBox4.Padding = new System.Windows.Forms.Padding(4);
             this.idPreviewPictureBox4.Size = new System.Drawing.Size(210, 111);
             this.idPreviewPictureBox4.TabIndex = 3;
             this.idPreviewPictureBox4.TabStop = false;
@@ -3158,7 +3158,7 @@ namespace PrintAndSnap
             this.idPreviewPictureBox3.Location = new System.Drawing.Point(551, 6);
             this.idPreviewPictureBox3.Margin = new System.Windows.Forms.Padding(27, 6, 27, 6);
             this.idPreviewPictureBox3.Name = "idPreviewPictureBox3";
-            this.idPreviewPictureBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPreviewPictureBox3.Padding = new System.Windows.Forms.Padding(4);
             this.idPreviewPictureBox3.Size = new System.Drawing.Size(208, 111);
             this.idPreviewPictureBox3.TabIndex = 2;
             this.idPreviewPictureBox3.TabStop = false;
@@ -3174,7 +3174,7 @@ namespace PrintAndSnap
             this.idPreviewPictureBox2.Location = new System.Drawing.Point(289, 6);
             this.idPreviewPictureBox2.Margin = new System.Windows.Forms.Padding(27, 6, 27, 6);
             this.idPreviewPictureBox2.Name = "idPreviewPictureBox2";
-            this.idPreviewPictureBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPreviewPictureBox2.Padding = new System.Windows.Forms.Padding(4);
             this.idPreviewPictureBox2.Size = new System.Drawing.Size(208, 111);
             this.idPreviewPictureBox2.TabIndex = 1;
             this.idPreviewPictureBox2.TabStop = false;
@@ -3190,7 +3190,7 @@ namespace PrintAndSnap
             this.idPreviewPictureBox1.Location = new System.Drawing.Point(27, 6);
             this.idPreviewPictureBox1.Margin = new System.Windows.Forms.Padding(27, 6, 27, 6);
             this.idPreviewPictureBox1.Name = "idPreviewPictureBox1";
-            this.idPreviewPictureBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPreviewPictureBox1.Padding = new System.Windows.Forms.Padding(4);
             this.idPreviewPictureBox1.Size = new System.Drawing.Size(208, 111);
             this.idPreviewPictureBox1.TabIndex = 0;
             this.idPreviewPictureBox1.TabStop = false;
@@ -3206,11 +3206,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel26.Controls.Add(this.idPrintingContinueBtn, 2, 0);
             this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel26.Location = new System.Drawing.Point(445, 520);
-            this.tableLayoutPanel26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel26.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 121F));
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel26.Size = new System.Drawing.Size(1050, 120);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
@@ -3310,7 +3310,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel32.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel32.Location = new System.Drawing.Point(445, 514);
-            this.tableLayoutPanel32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel32.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel32.Name = "tableLayoutPanel32";
             this.tableLayoutPanel32.RowCount = 1;
             this.tableLayoutPanel32.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3325,7 +3325,7 @@ namespace PrintAndSnap
             this.idPrintingSettings.Controls.Add(this.IDsettings);
             this.idPrintingSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idPrintingSettings.Location = new System.Drawing.Point(0, 0);
-            this.idPrintingSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPrintingSettings.Margin = new System.Windows.Forms.Padding(4);
             this.idPrintingSettings.Name = "idPrintingSettings";
             this.idPrintingSettings.Size = new System.Drawing.Size(1941, 897);
             this.idPrintingSettings.TabIndex = 2;
@@ -3335,7 +3335,7 @@ namespace PrintAndSnap
             this.IDsettings.Controls.Add(this.panel5);
             this.IDsettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.IDsettings.Location = new System.Drawing.Point(0, 0);
-            this.IDsettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IDsettings.Margin = new System.Windows.Forms.Padding(4);
             this.IDsettings.Name = "IDsettings";
             this.IDsettings.Size = new System.Drawing.Size(1941, 897);
             this.IDsettings.TabIndex = 0;
@@ -3347,7 +3347,7 @@ namespace PrintAndSnap
             this.panel5.Controls.Add(this.tableLayoutPanel34);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1941, 897);
             this.panel5.TabIndex = 2;
@@ -3361,7 +3361,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel8.Controls.Add(this.panel21, 0, 2);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Right;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(1070, 0);
-            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 3;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -3391,7 +3391,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel36.Controls.Add(this.idSettingsPicturePreview, 0, 0);
             this.tableLayoutPanel36.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel36.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel36.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel36.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel36.Name = "tableLayoutPanel36";
             this.tableLayoutPanel36.RowCount = 1;
             this.tableLayoutPanel36.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3406,7 +3406,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel37.Controls.Add(this.pictureBox16, 0, 1);
             this.tableLayoutPanel37.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel37.Location = new System.Drawing.Point(570, 4);
-            this.tableLayoutPanel37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel37.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel37.Name = "tableLayoutPanel37";
             this.tableLayoutPanel37.RowCount = 2;
             this.tableLayoutPanel37.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
@@ -3419,7 +3419,7 @@ namespace PrintAndSnap
             this.idPrintPreviewMini.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.idPrintPreviewMini.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idPrintPreviewMini.Location = new System.Drawing.Point(4, 4);
-            this.idPrintPreviewMini.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPrintPreviewMini.Margin = new System.Windows.Forms.Padding(4);
             this.idPrintPreviewMini.Name = "idPrintPreviewMini";
             this.idPrintPreviewMini.Size = new System.Drawing.Size(227, 164);
             this.idPrintPreviewMini.TabIndex = 0;
@@ -3430,7 +3430,7 @@ namespace PrintAndSnap
             this.pictureBox16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox16.Image = global::Snap_and_Print.Properties.Resources.camera_lens_ai_line;
             this.pictureBox16.Location = new System.Drawing.Point(4, 176);
-            this.pictureBox16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox16.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox16.Name = "pictureBox16";
             this.pictureBox16.Size = new System.Drawing.Size(227, 250);
             this.pictureBox16.TabIndex = 1;
@@ -3441,7 +3441,7 @@ namespace PrintAndSnap
             this.idSettingsPicturePreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.idSettingsPicturePreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idSettingsPicturePreview.Location = new System.Drawing.Point(4, 4);
-            this.idSettingsPicturePreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idSettingsPicturePreview.Margin = new System.Windows.Forms.Padding(4);
             this.idSettingsPicturePreview.Name = "idSettingsPicturePreview";
             this.idSettingsPicturePreview.Size = new System.Drawing.Size(558, 430);
             this.idSettingsPicturePreview.TabIndex = 0;
@@ -3472,11 +3472,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel33.Controls.Add(this.idSettingsSelectPicture1, 0, 0);
             this.tableLayoutPanel33.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel33.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel33.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel33.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel33.Name = "tableLayoutPanel33";
             this.tableLayoutPanel33.RowCount = 1;
             this.tableLayoutPanel33.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel33.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 98F));
+            this.tableLayoutPanel33.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 99F));
             this.tableLayoutPanel33.Size = new System.Drawing.Size(809, 99);
             this.tableLayoutPanel33.TabIndex = 1;
             // 
@@ -3488,7 +3488,7 @@ namespace PrintAndSnap
             this.idSettingsSelectPicture4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.idSettingsSelectPicture4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idSettingsSelectPicture4.Location = new System.Drawing.Point(610, 4);
-            this.idSettingsSelectPicture4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idSettingsSelectPicture4.Margin = new System.Windows.Forms.Padding(4);
             this.idSettingsSelectPicture4.Name = "idSettingsSelectPicture4";
             this.idSettingsSelectPicture4.Size = new System.Drawing.Size(195, 91);
             this.idSettingsSelectPicture4.TabIndex = 3;
@@ -3503,7 +3503,7 @@ namespace PrintAndSnap
             this.idSettingsSelectPicture3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.idSettingsSelectPicture3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idSettingsSelectPicture3.Location = new System.Drawing.Point(408, 4);
-            this.idSettingsSelectPicture3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idSettingsSelectPicture3.Margin = new System.Windows.Forms.Padding(4);
             this.idSettingsSelectPicture3.Name = "idSettingsSelectPicture3";
             this.idSettingsSelectPicture3.Size = new System.Drawing.Size(194, 91);
             this.idSettingsSelectPicture3.TabIndex = 2;
@@ -3518,7 +3518,7 @@ namespace PrintAndSnap
             this.idSettingsSelectPicture2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.idSettingsSelectPicture2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idSettingsSelectPicture2.Location = new System.Drawing.Point(206, 4);
-            this.idSettingsSelectPicture2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idSettingsSelectPicture2.Margin = new System.Windows.Forms.Padding(4);
             this.idSettingsSelectPicture2.Name = "idSettingsSelectPicture2";
             this.idSettingsSelectPicture2.Size = new System.Drawing.Size(194, 91);
             this.idSettingsSelectPicture2.TabIndex = 1;
@@ -3533,7 +3533,7 @@ namespace PrintAndSnap
             this.idSettingsSelectPicture1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.idSettingsSelectPicture1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.idSettingsSelectPicture1.Location = new System.Drawing.Point(4, 4);
-            this.idSettingsSelectPicture1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idSettingsSelectPicture1.Margin = new System.Windows.Forms.Padding(4);
             this.idSettingsSelectPicture1.Name = "idSettingsSelectPicture1";
             this.idSettingsSelectPicture1.Size = new System.Drawing.Size(194, 91);
             this.idSettingsSelectPicture1.TabIndex = 0;
@@ -3549,7 +3549,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel15.Controls.Add(this.panel7, 0, 2);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Left;
             this.tableLayoutPanel15.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 3;
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -3586,7 +3586,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel35.Controls.Add(this.tableLayoutPanel139, 0, 9);
             this.tableLayoutPanel35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel35.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel35.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel35.Name = "tableLayoutPanel35";
             this.tableLayoutPanel35.RowCount = 10;
             this.tableLayoutPanel35.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.86139F));
@@ -3658,7 +3658,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel70.Controls.Add(this.label20, 0, 0);
             this.tableLayoutPanel70.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel70.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel70.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel70.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel70.Name = "tableLayoutPanel70";
             this.tableLayoutPanel70.RowCount = 1;
             this.tableLayoutPanel70.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3695,7 +3695,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel133.Controls.Add(this.radioBtn2x2, 1, 0);
             this.tableLayoutPanel133.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel133.Location = new System.Drawing.Point(4, 70);
-            this.tableLayoutPanel133.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel133.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel133.Name = "tableLayoutPanel133";
             this.tableLayoutPanel133.RowCount = 1;
             this.tableLayoutPanel133.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3709,7 +3709,7 @@ namespace PrintAndSnap
             this.radioBtn2x1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtn2x1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtn2x1.Location = new System.Drawing.Point(601, 4);
-            this.radioBtn2x1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtn2x1.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtn2x1.Name = "radioBtn2x1";
             this.radioBtn2x1.Size = new System.Drawing.Size(194, 50);
             this.radioBtn2x1.TabIndex = 0;
@@ -3725,7 +3725,7 @@ namespace PrintAndSnap
             this.radioBtn1x1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtn1x1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtn1x1.Location = new System.Drawing.Point(402, 4);
-            this.radioBtn1x1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtn1x1.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtn1x1.Name = "radioBtn1x1";
             this.radioBtn1x1.Size = new System.Drawing.Size(191, 50);
             this.radioBtn1x1.TabIndex = 0;
@@ -3741,7 +3741,7 @@ namespace PrintAndSnap
             this.radioBtn2x2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtn2x2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtn2x2.Location = new System.Drawing.Point(203, 4);
-            this.radioBtn2x2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtn2x2.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtn2x2.Name = "radioBtn2x2";
             this.radioBtn2x2.Size = new System.Drawing.Size(191, 50);
             this.radioBtn2x2.TabIndex = 0;
@@ -3758,7 +3758,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel134.Controls.Add(this.label21, 0, 0);
             this.tableLayoutPanel134.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel134.Location = new System.Drawing.Point(4, 140);
-            this.tableLayoutPanel134.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel134.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel134.Name = "tableLayoutPanel134";
             this.tableLayoutPanel134.RowCount = 1;
             this.tableLayoutPanel134.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3792,7 +3792,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel135.Controls.Add(this.radioBtnSinglePhotoCopies, 1, 0);
             this.tableLayoutPanel135.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel135.Location = new System.Drawing.Point(4, 206);
-            this.tableLayoutPanel135.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel135.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel135.Name = "tableLayoutPanel135";
             this.tableLayoutPanel135.RowCount = 1;
             this.tableLayoutPanel135.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3806,7 +3806,7 @@ namespace PrintAndSnap
             this.radioBtnMultipleCopies.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtnMultipleCopies.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtnMultipleCopies.Location = new System.Drawing.Point(482, 4);
-            this.radioBtnMultipleCopies.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtnMultipleCopies.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtnMultipleCopies.Name = "radioBtnMultipleCopies";
             this.radioBtnMultipleCopies.Size = new System.Drawing.Size(313, 50);
             this.radioBtnMultipleCopies.TabIndex = 0;
@@ -3822,7 +3822,7 @@ namespace PrintAndSnap
             this.radioBtnSinglePhotoCopies.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtnSinglePhotoCopies.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtnSinglePhotoCopies.Location = new System.Drawing.Point(163, 4);
-            this.radioBtnSinglePhotoCopies.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtnSinglePhotoCopies.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtnSinglePhotoCopies.Name = "radioBtnSinglePhotoCopies";
             this.radioBtnSinglePhotoCopies.Size = new System.Drawing.Size(311, 50);
             this.radioBtnSinglePhotoCopies.TabIndex = 0;
@@ -3839,7 +3839,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel136.Controls.Add(this.label22, 0, 0);
             this.tableLayoutPanel136.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel136.Location = new System.Drawing.Point(4, 276);
-            this.tableLayoutPanel136.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel136.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel136.Name = "tableLayoutPanel136";
             this.tableLayoutPanel136.RowCount = 1;
             this.tableLayoutPanel136.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3874,7 +3874,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel137.Controls.Add(this.radioBtnPhotoBlack, 1, 0);
             this.tableLayoutPanel137.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel137.Location = new System.Drawing.Point(4, 342);
-            this.tableLayoutPanel137.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel137.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel137.Name = "tableLayoutPanel137";
             this.tableLayoutPanel137.RowCount = 1;
             this.tableLayoutPanel137.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3888,7 +3888,7 @@ namespace PrintAndSnap
             this.radioBtnPhotoColored.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtnPhotoColored.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtnPhotoColored.Location = new System.Drawing.Point(482, 4);
-            this.radioBtnPhotoColored.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtnPhotoColored.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtnPhotoColored.Name = "radioBtnPhotoColored";
             this.radioBtnPhotoColored.Size = new System.Drawing.Size(313, 50);
             this.radioBtnPhotoColored.TabIndex = 0;
@@ -3904,7 +3904,7 @@ namespace PrintAndSnap
             this.radioBtnPhotoBlack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioBtnPhotoBlack.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioBtnPhotoBlack.Location = new System.Drawing.Point(163, 4);
-            this.radioBtnPhotoBlack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioBtnPhotoBlack.Margin = new System.Windows.Forms.Padding(4);
             this.radioBtnPhotoBlack.Name = "radioBtnPhotoBlack";
             this.radioBtnPhotoBlack.Size = new System.Drawing.Size(311, 50);
             this.radioBtnPhotoBlack.TabIndex = 0;
@@ -3923,7 +3923,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel139.Controls.Add(this.idPrintingCopies, 0, 0);
             this.tableLayoutPanel139.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel139.Location = new System.Drawing.Point(4, 412);
-            this.tableLayoutPanel139.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel139.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel139.Name = "tableLayoutPanel139";
             this.tableLayoutPanel139.RowCount = 1;
             this.tableLayoutPanel139.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3981,7 +3981,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel13.Controls.Add(this.label23, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel13.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3997,7 +3997,7 @@ namespace PrintAndSnap
             this.idPrintingTotal.Image = global::Snap_and_Print.Properties.Resources.peso__1_;
             this.idPrintingTotal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.idPrintingTotal.Location = new System.Drawing.Point(407, 4);
-            this.idPrintingTotal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.idPrintingTotal.Margin = new System.Windows.Forms.Padding(4);
             this.idPrintingTotal.Name = "idPrintingTotal";
             this.idPrintingTotal.Padding = new System.Windows.Forms.Padding(0, 0, 160, 0);
             this.idPrintingTotal.Size = new System.Drawing.Size(396, 56);
@@ -4013,7 +4013,7 @@ namespace PrintAndSnap
             this.label23.Image = global::Snap_and_Print.Properties.Resources.cash_line__1_;
             this.label23.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label23.Location = new System.Drawing.Point(4, 4);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.label23.Margin = new System.Windows.Forms.Padding(4);
             this.label23.Name = "label23";
             this.label23.Padding = new System.Windows.Forms.Padding(53, 0, 0, 0);
             this.label23.Size = new System.Drawing.Size(395, 56);
@@ -4035,7 +4035,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel34.Controls.Add(this.idPrintSettingsConintueBtn, 2, 1);
             this.tableLayoutPanel34.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel34.Location = new System.Drawing.Point(0, 774);
-            this.tableLayoutPanel34.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel34.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel34.Name = "tableLayoutPanel34";
             this.tableLayoutPanel34.RowCount = 3;
             this.tableLayoutPanel34.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
@@ -4053,11 +4053,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel40.Controls.Add(this.idPrintSettingsBackBtn, 1, 0);
             this.tableLayoutPanel40.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel40.Location = new System.Drawing.Point(4, 10);
-            this.tableLayoutPanel40.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel40.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel40.Name = "tableLayoutPanel40";
             this.tableLayoutPanel40.RowCount = 1;
             this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 103F));
+            this.tableLayoutPanel40.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 102F));
             this.tableLayoutPanel40.Size = new System.Drawing.Size(639, 102);
             this.tableLayoutPanel40.TabIndex = 3;
             // 
@@ -4136,7 +4136,7 @@ namespace PrintAndSnap
             this.IDpayment.Controls.Add(this.panel4);
             this.IDpayment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.IDpayment.Location = new System.Drawing.Point(0, 0);
-            this.IDpayment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IDpayment.Margin = new System.Windows.Forms.Padding(4);
             this.IDpayment.Name = "IDpayment";
             this.IDpayment.Size = new System.Drawing.Size(1941, 897);
             this.IDpayment.TabIndex = 0;
@@ -4146,7 +4146,7 @@ namespace PrintAndSnap
             this.panel4.Controls.Add(this.tableLayoutPanel47);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1941, 897);
             this.panel4.TabIndex = 6;
@@ -4159,7 +4159,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel47.Controls.Add(this.tableLayoutPanel53, 0, 0);
             this.tableLayoutPanel47.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel47.Location = new System.Drawing.Point(0, 283);
-            this.tableLayoutPanel47.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel47.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel47.Name = "tableLayoutPanel47";
             this.tableLayoutPanel47.RowCount = 1;
             this.tableLayoutPanel47.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4175,7 +4175,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel53.Controls.Add(this.tableLayoutPanel125, 1, 0);
             this.tableLayoutPanel53.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel53.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel53.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel53.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel53.Name = "tableLayoutPanel53";
             this.tableLayoutPanel53.RowCount = 1;
             this.tableLayoutPanel53.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4190,7 +4190,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel125.Controls.Add(this.panel20, 0, 0);
             this.tableLayoutPanel125.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel125.Location = new System.Drawing.Point(390, 4);
-            this.tableLayoutPanel125.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel125.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel125.Name = "tableLayoutPanel125";
             this.tableLayoutPanel125.RowCount = 2;
             this.tableLayoutPanel125.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
@@ -4211,13 +4211,13 @@ namespace PrintAndSnap
             this.tableLayoutPanel52.Controls.Add(this.printBtnPaymentId, 2, 0);
             this.tableLayoutPanel52.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel52.Location = new System.Drawing.Point(4, 482);
-            this.tableLayoutPanel52.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel52.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel52.Name = "tableLayoutPanel52";
             this.tableLayoutPanel52.RowCount = 1;
             this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel52.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel52.Size = new System.Drawing.Size(1143, 112);
             this.tableLayoutPanel52.TabIndex = 2;
             // 
@@ -4343,7 +4343,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel126.Controls.Add(this.tableLayoutPanel132, 0, 8);
             this.tableLayoutPanel126.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel126.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel126.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel126.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel126.Name = "tableLayoutPanel126";
             this.tableLayoutPanel126.RowCount = 11;
             this.tableLayoutPanel126.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.79802F));
@@ -4384,7 +4384,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel123.Controls.Add(this.paymentIDBalance, 1, 0);
             this.tableLayoutPanel123.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel123.Location = new System.Drawing.Point(4, 174);
-            this.tableLayoutPanel123.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel123.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel123.Name = "tableLayoutPanel123";
             this.tableLayoutPanel123.RowCount = 1;
             this.tableLayoutPanel123.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4447,7 +4447,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel113.Controls.Add(this.label25, 0, 0);
             this.tableLayoutPanel113.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel113.Location = new System.Drawing.Point(4, 97);
-            this.tableLayoutPanel113.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel113.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel113.Name = "tableLayoutPanel113";
             this.tableLayoutPanel113.RowCount = 1;
             this.tableLayoutPanel113.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4570,7 +4570,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel124.Controls.Add(this.paymentInsertedID, 1, 0);
             this.tableLayoutPanel124.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel124.Location = new System.Drawing.Point(4, 251);
-            this.tableLayoutPanel124.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel124.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel124.Name = "tableLayoutPanel124";
             this.tableLayoutPanel124.RowCount = 1;
             this.tableLayoutPanel124.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4616,7 +4616,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel132.Controls.Add(this.paymentChangeID, 1, 0);
             this.tableLayoutPanel132.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel132.Location = new System.Drawing.Point(4, 328);
-            this.tableLayoutPanel132.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel132.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel132.Name = "tableLayoutPanel132";
             this.tableLayoutPanel132.RowCount = 1;
             this.tableLayoutPanel132.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4658,7 +4658,7 @@ namespace PrintAndSnap
             this.softCopyDownloadId.Controls.Add(this.panel10);
             this.softCopyDownloadId.Dock = System.Windows.Forms.DockStyle.Fill;
             this.softCopyDownloadId.Location = new System.Drawing.Point(0, 0);
-            this.softCopyDownloadId.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.softCopyDownloadId.Margin = new System.Windows.Forms.Padding(4);
             this.softCopyDownloadId.Name = "softCopyDownloadId";
             this.softCopyDownloadId.Size = new System.Drawing.Size(1941, 897);
             this.softCopyDownloadId.TabIndex = 4;
@@ -4668,7 +4668,7 @@ namespace PrintAndSnap
             this.panel10.Controls.Add(this.tableLayoutPanel39);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel10.Location = new System.Drawing.Point(0, 0);
-            this.panel10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel10.Margin = new System.Windows.Forms.Padding(4);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(1941, 897);
             this.panel10.TabIndex = 5;
@@ -4684,7 +4684,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel39.Controls.Add(this.label28, 1, 1);
             this.tableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel39.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel39.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel39.Name = "tableLayoutPanel39";
             this.tableLayoutPanel39.RowCount = 4;
             this.tableLayoutPanel39.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -4703,7 +4703,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel14.Controls.Add(this.downloadCancelBtn, 1, 0);
             this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel14.Location = new System.Drawing.Point(489, 809);
-            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
             this.tableLayoutPanel14.RowCount = 1;
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4787,7 +4787,7 @@ namespace PrintAndSnap
             this.photoBoothPanel.Controls.Add(this.funSoftCopyDownloadPanel);
             this.photoBoothPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoBoothPanel.Location = new System.Drawing.Point(0, 0);
-            this.photoBoothPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.photoBoothPanel.Margin = new System.Windows.Forms.Padding(4);
             this.photoBoothPanel.Name = "photoBoothPanel";
             this.photoBoothPanel.Size = new System.Drawing.Size(1941, 897);
             this.photoBoothPanel.TabIndex = 0;
@@ -4797,7 +4797,7 @@ namespace PrintAndSnap
             this.panelCMRphotoBooth.Controls.Add(this.tableLayoutPanel31);
             this.panelCMRphotoBooth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCMRphotoBooth.Location = new System.Drawing.Point(0, 0);
-            this.panelCMRphotoBooth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelCMRphotoBooth.Margin = new System.Windows.Forms.Padding(4);
             this.panelCMRphotoBooth.Name = "panelCMRphotoBooth";
             this.panelCMRphotoBooth.Size = new System.Drawing.Size(1941, 897);
             this.panelCMRphotoBooth.TabIndex = 2;
@@ -4814,7 +4814,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel31.Controls.Add(this.tableLayoutPanel79, 1, 1);
             this.tableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel31.Location = new System.Drawing.Point(0, 250);
-            this.tableLayoutPanel31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel31.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel31.Name = "tableLayoutPanel31";
             this.tableLayoutPanel31.RowCount = 3;
             this.tableLayoutPanel31.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.20792F));
@@ -4868,7 +4868,7 @@ namespace PrintAndSnap
             this.funCameraFeed.Location = new System.Drawing.Point(253, 12);
             this.funCameraFeed.Margin = new System.Windows.Forms.Padding(253, 12, 253, 12);
             this.funCameraFeed.Name = "funCameraFeed";
-            this.funCameraFeed.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funCameraFeed.Padding = new System.Windows.Forms.Padding(4);
             this.funCameraFeed.Size = new System.Drawing.Size(546, 331);
             this.funCameraFeed.TabIndex = 7;
             this.funCameraFeed.TabStop = false;
@@ -4886,7 +4886,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel51.Controls.Add(this.funPreview1, 0, 0);
             this.tableLayoutPanel51.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel51.Location = new System.Drawing.Point(4, 359);
-            this.tableLayoutPanel51.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel51.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel51.Name = "tableLayoutPanel51";
             this.tableLayoutPanel51.RowCount = 1;
             this.tableLayoutPanel51.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -4902,7 +4902,7 @@ namespace PrintAndSnap
             this.funPreview4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.funPreview4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funPreview4.Location = new System.Drawing.Point(787, 4);
-            this.funPreview4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funPreview4.Margin = new System.Windows.Forms.Padding(4);
             this.funPreview4.Name = "funPreview4";
             this.funPreview4.Size = new System.Drawing.Size(253, 137);
             this.funPreview4.TabIndex = 3;
@@ -4916,7 +4916,7 @@ namespace PrintAndSnap
             this.funPreview3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.funPreview3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funPreview3.Location = new System.Drawing.Point(526, 4);
-            this.funPreview3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funPreview3.Margin = new System.Windows.Forms.Padding(4);
             this.funPreview3.Name = "funPreview3";
             this.funPreview3.Size = new System.Drawing.Size(253, 137);
             this.funPreview3.TabIndex = 2;
@@ -4930,7 +4930,7 @@ namespace PrintAndSnap
             this.funPreview2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.funPreview2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funPreview2.Location = new System.Drawing.Point(265, 4);
-            this.funPreview2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funPreview2.Margin = new System.Windows.Forms.Padding(4);
             this.funPreview2.Name = "funPreview2";
             this.funPreview2.Size = new System.Drawing.Size(253, 137);
             this.funPreview2.TabIndex = 1;
@@ -4944,7 +4944,7 @@ namespace PrintAndSnap
             this.funPreview1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.funPreview1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funPreview1.Location = new System.Drawing.Point(4, 4);
-            this.funPreview1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funPreview1.Margin = new System.Windows.Forms.Padding(4);
             this.funPreview1.Name = "funPreview1";
             this.funPreview1.Size = new System.Drawing.Size(253, 137);
             this.funPreview1.TabIndex = 0;
@@ -4962,7 +4962,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel30.Controls.Add(this.funContinueBtn, 2, 0);
             this.tableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel30.Location = new System.Drawing.Point(445, 522);
-            this.tableLayoutPanel30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel30.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel30.Name = "tableLayoutPanel30";
             this.tableLayoutPanel30.RowCount = 1;
             this.tableLayoutPanel30.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5059,7 +5059,7 @@ namespace PrintAndSnap
             this.photoBoothSettings.Controls.Add(this.funSettings);
             this.photoBoothSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.photoBoothSettings.Location = new System.Drawing.Point(0, 0);
-            this.photoBoothSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.photoBoothSettings.Margin = new System.Windows.Forms.Padding(4);
             this.photoBoothSettings.Name = "photoBoothSettings";
             this.photoBoothSettings.Size = new System.Drawing.Size(1941, 897);
             this.photoBoothSettings.TabIndex = 2;
@@ -5071,7 +5071,7 @@ namespace PrintAndSnap
             this.funSettings.Controls.Add(this.tableLayoutPanel54);
             this.funSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funSettings.Location = new System.Drawing.Point(0, 0);
-            this.funSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funSettings.Margin = new System.Windows.Forms.Padding(4);
             this.funSettings.Name = "funSettings";
             this.funSettings.Size = new System.Drawing.Size(1941, 897);
             this.funSettings.TabIndex = 0;
@@ -5081,7 +5081,7 @@ namespace PrintAndSnap
             this.panel8.Controls.Add(this.tableLayoutPanel58);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel8.Location = new System.Drawing.Point(1097, 0);
-            this.panel8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel8.Margin = new System.Windows.Forms.Padding(4);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(844, 790);
             this.panel8.TabIndex = 3;
@@ -5094,7 +5094,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel58.Controls.Add(this.panel18, 0, 2);
             this.tableLayoutPanel58.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel58.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel58.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel58.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel58.Name = "tableLayoutPanel58";
             this.tableLayoutPanel58.RowCount = 3;
             this.tableLayoutPanel58.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -5125,11 +5125,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel59.Controls.Add(this.funMainPreview, 0, 0);
             this.tableLayoutPanel59.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel59.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel59.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel59.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel59.Name = "tableLayoutPanel59";
             this.tableLayoutPanel59.RowCount = 1;
             this.tableLayoutPanel59.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
-            this.tableLayoutPanel59.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 407F));
+            this.tableLayoutPanel59.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 408F));
             this.tableLayoutPanel59.Size = new System.Drawing.Size(782, 408);
             this.tableLayoutPanel59.TabIndex = 0;
             // 
@@ -5142,7 +5142,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel60.Controls.Add(this.pictureBox15, 0, 1);
             this.tableLayoutPanel60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel60.Location = new System.Drawing.Point(590, 4);
-            this.tableLayoutPanel60.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel60.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel60.Name = "tableLayoutPanel60";
             this.tableLayoutPanel60.RowCount = 2;
             this.tableLayoutPanel60.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
@@ -5214,11 +5214,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel112.Controls.Add(this.funSelectPic2, 1, 0);
             this.tableLayoutPanel112.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel112.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel112.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel112.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel112.Name = "tableLayoutPanel112";
             this.tableLayoutPanel112.RowCount = 1;
             this.tableLayoutPanel112.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel112.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 144F));
+            this.tableLayoutPanel112.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 145F));
             this.tableLayoutPanel112.Size = new System.Drawing.Size(782, 145);
             this.tableLayoutPanel112.TabIndex = 0;
             // 
@@ -5289,7 +5289,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel56.Controls.Add(this.panel17, 0, 2);
             this.tableLayoutPanel56.Dock = System.Windows.Forms.DockStyle.Left;
             this.tableLayoutPanel56.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel56.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel56.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel56.Name = "tableLayoutPanel56";
             this.tableLayoutPanel56.RowCount = 3;
             this.tableLayoutPanel56.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -5329,7 +5329,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel66.Controls.Add(this.tableLayoutPanel143, 0, 12);
             this.tableLayoutPanel66.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel66.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel66.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel66.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel66.Name = "tableLayoutPanel66";
             this.tableLayoutPanel66.RowCount = 13;
             this.tableLayoutPanel66.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.67961F));
@@ -5392,7 +5392,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel43.Controls.Add(this.funRadioBtnFilterNone, 1, 0);
             this.tableLayoutPanel43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel43.Location = new System.Drawing.Point(4, 272);
-            this.tableLayoutPanel43.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel43.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel43.Name = "tableLayoutPanel43";
             this.tableLayoutPanel43.RowCount = 1;
             this.tableLayoutPanel43.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5487,7 +5487,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel63.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel63.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel63.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel63.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel63.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel63.Name = "tableLayoutPanel63";
             this.tableLayoutPanel63.RowCount = 1;
             this.tableLayoutPanel63.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5522,7 +5522,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel138.Controls.Add(this.funRadioPrintTypeAll, 1, 0);
             this.tableLayoutPanel138.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel138.Location = new System.Drawing.Point(4, 380);
-            this.tableLayoutPanel138.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel138.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel138.Name = "tableLayoutPanel138";
             this.tableLayoutPanel138.RowCount = 1;
             this.tableLayoutPanel138.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5536,7 +5536,7 @@ namespace PrintAndSnap
             this.funRadioPrintTypeSingle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funRadioPrintTypeSingle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.funRadioPrintTypeSingle.Location = new System.Drawing.Point(390, 4);
-            this.funRadioPrintTypeSingle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funRadioPrintTypeSingle.Margin = new System.Windows.Forms.Padding(4);
             this.funRadioPrintTypeSingle.Name = "funRadioPrintTypeSingle";
             this.funRadioPrintTypeSingle.Size = new System.Drawing.Size(185, 36);
             this.funRadioPrintTypeSingle.TabIndex = 1;
@@ -5552,7 +5552,7 @@ namespace PrintAndSnap
             this.funRadioPrintTypeAll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funRadioPrintTypeAll.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.funRadioPrintTypeAll.Location = new System.Drawing.Point(197, 4);
-            this.funRadioPrintTypeAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funRadioPrintTypeAll.Margin = new System.Windows.Forms.Padding(4);
             this.funRadioPrintTypeAll.Name = "funRadioPrintTypeAll";
             this.funRadioPrintTypeAll.Size = new System.Drawing.Size(185, 36);
             this.funRadioPrintTypeAll.TabIndex = 0;
@@ -5569,7 +5569,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel78.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel78.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel78.Location = new System.Drawing.Point(4, 112);
-            this.tableLayoutPanel78.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel78.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel78.Name = "tableLayoutPanel78";
             this.tableLayoutPanel78.RowCount = 1;
             this.tableLayoutPanel78.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5602,7 +5602,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel109.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel109.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel109.Location = new System.Drawing.Point(4, 220);
-            this.tableLayoutPanel109.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel109.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel109.Name = "tableLayoutPanel109";
             this.tableLayoutPanel109.RowCount = 1;
             this.tableLayoutPanel109.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5638,7 +5638,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel49.Controls.Add(this.funRadioBtnFrameNone, 1, 0);
             this.tableLayoutPanel49.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel49.Location = new System.Drawing.Point(4, 164);
-            this.tableLayoutPanel49.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel49.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel49.Name = "tableLayoutPanel49";
             this.tableLayoutPanel49.RowCount = 1;
             this.tableLayoutPanel49.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5704,7 +5704,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel45.Controls.Add(this.funRadioBtnGridBtn, 2, 0);
             this.tableLayoutPanel45.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel45.Location = new System.Drawing.Point(4, 56);
-            this.tableLayoutPanel45.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel45.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel45.Name = "tableLayoutPanel45";
             this.tableLayoutPanel45.RowCount = 1;
             this.tableLayoutPanel45.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5752,7 +5752,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel141.Controls.Add(this.label6, 0, 0);
             this.tableLayoutPanel141.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel141.Location = new System.Drawing.Point(4, 328);
-            this.tableLayoutPanel141.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel141.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel141.Name = "tableLayoutPanel141";
             this.tableLayoutPanel141.RowCount = 1;
             this.tableLayoutPanel141.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5784,11 +5784,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel143.Controls.Add(this.label7, 0, 0);
             this.tableLayoutPanel143.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel143.Location = new System.Drawing.Point(4, 436);
-            this.tableLayoutPanel143.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel143.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel143.Name = "tableLayoutPanel143";
             this.tableLayoutPanel143.RowCount = 1;
             this.tableLayoutPanel143.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel143.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel143.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
             this.tableLayoutPanel143.Size = new System.Drawing.Size(773, 47);
             this.tableLayoutPanel143.TabIndex = 12;
             // 
@@ -5842,11 +5842,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel50.Controls.Add(this.tableLayoutPanel65, 1, 0);
             this.tableLayoutPanel50.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel50.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel50.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel50.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel50.Name = "tableLayoutPanel50";
             this.tableLayoutPanel50.RowCount = 1;
             this.tableLayoutPanel50.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel50.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel50.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
             this.tableLayoutPanel50.Size = new System.Drawing.Size(781, 66);
             this.tableLayoutPanel50.TabIndex = 0;
             // 
@@ -5859,7 +5859,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel110.Controls.Add(this.label8, 1, 0);
             this.tableLayoutPanel110.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel110.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel110.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel110.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel110.Name = "tableLayoutPanel110";
             this.tableLayoutPanel110.RowCount = 1;
             this.tableLayoutPanel110.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5902,7 +5902,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel65.Controls.Add(this.pictureBox13, 0, 0);
             this.tableLayoutPanel65.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel65.Location = new System.Drawing.Point(394, 4);
-            this.tableLayoutPanel65.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel65.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel65.Name = "tableLayoutPanel65";
             this.tableLayoutPanel65.RowCount = 1;
             this.tableLayoutPanel65.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -5944,7 +5944,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel54.Controls.Add(this.funSettingContinueBtn, 2, 1);
             this.tableLayoutPanel54.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel54.Location = new System.Drawing.Point(0, 790);
-            this.tableLayoutPanel54.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel54.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel54.Name = "tableLayoutPanel54";
             this.tableLayoutPanel54.RowCount = 3;
             this.tableLayoutPanel54.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1F));
@@ -5962,11 +5962,11 @@ namespace PrintAndSnap
             this.tableLayoutPanel42.Controls.Add(this.funSettingsBackBtn, 1, 0);
             this.tableLayoutPanel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel42.Location = new System.Drawing.Point(4, 5);
-            this.tableLayoutPanel42.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel42.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel42.Name = "tableLayoutPanel42";
             this.tableLayoutPanel42.RowCount = 1;
             this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+            this.tableLayoutPanel42.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanel42.Size = new System.Drawing.Size(639, 96);
             this.tableLayoutPanel42.TabIndex = 4;
             // 
@@ -6044,7 +6044,7 @@ namespace PrintAndSnap
             this.funPaymentPanel.Controls.Add(this.tableLayoutPanel72);
             this.funPaymentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funPaymentPanel.Location = new System.Drawing.Point(0, 0);
-            this.funPaymentPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funPaymentPanel.Margin = new System.Windows.Forms.Padding(4);
             this.funPaymentPanel.Name = "funPaymentPanel";
             this.funPaymentPanel.Size = new System.Drawing.Size(1941, 897);
             this.funPaymentPanel.TabIndex = 1;
@@ -6058,7 +6058,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel72.Controls.Add(this.tableLayoutPanel114, 1, 0);
             this.tableLayoutPanel72.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel72.Location = new System.Drawing.Point(0, 289);
-            this.tableLayoutPanel72.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel72.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel72.Name = "tableLayoutPanel72";
             this.tableLayoutPanel72.RowCount = 1;
             this.tableLayoutPanel72.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6074,7 +6074,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel114.Controls.Add(this.panel19, 0, 0);
             this.tableLayoutPanel114.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel114.Location = new System.Drawing.Point(392, 4);
-            this.tableLayoutPanel114.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel114.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel114.Name = "tableLayoutPanel114";
             this.tableLayoutPanel114.RowCount = 2;
             this.tableLayoutPanel114.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
@@ -6094,7 +6094,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel71.Controls.Add(this.paymentFunPrintBtn, 2, 0);
             this.tableLayoutPanel71.Controls.Add(this.paymentFunCancelBtn, 0, 0);
             this.tableLayoutPanel71.Location = new System.Drawing.Point(4, 484);
-            this.tableLayoutPanel71.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel71.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel71.Name = "tableLayoutPanel71";
             this.tableLayoutPanel71.RowCount = 1;
             this.tableLayoutPanel71.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6224,7 +6224,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel115.Controls.Add(this.tableLayoutPanel122, 0, 8);
             this.tableLayoutPanel115.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel115.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel115.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel115.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel115.Name = "tableLayoutPanel115";
             this.tableLayoutPanel115.RowCount = 11;
             this.tableLayoutPanel115.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.80198F));
@@ -6266,7 +6266,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel69.Controls.Add(this.paymentFunBalance, 1, 0);
             this.tableLayoutPanel69.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel69.Location = new System.Drawing.Point(4, 175);
-            this.tableLayoutPanel69.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel69.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel69.Name = "tableLayoutPanel69";
             this.tableLayoutPanel69.RowCount = 1;
             this.tableLayoutPanel69.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6312,7 +6312,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel68.Controls.Add(this.paymentFunTotal, 1, 0);
             this.tableLayoutPanel68.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel68.Location = new System.Drawing.Point(4, 97);
-            this.tableLayoutPanel68.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel68.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel68.Name = "tableLayoutPanel68";
             this.tableLayoutPanel68.RowCount = 1;
             this.tableLayoutPanel68.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
@@ -6448,7 +6448,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel121.Controls.Add(this.paymentFunInserted, 1, 0);
             this.tableLayoutPanel121.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel121.Location = new System.Drawing.Point(4, 253);
-            this.tableLayoutPanel121.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel121.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel121.Name = "tableLayoutPanel121";
             this.tableLayoutPanel121.RowCount = 1;
             this.tableLayoutPanel121.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6494,7 +6494,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel122.Controls.Add(this.paymentFunChange, 1, 0);
             this.tableLayoutPanel122.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel122.Location = new System.Drawing.Point(4, 331);
-            this.tableLayoutPanel122.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel122.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel122.Name = "tableLayoutPanel122";
             this.tableLayoutPanel122.RowCount = 1;
             this.tableLayoutPanel122.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6536,7 +6536,7 @@ namespace PrintAndSnap
             this.funSoftCopyDownloadPanel.Controls.Add(this.panel11);
             this.funSoftCopyDownloadPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.funSoftCopyDownloadPanel.Location = new System.Drawing.Point(0, 0);
-            this.funSoftCopyDownloadPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.funSoftCopyDownloadPanel.Margin = new System.Windows.Forms.Padding(4);
             this.funSoftCopyDownloadPanel.Name = "funSoftCopyDownloadPanel";
             this.funSoftCopyDownloadPanel.Size = new System.Drawing.Size(1941, 897);
             this.funSoftCopyDownloadPanel.TabIndex = 4;
@@ -6547,7 +6547,7 @@ namespace PrintAndSnap
             this.panel11.Controls.Add(this.tableLayoutPanel48);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(0, 0);
-            this.panel11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel11.Margin = new System.Windows.Forms.Padding(4);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(1941, 897);
             this.panel11.TabIndex = 2;
@@ -6563,7 +6563,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel48.Controls.Add(this.label24, 1, 1);
             this.tableLayoutPanel48.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel48.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel48.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel48.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel48.Name = "tableLayoutPanel48";
             this.tableLayoutPanel48.RowCount = 4;
             this.tableLayoutPanel48.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
@@ -6585,7 +6585,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel44.Controls.Add(this.funSoftCopyCancelBtn, 1, 0);
             this.tableLayoutPanel44.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel44.Location = new System.Drawing.Point(489, 809);
-            this.tableLayoutPanel44.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel44.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel44.Name = "tableLayoutPanel44";
             this.tableLayoutPanel44.RowCount = 1;
             this.tableLayoutPanel44.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -6669,7 +6669,7 @@ namespace PrintAndSnap
             this.retrievalPanelPhoto.Controls.Add(this.PhotoRetrievePanel);
             this.retrievalPanelPhoto.Dock = System.Windows.Forms.DockStyle.Fill;
             this.retrievalPanelPhoto.Location = new System.Drawing.Point(0, 0);
-            this.retrievalPanelPhoto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.retrievalPanelPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.retrievalPanelPhoto.Name = "retrievalPanelPhoto";
             this.retrievalPanelPhoto.Size = new System.Drawing.Size(1941, 897);
             this.retrievalPanelPhoto.TabIndex = 2;
@@ -6728,7 +6728,7 @@ namespace PrintAndSnap
             this.tableLayoutPanel76.Controls.Add(this.photoRetrievalBtn, 1, 0);
             this.tableLayoutPanel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel76.Location = new System.Drawing.Point(250, 328);
-            this.tableLayoutPanel76.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel76.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel76.Name = "tableLayoutPanel76";
             this.tableLayoutPanel76.RowCount = 1;
             this.tableLayoutPanel76.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));

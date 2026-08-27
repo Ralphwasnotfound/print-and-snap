@@ -59,6 +59,18 @@ namespace Snap_and_Print.Services
         {
             string[] ports = SerialPort.GetPortNames();
 
+            if (ports.Length == 0)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    "No COM ports found.\n\n" +
+                    "Please check the Arduino USB connection."
+                );
+
+                return false;
+            }
+
+            string errors = "";
+
             foreach (string port in ports)
             {
                 try
@@ -73,13 +85,31 @@ namespace Snap_and_Print.Services
 
                     serialPort.Open();
 
+                    // Successfully connected
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Try next COM port
+                    errors +=
+                        port + " → " +
+                        ex.Message + "\n\n";
+
+                    try
+                    {
+                        if (serialPort != null && serialPort.IsOpen)
+                            serialPort.Close();
+                    }
+                    catch
+                    {
+                    }
                 }
             }
+
+            System.Windows.Forms.MessageBox.Show(
+                "Could not connect to the Arduino.\n\n" +
+                "COM port errors:\n\n" +
+                errors
+            );
 
             return false;
         }
@@ -111,10 +141,9 @@ namespace Snap_and_Print.Services
         {
             if (!IsConnected)
             {
-                CoinAcceptorReady = false;
-                BillAcceptorReady = false;
-                CoinDispenserReady = false;
-                BillDispenserReady = false;
+                System.Windows.Forms.MessageBox.Show(
+                    "Hardware connection failed.\nPlease check the Arduino connection."
+                );
 
                 return false;
             }
@@ -123,14 +152,19 @@ namespace Snap_and_Print.Services
             {
                 serialPort.WriteLine("GETSTATUS");
 
+                // No success message.
+                // The normal hardware check will determine
+                // whether all devices are ready.
+
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                CoinAcceptorReady = false;
-                BillAcceptorReady = false;
-                CoinDispenserReady = false;
-                BillDispenserReady = false;
+                System.Windows.Forms.MessageBox.Show(
+                    "Hardware check failed.\n\n" +
+                    "Error:\n" +
+                    ex.Message
+                );
 
                 return false;
             }
