@@ -434,9 +434,9 @@ namespace PrintAndSnap
             this.TopMost = true;
 
             //COMMENT THIS/DELETE FOR PROD
-            this.FormBorderStyle = FormBorderStyle.Sizable;
+          /*  this.FormBorderStyle = FormBorderStyle.Sizable;
             this.WindowState = FormWindowState.Normal;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;*/
 
             // =========================
             // DOC DEFAULT SETTINGS
