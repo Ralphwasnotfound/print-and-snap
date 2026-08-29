@@ -883,8 +883,8 @@ namespace PrintAndSnap
             // printingSettingsPanel
             // 
             this.printingSettingsPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.printingSettingsPanel.Controls.Add(this.settingsPanel);
             this.printingSettingsPanel.Controls.Add(this.uploadPanel);
+            this.printingSettingsPanel.Controls.Add(this.settingsPanel);
             this.printingSettingsPanel.Controls.Add(this.paymentPanel);
             this.printingSettingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.printingSettingsPanel.Location = new System.Drawing.Point(0, 0);
@@ -6628,9 +6628,9 @@ namespace PrintAndSnap
             this.BackgroundImage = global::Snap_and_Print.Properties.Resources.SnapAndPrintBg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1164, 583);
-            this.Controls.Add(this.printPanel);
             this.Controls.Add(this.startPanel);
             this.Controls.Add(this.printingOptionsPanel);
+            this.Controls.Add(this.printPanel);
             this.Controls.Add(this.photoPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);

@@ -3178,7 +3178,6 @@ namespace PrintAndSnap
         private void printBtnPaymentId_Click(object sender, EventArgs e)
         {
             PrintIdPhoto();
-            paymentController.ResetPayment();
         }
 
         private async void PrintIdPhoto()
@@ -4810,6 +4809,14 @@ namespace PrintAndSnap
 
             try
             {
+                // =========================
+                // RESET PAYMENT FIRST
+                // =========================
+                paymentController.ResetPayment();
+
+                // =========================
+                // RESET EVERYTHING ELSE
+                // =========================
                 ResetDownloads();
                 ResetPhoto();
                 ResetDocument();
@@ -4819,8 +4826,6 @@ namespace PrintAndSnap
             {
                 isResetting = false;
             }
-
-            paymentController.ResetPayment();
         }
 
         private void ResetDownloads()
@@ -4907,9 +4912,40 @@ namespace PrintAndSnap
 
         private void ResetUI()
         {
+            // =========================
+            // RESET PAYMENT DISPLAY
+            // =========================
+
+            totalDocInserted.Text = "0";
+            paymentDocBalance.Text = "0";
+            totalDocChange.Text = "0";
+
+            paymentInsertedID.Text = "0";
+            paymentIDBalance.Text = "0";
+            paymentChangeID.Text = "0";
+
+            paymentFunInserted.Text = "0";
+            paymentFunBalance.Text = "0";
+            paymentFunChange.Text = "0";
+
+            paymentDocTotal.Text = "0";
+            paymentIDTotal.Text = "0";
+            paymentFunTotal.Text = "0";
+
+            // =========================
+            // RESET BUTTONS
+            // =========================
+
             printBtn.Enabled = false;
+            printBtnPaymentId.Enabled = false;
+            paymentFunPrintBtn.Enabled = false;
+
             downloadBtnPaymentId.Enabled = false;
             funDownloadBtn.Enabled = false;
+
+            // =========================
+            // RESET PANELS
+            // =========================
 
             continuePanel.Visible = false;
             printingSettingsPanel.Visible = false;
@@ -5248,10 +5284,6 @@ namespace PrintAndSnap
             showPanel(retrivalPanel);
         }
 
-        //====================
-        //PAYMENT FUNCTION COINSLOT
-        //====================
-        
 
         // DEBUG
         private void DebugPanelState(string location)
