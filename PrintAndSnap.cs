@@ -47,7 +47,10 @@ namespace PrintAndSnap
         private bool printingInProgress = false;
 
         private readonly string BASE_PATH = @"C:\PrintAndSnap";
-        private const string PRINTER_NAME = "Canon MG3000 series";
+
+        // PRINTERS
+        private const string DOCUMENT_PRINTER = "Canon MG3000 series";
+        private const string PHOTO_PRINTER = "EPSON L3210 Series";
 
         //MODES
         enum PhotoMode { None, ID, Fun}
@@ -1826,7 +1829,7 @@ namespace PrintAndSnap
                 //Printer Check
                 //==========
 
-                if (!IsPrinterReady(PRINTER_NAME))
+                if (!IsPrinterReady(PHOTO_PRINTER))
                 {
                     MessageBox.Show(
                         this,
@@ -1943,7 +1946,7 @@ namespace PrintAndSnap
         {
             try
             {
-                string printerName = PRINTER_NAME;
+                string printerName = DOCUMENT_PRINTER;
 
                 if (!printerManager.PrinterExists(printerName))
                 {
@@ -2045,16 +2048,16 @@ namespace PrintAndSnap
             if (!isMultiple) //SINGLE
             {
                 if (isColored)
-                    pricePerUnit = 10;
-                else
                     pricePerUnit = 15;
+                else
+                    pricePerUnit = 10;
             }
             else //MULTIPLE (FULL SHEET)
             {
                 if (isColored)
-                    pricePerUnit = 20;
-                else
                     pricePerUnit = 25;
+                else
+                    pricePerUnit = 20;
             }
 
             int total = pricePerUnit * copies;
@@ -2608,7 +2611,7 @@ namespace PrintAndSnap
             //=================
             //PRINTER CHECK
             //=================
-            if (!IsPrinterReady(PRINTER_NAME))
+            if (!IsPrinterReady(PHOTO_PRINTER))
             {
                 MessageBox.Show(
                     this,
@@ -3215,7 +3218,7 @@ namespace PrintAndSnap
 
                 try
                 {
-                    photoPrinting.PrintIdPhoto(readyToPrint, PRINTER_NAME, false, printMode);
+                    photoPrinting.PrintIdPhoto(readyToPrint, PHOTO_PRINTER, false, printMode);
                 }
                 catch
                 {
@@ -3246,7 +3249,7 @@ namespace PrintAndSnap
                 {
                     idprintingStatusLabel.Text = $"Printing... {i}s";
 
-                    // 🔥 allow cancel
+                    // allow cancel
                     if (!printingInProgress)
                     {
                         idprintingStatusLabel.Text = "Cancelled";
@@ -3405,7 +3408,7 @@ namespace PrintAndSnap
                 // =========================
                 // START PRINT FIRST
                 // =========================
-                photoPrinting.PrintFunPhoto(readyToPrint, PRINTER_NAME);
+                photoPrinting.PrintFunPhoto(readyToPrint, PHOTO_PRINTER);
 
                 // =========================
                 // STATUS
@@ -3568,7 +3571,7 @@ namespace PrintAndSnap
                     {
                         documentPrinting.PrintDocumentFile(
                             currentPdfPath,
-                            "Canon MG3000 series",
+                            DOCUMENT_PRINTER,
                             totalPages,
                             radioSinglePage.Checked,
                             (int)numericSinglePage.Value,
@@ -4855,37 +4858,232 @@ namespace PrintAndSnap
 
         private void ResetPhoto()
         {
-            PictureBox[] funBoxes =
+            // =========================
+            // STOP CAMERA / CAPTURE
+            // =========================
+
+            try
             {
-                funPreview1, funPreview2, funPreview3, funPreview4,
-                funSelectPic1, funSelectPic2, funSelectPic3, funSelectPic4
-            };
+                captureTimer?.Stop();
+            }
+            catch { }
 
-            foreach (var box in funBoxes)
-                SafeDisposePictureBox(box);
-
-            SafeDisposePictureBox(funMiniPreview);
-            SafeDisposePictureBox(funMainPreview);
-            SafeDisposePictureBox(funCameraFeed);
-            SafeDisposePictureBox(idCameraFeed);
-            SafeDisposePictureBox(idSettingsPicturePreview);
-
-            SafeDispose(ref finalFunImage);
-
-            cachedFilteredPhotos.Clear();
-            capturedPhotos.Clear();
-
-            currentMode = PhotoMode.None;
-            hasUserSelectedPhoto = false;
+            countdown = 3;
 
             try
             {
                 cameraService.StopCamera();
             }
-            catch
-            {
+            catch { }
 
+
+            // =========================
+            // DISPOSE PHOTO PREVIEWS
+            // =========================
+
+            PictureBox[] photoBoxes =
+            {
+        funPreview1,
+        funPreview2,
+        funPreview3,
+        funPreview4,
+
+        funSelectPic1,
+        funSelectPic2,
+        funSelectPic3,
+        funSelectPic4,
+
+        idPreviewPictureBox1,
+        idPreviewPictureBox2,
+        idPreviewPictureBox3,
+        idPreviewPictureBox4,
+
+        idSettingsSelectPicture1,
+        idSettingsSelectPicture2,
+        idSettingsSelectPicture3,
+        idSettingsSelectPicture4
+    };
+
+            foreach (var box in photoBoxes)
+            {
+                SafeDisposePictureBox(box);
             }
+
+
+            // =========================
+            // CAMERA FEEDS
+            // =========================
+
+            SafeDisposePictureBox(funCameraFeed);
+            SafeDisposePictureBox(idCameraFeed);
+
+            SafeDispose(ref currentFrame);
+            SafeDispose(ref lastFrame);
+
+
+            // =========================
+            // PHOTO PREVIEWS
+            // =========================
+
+            SafeDisposePictureBox(funMiniPreview);
+            SafeDisposePictureBox(funMainPreview);
+            SafeDisposePictureBox(idSettingsPicturePreview);
+            SafeDisposePictureBox(idPrintPreviewMini);
+
+            SafeDisposePictureBox(qrIdPrintingDownload);
+            SafeDisposePictureBox(qrSoftCopyDownloadFun);
+
+
+            // =========================
+            // FINAL PRINT IMAGES
+            // =========================
+
+            SafeDispose(ref finalIdPrintImage);
+            SafeDispose(ref finalFunImage);
+            SafeDispose(ref selectedPhoto);
+
+
+            // =========================
+            // CAPTURED PHOTOS
+            // =========================
+
+            foreach (var img in capturedPhotos)
+            {
+                try
+                {
+                    img?.Dispose();
+                }
+                catch { }
+            }
+
+            capturedPhotos.Clear();
+
+
+            // =========================
+            // FILTER CACHE
+            // =========================
+
+            foreach (var img in cachedFilteredPhotos)
+            {
+                try
+                {
+                    img?.Dispose();
+                }
+                catch { }
+            }
+
+            cachedFilteredPhotos.Clear();
+
+            lastAppliedFilter = "";
+
+            funFilter = "none";
+            funLayout = "none";
+            funFrame = "none";
+
+
+            // =========================
+            // ID STATE
+            // =========================
+
+            selectedLayout = "2x2";
+            isColored = true;
+            isMultiple = false;
+
+            totalIdPrice = 0;
+            lastIdCopiesValue = 1;
+
+            hasUserSelectedPhoto = false;
+
+            isPhotoRetrievalMode = false;
+            currentRetrievedIdPath = null;
+            lastSavedIdFileName = null;
+
+
+            // =========================
+            // FUN STATE
+            // =========================
+
+            totalFunPrice = 0;
+            lastFunCopiesValue = 1;
+
+            lastSavedFunFileName = null;
+            currentFunRetrievalCode = null;
+
+
+            // =========================
+            // RESET PHOTO BUTTONS
+            // =========================
+
+            idPrintingContinueBtn.Enabled = false;
+            funContinueBtn.Enabled = false;
+
+            idCaptureBtn.Enabled = true;
+            idCapctureAgainBtn.Enabled = true;
+
+            funCaptureBtn.Enabled = true;
+            funCaptureAgainBtn.Enabled = true;
+
+            idCaptureBtn.Text = "";
+            idCapctureAgainBtn.Text = "";
+
+            funCaptureBtn.Text = "";
+            funCaptureAgainBtn.Text = "";
+
+            idCaptureBtn.BackgroundImage =
+                global::Snap_and_Print.Properties.Resources.camera_fill;
+
+            funCaptureBtn.BackgroundImage =
+                global::Snap_and_Print.Properties.Resources.camera_fill;
+
+
+            // =========================
+            // RESET PHOTO RADIO BUTTONS
+            // =========================
+
+            radioBtn2x2.Checked = true;
+            radioBtnSinglePhotoCopies.Checked = true;
+            radioBtnPhotoColored.Checked = true;
+
+            funRadioBtnFilterNone.Checked = true;
+            funRadioBtnFrameNone.Checked = true;
+
+            funRadioPrintTypeSingle.Checked = true;
+
+            funRadioBtnVertical.Checked = false;
+            funRadioBtnGridBtn.Checked = false;
+
+
+            // =========================
+            // MOST IMPORTANT PART
+            // HIDE ALL PHOTO PANELS
+            // =========================
+
+            photoPanel.Visible = false;
+
+            photoMode.Visible = false;
+            photoIDPanel.Visible = false;
+            retrievalPanelPhoto.Visible = false;
+            photoBoothPanel.Visible = false;
+
+            panelCRMidPrinting.Visible = false;
+            idPrintingSettings.Visible = false;
+            IDpayment.Visible = false;
+            softCopyDownloadId.Visible = false;
+
+            panelCMRphotoBooth.Visible = false;
+            photoBoothSettings.Visible = false;
+            funPaymentPanel.Visible = false;
+            funSoftCopyDownloadPanel.Visible = false;
+
+            PhotoRetrievePanel.Visible = false;
+
+
+            // =========================
+            // RESET MODE
+            // =========================
+
+            currentMode = PhotoMode.None;
+            currentSystemMode = SystemMode.None;
         }
 
         private void ResetDocument()

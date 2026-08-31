@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace PrintAndSnap.Services.PhotoPrinting
 {
@@ -101,8 +102,8 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 // =========================
                 else if (layoutType == "grid")
                 {
-                    int rows = 3; 
-                    int outerGap = 20; 
+                    int rows = 3;
+                    int outerGap = 20;
 
                     int totalGapY = outerGap * (rows - 1);
 
@@ -196,9 +197,9 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     int outerPaddingBottom = 70;
                     int outerPaddingLeft = 20;
                     int outerPaddingRight = 20;
-                    
 
-                    int spacing = 1; 
+
+                    int spacing = 1;
 
                     int rows = 4;
                     int cols = 2;
@@ -207,7 +208,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     int totalSpacingY = spacing * (rows - 1);
 
                     int cellWidth = (canvas.Width - outerPaddingLeft - outerPaddingRight - totalSpacingX) / cols;
-                    int cellHeight = cellWidth * 2 / 3; 
+                    int cellHeight = cellWidth * 2 / 3;
 
                     int startX = outerPaddingLeft;
                     int totalUsedHeight = (cellHeight * rows) + totalSpacingY;
@@ -223,7 +224,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     // =========================
                     for (int row = 0; row < rows; row++)
                     {
-                        
+
                         for (int col = 0; col < cols; col++)
                         {
                             // position of each cell
@@ -283,7 +284,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                             g.DrawLine(cutPen, midX, top, midX, bottom);
                         }
                     }
-                    
+
                 }
 
                 // =========================
@@ -314,7 +315,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
                     // CENTER LIKE VERTICAL
                     int startX = outerPaddingLeft;
-                    int startY = outerPaddingTop + (remainingHeight / 2 );
+                    int startY = outerPaddingTop + (remainingHeight / 2);
 
                     int index = 0;
 
@@ -372,7 +373,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                             g.DrawLine(cutPen, midX, top, midX, bottom);
                         }
                     }
-                    
+
                 }
                 // =========================
                 // DEFAULT
@@ -424,133 +425,301 @@ namespace PrintAndSnap.Services.PhotoPrinting
             }
 
             // =========================
-            // SINGLE MODE
+            // CONVERT PHOTO ONCE
             // =========================
-            if (!isMultiple)
+            Bitmap processedPhoto = isColored
+                ? (Bitmap)photo.Clone()
+                : ConvertToGrayscale(photo);
+
+            try
             {
                 // =========================
-                // 2x2 GRID (4 PHOTOS)
+                // SINGLE MODE
                 // =========================
-                if (selectedLayout == "2x2")
+                if (!isMultiple)
                 {
-                    int cols = 2;
-                    int rows = 2;
-
-                    int canvasWidth = (photoWidth * cols) + spacing * (cols + 1);
-                    int canvasHeight = (photoHeight * rows) + spacing * (rows + 1);
-
-                    Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
-                    canvas.SetResolution(300, 300);
-
-                    using (Graphics g = Graphics.FromImage(canvas))
+                    // =========================
+                    // 2x2 GRID
+                    // =========================
+                    if (selectedLayout == "2x2")
                     {
-                        g.Clear(Color.White);
+                        int cols = 2;
+                        int rows = 2;
 
-                        for (int r = 0; r < rows; r++)
+                        int canvasWidth =
+                            (photoWidth * cols) +
+                            spacing * (cols + 1);
+
+                        int canvasHeight =
+                            (photoHeight * rows) +
+                            spacing * (rows + 1);
+
+                        Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
+                        canvas.SetResolution(300, 300);
+
+                        using (Graphics g = Graphics.FromImage(canvas))
                         {
-                            for (int c = 0; c < cols; c++)
+                            // QUALITY
+                            g.InterpolationMode =
+                                System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                            g.SmoothingMode =
+                                System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                            g.PixelOffsetMode =
+                                System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                            g.CompositingQuality =
+                                System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
+                            g.Clear(Color.White);
+
+                            for (int r = 0; r < rows; r++)
                             {
-                                int x = spacing + c * (photoWidth + spacing);
-                                int y = spacing + r * (photoHeight + spacing);
+                                for (int c = 0; c < cols; c++)
+                                {
+                                    int x = spacing +
+                                            c * (photoWidth + spacing);
 
-                                g.DrawImage(photo, x, y, photoWidth, photoHeight);
+                                    int y = spacing +
+                                            r * (photoHeight + spacing);
 
-                                // border
-                                g.DrawRectangle(Pens.Black, x, y, photoWidth, photoHeight);
+                                    // =========================
+                                    // DRAW PROCESSED PHOTO
+                                    // =========================
+                                    g.DrawImage(
+                                        processedPhoto,
+                                        x,
+                                        y,
+                                        photoWidth,
+                                        photoHeight
+                                    );
+
+                                    // BORDER
+                                    g.DrawRectangle(
+                                        Pens.Black,
+                                        x,
+                                        y,
+                                        photoWidth,
+                                        photoHeight
+                                    );
+                                }
                             }
                         }
+
+                        return canvas;
                     }
 
-                    return canvas;
+                    // =========================
+                    // 2x1
+                    // =========================
+                    else if (selectedLayout == "2x1")
+                    {
+                        int count = 2;
+
+                        int canvasWidth =
+                            photoWidth + spacing * 2;
+
+                        int canvasHeight =
+                            (photoHeight * count) +
+                            spacing * (count + 1);
+
+                        Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
+                        canvas.SetResolution(300, 300);
+
+                        using (Graphics g = Graphics.FromImage(canvas))
+                        {
+                            // QUALITY
+                            g.InterpolationMode =
+                                System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                            g.SmoothingMode =
+                                System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                            g.PixelOffsetMode =
+                                System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                            g.CompositingQuality =
+                                System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
+                            g.Clear(Color.White);
+
+                            for (int i = 0; i < count; i++)
+                            {
+                                int x = spacing;
+
+                                int y =
+                                    spacing +
+                                    i * (photoHeight + spacing);
+
+                                // DRAW PROCESSED PHOTO
+                                g.DrawImage(
+                                    processedPhoto,
+                                    x,
+                                    y,
+                                    photoWidth,
+                                    photoHeight
+                                );
+
+                                // BORDER
+                                g.DrawRectangle(
+                                    Pens.Black,
+                                    x,
+                                    y,
+                                    photoWidth,
+                                    photoHeight
+                                );
+                            }
+                        }
+
+                        return canvas;
+                    }
+
+                    // =========================
+                    // 1x1
+                    // =========================
+                    else
+                    {
+                        int canvasWidth =
+                            photoWidth + spacing * 2;
+
+                        int canvasHeight =
+                            photoHeight + spacing * 2;
+
+                        Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
+                        canvas.SetResolution(300, 300);
+
+                        using (Graphics g = Graphics.FromImage(canvas))
+                        {
+                            // QUALITY
+                            g.InterpolationMode =
+                                System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                            g.SmoothingMode =
+                                System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                            g.PixelOffsetMode =
+                                System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                            g.CompositingQuality =
+                                System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
+                            g.Clear(Color.White);
+
+                            g.DrawImage(
+                                processedPhoto,
+                                spacing,
+                                spacing,
+                                photoWidth,
+                                photoHeight
+                            );
+
+                            g.DrawRectangle(
+                                Pens.Black,
+                                spacing,
+                                spacing,
+                                photoWidth,
+                                photoHeight
+                            );
+                        }
+
+                        return canvas;
+                    }
                 }
 
                 // =========================
-                // 2x1
+                // MULTIPLE MODE (A4)
                 // =========================
-                else if (selectedLayout == "2x1")
+                int pageWidth = (int)(8.27 * dpi);
+                int pageHeight = (int)(11.69 * dpi);
+
+                Bitmap sheet = new Bitmap(pageWidth, pageHeight);
+                sheet.SetResolution(300, 300);
+
+                using (Graphics g = Graphics.FromImage(sheet))
                 {
-                    int count = 2;
+                    // QUALITY
+                    g.InterpolationMode =
+                        System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
 
-                    int canvasWidth = photoWidth + spacing * 2;
-                    int canvasHeight = (photoHeight * count) + spacing * (count + 1);
+                    g.SmoothingMode =
+                        System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
-                    Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
-                    canvas.SetResolution(300, 300);
+                    g.PixelOffsetMode =
+                        System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                    using (Graphics g = Graphics.FromImage(canvas))
+                    g.CompositingQuality =
+                        System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
+                    g.Clear(Color.White);
+
+                    int totalW = photoWidth + spacing;
+                    int totalH = photoHeight + spacing;
+
+                    int cols = pageWidth / totalW;
+                    int rows = pageHeight / totalH;
+
+                    for (int r = 0; r < rows; r++)
                     {
-                        g.Clear(Color.White);
-
-                        for (int i = 0; i < count; i++)
+                        for (int c = 0; c < cols; c++)
                         {
-                            int x = spacing;
-                            int y = spacing + i * (photoHeight + spacing);
+                            int x = c * totalW + spacing;
+                            int y = r * totalH + spacing;
 
-                            g.DrawImage(photo, x, y, photoWidth, photoHeight);
-
-                            // ✂border
-                            g.DrawRectangle(Pens.Black, x, y, photoWidth, photoHeight);
+                            // DRAW PROCESSED PHOTO
+                            g.DrawImage(
+                                processedPhoto,
+                                x,
+                                y,
+                                photoWidth,
+                                photoHeight
+                            );
                         }
                     }
-
-                    return canvas;
                 }
 
-                // =========================
-                // 1x1
-                // =========================
-                else
-                {
-                    int canvasWidth = photoWidth + spacing * 2;
-                    int canvasHeight = photoHeight + spacing * 2;
-
-                    Bitmap canvas = new Bitmap(canvasWidth, canvasHeight);
-                    canvas.SetResolution(300, 300);
-
-                    using (Graphics g = Graphics.FromImage(canvas))
-                    {
-                        g.Clear(Color.White);
-                        g.DrawImage(photo, spacing, spacing, photoWidth, photoHeight);
-
-                        g.DrawRectangle(Pens.Black, spacing, spacing, photoWidth, photoHeight);
-                    }
-
-                    return canvas;
-                }
+                return sheet;
             }
-
-            // =========================
-            // MULTIPLE MODE (A4)
-            // =========================
-            int pageWidth = (int)(8.27 * dpi);
-            int pageHeight = (int)(11.69 * dpi);
-
-            Bitmap sheet = new Bitmap(pageWidth, pageHeight);
-            sheet.SetResolution(300, 300);
-
-            using (Graphics g = Graphics.FromImage(sheet))
+            finally
             {
-                g.Clear(Color.White);
+                // Dispose temporary grayscale/color clone
+                processedPhoto.Dispose();
+            }
+        }
 
-                int totalW = photoWidth + spacing;
-                int totalH = photoHeight + spacing;
+        private Bitmap ConvertToGrayscale(Bitmap original)
+        {
+            Bitmap gray = new Bitmap(original.Width, original.Height);
 
-                int cols = pageWidth / totalW;
-                int rows = pageHeight / totalH;
-
-                for (int r = 0; r < rows; r++)
-                {
-                    for (int c = 0; c < cols; c++)
+            using (Graphics g = Graphics.FromImage(gray))
+            using (ImageAttributes attributes = new ImageAttributes())
+            {
+                ColorMatrix colorMatrix = new ColorMatrix(
+                    new float[][]
                     {
-                        int x = c * totalW + spacing;
-                        int y = r * totalH + spacing;
+                new float[] { 0.3f, 0.3f, 0.3f, 0, 0 },
+                new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                new float[] { 0, 0, 0, 1, 0 },
+                new float[] { 0, 0, 0, 0, 1 }
+                    });
 
-                        g.DrawImage(photo, x, y, photoWidth, photoHeight);
-                    }
-                }
+                attributes.SetColorMatrix(colorMatrix);
+
+                g.DrawImage(
+                    original,
+                    new Rectangle(0, 0, original.Width, original.Height),
+                    0,
+                    0,
+                    original.Width,
+                    original.Height,
+                    GraphicsUnit.Pixel,
+                    attributes
+                );
             }
 
-            return sheet;
+            return gray;
         }
+
     }
 }
