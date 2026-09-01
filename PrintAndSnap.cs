@@ -5,6 +5,8 @@ using PrintAndSnap.Services;
 using PrintAndSnap.Services.PhotoPrinting;
 using PrintAndSnap.Services.Printing;
 using QRCoder;
+using Snap_and_Print.Services;
+using Snap_and_Print.Services.PhotoPrinting;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,14 +16,14 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-using System.IO.Ports;
-using Snap_and_Print.Services;
+using Snap_and_Print.Services.PhotoPrinting;
 
 
 namespace PrintAndSnap
@@ -34,6 +36,7 @@ namespace PrintAndSnap
         // SERVICES
         // =========================
         private UploadServices uploadService = new UploadServices();
+        private PhotoUploadServices photoUploadServices;
         private DocumentPrinting documentPrinting = new DocumentPrinting();
         private PrinterManager printerManager = new PrinterManager();
         private PhotoPrinting photoPrinting = new PhotoPrinting();
@@ -71,7 +74,10 @@ namespace PrintAndSnap
 
         private int totalPages = 1;
         private bool colorAnalysisDone = false;
+
+        private int uploadDotCount = 0;
         private List<bool> pageIsColored = new List<bool>();
+
 
         //FILE WATCHER
         private FileSystemWatcher fileWatcher;
@@ -113,7 +119,7 @@ namespace PrintAndSnap
 
         private bool isPhotoRetrievalMode = false;
         private string currentRetrievedIdPath;
-
+        private string uploadedPhotoPath = "";
         private string lastSavedIdFileName;
 
         // =========================
@@ -459,6 +465,10 @@ namespace PrintAndSnap
 
             numericSinglePage.ValueChanged += (s, e) => CalculateTotal();
             numericSinglePage.TextChanged += (s, e) => CalculateTotal();
+
+            photoUploadServices = new PhotoUploadServices();
+
+            photoUploadServices.PhotoUploaded += PhotoUploadServices_PhotoUploaded;
 
             // =========================
             // DOC RADIO EVENTS
@@ -1176,6 +1186,7 @@ namespace PrintAndSnap
                 printingSettingsPanel.Visible = false;
                 paymentPanel.Visible = false;
                 retrivalPanel.Visible = false;
+                photoUploadPanel.Visible = false;
 
                 panel.Visible = true;
                 panel.BringToFront();
@@ -4813,6 +4824,10 @@ namespace PrintAndSnap
             try
             {
                 // =========================
+                // STOP PHOTO UPLOAD SERVER
+                // =========================
+                StopPhotoUploadSession();
+                // =========================
                 // RESET PAYMENT FIRST
                 // =========================
                 paymentController.ResetPayment();
@@ -5090,9 +5105,9 @@ namespace PrintAndSnap
         {
             uploadService.StopServer();
 
-            uploadStatusTimer.Stop();
-            inactivityTimer.Stop();
-            receiveTimer.Stop();
+            uploadStatusTimer?.Stop();
+            inactivityTimer?.Stop();
+            receiveTimer?.Stop();
 
             ResetPdfViewer();
             previewPanelSettingLayout.Controls.Clear();
@@ -5484,28 +5499,387 @@ namespace PrintAndSnap
 
         private void photoUpload_click(object sender, EventArgs e)
         {
-            
+            // =========================
+            // START A COMPLETELY NEW
+            // PHOTO UPLOAD SESSION
+            // =========================
+
+            uploadedPhotoPath = "";
+
+            // Make sure previous upload server is completely stopped
+            StopPhotoUploadSession();
+
+            // Small delay so Windows releases port 3001
+            Thread.Sleep(300);
+
+            // Generate a fresh token
+            photoUploadServices.GenerateNewToken();
+
+            // Start a fresh upload server
+            photoUploadServices.StartUploadServer();
+
+            // Generate fresh QR
+            photoUploadQr.SizeMode = PictureBoxSizeMode.Zoom;
+
+            if (photoUploadQr.Image != null)
+            {
+                photoUploadQr.Image.Dispose();
+                photoUploadQr.Image = null;
+            }
+
+            photoUploadQr.Image =
+                photoUploadServices.GenerateQRCode(
+                    photoUploadQr.Width,
+                    photoUploadQr.Height
+                );
+
+            // Reset status
+            uploadStatusLabel.Text = "Waiting for photo...";
+
+            StartUploadStatusAnimation();
+
+            uploadPhotoChoose.Visible = false;
+
+            photoUploadPanel.Visible = true;
+            photoUploadPanel.BringToFront();
+
+            // ALWAYS START AT UPLOAD PANEL
             showPanel(photoUploadPanel);
+        }
+
+        private void StartUploadStatusAnimation()
+        {
+            uploadDotCount = 0;
+
+            if (uploadStatusTimer != null)
+            {
+                uploadStatusTimer.Stop();
+                uploadStatusTimer.Dispose();
+            }
+
+            uploadStatusTimer = new System.Windows.Forms.Timer();
+            uploadStatusTimer.Interval = 500;
+
+            uploadStatusTimer.Tick += (s, e) =>
+            {
+                uploadDotCount++;
+
+                if (uploadDotCount > 3)
+                    uploadDotCount = 1;
+
+                uploadStatusLabel.Text =
+                    "Waiting for photo" +
+                    new string('.', uploadDotCount);
+            };
+
+            uploadStatusTimer.Start();
+        }
+
+        private void StopUploadStatusAnimation()
+        {
+            if (uploadStatusTimer != null)
+            {
+                uploadStatusTimer.Stop();
+                uploadStatusTimer.Dispose();
+                uploadStatusTimer = null;
+            }
+        }
+
+        private void PhotoUploadServices_PhotoUploaded(string filePath)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    PhotoUploadReceived(filePath);
+                }));
+
+                return;
+            }
+
+            PhotoUploadReceived(filePath);
+        }
+
+        private async void PhotoUploadReceived(string filePath)
+        {
+            uploadedPhotoPath = filePath;
+
+            // Stop the animated dots
+            StopUploadStatusAnimation();
+
+            // Show received message
+            uploadStatusLabel.Text = "Picture received! ✓";
+
+            // Give the customer time to see it
+            await Task.Delay(1500);
+
+            // Now move to Choose ID / FUN
+            ShowPhotoPanel(uploadPhotoChoose);
+        }
+
+        private async Task PhotoReceivedSequence()
+        {
+            uploadStatusLabel.Text = "Picture received!";
+
+            await Task.Delay(1500);
+
+            ShowPhotoPanel(uploadPhotoChoose);
         }
 
         private void uploadPhotoCancelBtn_click(object sender, EventArgs e)
         {
+            printingInProgress = false;
+            allowReset = true;
 
+            uploadedPhotoPath = "";
+
+            ResetMachine(true);
         }
 
         private void uploadPhotoBackBtn_click(object sender, EventArgs e)
         {
+            // STOP PHOTO UPLOAD SESSION
+            StopPhotoUploadSession();
 
+            // Go back to Photo Mode
+            ShowPhotoPanel(photoMode);
         }
 
         private void photoUploadIDBtn_click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(uploadedPhotoPath) || !File.Exists(uploadedPhotoPath))
+            {
+                MessageBox.Show(
+                    this,
+                    "No uploaded photo found.",
+                    "Upload Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
+            try
+            {
+                // Make sure we are in ID mode
+                currentMode = PhotoMode.ID;
+                currentSystemMode = SystemMode.Photo;
+
+                // Stop upload session
+                StopPhotoUploadSession();
+
+                // Reset previous photo state
+                ResetPhotoSession();
+
+                // =========================
+                // LOAD UPLOADED PHOTO
+                // =========================
+                using (Bitmap temp = new Bitmap(uploadedPhotoPath))
+                {
+                    capturedPhotos.Add(new Bitmap(temp));
+                }
+
+                if (capturedPhotos.Count == 0)
+                {
+                    MessageBox.Show("Failed to load uploaded photo.");
+                    return;
+                }
+
+                // =========================
+                // SELECT UPLOADED PHOTO
+                // =========================
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
+
+                // =========================
+                // LOAD INTO ID SETTINGS
+                // =========================
+                LoadIdSelectionPhotos();
+                UpdateIdSettings();
+
+                // =========================
+                // GO DIRECTLY TO ID SETTINGS
+                // =========================
+                ShowPhotoPanel(
+                    photoIDPanel,
+                    idPrintingSettings
+                );
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Uploaded ID photo error: " + ex.Message);
+
+                MessageBox.Show(
+                    this,
+                    "Unable to load uploaded photo.\n\n" + ex.Message,
+                    "Upload Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
         private void photoUploadFunBtn_click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(uploadedPhotoPath) || !File.Exists(uploadedPhotoPath))
+            {
+                MessageBox.Show(
+                    this,
+                    "No uploaded photo found.",
+                    "Upload Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
+            try
+            {
+                // Make sure we are in FUN mode
+                currentMode = PhotoMode.Fun;
+                currentSystemMode = SystemMode.Photo;
+
+                // Stop upload session
+                StopPhotoUploadSession();
+
+                // Reset previous photo state
+                ResetPhotoSession();
+
+                // =========================
+                // LOAD UPLOADED PHOTO
+                // =========================
+                using (Bitmap temp = new Bitmap(uploadedPhotoPath))
+                {
+                    capturedPhotos.Add(new Bitmap(temp));
+                }
+
+                if (capturedPhotos.Count == 0)
+                {
+                    MessageBox.Show("Failed to load uploaded photo.");
+                    return;
+                }
+
+                // =========================
+                // SELECT UPLOADED PHOTO
+                // =========================
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
+
+                // =========================
+                // FUN DEFAULT SETTINGS
+                // =========================
+                funFilter = "none";
+                funLayout = "none";
+                funFrame = "none";
+
+                funRadioBtnFilterNone.Checked = true;
+                funRadioBtnFrameNone.Checked = true;
+
+                funRadioPrintTypeSingle.Checked = true;
+
+                // =========================
+                // LOAD INTO FUN SETTINGS
+                // =========================
+                ShowFunCapturedPhotos();
+                LoadFunSelectionPhotos();
+
+                UpdatePrintTypeAvailability();
+                UpdateFunSettings();
+                CalculateFunPrice();
+
+                // =========================
+                // GO DIRECTLY TO FUN SETTINGS
+                // =========================
+                ShowPhotoPanel(
+                    photoBoothPanel,
+                    photoBoothSettings
+                );
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Uploaded FUN photo error: " + ex.Message);
+
+                MessageBox.Show(
+                    this,
+                    "Unable to load uploaded photo.\n\n" + ex.Message,
+                    "Upload Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+        }
+
+        private void StopPhotoUploadSession()
+        {
+            try
+            {
+                if (photoUploadServices != null)
+                {
+                    photoUploadServices.StopServer();
+                }
+
+                if (photoUploadQr != null && photoUploadQr.Image != null)
+                {
+                    photoUploadQr.Image.Dispose();
+                    photoUploadQr.Image = null;
+                }
+
+                DebugLog("Photo Upload server stopped.");
+            }
+            catch (Exception ex)
+            {
+                DebugLog("Photo Upload cleanup error: " + ex.Message);
+            }
+        }
+
+        private void photoUploadIDBtn_MouseEnter(object sender, EventArgs e)
+        {
+            uploadChooseLabel.Text = "Print photo in ID formats such as 2x2, 2x1, or 1x1."; ;
+        }
+
+        private void photoUploadIDBtn_MouseLeave(object sender, EventArgs e)
+        {
+            uploadChooseLabel.Text = "Please Select a printing options";
+        }
+
+        private void photoUploadFunBtn_MouseEnter(object sender, EventArgs e)
+        {
+            uploadChooseLabel.Text = "Print to add filters, colors and themes.";
+        }
+
+        private void photoUploadFunBtn_MouseLeave(object sender, EventArgs e)
+        {
+            uploadChooseLabel.Text = "Please Select a printing options";
+        }
+
+        private void photoUploadQr_MouseEnter(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Scan me"; ;
+        }
+
+        private void photoUploadQr_MouseLeave(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Open Qr code Scanner to Scan";
+        }
+
+        private void uploadPhotoCancelBtn_MouseEnter(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Reset back to start";
+        }
+
+        private void uploadPhotoCancelBtn_MouseLeave(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Open Qr code Scanner to Scan";
+        }
+
+        private void uploadPhotoBackBtn_MouseEnter(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Back to Photo Modes";
+        }
+
+        private void uploadPhotoBackBtn_MouseLeave(object sender, EventArgs e)
+        {
+            uploadNotifLabel.Text = "Open Qr code Scanner to Scan";
         }
 
         // DEBUG
@@ -5523,6 +5897,5 @@ namespace PrintAndSnap
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
 
-        
     }
 }
