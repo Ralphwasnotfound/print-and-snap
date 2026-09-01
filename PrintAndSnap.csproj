@@ -307,6 +307,8 @@
     <None Include="Resources\cash-line %281%29.png" />
     <None Include="Resources\PRNTSTNGBG.png" />
     <None Include="Resources\SnapAndPrintBg.png" />
+    <None Include="Resources\image-upload-fill.png" />
+    <None Include="Resources\image-upload-fill %281%29.png" />
     <Content Include="underthetitle.png" />
   </ItemGroup>
   <ItemGroup>

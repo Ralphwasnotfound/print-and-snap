@@ -29,7 +29,7 @@ namespace PrintAndSnap
 
     public partial class PrintAndSnap : Form
     {
-     
+
         // =========================
         // SERVICES
         // =========================
@@ -53,8 +53,8 @@ namespace PrintAndSnap
         private const string PHOTO_PRINTER = "EPSON L3210 Series";
 
         //MODES
-        enum PhotoMode { None, ID, Fun}
-        enum SystemMode { None,Docs,Photo }
+        enum PhotoMode { None, ID, Fun }
+        enum SystemMode { None, Docs, Photo }
 
         private PhotoMode currentMode = PhotoMode.None;
         private SystemMode currentSystemMode = SystemMode.None;
@@ -68,11 +68,11 @@ namespace PrintAndSnap
         private string currentEditablePath;
 
         private PdfViewer pdfViewer;
-       
+
         private int totalPages = 1;
         private bool colorAnalysisDone = false;
         private List<bool> pageIsColored = new List<bool>();
-        
+
         //FILE WATCHER
         private FileSystemWatcher fileWatcher;
         private HashSet<string> processedFiles = new HashSet<string>();
@@ -437,9 +437,9 @@ namespace PrintAndSnap
             this.TopMost = true;
 
             //COMMENT THIS/DELETE FOR PROD
-          /*  this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.WindowState = FormWindowState.Normal;
-            this.StartPosition = FormStartPosition.CenterScreen;*/
+            /*  this.FormBorderStyle = FormBorderStyle.Sizable;
+              this.WindowState = FormWindowState.Normal;
+              this.StartPosition = FormStartPosition.CenterScreen;*/
 
             // =========================
             // DOC DEFAULT SETTINGS
@@ -534,7 +534,7 @@ namespace PrintAndSnap
             };
 
         }
-        
+
         // ====================
         // TASKBAR METHODS
         // ====================
@@ -559,9 +559,9 @@ namespace PrintAndSnap
             //if not show for production and testing
             base.OnShown(e);
             //HideTaskbar();
-//#if !DEBUG
-//              HideTaskbar(); 
-//#endif
+            //#if !DEBUG
+            //              HideTaskbar(); 
+            //#endif
         }
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -658,7 +658,7 @@ namespace PrintAndSnap
         // =======================
         private void Print_And_Snap_Load(object sender, EventArgs e)
         {
-           
+
             //#if !DEBUG
             //            //enable this for production
             //            {
@@ -1228,12 +1228,12 @@ namespace PrintAndSnap
         private void photoPrintingBtn_Click(Object sender, EventArgs e)
         {
 
-          
+
             currentSystemMode = SystemMode.Photo;
             photoPanel.Visible = true;
             photoPanel.BringToFront();
 
-            ShowPhotoPanel(photoMode); 
+            ShowPhotoPanel(photoMode);
 
         }
 
@@ -1908,7 +1908,7 @@ namespace PrintAndSnap
                 }
 
                 paymentIDTotal.Text = totalIdPrice.ToString();
-                paymentController.StartPayment(totalIdPrice); 
+                paymentController.StartPayment(totalIdPrice);
                 printBtn.Enabled = false;
                 downloadBtnPaymentId.Enabled = false;
 
@@ -3214,7 +3214,7 @@ namespace PrintAndSnap
                 // STATUS
                 idprintingStatusLabel.Text = "Printing...";
                 idprintingStatusLabel.Visible = true;
-                
+
 
                 try
                 {
@@ -3364,7 +3364,7 @@ namespace PrintAndSnap
                         MessageBoxIcon.Information
                     );
                 }));
-               
+
             }
             catch (Exception ex)
             {
@@ -3688,7 +3688,7 @@ namespace PrintAndSnap
             }
         }
 
-        
+
 
         // =========================
         // DOWNLOAD / QR METHODS
@@ -3714,7 +3714,7 @@ namespace PrintAndSnap
                     qrIdPrintingDownload.Visible = true;
                     qrIdPrintingDownload.BringToFront();
 
-                    IDpayment.Visible = true; 
+                    IDpayment.Visible = true;
                     IDpayment.BringToFront();
                 }));
             }
@@ -5158,7 +5158,7 @@ namespace PrintAndSnap
         {
 
             showPanel(printingOptionsPanel);
-            
+
             inactivityTimer.Start();
         }
 
@@ -5460,7 +5460,7 @@ namespace PrintAndSnap
             allowReset = true;
             ResetMachine(true);
         }
-        
+
         private void retrievalCodeTextBox_Keypress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
@@ -5482,6 +5482,31 @@ namespace PrintAndSnap
             showPanel(retrivalPanel);
         }
 
+        private void photoUpload_click(object sender, EventArgs e)
+        {
+            
+            showPanel(photoUploadPanel);
+        }
+
+        private void uploadPhotoCancelBtn_click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void uploadPhotoBackBtn_click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void photoUploadIDBtn_click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void photoUploadFunBtn_click(object sender, EventArgs e)
+        {
+
+        }
 
         // DEBUG
         private void DebugPanelState(string location)
@@ -5497,5 +5522,7 @@ namespace PrintAndSnap
 
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
+
+        
     }
 }

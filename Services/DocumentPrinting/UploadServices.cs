@@ -176,13 +176,20 @@ namespace PrintAndSnap.Services
                         continue; 
                     }
 
-                    bool isLocal =
-    context.Request.RemoteEndPoint.Address.Equals(IPAddress.Loopback) ||
-    context.Request.RemoteEndPoint.Address.Equals(IPAddress.IPv6Loopback);
+                    // ==========================================
+                    // WRONG NETWORK CHECK
+                    // ==========================================
 
-                    if (!isLocal && token != currentUploadToken)
+                    IPAddress remoteIP = context.Request.RemoteEndPoint.Address;
+
+                    bool isLocal =
+                        IPAddress.IsLoopback(remoteIP) ||
+                        (remoteIP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork &&
+                         remoteIP.ToString().StartsWith("192.168.8."));
+
+                    if (!isLocal)
                     {
-                        string htmlLocked = @"
+                        string htmlWrongNetwork = @"
 <!DOCTYPE html>
 <html>
 
@@ -202,19 +209,27 @@ namespace PrintAndSnap.Services
 body{
     font-family:'Segoe UI',Arial,sans-serif;
     background:#f4f6f9;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     height:100vh;
 }
 
 .card{
     width:90%;
     max-width:420px;
+
     background:white;
+
     border-radius:20px;
+
     padding:40px;
-    box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.15);
+
     text-align:center;
 }
 
@@ -248,13 +263,14 @@ p{
 
 <div class='card'>
 
-<div class='icon'>🔒</div>
+<div class='icon'>⚠️</div>
 
-<h2>Upload Locked</h2>
+<h2>Wrong Network</h2>
 
 <p>
-Please scan the QR code displayed on the
-<b>Snap and Print</b> kiosk to begin your upload session.
+Please scan the QR code provided on the
+<b>Snap and Print</b> kiosk to connect to the
+<b>LOCAL network</b>, then try again.
 </p>
 
 <div class='footer'>
@@ -267,31 +283,27 @@ Snap and Print
 
 </html>";
 
-                        byte[] bufferLocked = Encoding.UTF8.GetBytes(htmlLocked);
+                        byte[] bufferWrongNetwork =
+                            Encoding.UTF8.GetBytes(htmlWrongNetwork);
 
-                        context.Response.ContentLength64 = bufferLocked.Length;
-                        context.Response.OutputStream.Write(bufferLocked, 0, bufferLocked.Length);
+                        context.Response.StatusCode = 403;
+
+                        context.Response.ContentType =
+                            "text/html; charset=UTF-8";
+
+                        context.Response.ContentLength64 =
+                            bufferWrongNetwork.Length;
+
+                        context.Response.OutputStream.Write(
+                            bufferWrongNetwork,
+                            0,
+                            bufferWrongNetwork.Length
+                        );
+
                         context.Response.OutputStream.Close();
+
                         continue;
                     }
-
-                    //                    if (token != currentUploadToken)
-                    //                    {
-                    //                        string htmlLocked = @"
-                    //<html>
-                    //<body style='font-family:Arial;text-align:center;margin-top:50px'>
-                    //<h2>Upload Locked</h2>
-                    //<p>Please scan the QR code on the printer machine.</p>
-                    //</body>
-                    //</html>";
-
-                    //                        byte[] bufferLocked = Encoding.UTF8.GetBytes(htmlLocked);
-
-                    //                        context.Response.ContentLength64 = bufferLocked.Length;
-                    //                        context.Response.OutputStream.Write(bufferLocked, 0, bufferLocked.Length);
-                    //                        context.Response.OutputStream.Close();
-                    //                        continue;
-                    //                    }
 
                     if (context.Request.HttpMethod == "POST")
                     {
@@ -827,18 +839,9 @@ document.getElementById('fileInput').addEventListener('change', function(){{
 
         public string GetLocalIPAdress()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-
-            throw new Exception("No IPv4 address found.");
+            return "192.168.8.100";
         }
+
         public string GenerateNewToken()
         {
             currentUploadToken = Guid.NewGuid().ToString();

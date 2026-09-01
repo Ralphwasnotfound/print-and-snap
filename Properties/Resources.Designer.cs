@@ -383,6 +383,26 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap image_upload_fill {
+            get {
+                object obj = ResourceManager.GetObject("image-upload-fill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap image_upload_fill__1_ {
+            get {
+                object obj = ResourceManager.GetObject("image-upload-fill (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap layout_2_line {
             get {
                 object obj = ResourceManager.GetObject("layout-2-line", resourceCulture);
