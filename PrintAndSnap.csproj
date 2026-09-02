@@ -310,6 +310,7 @@
     <None Include="Resources\SnapAndPrintBg.png" />
     <None Include="Resources\image-upload-fill.png" />
     <None Include="Resources\image-upload-fill %281%29.png" />
+    <None Include="Resources\repeat-fill.png" />
     <Content Include="underthetitle.png" />
   </ItemGroup>
   <ItemGroup>

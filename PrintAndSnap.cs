@@ -42,6 +42,13 @@ namespace PrintAndSnap
         private PhotoPrinting photoPrinting = new PhotoPrinting();
         private PricingService pricingService = new PricingService();
 
+        private Button activeCaptureButton = null;
+
+        private Image idCaptureAgainOriginalImage;
+        private Image funCaptureAgainOriginalImage;
+        private Image idContinueOriginalImage;
+        private Image funContinueOriginalImage;
+
         // =========================
         // GLOBAL SYSTEM STATE
         // =========================
@@ -368,6 +375,15 @@ namespace PrintAndSnap
         public PrintAndSnap()
         {
             InitializeComponent();
+
+            // =========================
+            // SAVE ORIGINAL BUTTON IMAGES
+            // =========================
+
+            idCaptureAgainOriginalImage = idCaptureAgainBtn.BackgroundImage;
+            funCaptureAgainOriginalImage = funCaptureAgainBtn.BackgroundImage;
+            idContinueOriginalImage = idPrintingContinueBtn.BackgroundImage;
+            funContinueOriginalImage = funContinueBtn.BackgroundImage;
 
             // =========================
             // CAMERA INIT
@@ -1356,9 +1372,10 @@ namespace PrintAndSnap
         private async void CaptureTimer_Tick(object sender, EventArgs e)
         {
             bool isFunMode = currentMode == PhotoMode.Fun;
-            Button captureButton = isFunMode
-                ? (!funCaptureAgainBtn.Enabled ? funCaptureAgainBtn : funCaptureBtn)
-                : (!idCapctureAgainBtn.Enabled ? idCapctureAgainBtn : idCaptureBtn);
+            Button captureButton = activeCaptureButton;
+
+            if (captureButton == null)
+                return;
 
             if (countdown > 0)
             {
@@ -1390,13 +1407,44 @@ namespace PrintAndSnap
 
                 if (isFunMode)
                 {
+                    // =========================
+                    // FUN PHOTO SELECTION
+                    // SAME BEHAVIOR AS ID
+                    // =========================
+
+                    if (capturedPhotos.Count > 1)
+                    {
+                        if (selectedPhoto != null)
+                        {
+                            selectedPhoto.Dispose();
+                            selectedPhoto = null;
+                        }
+
+                        hasUserSelectedPhoto = false;
+                    }
+
                     ShowFunCapturedPhotos();
-                    funContinueBtn.Enabled = true;
+                    UpdateFunCaptureButtonState();
                 }
                 else
                 {
+                    // =========================
+                    // ID PHOTO SELECTION
+                    // =========================
+
+                    if (capturedPhotos.Count > 1)
+                    {
+                        if (selectedPhoto != null)
+                        {
+                            selectedPhoto.Dispose();
+                            selectedPhoto = null;
+                        }
+
+                        hasUserSelectedPhoto = false;
+                    }
+
                     ShowCapturedPhotos();
-                    idPrintingContinueBtn.Enabled = true;
+                    UpdateCaptureButtonState();
                 }
             }
             catch (Exception ex)
@@ -1409,10 +1457,29 @@ namespace PrintAndSnap
                     countdown = 3;
 
                 captureButton.Text = "";
-                if (captureButton == idCaptureBtn || captureButton == funCaptureBtn)
-                    captureButton.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
 
-                captureButton.Enabled = true;
+                if (captureButton == idCaptureBtn || captureButton == funCaptureBtn)
+                {
+                    captureButton.BackgroundImage =
+                        global::Snap_and_Print.Properties.Resources.camera_fill;
+                }
+
+                if (captureButton == idCaptureBtn)
+                {
+                    idCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+                    // Capture Again available only when photos exist
+                    idCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
+                }
+                else if (captureButton == funCaptureBtn)
+                {
+                    funCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+                    // Capture Again available only when photos exist
+                    funCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
+                }
+
+                activeCaptureButton = null;
             }
         }
 
@@ -1454,102 +1521,135 @@ namespace PrintAndSnap
 
         private async void idPrintingContinueBtn_Click(object sender, EventArgs args)
         {
-            if (isProcessing) return;
-            isProcessing = true;
+            if (isProcessing)
+                return;
 
+            if (capturedPhotos.Count == 0)
+            {
+                MessageBox.Show(
+                    "Please capture at least one photo.",
+                    "No Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            // MORE THAN ONE PHOTO = MUST SELECT ONE
+            if (capturedPhotos.Count > 1 && !hasUserSelectedPhoto)
+            {
+                MessageBox.Show(
+                    "Please select ONE photo to continue.",
+                    "Select Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            if (selectedPhoto == null)
+            {
+                MessageBox.Show(
+                    "Please select one photo to continue.",
+                    "Select Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            isProcessing = true;
             idPrintingContinueBtn.Enabled = false;
 
             try
             {
-                if (capturedPhotos.Count == 0)
-                {
-                    MessageBox.Show("Please capture at least one photo.");
-                    return;
-                }
-
-                // STOP CAMERA
                 await Task.Run(() => cameraService.StopCamera());
                 await Task.Delay(200);
 
-                // =========================
-                // SAVE TEMP
-                // =========================
-                string tempFolder = @"C:\PrintAndSnap\ID\temp";
-                Directory.CreateDirectory(tempFolder);
+                UpdateIdSettings();
 
-                foreach (var file in Directory.GetFiles(tempFolder))
-                {
-                    try { File.Delete(file); } catch { }
-                }
+                ShowPhotoPanel(
+                    photoIDPanel,
+                    idPrintingSettings
+                );
+            }
+            catch (Exception ex)
+            {
+                DebugLog("ID Continue error: " + ex.Message);
 
-                for (int i = 0; i < capturedPhotos.Count; i++)
-                {
-                    string path = Path.Combine(tempFolder, $"temp_{i + 1}.png");
-                    capturedPhotos[i].Save(path, ImageFormat.Png);
-                }
-
-                // =========================
-                // SHOW PHOTOS IN SETTINGS
-                // =========================
-                ShowCapturedPhotos();          // preview boxes
-                LoadIdSelectionPhotos();       // selection UI
-                UpdateIdSettings();            // generate preview
-
-                // =========================
-                // GO TO SETTINGS PANEL
-                // =========================
-                ShowPhotoPanel(photoIDPanel, idPrintingSettings);
+                MessageBox.Show(
+                    this,
+                    "Unable to continue.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             finally
             {
                 isProcessing = false;
+                idPrintingContinueBtn.Enabled = true;
             }
         }
 
-        private void LoadIdSelectionPhotos()
+        private void SelectCapturedIdPhoto_Click(object sender, EventArgs e)
         {
-            hasUserSelectedPhoto = false;
+            PictureBox clicked = sender as PictureBox;
 
+            if (clicked == null || clicked.Image == null)
+                return;
+
+            int selectedIndex = -1;
+
+            if (clicked == idPreviewPictureBox1)
+                selectedIndex = 0;
+            else if (clicked == idPreviewPictureBox2)
+                selectedIndex = 1;
+            else if (clicked == idPreviewPictureBox3)
+                selectedIndex = 2;
+            else if (clicked == idPreviewPictureBox4)
+                selectedIndex = 3;
+
+            if (selectedIndex < 0 || selectedIndex >= capturedPhotos.Count)
+                return;
+
+            // Remove previous selected photo
+            if (selectedPhoto != null)
+            {
+                selectedPhoto.Dispose();
+                selectedPhoto = null;
+            }
+
+            // Save the newly selected photo
+            selectedPhoto = (Bitmap)capturedPhotos[selectedIndex].Clone();
+            hasUserSelectedPhoto = true;
+
+            // Reset all preview boxes
             PictureBox[] boxes =
             {
-        idSettingsSelectPicture1,
-        idSettingsSelectPicture2,
-        idSettingsSelectPicture3,
-        idSettingsSelectPicture4
+        idPreviewPictureBox1,
+        idPreviewPictureBox2,
+        idPreviewPictureBox3,
+        idPreviewPictureBox4
     };
 
-            for (int i = 0; i < boxes.Length; i++)
+            foreach (PictureBox box in boxes)
             {
-                boxes[i].Click -= SelectPhoto_Click;
-
-                if (i < capturedPhotos.Count)
-                {
-                    if (boxes[i].Image != null)
-                        boxes[i].Image.Dispose();
-
-                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
-                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                    boxes[i].Visible = true;
-
-                    boxes[i].Click += SelectPhoto_Click;
-                }
-                else
-                {
-                    boxes[i].Visible = false;
-                }
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
             }
 
-            // AUTO SELECT FIRST PHOTO
-            if (capturedPhotos.Count > 0)
-            {
-                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
-                hasUserSelectedPhoto = true;
+            // Highlight selected photo
+            clicked.BorderStyle = BorderStyle.FixedSingle;
+            clicked.BackColor = Color.LightSkyBlue;
+            clicked.Padding = new Padding(4);
 
-                HighlightSelectedPhoto(boxes[0]);
-
-                UpdateIdSettings();
-            }
+            // Enable Continue because ONE photo is now selected
+            idPrintingContinueBtn.Enabled = true;
         }
+
+
 
         private void SelectPhoto_Click(object sender, EventArgs e)
         {
@@ -1604,11 +1704,24 @@ namespace PrintAndSnap
 
             for (int i = 0; i < boxes.Length; i++)
             {
+                // Prevent duplicate event handlers
+                boxes[i].Click -= SelectCapturedIdPhoto_Click;
+
                 if (i < capturedPhotos.Count)
                 {
+                    SafeDisposePictureBox(boxes[i]);
+
                     boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
                     boxes[i].Visible = true;
                     boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    // Reset appearance
+                    boxes[i].BorderStyle = BorderStyle.None;
+                    boxes[i].BackColor = Color.Transparent;
+                    boxes[i].Padding = new Padding(0);
+
+                    // MAKE IT CLICKABLE
+                    boxes[i].Click += SelectCapturedIdPhoto_Click;
                 }
                 else
                 {
@@ -1622,8 +1735,10 @@ namespace PrintAndSnap
             if (currentFrame == null)
                 return;
 
-            // PREVENT SPAM CLICK
             if (captureTimer.Enabled)
+                return;
+
+            if (isProcessing)
                 return;
 
             if (capturedPhotos.Count >= 4)
@@ -1632,13 +1747,122 @@ namespace PrintAndSnap
                 return;
             }
 
+            activeCaptureButton = idCaptureBtn;
+
             idCaptureBtn.Enabled = false;
+            idPrintingContinueBtn.Enabled = false;
+            idCaptureAgainBtn.Enabled = false;
+
             idCaptureBtn.BackgroundImage = null;
 
             countdown = 3;
             captureTimer.Start();
         }
 
+        private void UpdateCaptureButtonState()
+        {
+            // Capture button: maximum 4 photos
+            idCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+            // =========================
+            // ONLY ONE PHOTO
+            // =========================
+            if (capturedPhotos.Count == 1)
+            {
+                if (selectedPhoto != null)
+                {
+                    selectedPhoto.Dispose();
+                }
+
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
+            }
+
+            // =========================
+            // MORE THAN ONE PHOTO
+            // =========================
+            else if (capturedPhotos.Count > 1)
+            {
+                // Do NOT automatically select anything
+                idPrintingContinueBtn.Enabled = hasUserSelectedPhoto;
+                return;
+            }
+
+            // =========================
+            // CONTINUE
+            // =========================
+            idPrintingContinueBtn.Enabled =
+                capturedPhotos.Count == 1 ||
+                hasUserSelectedPhoto;
+        }
+
+        private void UpdateFunCaptureButtonState()
+        {
+            // Capture button: maximum 4 photos
+            funCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+            // =========================
+            // ONLY ONE PHOTO
+            // =========================
+            if (capturedPhotos.Count == 1)
+            {
+                if (selectedPhoto != null)
+                {
+                    selectedPhoto.Dispose();
+                }
+
+                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
+                hasUserSelectedPhoto = true;
+            }
+
+            // =========================
+            // MORE THAN ONE PHOTO
+            // =========================
+            else if (capturedPhotos.Count > 1)
+            {
+                // User MUST select one
+                funContinueBtn.Enabled = hasUserSelectedPhoto;
+                return;
+            }
+
+            // =========================
+            // CONTINUE
+            // =========================
+            funContinueBtn.Enabled =
+                capturedPhotos.Count == 1 ||
+                hasUserSelectedPhoto;
+        }
+
+        private void ResetIdPreviewBoxes()
+        {
+            PictureBox[] boxes =
+            {
+        idPreviewPictureBox1,
+        idPreviewPictureBox2,
+        idPreviewPictureBox3,
+        idPreviewPictureBox4
+    };
+
+            foreach (PictureBox box in boxes)
+            {
+                // Remove selection event
+                box.Click -= SelectCapturedIdPhoto_Click;
+
+                // Dispose old preview image
+                if (box.Image != null)
+                {
+                    Image oldImage = box.Image;
+                    box.Image = null;
+                    oldImage.Dispose();
+                }
+
+                // Reset UI completely
+                box.Visible = false;
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
+            }
+        }
 
         //===========
         // QR TIMER
@@ -1820,7 +2044,7 @@ namespace PrintAndSnap
 
             // UI
             ShowPhotoPanel(photoIDPanel, idPrintingSettings);
-            LoadIdSelectionPhotos();
+            
             UpdateIdSettings();
 
         }
@@ -1947,10 +2171,10 @@ namespace PrintAndSnap
             ResetPhotoSession();
 
             idCaptureBtn.Text = "";
-            idCapctureAgainBtn.Text = "";
+            idCaptureAgainBtn.Text = "";
             idCaptureBtn.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
             idCaptureBtn.Enabled = true;
-            idCapctureAgainBtn.Enabled = true;
+            idCaptureAgainBtn.Enabled = false;
         }
 
         private void PrinterStatusTimer_Tick(object sender, EventArgs e)
@@ -2107,6 +2331,8 @@ namespace PrintAndSnap
 
         private void ResetPhotoSession()
         {
+            ResetIdPreviewBoxes();
+
             //clear photos
             foreach (var img in capturedPhotos)
                 img.Dispose();
@@ -2137,6 +2363,15 @@ namespace PrintAndSnap
                     box.Image.Dispose();
                     box.Image = null;
                 }
+
+                // IMPORTANT:
+                // Hide preview boxes when resetting the photo session
+                box.Visible = false;
+
+                // Reset selection appearance
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
             }
 
             // reset buttons
@@ -2278,7 +2513,6 @@ namespace PrintAndSnap
             if (currentFrame == null)
                 return;
 
-            // PREVENT SPAM CLICK
             if (captureTimer.Enabled)
                 return;
 
@@ -2288,7 +2522,13 @@ namespace PrintAndSnap
                 return;
             }
 
+            activeCaptureButton = funCaptureBtn;
+
+            // Disable everything while countdown is running
             funCaptureBtn.Enabled = false;
+            funCaptureAgainBtn.Enabled = false;
+            funContinueBtn.Enabled = false;
+
             funCaptureBtn.BackgroundImage = null;
 
             countdown = 3;
@@ -2297,47 +2537,103 @@ namespace PrintAndSnap
 
         private async void funContinueBtn_Click(object sender, EventArgs args)
         {
-            if (isProcessing) return;
-            isProcessing = true;
+            if (isProcessing)
+                return;
 
+            // =========================
+            // VALIDATION
+            // =========================
+
+            if (capturedPhotos.Count == 0)
+            {
+                MessageBox.Show(
+                    "Please capture at least one photo.",
+                    "No Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            if (capturedPhotos.Count > 1 && !hasUserSelectedPhoto)
+            {
+                MessageBox.Show(
+                    "Please select ONE photo to continue.",
+                    "Select Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            if (selectedPhoto == null)
+            {
+                MessageBox.Show(
+                    "Please select one photo to continue.",
+                    "Select Photo",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            isProcessing = true;
             funContinueBtn.Enabled = false;
 
             try
             {
-                if (capturedPhotos.Count == 0)
-                {
-                    MessageBox.Show("Please capture at least one photo.");
-                    return;
-                }
+                // =========================
+                // STOP CAMERA
+                // =========================
 
                 await Task.Run(() => cameraService.StopCamera());
                 await Task.Delay(200);
 
-                string tempFolder = @"C:\PrintAndSnap\FUN\temp";
-                Directory.CreateDirectory(tempFolder);
+                // =========================
+                // FUN DEFAULT SETTINGS
+                // =========================
 
-                foreach (var file in Directory.GetFiles(tempFolder))
-                {
-                    try { File.Delete(file); } catch { }
-                }
+                funFilter = "none";
+                funLayout = "none";
+                funFrame = "none";
 
-                for (int i = 0; i < capturedPhotos.Count; i++)
-                {
-                    string path = Path.Combine(tempFolder, $"temp_{i + 1}.png");
-                    capturedPhotos[i].Save(path, ImageFormat.Png);
-                }
+                funRadioBtnFilterNone.Checked = true;
+                funRadioBtnFrameNone.Checked = true;
 
-                ResetFunCache();
+                // =========================
+                // LOAD SELECTED PHOTO
+                // INTO FUN SETTINGS
+                // =========================
 
-                ShowFunCapturedPhotos();
+                UpdateFunSettings();
 
-                ShowPhotoPanel(photoBoothPanel, photoBoothSettings);
+                // =========================
+                // GO TO FUN SETTINGS
+                // =========================
 
-                LoadFunSelectionPhotos();
+                ShowPhotoPanel(
+                    photoBoothPanel,
+                    photoBoothSettings
+                );
+            }
+            catch (Exception ex)
+            {
+                DebugLog("FUN Continue error: " + ex.Message);
+
+                MessageBox.Show(
+                    this,
+                    "Unable to continue.\n\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             finally
             {
                 isProcessing = false;
+
+                if (capturedPhotos.Count > 0)
+                    funContinueBtn.Enabled = true;
             }
         }
 
@@ -2353,20 +2649,86 @@ namespace PrintAndSnap
 
             for (int i = 0; i < boxes.Length; i++)
             {
+                boxes[i].Click -= SelectCapturedFunPhoto_Click;
+
                 if (i < capturedPhotos.Count)
                 {
-                    if (boxes[i].Image != null)
-                        boxes[i].Image.Dispose();
+                    SafeDisposePictureBox(boxes[i]);
 
                     boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
                     boxes[i].Visible = true;
                     boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    // Reset appearance
+                    boxes[i].BorderStyle = BorderStyle.None;
+                    boxes[i].BackColor = Color.Transparent;
+                    boxes[i].Padding = new Padding(0);
+
+                    // Make clickable
+                    boxes[i].Click += SelectCapturedFunPhoto_Click;
                 }
                 else
                 {
                     boxes[i].Visible = false;
                 }
             }
+        }
+
+        private void SelectCapturedFunPhoto_Click(object sender, EventArgs e)
+        {
+            PictureBox clicked = sender as PictureBox;
+
+            if (clicked == null || clicked.Image == null)
+                return;
+
+            int selectedIndex = -1;
+
+            if (clicked == funPreview1)
+                selectedIndex = 0;
+            else if (clicked == funPreview2)
+                selectedIndex = 1;
+            else if (clicked == funPreview3)
+                selectedIndex = 2;
+            else if (clicked == funPreview4)
+                selectedIndex = 3;
+
+            if (selectedIndex < 0 || selectedIndex >= capturedPhotos.Count)
+                return;
+
+            // Remove previous selected photo
+            if (selectedPhoto != null)
+            {
+                selectedPhoto.Dispose();
+                selectedPhoto = null;
+            }
+
+            // Save selected photo
+            selectedPhoto = (Bitmap)capturedPhotos[selectedIndex].Clone();
+            hasUserSelectedPhoto = true;
+
+            // Reset all boxes
+            PictureBox[] boxes =
+            {
+        funPreview1,
+        funPreview2,
+        funPreview3,
+        funPreview4
+    };
+
+            foreach (PictureBox box in boxes)
+            {
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
+            }
+
+            // Highlight selected photo
+            clicked.BorderStyle = BorderStyle.FixedSingle;
+            clicked.BackColor = Color.LightPink;
+            clicked.Padding = new Padding(4);
+
+            // Enable Continue
+            funContinueBtn.Enabled = true;
         }
 
         private void LoadFunSelectionPhotos()
@@ -2606,15 +2968,30 @@ namespace PrintAndSnap
 
         private void funCaptureAgainBtn_Click(object obj, EventArgs args)
         {
+            // Stop any active countdown
             captureTimer.Stop();
+
+            // Reset countdown
             countdown = 3;
+
+            // Reset all captured photos/session
             ResetPhotoSession();
 
+            // Reset Capture button
             funCaptureBtn.Text = "";
-            funCaptureAgainBtn.Text = "";
-            funCaptureBtn.BackgroundImage = global::Snap_and_Print.Properties.Resources.camera_fill;
+            funCaptureBtn.BackgroundImage =
+                global::Snap_and_Print.Properties.Resources.camera_fill;
             funCaptureBtn.Enabled = true;
-            funCaptureAgainBtn.Enabled = true;
+
+            // Capture Again must be disabled until a photo is captured again
+            funCaptureAgainBtn.Text = "";
+            funCaptureAgainBtn.Enabled = false;
+
+            // Continue must also be disabled
+            funContinueBtn.Enabled = false;
+
+            // Make sure no old active capture button remains
+            activeCaptureButton = null;
         }
 
         private void funSettingsContinueBtn_Click(object sender, EventArgs e)
@@ -4086,6 +4463,28 @@ namespace PrintAndSnap
         {
             printingInProgress = false;
             allowReset = true;
+
+            // Stop any active countdown
+            captureTimer.Stop();
+            countdown = 3;
+            activeCaptureButton = null;
+
+            // Reset FUN photo capture session
+            ResetPhotoSession();
+
+            // Reset FUN buttons
+            funCaptureBtn.Enabled = true;
+            funCaptureAgainBtn.Enabled = false;
+            funContinueBtn.Enabled = false;
+
+            // Reset FUN button appearance
+            funCaptureBtn.Text = "";
+            funCaptureAgainBtn.Text = "";
+
+            funCaptureBtn.BackgroundImage =
+                global::Snap_and_Print.Properties.Resources.camera_fill;
+
+            // Finally reset the machine/panels
             ResetMachine(true);
         }
 
@@ -4093,6 +4492,28 @@ namespace PrintAndSnap
         {
             printingInProgress = false;
             allowReset = true;
+
+            // Stop any active countdown
+            captureTimer.Stop();
+            countdown = 3;
+            activeCaptureButton = null;
+
+            // Reset FUN photo capture session
+            ResetPhotoSession();
+
+            // Reset FUN capture UI
+            funCaptureBtn.Enabled = true;
+            funCaptureAgainBtn.Enabled = false;
+            funContinueBtn.Enabled = false;
+
+            // Reset FUN button appearance
+            funCaptureBtn.Text = "";
+            funCaptureAgainBtn.Text = "";
+
+            funCaptureBtn.BackgroundImage =
+                global::Snap_and_Print.Properties.Resources.camera_fill;
+
+            // Return to the starting UI
             ResetMachine(true);
         }
 
@@ -4881,7 +5302,10 @@ namespace PrintAndSnap
             {
                 captureTimer?.Stop();
             }
-            catch { }
+            catch 
+            {
+                activeCaptureButton = null;
+            }
 
             countdown = 3;
 
@@ -5033,13 +5457,13 @@ namespace PrintAndSnap
             funContinueBtn.Enabled = false;
 
             idCaptureBtn.Enabled = true;
-            idCapctureAgainBtn.Enabled = true;
+            idCaptureAgainBtn.Enabled = false;
 
             funCaptureBtn.Enabled = true;
-            funCaptureAgainBtn.Enabled = true;
+            funCaptureAgainBtn.Enabled = false;
 
             idCaptureBtn.Text = "";
-            idCapctureAgainBtn.Text = "";
+            idCaptureAgainBtn.Text = "";
 
             funCaptureBtn.Text = "";
             funCaptureAgainBtn.Text = "";
@@ -5162,6 +5586,9 @@ namespace PrintAndSnap
 
             continuePanel.Visible = false;
             printingSettingsPanel.Visible = false;
+
+            photoPanel.Visible = false;
+            photoPanel.SendToBack();
 
             showPanel(startPanel);
         }
@@ -5693,8 +6120,7 @@ namespace PrintAndSnap
 
                 // =========================
                 // LOAD INTO ID SETTINGS
-                // =========================
-                LoadIdSelectionPhotos();
+                // ========================
                 UpdateIdSettings();
 
                 // =========================

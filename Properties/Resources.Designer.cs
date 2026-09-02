@@ -643,6 +643,16 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap repeat_fill {
+            get {
+                object obj = ResourceManager.GetObject("repeat-fill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap reset_left_fill {
             get {
                 object obj = ResourceManager.GetObject("reset-left-fill", resourceCulture);
