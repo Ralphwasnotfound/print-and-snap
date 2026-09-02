@@ -100,6 +100,8 @@ namespace PrintAndSnap
         private FilterServices filterService = new FilterServices();
         private PhotoLayoutServices layoutService = new PhotoLayoutServices();
         private FrameServices frameService = new FrameServices();
+        private BackgroundRemovalService backgroundRemovalService = new BackgroundRemovalService();
+        private SuitOverlayService suitOverlayService = new SuitOverlayService();
 
         private Bitmap currentFrame;
         private Bitmap lastFrame;
@@ -118,6 +120,9 @@ namespace PrintAndSnap
         private string selectedLayout = "2x2";
         private bool isColored = true;
         private bool isMultiple = false;
+
+        // ID BACKGROUND / SUIT OPTION
+        private string idBackgroundOption = "none";
 
         private Bitmap finalIdPrintImage;
 
@@ -375,6 +380,8 @@ namespace PrintAndSnap
         public PrintAndSnap()
         {
             InitializeComponent();
+
+            idCameraFeed.Paint += idCameraFeed_Paint;
 
             // =========================
             // SAVE ORIGINAL BUTTON IMAGES
@@ -1347,6 +1354,9 @@ namespace PrintAndSnap
 
             idCameraFeed.Image = lastFrame;
             idCameraFeed.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            // Force Paint event
+            idCameraFeed.Invalidate();
         }
 
         private void FunUpdateCameraFrame(Bitmap frame)
@@ -1572,6 +1582,17 @@ namespace PrintAndSnap
                     photoIDPanel,
                     idPrintingSettings
                 );
+
+                idBackgroundOption = "none";
+
+                HighlightSelectedPhoto(idSettingsSelectPicture1);
+
+                UpdateIdSettings();
+
+                ShowPhotoPanel(
+                    photoIDPanel,
+                    idPrintingSettings
+                );
             }
             catch (Exception ex)
             {
@@ -1649,24 +1670,6 @@ namespace PrintAndSnap
             idPrintingContinueBtn.Enabled = true;
         }
 
-
-
-        private void SelectPhoto_Click(object sender, EventArgs e)
-        {
-            PictureBox clicked = sender as PictureBox;
-
-            if (clicked?.Image == null)
-                return;
-
-            hasUserSelectedPhoto = true;
-
-            // IMPORTANT: clone to avoid memory issues
-            selectedPhoto = (Bitmap)clicked.Image.Clone();
-
-            HighlightSelectedPhoto(clicked);
-
-            UpdateIdSettings();
-        }
 
         private void HighlightSelectedPhoto(PictureBox selectedBox)
         {
@@ -1896,16 +1899,157 @@ namespace PrintAndSnap
             if (selectedPhoto == null)
                 return;
 
-            Bitmap layout = GenerateSingleLayout(selectedPhoto);
+            Bitmap processedPhoto = null;
+            Bitmap finalPhoto = null;
 
-            if (idSettingsPicturePreview.Image != null)
-                idSettingsPicturePreview.Image.Dispose();
+            try
+            {
+                // ==========================================
+                // BACKGROUND REMOVAL
+                // ==========================================
 
-            idSettingsPicturePreview.Image = layout;
+                if (idBackgroundOption == "white" ||
+                    idBackgroundOption == "male" ||
+                    idBackgroundOption == "female")
+                {
+                    DebugLog("AI background removal started...");
 
-            idSettingsPicturePreview.SizeMode = PictureBoxSizeMode.Zoom;
+                    processedPhoto =
+                        backgroundRemovalService.RemoveBackground(
+                            selectedPhoto
+                        );
 
-            UpdateMiniPreview();
+                    DebugLog("AI background removal completed.");
+                }
+                else
+                {
+                    processedPhoto = new Bitmap(selectedPhoto);
+                }
+
+                // ==========================================
+                // APPLY MALE / FEMALE SUIT
+                // ==========================================
+
+                if (idBackgroundOption == "male" ||
+                    idBackgroundOption == "female")
+                {
+                    DebugLog(
+                        "Applying " +
+                        idBackgroundOption +
+                        " suit..."
+                    );
+
+                    finalPhoto =
+                        suitOverlayService.ApplySuit(
+                            processedPhoto,
+                            idBackgroundOption
+                        );
+                }
+                else
+                {
+                    finalPhoto = new Bitmap(processedPhoto);
+                }
+
+                // ==========================================
+                // GENERATE ID LAYOUT
+                // ==========================================
+
+                Bitmap layout =
+                    GenerateSingleLayout(finalPhoto);
+
+                if (idSettingsPicturePreview.Image != null)
+                {
+                    idSettingsPicturePreview.Image.Dispose();
+                    idSettingsPicturePreview.Image = null;
+                }
+
+                idSettingsPicturePreview.Image = layout;
+                idSettingsPicturePreview.SizeMode =
+                    PictureBoxSizeMode.Zoom;
+
+                UpdateMiniPreview();
+            }
+            catch (Exception ex)
+            {
+                DebugLog(
+                    "ID photo processing error: " +
+                    ex.Message
+                );
+
+                MessageBox.Show(
+                    "Unable to process the ID photo.\n\n" +
+                    ex.Message,
+                    "ID Photo Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            finally
+            {
+                if (processedPhoto != null)
+                    processedPhoto.Dispose();
+
+                if (finalPhoto != null)
+                    finalPhoto.Dispose();
+            }
+        }
+
+        private Bitmap RemoveIdBackground(Bitmap source)
+        {
+            if (source == null)
+                return null;
+
+            Bitmap result = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+
+            result.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+
+            for (int y = 0; y < source.Height; y++)
+            {
+                for (int x = 0; x < source.Width; x++)
+                {
+                    Color pixel = source.GetPixel(x, y);
+
+                    // Detect bright/near-white background
+                    bool isBackground =
+                        pixel.R > 200 &&
+                        pixel.G > 200 &&
+                        pixel.B > 200;
+
+                    if (isBackground)
+                    {
+                        // Make background transparent
+                        result.SetPixel(x, y, Color.Transparent);
+                    }
+                    else
+                    {
+                        // Keep person
+                        result.SetPixel(x, y, Color.FromArgb(
+                            255,
+                            pixel.R,
+                            pixel.G,
+                            pixel.B
+                        ));
+                    }
+                }
+            }
+
+            // Put the transparent result onto a WHITE background
+            Bitmap finalImage = new Bitmap(source.Width, source.Height, PixelFormat.Format24bppRgb);
+            finalImage.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(finalImage))
+            {
+                g.Clear(Color.White);
+
+                g.DrawImage(
+                    result,
+                    new Rectangle(0, 0, finalImage.Width, finalImage.Height)
+                );
+            }
+
+            result.Dispose();
+
+            return finalImage;
         }
 
         private void UpdateMiniPreview()
@@ -2100,12 +2244,69 @@ namespace PrintAndSnap
                 // =========================
                 DebugLog("Generating layout...");
 
-                finalIdPrintImage = layoutService.GenerateIdLayout(
-                    selectedPhoto,
-                    selectedLayout,
-                    isColored,
-                    isMultiple
-                );
+                Bitmap photoToPrint = null;
+                Bitmap processedPhoto = null;
+
+                try
+                {
+                    // ==========================================
+                    // BACKGROUND REMOVAL
+                    // ==========================================
+
+                    if (idBackgroundOption == "white" ||
+                        idBackgroundOption == "male" ||
+                        idBackgroundOption == "female")
+                    {
+                        processedPhoto =
+                            backgroundRemovalService.RemoveBackground(
+                                selectedPhoto
+                            );
+                    }
+                    else
+                    {
+                        processedPhoto =
+                            new Bitmap(selectedPhoto);
+                    }
+
+                    // ==========================================
+                    // APPLY SUIT
+                    // ==========================================
+
+                    if (idBackgroundOption == "male" ||
+                        idBackgroundOption == "female")
+                    {
+                        photoToPrint =
+                            suitOverlayService.ApplySuit(
+                                processedPhoto,
+                                idBackgroundOption
+                            );
+                    }
+                    else
+                    {
+                        photoToPrint =
+                            new Bitmap(processedPhoto);
+                    }
+
+                    // ==========================================
+                    // GENERATE FINAL ID LAYOUT
+                    // ==========================================
+
+                    finalIdPrintImage =
+                        layoutService.GenerateIdLayout(
+                            photoToPrint,
+                            selectedLayout,
+                            isColored,
+                            isMultiple
+                        );
+                }
+                finally
+                {
+                    if (photoToPrint != null)
+                        photoToPrint.Dispose();
+
+                    if (processedPhoto != null)
+                        processedPhoto.Dispose();
+                }
 
                 if (finalIdPrintImage == null)
                 {
@@ -2750,7 +2951,7 @@ namespace PrintAndSnap
             {
                 if (boxes[i] == null) continue;
 
-                boxes[i].Click -= FunSelectPhoto_Click;
+                boxes[i].Click -= SelectCapturedFunPhoto_Click;
 
                 if (i < capturedPhotos.Count)
                 {
@@ -2761,7 +2962,7 @@ namespace PrintAndSnap
                     boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
                     boxes[i].Visible = true;
 
-                    boxes[i].Click += FunSelectPhoto_Click;
+                    boxes[i].Click += SelectCapturedFunPhoto_Click;
                 }
                 else
                 {
@@ -2808,21 +3009,39 @@ namespace PrintAndSnap
             selectedBox.Padding = new Padding(3);
         }
 
-        private void FunSelectPhoto_Click(object sender, EventArgs e)
+        private void SelectPhoto_Click(object sender, EventArgs e)
         {
-            if (!funRadioPrintTypeSingle.Checked)
-                return; // prevent selection in Print All
-
             PictureBox clicked = sender as PictureBox;
 
-            if (clicked?.Image == null)
+            if (clicked == null)
                 return;
 
-            hasUserSelectedPhoto = true;
-            selectedPhoto = (Bitmap)clicked.Image.Clone();
+            if (clicked == idSettingsSelectPicture1)
+            {
+                idBackgroundOption = "none";
+            }
+            else if (clicked == idSettingsSelectPicture2)
+            {
+                idBackgroundOption = "white";
+            }
+            else if (clicked == idSettingsSelectPicture3)
+            {
+                idBackgroundOption = "male";
+            }
+            else if (clicked == idSettingsSelectPicture4)
+            {
+                idBackgroundOption = "female";
+            }
+            else
+            {
+                return;
+            }
 
-            HighlightFunSelectedPhoto(clicked);
-            UpdateFunSettings();
+            // Highlight selected option
+            HighlightSelectedPhoto(clicked);
+
+            // Rebuild ID preview
+            UpdateIdSettings();
         }
 
         private void UpdateFunSettings()
@@ -2856,10 +3075,15 @@ namespace PrintAndSnap
 
             if (isSingle)
             {
+                Bitmap filteredSelected =
+                    filterService.ApplyFunFilter(selectedPhoto, funFilter);
+
                 for (int i = 0; i < needed; i++)
                 {
-                    photosToUse.Add((Bitmap)selectedPhoto.Clone());
+                    photosToUse.Add((Bitmap)filteredSelected.Clone());
                 }
+
+                filteredSelected.Dispose();
             }
             else
             {
@@ -2935,10 +3159,15 @@ namespace PrintAndSnap
 
                 int needed = (funLayout == "grid") ? 4 : 2;
 
+                Bitmap filteredSelected =
+                    filterService.ApplyFunFilter(selectedPhoto, funFilter);
+
                 for (int i = 0; i < needed; i++)
                 {
-                    photosToUse.Add((Bitmap)selectedPhoto.Clone());
+                    photosToUse.Add((Bitmap)filteredSelected.Clone());
                 }
+
+                filteredSelected.Dispose();
             }
             else
             {
@@ -5427,6 +5656,7 @@ namespace PrintAndSnap
             selectedLayout = "2x2";
             isColored = true;
             isMultiple = false;
+            idBackgroundOption = "none";
 
             totalIdPrice = 0;
             lastIdCopiesValue = 1;
@@ -6306,6 +6536,141 @@ namespace PrintAndSnap
         private void uploadPhotoBackBtn_MouseLeave(object sender, EventArgs e)
         {
             uploadNotifLabel.Text = "Open Qr code Scanner to Scan";
+        }
+
+        private void idCameraFeed_Paint(object sender, PaintEventArgs e)
+        {
+            PictureBox camera = sender as PictureBox;
+
+            if (camera == null)
+                return;
+
+            Graphics g = e.Graphics;
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            int width = camera.ClientSize.Width;
+            int height = camera.ClientSize.Height;
+
+            // ==========================================
+            // FACE GUIDE
+            // LARGE AND MORE VISIBLE
+            // ==========================================
+
+            int headWidth = (int)(width * 0.36);
+            int headHeight = (int)(height * 0.55);
+
+            int headX = (width - headWidth) / 2;
+            int headY = (int)(height * 0.08);
+
+            Rectangle headGuide = new Rectangle(
+                headX,
+                headY,
+                headWidth,
+                headHeight
+            );
+
+            // ==========================================
+            // SHOULDER GUIDE
+            // SMALLER - ONLY A LITTLE INSIDE
+            // ==========================================
+
+            int shoulderWidth = (int)(width * 0.55);
+            int shoulderHeight = (int)(height * 0.30);
+
+            int shoulderX = (width - shoulderWidth) / 2;
+            int shoulderY = (int)(height * 0.65);
+
+            Rectangle suitGuide = new Rectangle(
+                shoulderX,
+                shoulderY,
+                shoulderWidth,
+                shoulderHeight
+            );
+
+            // ==========================================
+            // DRAW GUIDE
+            // ==========================================
+
+            using (Pen guidePen = new Pen(Color.Lime, 3))
+            {
+                guidePen.DashStyle = DashStyle.Dash;
+
+                // FACE
+                g.DrawEllipse(
+                    guidePen,
+                    headGuide
+                );
+
+                // SHOULDERS
+                g.DrawRectangle(
+                    guidePen,
+                    suitGuide
+                );
+            }
+
+            // ==========================================
+            // CENTER LINE
+            // ==========================================
+
+            using (Pen centerPen = new Pen(Color.White, 1))
+            {
+                centerPen.DashStyle = DashStyle.Dot;
+
+                int centerX = width / 2;
+
+                g.DrawLine(
+                    centerPen,
+                    centerX,
+                    0,
+                    centerX,
+                    height
+                );
+            }
+
+            // ==========================================
+            // INSTRUCTION
+            // ==========================================
+
+            using (Font font = new Font(
+                "Arial",
+                14,
+                FontStyle.Bold))
+            using (Brush brush = new SolidBrush(
+                Color.White))
+            {
+                string text =
+                    "Align your face inside the guide";
+
+                SizeF textSize =
+                    g.MeasureString(text, font);
+
+                float textX =
+                    (width - textSize.Width) / 2;
+
+                float textY = 10;
+
+                // Shadow
+                using (Brush shadow =
+                    new SolidBrush(Color.Black))
+                {
+                    g.DrawString(
+                        text,
+                        font,
+                        shadow,
+                        textX + 2,
+                        textY + 2
+                    );
+                }
+
+                g.DrawString(
+                    text,
+                    font,
+                    brush,
+                    textX,
+                    textY
+                );
+            }
         }
 
         // DEBUG

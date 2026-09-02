@@ -223,6 +223,26 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eraser_fill {
+            get {
+                object obj = ResourceManager.GetObject("eraser-fill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap female_suit {
+            get {
+                object obj = ResourceManager.GetObject("female_suit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap file_copy_2_line {
             get {
                 object obj = ResourceManager.GetObject("file-copy-2-line", resourceCulture);
@@ -383,6 +403,16 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap image_2_line {
+            get {
+                object obj = ResourceManager.GetObject("image-2-line", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap image_upload_fill {
             get {
                 object obj = ResourceManager.GetObject("image-upload-fill", resourceCulture);
@@ -426,6 +456,16 @@ namespace Snap_and_Print.Properties {
         internal static System.Drawing.Bitmap mail_download_fill {
             get {
                 object obj = ResourceManager.GetObject("mail-download-fill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap male_suit {
+            get {
+                object obj = ResourceManager.GetObject("male_suit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

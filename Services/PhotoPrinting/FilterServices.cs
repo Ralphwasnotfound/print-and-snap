@@ -10,74 +10,149 @@ namespace PrintAndSnap.Services.PhotoPrinting
             if (original == null)
                 return null;
 
-            if (funFilter == "none")
-                return (Bitmap)original.Clone();
+            switch (funFilter)
+            {
+                case "black":
+                    return ConvertToGrayscale(original);
 
-            if (funFilter == "black")
-                return ConvertToGrayscale(original);
+                case "warm":
+                    return ApplyWarmFilter(original);
 
-            if (funFilter == "warm")
-                return ApplyWarmFilter(original);
+                case "minimal":
+                    return ApplyMinimalFilter(original);
 
-            return (Bitmap)original.Clone();
+                case "none":
+                default:
+                    return (Bitmap)original.Clone();
+            }
         }
 
+        // =========================
+        // BLACK & WHITE
+        // =========================
         private Bitmap ConvertToGrayscale(Bitmap original)
         {
-            Bitmap gray = new Bitmap(original.Width, original.Height);
+            Bitmap gray = new Bitmap(
+                original.Width,
+                original.Height,
+                PixelFormat.Format24bppRgb
+            );
 
             using (Graphics g = Graphics.FromImage(gray))
+            using (ImageAttributes attributes = new ImageAttributes())
             {
-                var colorMatrix = new ColorMatrix(
+                ColorMatrix colorMatrix = new ColorMatrix(
                     new float[][]
                     {
-                        new float[] {.3f, .3f, .3f, 0, 0},
-                        new float[] {.59f, .59f, .59f, 0, 0},
-                        new float[] {.11f, .11f, .11f, 0, 0},
-                        new float[] {0, 0, 0, 1, 0},
-                        new float[] {0, 0, 0, 0, 1}
-                    });
+                        new float[] { 0.299f, 0.299f, 0.299f, 0, 0 },
+                        new float[] { 0.587f, 0.587f, 0.587f, 0, 0 },
+                        new float[] { 0.114f, 0.114f, 0.114f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0, 0, 0, 0, 1 }
+                    }
+                );
 
-                var attributes = new ImageAttributes();
                 attributes.SetColorMatrix(colorMatrix);
 
-                g.DrawImage(original,
+                g.DrawImage(
+                    original,
                     new Rectangle(0, 0, original.Width, original.Height),
-                    0, 0, original.Width, original.Height,
+                    0,
+                    0,
+                    original.Width,
+                    original.Height,
                     GraphicsUnit.Pixel,
-                    attributes);
+                    attributes
+                );
             }
 
             return gray;
         }
 
+        // =========================
+        // WARM
+        // =========================
         private Bitmap ApplyWarmFilter(Bitmap original)
         {
-            Bitmap warm = new Bitmap(original.Width, original.Height);
+            Bitmap warm = new Bitmap(
+                original.Width,
+                original.Height,
+                PixelFormat.Format24bppRgb
+            );
 
             using (Graphics g = Graphics.FromImage(warm))
+            using (ImageAttributes attributes = new ImageAttributes())
             {
-                float[][] matrix =
-                {
-                    new float[] {1.1f, 0, 0, 0, 0},
-                    new float[] {0, 1.0f, 0, 0, 0},
-                    new float[] {0, 0, 0.9f, 0, 0},
-                    new float[] {0, 0, 0, 1, 0},
-                    new float[] {0.05f, 0.02f, 0, 0, 1}
-                };
+                ColorMatrix matrix = new ColorMatrix(
+                    new float[][]
+                    {
+                        new float[] { 1.10f, 0, 0, 0, 0 },
+                        new float[] { 0, 1.00f, 0, 0, 0 },
+                        new float[] { 0, 0, 0.90f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0.05f, 0.02f, 0, 0, 1 }
+                    }
+                );
 
-                ColorMatrix cm = new ColorMatrix(matrix);
-                ImageAttributes ia = new ImageAttributes();
-                ia.SetColorMatrix(cm);
+                attributes.SetColorMatrix(matrix);
 
-                g.DrawImage(original,
+                g.DrawImage(
+                    original,
                     new Rectangle(0, 0, original.Width, original.Height),
-                    0, 0, original.Width, original.Height,
+                    0,
+                    0,
+                    original.Width,
+                    original.Height,
                     GraphicsUnit.Pixel,
-                    ia);
+                    attributes
+                );
             }
 
             return warm;
+        }
+
+        // =========================
+        // MINIMAL
+        // =========================
+        private Bitmap ApplyMinimalFilter(Bitmap original)
+        {
+            Bitmap minimal = new Bitmap(
+                original.Width,
+                original.Height,
+                PixelFormat.Format24bppRgb
+            );
+
+            using (Graphics g = Graphics.FromImage(minimal))
+            using (ImageAttributes attributes = new ImageAttributes())
+            {
+                // Very subtle enhancement:
+                // slightly brighter and softer colors.
+                ColorMatrix matrix = new ColorMatrix(
+                    new float[][]
+                    {
+                        new float[] { 1.03f, 0, 0, 0, 0 },
+                        new float[] { 0, 1.03f, 0, 0, 0 },
+                        new float[] { 0, 0, 1.03f, 0, 0 },
+                        new float[] { 0, 0, 0, 1, 0 },
+                        new float[] { 0.01f, 0.01f, 0.01f, 0, 1 }
+                    }
+                );
+
+                attributes.SetColorMatrix(matrix);
+
+                g.DrawImage(
+                    original,
+                    new Rectangle(0, 0, original.Width, original.Height),
+                    0,
+                    0,
+                    original.Width,
+                    original.Height,
+                    GraphicsUnit.Pixel,
+                    attributes
+                );
+            }
+
+            return minimal;
         }
     }
 }
