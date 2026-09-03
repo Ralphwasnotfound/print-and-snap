@@ -102,7 +102,7 @@ namespace PrintAndSnap
         private FrameServices frameService = new FrameServices();
         private BackgroundRemovalService backgroundRemovalService = new BackgroundRemovalService();
         private SuitOverlayService suitOverlayService = new SuitOverlayService();
-
+        private FunThemeService funThemeService = new FunThemeService();
         private Bitmap currentFrame;
         private Bitmap lastFrame;
 
@@ -140,6 +140,8 @@ namespace PrintAndSnap
         private string funFilter = "none";
         private string funLayout = "none";
         private string funFrame = "none";
+
+        private string funTheme = "none";
 
         private int totalFunPrice = 0;
         private int lastFunCopiesValue = 1;
@@ -381,6 +383,11 @@ namespace PrintAndSnap
         {
             InitializeComponent();
 
+            funSelectPic1.Click += SelectFunTheme_Click;
+            funSelectPic2.Click += SelectFunTheme_Click;
+            funSelectPic3.Click += SelectFunTheme_Click;
+            funSelectPic4.Click += SelectFunTheme_Click;
+
             idCameraFeed.Paint += idCameraFeed_Paint;
 
             // =========================
@@ -492,6 +499,13 @@ namespace PrintAndSnap
             photoUploadServices = new PhotoUploadServices();
 
             photoUploadServices.PhotoUploaded += PhotoUploadServices_PhotoUploaded;
+
+            // =========================
+            // FUN BACKGROUND DEFAULT
+            // =========================
+
+            funRadioBGNormal.Checked = true;
+            funRadioRemoveBg.Checked = false;
 
             // =========================
             // DOC RADIO EVENTS
@@ -2062,65 +2076,164 @@ namespace PrintAndSnap
             int pageWidth = (int)(8.27 * baseDpi);
             int pageHeight = (int)(11.69 * baseDpi);
 
-            Bitmap mini = new Bitmap(pageWidth, pageHeight);
+            Bitmap processedPhoto = null;
+            Bitmap finalPhoto = null;
+            Bitmap grayscalePhoto = null;
 
-            using (Graphics g = Graphics.FromImage(mini))
+            try
             {
-                g.Clear(Color.White);
+                // ==============================
+                // PROCESS PHOTO
+                // ==============================
 
-                using (Pen pen = new Pen(Color.Gray, 1))
+                if (idBackgroundOption == "white" ||
+                    idBackgroundOption == "male" ||
+                    idBackgroundOption == "female")
                 {
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    processedPhoto =
+                        backgroundRemovalService.RemoveBackground(
+                            selectedPhoto
+                        );
+                }
+                else
+                {
+                    processedPhoto =
+                        new Bitmap(selectedPhoto);
+                }
 
-                    Image previewPhoto = isColored
-                        ? selectedPhoto
-                        : ConvertToGrayscale(selectedPhoto);
+                // ==============================
+                // APPLY SUIT
+                // ==============================
 
-                    // SINGLE MODE
-                    if (!isMultiple)
+                if (idBackgroundOption == "male" ||
+                    idBackgroundOption == "female")
+                {
+                    finalPhoto =
+                        suitOverlayService.ApplySuit(
+                            processedPhoto,
+                            idBackgroundOption
+                        );
+                }
+                else
+                {
+                    finalPhoto =
+                        new Bitmap(processedPhoto);
+                }
+
+                // ==============================
+                // COLOR / GRAYSCALE
+                // ==============================
+
+                Image previewPhoto;
+
+                if (isColored)
+                {
+                    previewPhoto = finalPhoto;
+                }
+                else
+                {
+                    grayscalePhoto =
+                        ConvertToGrayscale(finalPhoto);
+
+                    previewPhoto = grayscalePhoto;
+                }
+
+                Bitmap mini = new Bitmap(pageWidth, pageHeight);
+
+                using (Graphics g = Graphics.FromImage(mini))
+                {
+                    g.Clear(Color.White);
+
+                    using (Pen pen = new Pen(Color.Gray, 1))
                     {
-                        int w = pageWidth / 3;
-                        int h = pageHeight / 3;
+                        pen.DashStyle =
+                            System.Drawing.Drawing2D.DashStyle.Dash;
 
-                        int margin = 10;
-
-                        int x = margin;
-                        int y = margin;
-
-
-                        DrawSingleLayout(g, previewPhoto, x, y, w, h, pen);
-                    }
-                    // MULTIPLE MODE
-                    else
-                    {
-                        int layoutW = pageWidth / 4;
-                        int layoutH = pageHeight / 6;
-
-                        int cols = pageWidth / layoutW;
-                        int rows = pageHeight / layoutH;
-
-                        for (int row = 0; row < rows; row++)
+                        // SINGLE MODE
+                        if (!isMultiple)
                         {
-                            for (int col = 0; col < cols; col++)
-                            {
-                                int x = col * layoutW;
-                                int y = row * layoutH;
+                            int w = pageWidth / 3;
+                            int h = pageHeight / 3;
 
-                                DrawSingleLayout(g, previewPhoto, x, y, layoutW, layoutH, pen);
+                            int margin = 10;
+
+                            int x = margin;
+                            int y = margin;
+
+                            DrawSingleLayout(
+                                g,
+                                previewPhoto,
+                                x,
+                                y,
+                                w,
+                                h,
+                                pen
+                            );
+                        }
+                        // MULTIPLE MODE
+                        else
+                        {
+                            int layoutW = pageWidth / 4;
+                            int layoutH = pageHeight / 6;
+
+                            int cols = pageWidth / layoutW;
+                            int rows = pageHeight / layoutH;
+
+                            for (int row = 0; row < rows; row++)
+                            {
+                                for (int col = 0; col < cols; col++)
+                                {
+                                    int x = col * layoutW;
+                                    int y = row * layoutH;
+
+                                    DrawSingleLayout(
+                                        g,
+                                        previewPhoto,
+                                        x,
+                                        y,
+                                        layoutW,
+                                        layoutH,
+                                        pen
+                                    );
+                                }
                             }
                         }
                     }
                 }
+
+                // ==============================
+                // UPDATE MINI PREVIEW
+                // ==============================
+
+                if (idPrintPreviewMini.Image != null)
+                {
+                    idPrintPreviewMini.Image.Dispose();
+                    idPrintPreviewMini.Image = null;
+                }
+
+                idPrintPreviewMini.Image = mini;
+
+                idPrintPreviewMini.SizeMode =
+                    PictureBoxSizeMode.Zoom;
             }
+            catch (Exception ex)
+            {
+                DebugLog(
+                    "Mini preview processing error: " +
+                    ex.Message
+                );
+            }
+            finally
+            {
+                if (processedPhoto != null)
+                    processedPhoto.Dispose();
 
-            // dispose old
-            if (idPrintPreviewMini.Image != null)
-                idPrintPreviewMini.Image.Dispose();
+                if (finalPhoto != null)
+                    finalPhoto.Dispose();
 
-            idPrintPreviewMini.Image = mini;
-
-            // AUTO FIT TO PANEL
-            idPrintPreviewMini.SizeMode = PictureBoxSizeMode.Zoom;
+                if (grayscalePhoto != null)
+                    grayscalePhoto.Dispose();
+            }
         }
 
         private void LoadIdRetrieval(string code)
@@ -2801,6 +2914,9 @@ namespace PrintAndSnap
                 funRadioBtnFilterNone.Checked = true;
                 funRadioBtnFrameNone.Checked = true;
 
+                funRadioBGNormal.Checked = true;
+                funRadioRemoveBg.Checked = false;
+
                 // =========================
                 // LOAD SELECTED PHOTO
                 // INTO FUN SETTINGS
@@ -2836,6 +2952,27 @@ namespace PrintAndSnap
                 if (capturedPhotos.Count > 0)
                     funContinueBtn.Enabled = true;
             }
+        }
+
+        // FUN BACKGROUND
+        private void funRadioBGNormal_CheckedChanged(
+            object sender,
+            EventArgs e)
+        {
+            if (!funRadioBGNormal.Checked)
+                return;
+
+            UpdateFunSettings();
+        }
+
+        private void funRadioRemoveBg_CheckedChanged(
+            object sender,
+            EventArgs e)
+        {
+            if (!funRadioRemoveBg.Checked)
+                return;
+
+            UpdateFunSettings();
         }
 
         private void ShowFunCapturedPhotos()
@@ -2932,70 +3069,123 @@ namespace PrintAndSnap
             funContinueBtn.Enabled = true;
         }
 
-        private void LoadFunSelectionPhotos()
+        private void SelectFunTheme_Click(object sender, EventArgs e)
         {
-            if (capturedPhotos.Count == 0)
+            PictureBox clicked = sender as PictureBox;
+
+            if (clicked == null)
                 return;
 
-            hasUserSelectedPhoto = false;
+            // =========================
+            // DETERMINE SELECTED THEME
+            // =========================
+            if (clicked == funSelectPic1)
+                funTheme = "beach";
+            else if (clicked == funSelectPic2)
+                funTheme = "party";
+            else if (clicked == funSelectPic3)
+                funTheme = "love";
+            else if (clicked == funSelectPic4)
+                funTheme = "xmas";
+            else
+                return;
 
-            PictureBox[] boxes =
+            DebugLog("=================================");
+            DebugLog("FUN THEME CLICKED: " + funTheme);
+            DebugLog("selectedPhoto NULL = " + (selectedPhoto == null));
+            DebugLog("capturedPhotos COUNT = " + capturedPhotos.Count);
+            DebugLog("funRadioPrintTypeSingle = " +
+                     funRadioRemoveBg.Checked);
+            DebugLog("funRadioPrintTypeAll = " +
+                     funRadioBGNormal.Checked);
+
+            // =========================
+            // HIGHLIGHT THEME
+            // =========================
+            HighlightFunTheme(clicked);
+
+            // =========================
+            // MAKE SURE PHOTO EXISTS
+            // =========================
+            if (selectedPhoto == null && capturedPhotos.Count > 0)
             {
-            funSelectPic1,
-            funSelectPic2,
-            funSelectPic3,
-            funSelectPic4
-            };
+                selectedPhoto =
+                    (Bitmap)capturedPhotos[0].Clone();
 
-            for (int i = 0; i < boxes.Length; i++)
-            {
-                if (boxes[i] == null) continue;
-
-                boxes[i].Click -= SelectCapturedFunPhoto_Click;
-
-                if (i < capturedPhotos.Count)
-                {
-                    if (boxes[i].Image != null)
-                        boxes[i].Image.Dispose();
-
-                    boxes[i].Image = (Bitmap)capturedPhotos[i].Clone();
-                    boxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                    boxes[i].Visible = true;
-
-                    boxes[i].Click += SelectCapturedFunPhoto_Click;
-                }
-                else
-                {
-                    boxes[i].Visible = false;
-                }
-
-                CalculateFunPrice();
-            }
-
-            // SAFE AUTO SELECT
-            if (capturedPhotos.Count > 0 && boxes[0] != null)
-            {
-                selectedPhoto = (Bitmap)capturedPhotos[0].Clone();
                 hasUserSelectedPhoto = true;
 
-                funRadioBtnFilterNone.Checked = true;
-                funRadioBtnFrameNone.Checked = true;
+                DebugLog(
+                    "FUN THEME: selectedPhoto was NULL. " +
+                    "Auto-selected first photo."
+                );
+            }
 
-                UpdatePrintTypeAvailability();
-                HighlightFunSelectedPhoto(boxes[0]);
+            if (selectedPhoto == null)
+            {
+                DebugLog(
+                    "FUN THEME ERROR: No selected photo available."
+                );
+
+                MessageBox.Show(
+                    "Please select a photo first.",
+                    "FUN Theme",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                return;
+            }
+
+            // =========================
+            // APPLY THEME
+            // =========================
+            try
+            {
+                DebugLog(
+                    "FUN THEME: Calling UpdateFunSettings..."
+                );
+
                 UpdateFunSettings();
+
+                DebugLog(
+                    "FUN THEME: UpdateFunSettings completed."
+                );
+
+                DebugLog(
+                    "funMainPreview.Image NULL = " +
+                    (funMainPreview.Image == null)
+                );
+
+                funMainPreview.Refresh();
+                funMiniPreview.Refresh();
+            }
+            catch (Exception ex)
+            {
+                DebugLog(
+                    "FUN THEME PREVIEW ERROR:"
+                );
+
+                DebugLog(ex.ToString());
+
+                MessageBox.Show(
+                    "Theme preview failed.\n\n" +
+                    ex.Message,
+                    "FUN Theme Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 
-        private void HighlightFunSelectedPhoto(PictureBox selectedBox)
+        private void HighlightFunTheme(PictureBox selectedBox)
         {
             PictureBox[] boxes =
             {
-            funSelectPic1,
-            funSelectPic2,
-            funSelectPic3,
-            funSelectPic4
-            };
+        funSelectPic1,
+        funSelectPic2,
+        funSelectPic3,
+        funSelectPic4
+    };
 
             foreach (var box in boxes)
             {
@@ -3052,13 +3242,24 @@ namespace PrintAndSnap
             // =========================
             // SMART FILTER CACHE
             // =========================
-            if (cachedFilteredPhotos.Count == 0 || lastAppliedFilter != funFilter)
+            if (cachedFilteredPhotos.Count == 0 ||
+                lastAppliedFilter != funFilter)
             {
+                foreach (var img in cachedFilteredPhotos)
+                    img?.Dispose();
+
                 cachedFilteredPhotos.Clear();
 
                 foreach (var photo in capturedPhotos)
                 {
-                    cachedFilteredPhotos.Add(filterService.ApplyFunFilter(photo, funFilter));
+                    Bitmap filtered =
+                        filterService.ApplyFunFilter(
+                            photo,
+                            funFilter
+                        );
+
+                    if (filtered != null)
+                        cachedFilteredPhotos.Add(filtered);
                 }
 
                 lastAppliedFilter = funFilter;
@@ -3066,24 +3267,64 @@ namespace PrintAndSnap
 
             // =========================
             // BUILD PHOTOS
+            // FILTER + OPTIONAL THEME
             // =========================
-            List<Bitmap> photosToUse = new List<Bitmap>();
 
-            bool isSingle = funRadioPrintTypeSingle.Checked;
+            List<Bitmap> photosToUse =
+                new List<Bitmap>();
 
-            int needed = (funLayout == "grid") ? 4 : 2;
+            bool isSingle =
+                funRadioRemoveBg.Checked;
+
+            int needed;
+
+            if (funLayout == "grid")
+                needed = 4;
+            else if (funLayout == "vertical")
+                needed = 2;
+            else
+                needed = isSingle ? 2 : 1;
 
             if (isSingle)
             {
                 Bitmap filteredSelected =
-                    filterService.ApplyFunFilter(selectedPhoto, funFilter);
+                    filterService.ApplyFunFilter(
+                        selectedPhoto,
+                        funFilter
+                    );
 
-                for (int i = 0; i < needed; i++)
+                if (filteredSelected != null)
                 {
-                    photosToUse.Add((Bitmap)filteredSelected.Clone());
-                }
+                    // =========================
+                    // APPLY THEME ONLY IF SELECTED
+                    // =========================
+                    Bitmap processedPhoto = filteredSelected;
 
-                filteredSelected.Dispose();
+                    if (!string.IsNullOrEmpty(funTheme) &&
+                        funTheme != "none")
+                    {
+                        Bitmap themedPhoto =
+                            ApplyFunThemeWithBackgroundRemoval(
+                                filteredSelected,
+                                funTheme
+                            );
+
+                        if (themedPhoto != null)
+                        {
+                            processedPhoto = themedPhoto;
+                            filteredSelected.Dispose();
+                        }
+                    }
+
+                    for (int i = 0; i < needed; i++)
+                    {
+                        photosToUse.Add(
+                            (Bitmap)processedPhoto.Clone()
+                        );
+                    }
+
+                    processedPhoto.Dispose();
+                }
             }
             else
             {
@@ -3094,19 +3335,52 @@ namespace PrintAndSnap
                     if (cachedFilteredPhotos.Count == 0)
                         break;
 
-                    photosToUse.Add((Bitmap)cachedFilteredPhotos[index % cachedFilteredPhotos.Count].Clone());
+                    Bitmap filtered =
+                        (Bitmap)cachedFilteredPhotos[
+                            index % cachedFilteredPhotos.Count
+                        ].Clone();
+
+                    // =========================
+                    // APPLY THEME ONLY IF SELECTED
+                    // =========================
+                    if (!string.IsNullOrEmpty(funTheme) &&
+                        funTheme != "none")
+                    {
+                        Bitmap themedPhoto =
+                            ApplyFunThemeWithBackgroundRemoval(
+                                filtered,
+                                funTheme
+                            );
+
+                        filtered.Dispose();
+
+                        if (themedPhoto == null)
+                            break;
+
+                        filtered = themedPhoto;
+                    }
+
+                    photosToUse.Add(filtered);
+
                     index++;
                 }
             }
 
             // =========================
-            // APPLY FRAME PER PHOTO
+            // APPLY FRAME
             // =========================
-            List<Bitmap> framedPhotos = new List<Bitmap>();
+
+            List<Bitmap> framedPhotos =
+                new List<Bitmap>();
 
             foreach (var photo in photosToUse)
             {
-                Bitmap framed = frameService.ApplyFunFrame(photo, funFrame);
+                Bitmap framed =
+                    frameService.ApplyFunFrame(
+                        photo,
+                        funFrame
+                    );
+
                 if (framed != null)
                     framedPhotos.Add(framed);
             }
@@ -3114,83 +3388,124 @@ namespace PrintAndSnap
             // =========================
             // APPLY LAYOUT
             // =========================
-            Bitmap preview = layoutService.ApplyFunLayout(framedPhotos, funLayout, false);
+
+            Bitmap preview =
+                layoutService.ApplyFunLayout(
+                    framedPhotos,
+                    funLayout,
+                    false
+                );
 
             if (preview == null)
+            {
+                foreach (var img in photosToUse)
+                    img?.Dispose();
+
+                foreach (var img in framedPhotos)
+                    img?.Dispose();
+
                 return;
+            }
 
             // =========================
-            // PREVIEW DISPLAY
+            // MAIN PREVIEW
             // =========================
+
             if (funMainPreview.Image != null)
                 funMainPreview.Image.Dispose();
 
-            funMainPreview.Image = (Bitmap)preview.Clone();
-            funMainPreview.SizeMode = PictureBoxSizeMode.Zoom;
+            funMainPreview.Image =
+                (Bitmap)preview.Clone();
+
+            funMainPreview.SizeMode =
+                PictureBoxSizeMode.Zoom;
+
+            // =========================
+            // MINI PREVIEW
+            // =========================
 
             if (funMiniPreview.Image != null)
                 funMiniPreview.Image.Dispose();
 
-            Bitmap miniPreview = layoutService.ApplyFunLayout(framedPhotos, funLayout, true);
+            Bitmap miniPreview =
+                layoutService.ApplyFunLayout(
+                    framedPhotos,
+                    funLayout,
+                    true
+                );
+
             funMiniPreview.Image = miniPreview;
-            funMiniPreview.SizeMode = PictureBoxSizeMode.Zoom;
+            funMiniPreview.SizeMode =
+                PictureBoxSizeMode.Zoom;
 
             // =========================
             // CLEANUP
             // =========================
+
             foreach (var img in photosToUse)
-                img.Dispose();
+                img?.Dispose();
 
             foreach (var img in framedPhotos)
-                img.Dispose();
+                img?.Dispose();
 
             preview.Dispose();
         }
 
         private List<Bitmap> BuildFunPhotos()
         {
-            List<Bitmap> photosToUse;
+            List<Bitmap> photosToUse =
+                new List<Bitmap>();
 
-            bool isSingle = funRadioPrintTypeSingle.Checked;
+            // ==========================================
+            // DETERMINE NUMBER OF PHOTOS
+            // ==========================================
 
-            if (isSingle)
+            int needed = 1;
+
+            if (funLayout == "grid")
+                needed = 4;
+            else if (funLayout == "vertical")
+                needed = 2;
+
+            // ==========================================
+            // PROCESS SELECTED PHOTO
+            // ==========================================
+
+            if (selectedPhoto == null)
+                return photosToUse;
+
+            Bitmap filtered =
+                filterService.ApplyFunFilter(
+                    selectedPhoto,
+                    funFilter
+                );
+
+            if (filtered == null)
+                return photosToUse;
+
+            Bitmap themed =
+                ApplyFunThemeWithBackgroundRemoval(
+                    filtered,
+                    funTheme
+                );
+
+            filtered.Dispose();
+
+            if (themed == null)
+                return photosToUse;
+
+            // ==========================================
+            // CREATE REQUIRED COPIES
+            // ==========================================
+
+            for (int i = 0; i < needed; i++)
             {
-                photosToUse = new List<Bitmap>();
-
-                int needed = (funLayout == "grid") ? 4 : 2;
-
-                Bitmap filteredSelected =
-                    filterService.ApplyFunFilter(selectedPhoto, funFilter);
-
-                for (int i = 0; i < needed; i++)
-                {
-                    photosToUse.Add((Bitmap)filteredSelected.Clone());
-                }
-
-                filteredSelected.Dispose();
+                photosToUse.Add(
+                    (Bitmap)themed.Clone()
+                );
             }
-            else
-            {
-                photosToUse = new List<Bitmap>();
 
-                int needed = 1;
-
-                if (funLayout == "grid")
-                    needed = 4;
-                else if (funLayout == "vertical")
-                    needed = 2;
-
-                int index = 0;
-
-                while (photosToUse.Count < needed)
-                {
-                    if (cachedFilteredPhotos.Count == 0)
-                        break;
-
-                    photosToUse.Add((Bitmap)cachedFilteredPhotos[index % cachedFilteredPhotos.Count].Clone());
-                    index++;
-                }
-            }
+            themed.Dispose();
 
             return photosToUse;
         }
@@ -3223,10 +3538,143 @@ namespace PrintAndSnap
             activeCaptureButton = null;
         }
 
+        private Bitmap ApplyFunThemeWithBackgroundRemoval(
+    Bitmap photo,
+    string theme)
+        {
+            if (photo == null)
+            {
+                DebugLog("FUN Theme: photo is NULL.");
+                return null;
+            }
+
+            // ==========================================
+            // NO THEME
+            // ==========================================
+
+            if (string.IsNullOrEmpty(theme) ||
+                theme == "none")
+            {
+                DebugLog("FUN Theme: No theme selected.");
+
+                return new Bitmap(photo);
+            }
+
+            Bitmap photoForTheme = null;
+            Bitmap result = null;
+
+            try
+            {
+                // ==========================================
+                // CHECK BACKGROUND OPTION
+                // ==========================================
+
+                if (funRadioRemoveBg.Checked)
+                {
+                    DebugLog(
+                        "FUN Background: REMOVE BACKGROUND selected."
+                    );
+
+                    DebugLog(
+                        "FUN Background: Starting background removal..."
+                    );
+
+                    photoForTheme =
+                        backgroundRemovalService.RemoveBackground(photo);
+
+                    if (photoForTheme == null)
+                    {
+                        DebugLog(
+                            "FUN Background ERROR: " +
+                            "RemoveBackground returned NULL."
+                        );
+
+                        MessageBox.Show(
+                            "Background removal returned no image.",
+                            "FUN Background Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+
+                        return null;
+                    }
+
+                    DebugLog(
+                        "FUN Background: Removal completed."
+                    );
+                }
+                else
+                {
+                    // ==========================================
+                    // NORMAL BACKGROUND
+                    // ==========================================
+
+                    DebugLog(
+                        "FUN Background: NORMAL selected."
+                    );
+
+                    photoForTheme =
+                        new Bitmap(photo);
+                }
+
+                // ==========================================
+                // APPLY THEME
+                // ==========================================
+
+                DebugLog(
+                    "FUN Theme: Applying " + theme + " theme..."
+                );
+
+                result =
+    funThemeService.ApplyTheme(
+        photoForTheme,
+        theme,
+        funRadioRemoveBg.Checked
+    );
+
+                if (result == null)
+                {
+                    DebugLog(
+                        "FUN Theme ERROR: ApplyTheme returned NULL."
+                    );
+
+                    return null;
+                }
+
+                DebugLog(
+                    "FUN Theme: Theme applied successfully."
+                );
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                DebugLog(
+                    "FUN Theme ERROR:\n" +
+                    ex.ToString()
+                );
+
+                MessageBox.Show(
+                    "FUN Theme processing failed.\n\n" +
+                    ex.Message,
+                    "FUN Theme Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                return null;
+            }
+            finally
+            {
+                if (photoForTheme != null)
+                    photoForTheme.Dispose();
+            }
+        }
+
         private void funSettingsContinueBtn_Click(object sender, EventArgs e)
         {
             //=================
-            //PRINTER CHECK
+            // PRINTER CHECK
             //=================
             if (!IsPrinterReady(PHOTO_PRINTER))
             {
@@ -3247,29 +3695,56 @@ namespace PrintAndSnap
                 return;
             }
 
-            // USE EXACT PREVIEW (THIS FIXES FRAME ISSUE)
-            // rebuild photos (same as preview logic)
+            //=================================================
+            // BUILD PHOTOS USING ALL CURRENT FUN SETTINGS
+            //=================================================
+            // This includes:
+            // - Selected photo(s)
+            // - Filter
+            // - Theme
+            //
+            // Frame and layout are applied below.
+            //=================================================
+
             List<Bitmap> photosToUse = BuildFunPhotos();
 
-            // apply frame
+            if (photosToUse == null || photosToUse.Count == 0)
+            {
+                MessageBox.Show("No photos available.");
+                return;
+            }
+
+            //=================
+            // APPLY FRAME
+            //=================
             List<Bitmap> framedPhotos = new List<Bitmap>();
 
-            foreach (var photo in photosToUse)
+            foreach (Bitmap photo in photosToUse)
             {
                 Bitmap framed = frameService.ApplyFunFrame(photo, funFrame);
+
                 if (framed != null)
                     framedPhotos.Add(framed);
             }
 
-            // FINAL IMAGE WITH CUT LINES (FOR PRINT)
-            finalFunImage = layoutService.ApplyFunLayout(framedPhotos, funLayout, true);
+            //=================
+            // APPLY LAYOUT
+            //=================
+            // true = include cut lines for printing
+            finalFunImage = layoutService.ApplyFunLayout(
+                framedPhotos,
+                funLayout,
+                true
+            );
 
-            // cleanup
-            foreach (var img in photosToUse)
-                img.Dispose();
+            //=================
+            // CLEANUP
+            //=================
+            foreach (Bitmap img in photosToUse)
+                img?.Dispose();
 
-            foreach (var img in framedPhotos)
-                img.Dispose();
+            foreach (Bitmap img in framedPhotos)
+                img?.Dispose();
 
             if (finalFunImage == null)
             {
@@ -3277,10 +3752,16 @@ namespace PrintAndSnap
                 return;
             }
 
+            //=================
             // PRICE
+            //=================
             totalFunPrice = int.Parse(funTotal.Text.Trim());
 
             paymentFunTotal.Text = totalFunPrice.ToString();
+
+            //=================
+            // START PAYMENT
+            //=================
             paymentController.StartPayment(totalFunPrice);
 
             paymentFunPrintBtn.Enabled = false;
@@ -3289,7 +3770,13 @@ namespace PrintAndSnap
 
             funDownloadBtn.Enabled = false;
 
-            ShowPhotoPanel(photoBoothPanel, funPaymentPanel);
+            //=================
+            // SHOW PAYMENT
+            //=================
+            ShowPhotoPanel(
+                photoBoothPanel,
+                funPaymentPanel
+            );
         }
 
         //FUN LAYOUT
@@ -3369,7 +3856,7 @@ namespace PrintAndSnap
         // FUN PRINT TYPE
         private void funRadioPrintTypeSingle_CheckedChanged(object sender, EventArgs e)
         {
-            if (funRadioPrintTypeSingle.Checked)
+            if (funRadioRemoveBg.Checked)
             {
                 // 🔥 ensure a photo is selected
                 if (selectedPhoto == null && capturedPhotos.Count > 0)
@@ -3378,36 +3865,15 @@ namespace PrintAndSnap
                     hasUserSelectedPhoto = true;
                 }
 
-                UpdatePhotoSelectionState();
                 UpdateFunSettings();
             }
         }
 
         private void funRadioPrintTypeAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (funRadioPrintTypeAll.Checked)
+            if (funRadioBGNormal.Checked)
             {
-                UpdatePhotoSelectionState();
                 UpdateFunSettings();
-            }
-        }
-
-        private void UpdatePhotoSelectionState()
-        {
-            bool isSingle = funRadioPrintTypeSingle.Checked;
-
-            PictureBox[] boxes =
-            {
-        funSelectPic1,
-        funSelectPic2,
-        funSelectPic3,
-        funSelectPic4
-    };
-
-            foreach (var box in boxes)
-            {
-                box.Enabled = isSingle;
-                box.BackColor = isSingle ? Color.Transparent : Color.LightGray;
             }
         }
 
@@ -3418,22 +3884,22 @@ namespace PrintAndSnap
             if (count <= 1)
             {
                 // FORCE PRINT ALL
-                funRadioPrintTypeAll.Checked = true;
+                funRadioBGNormal.Checked = true;
                 UpdateFunSettings();
 
-                funRadioPrintTypeSingle.Enabled = false;
-                funRadioPrintTypeAll.Enabled = false;
+                funRadioRemoveBg.Enabled = false;
+                funRadioBGNormal.Enabled = false;
 
                 // optional UI feedback
-                funRadioPrintTypeAll.Text = "Print All (Auto)";
+                funRadioBGNormal.Text = "Print All (Auto)";
             }
             else
             {
                 // ENABLE OPTIONS
-                funRadioPrintTypeSingle.Enabled = true;
-                funRadioPrintTypeAll.Enabled = true;
+                funRadioRemoveBg.Enabled = true;
+                funRadioBGNormal.Enabled = true;
 
-                funRadioPrintTypeAll.Text = "Print All";
+                funRadioBGNormal.Text = "Print All";
             }
         }
 
@@ -3536,7 +4002,6 @@ namespace PrintAndSnap
             hasUserSelectedPhoto = true;
 
             ShowPhotoPanel(photoBoothPanel, photoBoothSettings);
-            LoadFunSelectionPhotos();
             UpdateFunSettings();
             UpdatePrintTypeAvailability();
 
@@ -3835,7 +4300,33 @@ namespace PrintAndSnap
 
                 try
                 {
-                    photoPrinting.PrintIdPhoto(readyToPrint, PHOTO_PRINTER, false, printMode);
+                    int copies = (int)numericIdPrintingCopies.Value;
+
+                    if (copies < 1)
+                        copies = 1;
+
+                    for (int i = 0; i < copies; i++)
+                    {
+                        Debug.WriteLine(
+                            "ID PRINT: Printing copy " +
+                            (i + 1) +
+                            " of " +
+                            copies
+                        );
+
+                        photoPrinting.PrintIdPhoto(
+                            readyToPrint,
+                            PHOTO_PRINTER,
+                            false,
+                            printMode
+                        );
+
+                        // Give the printer a moment between jobs
+                        if (i < copies - 1)
+                        {
+                            await Task.Delay(1000);
+                        }
+                    }
                 }
                 catch
                 {
@@ -4020,12 +4511,42 @@ namespace PrintAndSnap
                 funDownloadBtn.Enabled = false;
                 lastSavedFunFileName = null;
 
-                Bitmap readyToPrint = layoutService.ResizeTo4x6(finalFunImage);
+                Bitmap readyToPrint =
+    layoutService.ResizeTo4x6(finalFunImage);
 
                 // =========================
-                // START PRINT FIRST
+                // PRINT ALL COPIES
                 // =========================
-                photoPrinting.PrintFunPhoto(readyToPrint, PHOTO_PRINTER);
+
+                int copies = (int)funNumericCopies.Value;
+
+                if (copies < 1)
+                    copies = 1;
+
+                for (int i = 0; i < copies; i++)
+                {
+                    DebugLog(
+                        "FUN PRINT: Printing copy " +
+                        (i + 1) +
+                        " of " +
+                        copies
+                    );
+
+                    photoPrinting.PrintFunPhoto(
+                        readyToPrint,
+                        PHOTO_PRINTER
+                    );
+
+                    // Small delay between print jobs
+                    // so the printer has time to finish
+                    // accepting the previous job.
+                    if (i < copies - 1)
+                    {
+                        await Task.Delay(1000);
+                    }
+                }
+
+                readyToPrint.Dispose();
 
                 // =========================
                 // STATUS
@@ -5716,7 +6237,7 @@ namespace PrintAndSnap
             funRadioBtnFilterNone.Checked = true;
             funRadioBtnFrameNone.Checked = true;
 
-            funRadioPrintTypeSingle.Checked = true;
+            funRadioRemoveBg.Checked = true;
 
             funRadioBtnVertical.Checked = false;
             funRadioBtnGridBtn.Checked = false;
@@ -6431,13 +6952,12 @@ namespace PrintAndSnap
                 funRadioBtnFilterNone.Checked = true;
                 funRadioBtnFrameNone.Checked = true;
 
-                funRadioPrintTypeSingle.Checked = true;
+                funRadioRemoveBg.Checked = true;
 
                 // =========================
                 // LOAD INTO FUN SETTINGS
                 // =========================
                 ShowFunCapturedPhotos();
-                LoadFunSelectionPhotos();
 
                 UpdatePrintTypeAvailability();
                 UpdateFunSettings();

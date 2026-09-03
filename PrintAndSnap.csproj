@@ -207,6 +207,7 @@
     <Compile Include="Services\PhotoPrinting\CameraServices.cs" />
     <Compile Include="Services\PhotoPrinting\FilterServices.cs" />
     <Compile Include="Services\PhotoPrinting\FrameServices.cs" />
+    <Compile Include="Services\PhotoPrinting\FunThemeService.cs" />
     <Compile Include="Services\PhotoPrinting\PhotoLayoutServices.cs" />
     <Compile Include="Services\PhotoPrinting\PhotoPrinting.cs" />
     <Compile Include="Services\PhotoPrinting\PhotoServices.cs" />
@@ -224,6 +225,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Suits\male_suit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Themes\beach.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Themes\love.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Themes\party.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Themes\xmas.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Models\u2netp.onnx">
@@ -343,6 +356,11 @@
     <None Include="Resources\male_suit.png" />
     <None Include="Resources\image-2-line.png" />
     <None Include="Resources\eraser-fill.png" />
+    <None Include="Resources\xmas.png" />
+    <None Include="Resources\love.png" />
+    <None Include="Resources\party.png" />
+    <None Include="Resources\beach.png" />
+    <None Include="Resources\image-ai-line.png" />
     <Content Include="underthetitle.png" />
   </ItemGroup>
   <ItemGroup>

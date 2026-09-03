@@ -93,6 +93,16 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap beach {
+            get {
+                object obj = ResourceManager.GetObject("beach", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bgcolor {
             get {
                 object obj = ResourceManager.GetObject("bgcolor", resourceCulture);
@@ -413,6 +423,16 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap image_ai_line {
+            get {
+                object obj = ResourceManager.GetObject("image-ai-line", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap image_upload_fill {
             get {
                 object obj = ResourceManager.GetObject("image-upload-fill", resourceCulture);
@@ -453,6 +473,16 @@ namespace Snap_and_Print.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap love {
+            get {
+                object obj = ResourceManager.GetObject("love", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mail_download_fill {
             get {
                 object obj = ResourceManager.GetObject("mail-download-fill", resourceCulture);
@@ -466,6 +496,16 @@ namespace Snap_and_Print.Properties {
         internal static System.Drawing.Bitmap male_suit {
             get {
                 object obj = ResourceManager.GetObject("male_suit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap party {
+            get {
+                object obj = ResourceManager.GetObject("party", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -726,6 +766,16 @@ namespace Snap_and_Print.Properties {
         internal static System.Drawing.Bitmap snapAndPrintLogo {
             get {
                 object obj = ResourceManager.GetObject("snapAndPrintLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap xmas {
+            get {
+                object obj = ResourceManager.GetObject("xmas", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
