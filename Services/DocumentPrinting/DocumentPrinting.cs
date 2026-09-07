@@ -17,6 +17,7 @@ namespace PrintAndSnap.Services.Printing
             string currentPdfPath,
             string printerName,
             int totalPages,
+            int copies,
             bool isSinglePage,
             int singlePage,
             bool isRange,
@@ -53,12 +54,13 @@ namespace PrintAndSnap.Services.Printing
                     }
 
                     // RANGE
-                    else if (isRange && pageRangeText.Contains("-"))
+                    else if (isRange)
                     {
-                        var parts = pageRangeText.Split('-');
-
-                        startPage = int.Parse(parts[0]);
-                        endPage = int.Parse(parts[1]);
+                        if (!new global::PrintAndSnap.Services.PricingService()
+                            .TryParsePageRange(pageRangeText, totalPages, out startPage, out endPage))
+                        {
+                            return false;
+                        }
                     }
 
                     // PRINT PAGE BY PAGE
@@ -67,6 +69,7 @@ namespace PrintAndSnap.Services.Printing
                         var printDoc = document.CreatePrintDocument();
 
                         printDoc.PrinterSettings.PrinterName = printerName;
+                        printDoc.PrinterSettings.Copies = (short)copies;
 
                         printDoc.PrintController =
                             new System.Drawing.Printing.StandardPrintController();

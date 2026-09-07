@@ -122,7 +122,7 @@ namespace PrintAndSnap.Services
         // =========================
         // PARSE PAGE RANGE
         // =========================
-        private bool TryParsePageRange(
+        public bool TryParsePageRange(
             string input,
             int totalPages,
             out int start,

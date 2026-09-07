@@ -3275,7 +3275,7 @@ namespace PrintAndSnap
                 new List<Bitmap>();
 
             bool isSingle =
-                funRadioRemoveBg.Checked;
+                true;
 
             int needed;
 
@@ -4704,14 +4704,17 @@ namespace PrintAndSnap
 
             try
             {
-                _ = Task.Run(() =>
+                int copies = (int)numericCopies.Value;
+
+                Task<bool> printTask = Task.Run(() =>
                 {
                     try
                     {
-                        documentPrinting.PrintDocumentFile(
+                        return documentPrinting.PrintDocumentFile(
                             currentPdfPath,
                             DOCUMENT_PRINTER,
                             totalPages,
+                            copies,
                             radioSinglePage.Checked,
                             (int)numericSinglePage.Value,
                             radioPrintRange.Checked,
@@ -4723,11 +4726,12 @@ namespace PrintAndSnap
                     catch (Exception ex)
                     {
                         DebugLog("Print error: " + ex.Message);
+                        return false;
                     }
                 });
 
-                // assume success
-                printSuccess = true;
+                // Success is determined by the printing task.
+                printSuccess = false;
                 sessionActive = true;
 
 
@@ -4737,6 +4741,11 @@ namespace PrintAndSnap
                     (int)numericCopies.Value,
                     radioColored.Checked
                 );
+
+                if (!printTask.IsCompleted)
+                    printingStatusLabel.Text = "Waiting for print operation to finish...";
+
+                printSuccess = await printTask;
 
                 if (!printSuccess)
                 {
@@ -5365,6 +5374,8 @@ namespace PrintAndSnap
             Debug.WriteLine("PROCESS PDF: " + filePath);
 
             currentPdfPath = filePath;
+            colorAnalysisDone = false;
+            pageIsColored = new List<bool>();
 
             ResetPdfViewer(); // ensure old viewer is gone
 
@@ -5533,6 +5544,8 @@ namespace PrintAndSnap
         private void LoadNewPreview(string newPdfPath)
         {
             Debug.WriteLine("PDF PREVIEW LOADED");
+            colorAnalysisDone = false;
+            pageIsColored = new List<bool>();
 
             ResetPdfViewer();
 
@@ -5565,10 +5578,14 @@ namespace PrintAndSnap
                 return;
             }
 
+            pageIsColored = pricingService.AnalyzeDocumentColors(newPdfPath);
+            colorAnalysisDone = true;
+
             numericSinglePage.Minimum = 1;
             numericSinglePage.Maximum = totalPages;
             numericSinglePage.Value = 1;
             uploadStatusTimer.Stop();
+            CalculateTotal();
 
             if (!isRetrievalMode)
             {
@@ -5931,35 +5948,9 @@ namespace PrintAndSnap
             }
             else if (radioPrintRange.Checked)
             {
-                string input = numericPageRange.Text.Trim();
-
-                if (!string.IsNullOrEmpty(input) && input.Contains("-"))
-                {
-                    string[] parts = input.Split('-');
-
-                    if (parts.Length == 2 &&
-                        int.TryParse(parts[0], out int start) &&
-                        int.TryParse(parts[1], out int end))
-                    {
-                        // FIX: normalize values
-                        if (start > end)
-                        {
-                            int temp = start;
-                            start = end;
-                            end = temp;
-                        }
-
-                        // LIMIT to valid pages
-                        start = Math.Max(1, start);
-                        end = Math.Min(totalPages, end);
-
-                        pagesToPrint = end - start + 1;
-                    }
-                    else
-                    {
-                        pagesToPrint = 0;
-                    }
-                }
+                pagesToPrint = pricingService.CountSelectedPages(
+                    numericPageRange.Text,
+                    totalPages);
             }
 
             int totalWork = pagesToPrint * copies;
@@ -6334,6 +6325,8 @@ namespace PrintAndSnap
             currentEditablePath = null;
             currentOriginalPath = null;
             isRetrievalMode = false;
+            colorAnalysisDone = false;
+            pageIsColored = new List<bool>();
 
             totalLabel.Text = "0";
             paymentDocBalance.Text = "0";
@@ -6658,6 +6651,18 @@ namespace PrintAndSnap
 
         private void proceedBtn_Click(object sender, EventArgs e)
         {
+            if (radioPrintRange.Checked &&
+                !pricingService.TryParsePageRange(
+                    numericPageRange.Text, totalPages, out int start, out int end))
+            {
+                MessageBox.Show(
+                    this,
+                    "Enter a valid page range, such as 1-5, within this document.",
+                    "Invalid Page Range",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
 
             string printerName = "Canon MG3000 series";
 

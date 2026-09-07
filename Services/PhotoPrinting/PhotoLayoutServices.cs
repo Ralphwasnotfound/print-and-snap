@@ -161,6 +161,17 @@ namespace PrintAndSnap.Services.PhotoPrinting
                         }
                     }
                 }
+                else
+                {
+                    Rectangle drawArea = new Rectangle(
+                        outerPaddingLeft,
+                        outerPaddingTop,
+                        width - outerPaddingLeft - outerPaddingRight,
+                        height - outerPaddingTop - outerPaddingBottom
+                    );
+
+                    g.DrawImage(photos[0], drawArea);
+                }
             }
 
             return canvas;
