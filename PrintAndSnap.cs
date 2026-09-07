@@ -2923,6 +2923,7 @@ namespace PrintAndSnap
                 // =========================
 
                 UpdateFunSettings();
+                CalculateFunPrice();
 
                 // =========================
                 // GO TO FUN SETTINGS
@@ -4805,7 +4806,6 @@ namespace PrintAndSnap
             finally
             {
                 printingInProgress = false;
-                printBtn.Enabled = true;
             }
         }
 
@@ -4815,6 +4815,18 @@ namespace PrintAndSnap
 
             try
             {
+                resetTokenSource?.Cancel();
+                StopPhotoUploadSession();
+
+                try
+                {
+                    paymentController.ResetPayment();
+                }
+                catch (Exception ex)
+                {
+                    DebugLog("Payment reset error: " + ex.Message);
+                }
+
                 ResetDownloads();
                 ResetPhoto();
                 ResetDocument();
@@ -6168,6 +6180,20 @@ namespace PrintAndSnap
             funFilter = "none";
             funLayout = "none";
             funFrame = "none";
+            funTheme = "none";
+
+            foreach (var box in new[]
+            {
+                funSelectPic1,
+                funSelectPic2,
+                funSelectPic3,
+                funSelectPic4
+            })
+            {
+                box.BorderStyle = BorderStyle.None;
+                box.BackColor = Color.Transparent;
+                box.Padding = new Padding(0);
+            }
 
 
             // =========================
@@ -6187,6 +6213,14 @@ namespace PrintAndSnap
             isPhotoRetrievalMode = false;
             currentRetrievedIdPath = null;
             lastSavedIdFileName = null;
+            retrievalAttempts = 0;
+            photoRetrievalCodeBox.Clear();
+
+            idprintingStatusLabel.Text = "";
+            idprintingStatusLabel.Visible = false;
+
+            funPrintingStatusLabel.Text = "";
+            funPrintingStatusLabel.Visible = false;
 
 
             // =========================
@@ -6242,6 +6276,12 @@ namespace PrintAndSnap
             funRadioBtnVertical.Checked = false;
             funRadioBtnGridBtn.Checked = false;
 
+            numericIdPrintingCopies.Value = 1;
+            numericIdPrintingCopies.Enabled = false;
+            funNumericCopies.Value = 1;
+
+            CalculateIdPrice();
+            CalculateFunPrice();
 
             // =========================
             // MOST IMPORTANT PART
@@ -6293,6 +6333,7 @@ namespace PrintAndSnap
             currentPdfPath = null;
             currentEditablePath = null;
             currentOriginalPath = null;
+            isRetrievalMode = false;
 
             totalLabel.Text = "0";
             paymentDocBalance.Text = "0";
@@ -7208,5 +7249,5 @@ namespace PrintAndSnap
             Debug.WriteLine("receiveTimer enabled: " + receiveTimer.Enabled);
         }
 
-    }
+    }  
 }
