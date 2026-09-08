@@ -138,7 +138,62 @@ namespace PrintAndSnap.Services
                             ? funDownloadFolder
                             : idDownloadFolder;
 
-                        string filePath = Path.Combine(baseFolder, fileName);
+                        string filePath;
+
+                        try
+                        {
+                            if (Path.IsPathRooted(fileName) ||
+                                fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 ||
+                                !string.Equals(
+                                    fileName,
+                                    Path.GetFileName(fileName),
+                                    StringComparison.Ordinal) ||
+                                !string.Equals(
+                                    Path.GetExtension(fileName),
+                                    ".png",
+                                    StringComparison.OrdinalIgnoreCase))
+                            {
+                                context.Response.StatusCode = 400;
+                                context.Response.Close();
+                                continue;
+                            }
+
+                            string fullBaseFolder = Path.GetFullPath(baseFolder)
+                                .TrimEnd(
+                                    Path.DirectorySeparatorChar,
+                                    Path.AltDirectorySeparatorChar)
+                                + Path.DirectorySeparatorChar;
+
+                            filePath = Path.GetFullPath(
+                                Path.Combine(fullBaseFolder, fileName));
+
+                            if (!filePath.StartsWith(
+                                fullBaseFolder,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                context.Response.StatusCode = 403;
+                                context.Response.Close();
+                                continue;
+                            }
+                        }
+                        catch (ArgumentException)
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.Close();
+                            continue;
+                        }
+                        catch (NotSupportedException)
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.Close();
+                            continue;
+                        }
+                        catch (PathTooLongException)
+                        {
+                            context.Response.StatusCode = 400;
+                            context.Response.Close();
+                            continue;
+                        }
 
                         if (!File.Exists(filePath))
                         {
