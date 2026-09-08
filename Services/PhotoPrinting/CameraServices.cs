@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PrintAndSnap.Services.PhotoPrinting
 {
@@ -38,6 +39,39 @@ namespace PrintAndSnap.Services.PhotoPrinting
             videoSource.NewFrame += frameHandler;
 
             videoSource.Start();
+        }
+
+        public async Task StopCameraAsync()
+        {
+            VideoCaptureDevice sourceToStop = videoSource;
+            NewFrameEventHandler handlerToRemove = frameHandler;
+
+            if (sourceToStop == null)
+                return;
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (sourceToStop.IsRunning)
+                    {
+                        sourceToStop.SignalToStop();
+                        sourceToStop.WaitForStop();
+                    }
+
+                    if (handlerToRemove != null)
+                        sourceToStop.NewFrame -= handlerToRemove;
+                }
+                catch { }
+            });
+
+            if (ReferenceEquals(videoSource, sourceToStop))
+            {
+                videoSource = null;
+
+                if (ReferenceEquals(frameHandler, handlerToRemove))
+                    frameHandler = null;
+            }
         }
 
         public void StopCamera()

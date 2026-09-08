@@ -37,6 +37,15 @@ namespace PrintAndSnap
         // =========================
         private UploadServices uploadService = new UploadServices();
         private PhotoUploadServices photoUploadServices;
+        private string activePhotoUploadToken;
+        private long photoUploadCaptureVersion;
+
+        private bool IsCurrentPhotoUpload(string uploadToken)
+        {
+            return !string.IsNullOrEmpty(uploadToken)
+                && uploadToken == activePhotoUploadToken
+                && photoUploadCaptureVersion == photoCaptureVersion;
+        }
         private DocumentPrinting documentPrinting = new DocumentPrinting();
         private PrinterManager printerManager = new PrinterManager();
         private PhotoPrinting photoPrinting = new PhotoPrinting();
@@ -53,6 +62,8 @@ namespace PrintAndSnap
         // GLOBAL SYSTEM STATE
         // =========================
         private bool isProcessing = false;
+        private long photoCaptureVersion = 0;
+        private long photoDownloadVersion = 0;
         private bool isResetting = false;
         private bool printingInProgress = false;
 
@@ -147,6 +158,7 @@ namespace PrintAndSnap
         private int lastFunCopiesValue = 1;
 
         private Bitmap finalFunImage;
+        private Bitmap preparedFunDownloadImage;
 
         private string lastSavedFunFileName;
         private string currentFunRetrievalCode = null;
@@ -178,6 +190,7 @@ namespace PrintAndSnap
         private System.Windows.Forms.Timer inactivityTimer;
         private System.Windows.Forms.Timer qrExpireTimer;
         private System.Windows.Forms.Timer uploadStatusTimer;
+        private System.Windows.Forms.Timer photoUploadStatusTimer;
         private System.Windows.Forms.Timer captureTimer;
 
         // =========================
@@ -249,6 +262,8 @@ namespace PrintAndSnap
                 try { inactivityTimer?.Stop(); } catch { }
                 try { qrExpireTimer?.Stop(); } catch { }
                 try { uploadStatusTimer?.Stop(); } catch { }
+                try { uploadStatusTimer?.Dispose(); } catch { }
+                try { StopUploadStatusAnimation(); } catch { }
                 try { captureTimer?.Stop(); } catch { }
                 try { receiveTimer?.Stop(); } catch { }
 
@@ -329,6 +344,7 @@ namespace PrintAndSnap
                     SafeDispose(ref selectedPhoto);
                     SafeDispose(ref finalIdPrintImage);
                     SafeDispose(ref finalFunImage);
+                    SafeDispose(ref preparedFunDownloadImage);
 
                     foreach (var photo in cachedFilteredPhotos)
                     {
@@ -1406,6 +1422,7 @@ namespace PrintAndSnap
 
         private async void CaptureTimer_Tick(object sender, EventArgs e)
         {
+            long captureVersion = photoCaptureVersion;
             bool isFunMode = currentMode == PhotoMode.Fun;
             Button captureButton = activeCaptureButton;
 
@@ -1426,6 +1443,9 @@ namespace PrintAndSnap
             try
             {
                 await Task.Delay(500);
+
+                if (captureVersion != photoCaptureVersion)
+                    return;
 
                 if (countdown != -1 || currentFrame == null)
                     return;
@@ -1484,37 +1504,43 @@ namespace PrintAndSnap
             }
             catch (Exception ex)
             {
+                if (captureVersion != photoCaptureVersion)
+                    return;
+
                 DebugLog("Capture error: " + ex.Message);
             }
             finally
             {
-                if (countdown == -1)
-                    countdown = 3;
-
-                captureButton.Text = "";
-
-                if (captureButton == idCaptureBtn || captureButton == funCaptureBtn)
+                if (captureVersion == photoCaptureVersion)
                 {
-                    captureButton.BackgroundImage =
-                        global::Snap_and_Print.Properties.Resources.camera_fill;
+                    if (countdown == -1)
+                        countdown = 3;
+
+                    captureButton.Text = "";
+
+                    if (captureButton == idCaptureBtn || captureButton == funCaptureBtn)
+                    {
+                        captureButton.BackgroundImage =
+                            global::Snap_and_Print.Properties.Resources.camera_fill;
+                    }
+
+                    if (captureButton == idCaptureBtn)
+                    {
+                        idCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+                        // Capture Again available only when photos exist
+                        idCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
+                    }
+                    else if (captureButton == funCaptureBtn)
+                    {
+                        funCaptureBtn.Enabled = capturedPhotos.Count < 4;
+
+                        // Capture Again available only when photos exist
+                        funCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
+                    }
+
+                    activeCaptureButton = null;
                 }
-
-                if (captureButton == idCaptureBtn)
-                {
-                    idCaptureBtn.Enabled = capturedPhotos.Count < 4;
-
-                    // Capture Again available only when photos exist
-                    idCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
-                }
-                else if (captureButton == funCaptureBtn)
-                {
-                    funCaptureBtn.Enabled = capturedPhotos.Count < 4;
-
-                    // Capture Again available only when photos exist
-                    funCaptureAgainBtn.Enabled = capturedPhotos.Count > 0;
-                }
-
-                activeCaptureButton = null;
             }
         }
 
@@ -1556,6 +1582,7 @@ namespace PrintAndSnap
 
         private async void idPrintingContinueBtn_Click(object sender, EventArgs args)
         {
+            long captureVersion = photoCaptureVersion;
             if (isProcessing)
                 return;
 
@@ -1598,8 +1625,14 @@ namespace PrintAndSnap
 
             try
             {
-                await Task.Run(() => cameraService.StopCamera());
+                await cameraService.StopCameraAsync();
+                if (captureVersion != photoCaptureVersion)
+                    return;
+
                 await Task.Delay(200);
+
+                if (captureVersion != photoCaptureVersion)
+                    return;
 
                 UpdateIdSettings();
 
@@ -1621,6 +1654,9 @@ namespace PrintAndSnap
             }
             catch (Exception ex)
             {
+                if (captureVersion != photoCaptureVersion)
+                    return;
+
                 DebugLog("ID Continue error: " + ex.Message);
 
                 MessageBox.Show(
@@ -1633,8 +1669,11 @@ namespace PrintAndSnap
             }
             finally
             {
-                isProcessing = false;
-                idPrintingContinueBtn.Enabled = true;
+                if (captureVersion == photoCaptureVersion)
+                {
+                    isProcessing = false;
+                    idPrintingContinueBtn.Enabled = true;
+                }
             }
         }
 
@@ -2656,6 +2695,9 @@ namespace PrintAndSnap
 
         private void ResetPhotoSession()
         {
+            photoCaptureVersion++;
+            isProcessing = false;
+
             ResetIdPreviewBoxes();
 
             //clear photos
@@ -2862,6 +2904,7 @@ namespace PrintAndSnap
 
         private async void funContinueBtn_Click(object sender, EventArgs args)
         {
+            long captureVersion = photoCaptureVersion;
             if (isProcessing)
                 return;
 
@@ -2911,8 +2954,14 @@ namespace PrintAndSnap
                 // STOP CAMERA
                 // =========================
 
-                await Task.Run(() => cameraService.StopCamera());
+                await cameraService.StopCameraAsync();
+                if (captureVersion != photoCaptureVersion)
+                    return;
+
                 await Task.Delay(200);
+
+                if (captureVersion != photoCaptureVersion)
+                    return;
 
                 // =========================
                 // FUN DEFAULT SETTINGS
@@ -2947,6 +2996,9 @@ namespace PrintAndSnap
             }
             catch (Exception ex)
             {
+                if (captureVersion != photoCaptureVersion)
+                    return;
+
                 DebugLog("FUN Continue error: " + ex.Message);
 
                 MessageBox.Show(
@@ -2959,10 +3011,13 @@ namespace PrintAndSnap
             }
             finally
             {
-                isProcessing = false;
+                if (captureVersion == photoCaptureVersion)
+                {
+                    isProcessing = false;
 
-                if (capturedPhotos.Count > 0)
-                    funContinueBtn.Enabled = true;
+                    if (capturedPhotos.Count > 0)
+                        funContinueBtn.Enabled = true;
+                }
             }
         }
 
@@ -3749,6 +3804,10 @@ namespace PrintAndSnap
                 true
             );
 
+            SafeDispose(ref preparedFunDownloadImage);
+            preparedFunDownloadImage =
+                layoutService.ApplyDownloadLayout(photosToUse, funLayout);
+
             //=================
             // CLEANUP
             //=================
@@ -3758,7 +3817,7 @@ namespace PrintAndSnap
             foreach (Bitmap img in framedPhotos)
                 img?.Dispose();
 
-            if (finalFunImage == null)
+            if (finalFunImage == null || preparedFunDownloadImage == null)
             {
                 MessageBox.Show("Failed to generate image.");
                 return;
@@ -4482,11 +4541,6 @@ namespace PrintAndSnap
                     code = codeName;
                 }
 
-                // =========================
-                // SHOW QR FIRST (IMPORTANT FIX)
-                // =========================
-                GenerateQrForDownload(downloadFileName);
-
                 uploadService.uploadUsed = false;
 
                 // ENABLE BUTTON FIRST
@@ -4559,7 +4613,7 @@ namespace PrintAndSnap
                 return;
             }
 
-            if (finalFunImage == null)
+            if (finalFunImage == null || preparedFunDownloadImage == null)
             {
                 MessageBox.Show("No image to print.");
                 return;
@@ -4722,16 +4776,7 @@ namespace PrintAndSnap
                 string fileName = code + ".png";
                 string downloadPath = Path.Combine(downloadFolder, fileName);
 
-                List<Bitmap> photosToUse = BuildFunPhotos();
-
-                Bitmap downloadImage = layoutService.ApplyDownloadLayout(photosToUse, funLayout);
-                downloadImage.Save(downloadPath, ImageFormat.Png);
-
-                // cleanup
-                foreach (var img in photosToUse)
-                    img.Dispose();
-
-                downloadImage.Dispose();
+                preparedFunDownloadImage.Save(downloadPath, ImageFormat.Png);
 
                 lastSavedFunFileName = fileName;
                 currentFunRetrievalCode = code;
@@ -4739,6 +4784,7 @@ namespace PrintAndSnap
                 // =========================
                 // AUTO DELETE
                 // =========================
+                uploadService.uploadUsed = false;
                 StartAutoCleanup(downloadPath);
 
                 // =========================
@@ -4757,8 +4803,6 @@ namespace PrintAndSnap
                 paymentFunCancelBtn.Enabled = true;
 
                 funPrintingStatusLabel.Text = "Print complete!";
-
-                StartAutoCleanup(downloadPath);
 
                 // =========================
                 // MESSAGE
@@ -4991,56 +5035,63 @@ namespace PrintAndSnap
             }
         }
 
-        private void StartAutoCleanup(string filePath)
+        private async void StartAutoCleanup(string filePath, int timeout = 80)
         {
             resetTokenSource?.Cancel();
-            resetTokenSource = new CancellationTokenSource();
-            var token = resetTokenSource.Token;
 
-            _ = Task.Run(async () =>
+            var source = new CancellationTokenSource();
+            resetTokenSource = source;
+            var token = source.Token;
+
+            try
             {
+                for (int i = 0; i < timeout; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    if (uploadService.uploadUsed)
+                        break;
+
+                    await Task.Delay(1000, token);
+                }
+
+                token.ThrowIfCancellationRequested();
+
+                if (!ReferenceEquals(resetTokenSource, source))
+                    return;
+
                 try
                 {
-                    int timeout = 80;
-
-                    for (int i = 0; i < timeout; i++)
+                    if (File.Exists(filePath))
                     {
-                        if (token.IsCancellationRequested) return;
-
-                        if (uploadService.uploadUsed)
-                            break;
-
-                        await Task.Delay(1000, token);
+                        File.SetAttributes(filePath, FileAttributes.Normal);
+                        File.Delete(filePath);
                     }
-
-                    if (token.IsCancellationRequested) return;
-
-                    try
-                    {
-                        if (File.Exists(filePath))
-                        {
-                            File.SetAttributes(filePath, FileAttributes.Normal);
-                            File.Delete(filePath);
-                        }
-                    }
-                    catch { }
-
-                    await Task.Delay(2000, token);
-
-                    if (token.IsCancellationRequested) return;
-
-                    this.Invoke(new Action(() =>
-                    {
-                        printingInProgress = false;
-                        allowReset = true;
-                        ResetMachine(true);
-                    }));
                 }
-                catch (TaskCanceledException)
-                {
+                catch { }
+
+                await Task.Delay(2000, token);
+
+                token.ThrowIfCancellationRequested();
+
+                if (!ReferenceEquals(resetTokenSource, source))
                     return;
-                }
-            });
+
+                printingInProgress = false;
+                allowReset = true;
+                ResetMachine(true);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                return;
+            }
+            finally
+            {
+                if (ReferenceEquals(resetTokenSource, source))
+                    resetTokenSource = null;
+
+                source.Dispose();
+            }
         }
 
         private void GenerateQrForFunDownload(string fileName)
@@ -5077,6 +5128,7 @@ namespace PrintAndSnap
 
         private async void downloadBtnPaymentId_Click(object sender, EventArgs e)
         {
+            long downloadVersion = ++photoDownloadVersion;
             try
             {
                 downloadBtnPaymentId.Enabled = false;
@@ -5094,6 +5146,8 @@ namespace PrintAndSnap
                 else
                 {
                     MessageBox.Show("No file to download.");
+                    if (downloadVersion != photoDownloadVersion)
+                        return;
                     downloadBtnPaymentId.Enabled = true;
                     return;
                 }
@@ -5103,95 +5157,51 @@ namespace PrintAndSnap
                 if (!File.Exists(fullPath))
                 {
                     MessageBox.Show("File not found.");
+                    if (downloadVersion != photoDownloadVersion)
+                        return;
                     downloadBtnPaymentId.Enabled = true;
                     return;
                 }
 
                 // RESET SERVER
+                uploadService.uploadUsed = false;
+                StartAutoCleanup(fullPath);
                 uploadService.StopServer();
                 await Task.Delay(500);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
                 uploadService.GenerateNewToken();
 
                 uploadService.StartUploadServer();
                 await Task.Delay(1200);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
                 GenerateQrForDownload(fileToDownload);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
                 ShowPhotoPanel(photoIDPanel, softCopyDownloadId);
+                StartAutoCleanup(fullPath, 60);
 
-                // =========================
-                // AUTO DELETE AFTER DOWNLOAD
-                // =========================
-                _ = Task.Run(async () =>
-                {
-                    string path = Path.Combine(@"C:\PrintAndSnap\ID\download", fileToDownload);
-
-                    int timeout = 60;
-                    bool downloaded = false;
-
-                    for (int i = 0; i < timeout; i++)
-                    {
-                        if (uploadService.uploadUsed)
-                        {
-                            downloaded = true;
-
-                            try
-                            {
-                                if (File.Exists(path))
-                                    File.Delete(path);
-                            }
-                            catch { }
-
-                            uploadService.uploadUsed = false;
-
-                            // delay before reset (better UX)
-                            await Task.Delay(2000);
-
-                            this.Invoke(new Action(() =>
-                            {
-                                printingInProgress = false;
-                                allowReset = true;
-                                ResetMachine(true);
-                            }));
-
-                            break;
-                        }
-
-                        await Task.Delay(1000);
-                    }
-                    // IF NOT DOWNLOADED → fallback reset
-                    if (!downloaded)
-                    {
-                        try
-                        {
-                            if (File.Exists(path))
-                                File.Delete(path);
-                        }
-                        catch { }
-
-                        await Task.Delay(2000);
-
-                        this.Invoke(new Action(() =>
-                        {
-                            printingInProgress = false;
-                            allowReset = true;
-                            ResetMachine(true);
-                        }));
-                    }
-                });
 
                 downloadBtnPaymentId.Enabled = true;
             }
             catch (Exception ex)
             {
+                if (downloadVersion != photoDownloadVersion)
+                    return;
                 MessageBox.Show("Download error: " + ex.Message);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
                 downloadBtnPaymentId.Enabled = true;
             }
         }
 
         private async void funDownloadBtn_Click(object sender, EventArgs e)
         {
+            long downloadVersion = ++photoDownloadVersion;
             try
             {
                 // BLOCK IF NOT READY
@@ -5204,102 +5214,59 @@ namespace PrintAndSnap
 
                 funDownloadBtn.Enabled = false;
 
+                string fileToDownload = lastSavedFunFileName;
                 string folder = @"C:\PrintAndSnap\FUN\download";
-                string fullPath = Path.Combine(folder, lastSavedFunFileName);
+                string fullPath = Path.Combine(folder, fileToDownload);
 
                 if (!File.Exists(fullPath))
                 {
                     MessageBox.Show("File not found.");
+                    if (downloadVersion != photoDownloadVersion)
+                        return;
                     funDownloadBtn.Enabled = true;
                     return;
                 }
 
                 // HARD RESET SERVER (same as ID)
+                uploadService.uploadUsed = false;
+                StartAutoCleanup(fullPath);
                 uploadService.StopServer();
                 await Task.Delay(500);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
                 uploadService.GenerateNewToken();
 
                 uploadService.StartUploadServer();
                 await Task.Delay(1200);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
-                GenerateQrForFunDownload(lastSavedFunFileName);
+                GenerateQrForFunDownload(fileToDownload);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
 
                 ShowPhotoPanel(photoBoothPanel, funSoftCopyDownloadPanel);
+                StartAutoCleanup(fullPath, 60);
 
                 // Re-enable after done
                 funDownloadBtn.Enabled = true;
 
-                // =========================
-                // AUTO DELETE + RESET
-                // =========================
-                _ = Task.Run(async () =>
-                {
-                    string path = Path.Combine(@"C:\PrintAndSnap\FUN\download", lastSavedFunFileName);
-
-                    int timeout = 60;
-                    bool downloaded = false;
-
-                    for (int i = 0; i < timeout; i++)
-                    {
-                        if (uploadService.uploadUsed)
-                        {
-                            downloaded = true;
-
-                            try
-                            {
-                                if (File.Exists(path))
-                                    File.Delete(path);
-                            }
-                            catch { }
-
-                            uploadService.uploadUsed = false;
-
-                            await Task.Delay(2000);
-
-                            this.Invoke(new Action(() =>
-                            {
-                                printingInProgress = false;
-                                allowReset = true;
-                                ResetMachine(true);
-                            }));
-
-                            break;
-                        }
-
-                        await Task.Delay(1000);
-                    }
-
-                    // fallback delete
-                    if (!downloaded)
-                    {
-                        try
-                        {
-                            if (File.Exists(path))
-                                File.Delete(path);
-                        }
-                        catch { }
-
-                        await Task.Delay(2000);
-
-                        this.Invoke(new Action(() =>
-                        {
-                            printingInProgress = false;
-                            allowReset = true;
-                            ResetMachine(true);
-                        }));
-                    }
-                });
             }
             catch (Exception ex)
             {
+                if (downloadVersion != photoDownloadVersion)
+                    return;
                 MessageBox.Show("Download error: " + ex.Message);
+                if (downloadVersion != photoDownloadVersion)
+                    return;
                 funDownloadBtn.Enabled = true;
             }
         }
 
         private void StopDownloadSession()
         {
+            photoDownloadVersion++;
             try
             {
                 uploadService.StopServer();
@@ -5450,6 +5417,7 @@ namespace PrintAndSnap
 
         private void backBtnPaymentId_Click(object obj, EventArgs args)
         {
+            photoDownloadVersion++;
             ShowPhotoPanel(photoIDPanel, idPrintingSettings);
         }
 
@@ -5465,6 +5433,7 @@ namespace PrintAndSnap
 
         private void paymentFunBackBtn_Click(object obj, EventArgs args)
         {
+            photoDownloadVersion++;
             ShowPhotoPanel(photoBoothPanel, photoBoothSettings);
         }
 
@@ -6157,6 +6126,12 @@ namespace PrintAndSnap
 
         private void ResetPhoto()
         {
+            StopUploadStatusAnimation();
+            resetTokenSource?.Cancel();
+            photoDownloadVersion++;
+            photoCaptureVersion++;
+            isProcessing = false;
+
             // =========================
             // STOP CAMERA / CAPTURE
             // =========================
@@ -6242,6 +6217,7 @@ namespace PrintAndSnap
 
             SafeDispose(ref finalIdPrintImage);
             SafeDispose(ref finalFunImage);
+            SafeDispose(ref preparedFunDownloadImage);
             SafeDispose(ref selectedPhoto);
 
 
@@ -6852,7 +6828,8 @@ namespace PrintAndSnap
             Thread.Sleep(300);
 
             // Generate a fresh token
-            photoUploadServices.GenerateNewToken();
+            activePhotoUploadToken = photoUploadServices.GenerateNewToken();
+            photoUploadCaptureVersion = photoCaptureVersion;
 
             // Start a fresh upload server
             photoUploadServices.StartUploadServer();
@@ -6888,19 +6865,23 @@ namespace PrintAndSnap
 
         private void StartUploadStatusAnimation()
         {
+            string uploadToken = activePhotoUploadToken;
             uploadDotCount = 0;
 
-            if (uploadStatusTimer != null)
+            if (photoUploadStatusTimer != null)
             {
-                uploadStatusTimer.Stop();
-                uploadStatusTimer.Dispose();
+                photoUploadStatusTimer.Stop();
+                photoUploadStatusTimer.Dispose();
             }
 
-            uploadStatusTimer = new System.Windows.Forms.Timer();
-            uploadStatusTimer.Interval = 500;
+            photoUploadStatusTimer = new System.Windows.Forms.Timer();
+            photoUploadStatusTimer.Interval = 500;
 
-            uploadStatusTimer.Tick += (s, e) =>
+            photoUploadStatusTimer.Tick += (s, e) =>
             {
+                if (!IsCurrentPhotoUpload(uploadToken))
+                    return;
+
                 uploadDotCount++;
 
                 if (uploadDotCount > 3)
@@ -6911,36 +6892,39 @@ namespace PrintAndSnap
                     new string('.', uploadDotCount);
             };
 
-            uploadStatusTimer.Start();
+            photoUploadStatusTimer.Start();
         }
 
         private void StopUploadStatusAnimation()
         {
-            if (uploadStatusTimer != null)
+            if (photoUploadStatusTimer != null)
             {
-                uploadStatusTimer.Stop();
-                uploadStatusTimer.Dispose();
-                uploadStatusTimer = null;
+                photoUploadStatusTimer.Stop();
+                photoUploadStatusTimer.Dispose();
+                photoUploadStatusTimer = null;
             }
         }
 
-        private void PhotoUploadServices_PhotoUploaded(string filePath)
+        private void PhotoUploadServices_PhotoUploaded(string filePath, string uploadToken)
         {
             if (InvokeRequired)
             {
                 BeginInvoke(new Action(() =>
                 {
-                    PhotoUploadReceived(filePath);
+                    PhotoUploadReceived(filePath, uploadToken);
                 }));
 
                 return;
             }
 
-            PhotoUploadReceived(filePath);
+            PhotoUploadReceived(filePath, uploadToken);
         }
 
-        private async void PhotoUploadReceived(string filePath)
+        private async void PhotoUploadReceived(string filePath, string uploadToken)
         {
+            if (!IsCurrentPhotoUpload(uploadToken))
+                return;
+
             uploadedPhotoPath = filePath;
 
             // Stop the animated dots
@@ -6951,6 +6935,9 @@ namespace PrintAndSnap
 
             // Give the customer time to see it
             await Task.Delay(1500);
+
+            if (!IsCurrentPhotoUpload(uploadToken))
+                return;
 
             // Now move to Choose ID / FUN
             ShowPhotoPanel(uploadPhotoChoose);
@@ -7148,6 +7135,9 @@ namespace PrintAndSnap
 
         private void StopPhotoUploadSession()
         {
+            activePhotoUploadToken = null;
+            StopUploadStatusAnimation();
+
             try
             {
                 if (photoUploadServices != null)

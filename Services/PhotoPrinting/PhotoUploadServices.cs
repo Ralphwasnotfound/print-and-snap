@@ -39,7 +39,7 @@ namespace Snap_and_Print.Services.PhotoPrinting
         private string idTempFolder;
         private string funTempFolder;
 
-        public event Action<string> PhotoUploaded;
+        public event Action<string, string> PhotoUploaded;
 
         public PhotoUploadServices()
         {
@@ -471,7 +471,7 @@ Please return to the kiosk to start a new session.
 
             if (context.Request.HttpMethod == "POST")
             {
-                ReceivePhoto(context);
+                ReceivePhoto(context, token);
                 return;
             }
 
@@ -487,7 +487,8 @@ Please return to the kiosk to start a new session.
         // ==========================================
 
         private void ReceivePhoto(
-            HttpListenerContext context)
+            HttpListenerContext context,
+            string uploadToken)
         {
             string fileName =
                 context.Request.Headers["X-File-Name"];
@@ -644,7 +645,7 @@ to continue.
                     filePath
                 );
 
-                PhotoUploaded?.Invoke(filePath);
+                PhotoUploaded?.Invoke(filePath, uploadToken);
             }
             catch (Exception ex)
             {

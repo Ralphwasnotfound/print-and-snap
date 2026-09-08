@@ -161,17 +161,7 @@ namespace PrintAndSnap.Services
                         context.Response.OutputStream.Close();
                         context.Response.Close();
 
-                        // delete after download
-                        _ = Task.Run(async () =>
-                        {
-                            await Task.Delay(2000);
-                            try
-                            {
-                                if (File.Exists(filePath))
-                                    File.Delete(filePath);
-                            }
-                            catch { }
-                        });
+
 
                         continue; 
                     }
