@@ -196,6 +196,14 @@ namespace PrintAndSnap
         private IntPtr hookID = IntPtr.Zero;
         private int countdown = 3;
         private CancellationTokenSource resetTokenSource;
+        private CancellationTokenSource photoPrintTokenSource =
+            new CancellationTokenSource();
+
+        private void CancelPhotoPrintOperation()
+        {
+            photoPrintTokenSource.Cancel();
+            photoPrintTokenSource = new CancellationTokenSource();
+        }
         private string lastPrinterError = "";
         private DateTime lastFrameTime = DateTime.MinValue;
 
@@ -218,6 +226,7 @@ namespace PrintAndSnap
         {
             try
             {
+                photoPrintTokenSource.Cancel();
                 DebugLog("APPLICATION SHUTDOWN STARTED");
 
                 // =========================
@@ -802,9 +811,11 @@ namespace PrintAndSnap
             paymentController.InsertedPayment >= paymentController.TotalAmount;
 
             printBtnPaymentId.Enabled =
+                !printingInProgress &&
                 paymentController.InsertedPayment >= paymentController.TotalAmount;
 
             paymentFunPrintBtn.Enabled =
+                !printingInProgress &&
                 paymentController.InsertedPayment >= paymentController.TotalAmount;
         }
 
@@ -4263,11 +4274,15 @@ namespace PrintAndSnap
         // ID PAYMENT
         private void printBtnPaymentId_Click(object sender, EventArgs e)
         {
+            if (printingInProgress)
+                return;
+
             PrintIdPhoto();
         }
 
         private async void PrintIdPhoto()
         {
+            CancellationToken photoPrintToken = photoPrintTokenSource.Token;
 
             // BLOCK IF NOT FULLY PAID
             if (paymentController.InsertedPayment < paymentController.TotalAmount)
@@ -4284,7 +4299,11 @@ namespace PrintAndSnap
 
             try
             {
+                photoPrintToken.ThrowIfCancellationRequested();
                 printingInProgress = true;
+
+                backBtnPaymentId.Enabled = false;
+                cancelBtnPaymentId.Enabled = false;
 
                 printBtnPaymentId.Enabled = false;
                 // disable download until done
@@ -4308,6 +4327,14 @@ namespace PrintAndSnap
 
                     for (int i = 0; i < copies; i++)
                     {
+                        photoPrintToken.ThrowIfCancellationRequested();
+
+                        if (!IsPrinterReady(PHOTO_PRINTER))
+                        {
+                            throw new InvalidOperationException(
+                                "ID printer is unavailable. Printing could not be confirmed.");
+                        }
+
                         Debug.WriteLine(
                             "ID PRINT: Printing copy " +
                             (i + 1) +
@@ -4315,23 +4342,26 @@ namespace PrintAndSnap
                             copies
                         );
 
+                        photoPrintToken.ThrowIfCancellationRequested();
                         photoPrinting.PrintIdPhoto(
                             readyToPrint,
                             PHOTO_PRINTER,
                             false,
                             printMode
                         );
+                        photoPrintToken.ThrowIfCancellationRequested();
 
                         // Give the printer a moment between jobs
                         if (i < copies - 1)
                         {
-                            await Task.Delay(1000);
+                            await Task.Delay(1000, photoPrintToken);
+                            photoPrintToken.ThrowIfCancellationRequested();
                         }
                     }
                 }
                 catch
                 {
-                    Debug.WriteLine("Printer fallback used.");
+                    throw;
                 }
 
                 // =========================
@@ -4356,6 +4386,7 @@ namespace PrintAndSnap
                 // TIMER LOOP
                 for (int i = printTime / 1000; i > 0; i--)
                 {
+                    photoPrintToken.ThrowIfCancellationRequested();
                     idprintingStatusLabel.Text = $"Printing... {i}s";
 
                     // allow cancel
@@ -4365,11 +4396,26 @@ namespace PrintAndSnap
                         return;
                     }
 
-                    await Task.Delay(1000);
+                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    {
+                        throw new InvalidOperationException(
+                            "ID printer became unavailable. Printing could not be confirmed.");
+                    }
+
+                    await Task.Delay(1000, photoPrintToken);
+                    photoPrintToken.ThrowIfCancellationRequested();
                 }
 
 
 
+                photoPrintToken.ThrowIfCancellationRequested();
+                if (!IsPrinterReady(PHOTO_PRINTER))
+                {
+                    throw new InvalidOperationException(
+                        "ID printer is unavailable. Printing could not be confirmed.");
+                }
+
+                photoPrintToken.ThrowIfCancellationRequested();
                 idprintingStatusLabel.Text = "Done!";
 
                 // =========================
@@ -4450,6 +4496,8 @@ namespace PrintAndSnap
                 }));
 
                 printingInProgress = false;
+                backBtnPaymentId.Enabled = true;
+                cancelBtnPaymentId.Enabled = true;
 
                 string path = Path.Combine(ID_DOWNLOAD, downloadFileName);
                 StartAutoCleanup(path);
@@ -4475,9 +4523,19 @@ namespace PrintAndSnap
                 }));
 
             }
+            catch (OperationCanceledException)
+                when (photoPrintToken.IsCancellationRequested)
+            {
+                return;
+            }
             catch (Exception ex)
             {
+                if (photoPrintToken.IsCancellationRequested)
+                    return;
+
                 printingInProgress = false;
+                backBtnPaymentId.Enabled = true;
+                cancelBtnPaymentId.Enabled = true;
                 MessageBox.Show("Print failed: " + ex.Message);
             }
         }
@@ -4485,11 +4543,15 @@ namespace PrintAndSnap
         // FUN  PAYMENT
         private void paymentFunPrintBtn_Click(object sender, EventArgs e)
         {
+            if (printingInProgress)
+                return;
+
             PrintFunPhoto();
         }
 
         private async void PrintFunPhoto()
         {
+            CancellationToken photoPrintToken = photoPrintTokenSource.Token;
             // BLOCK IF NOT PAID 
             if (paymentController.InsertedPayment < paymentController.TotalAmount)
             {
@@ -4505,7 +4567,11 @@ namespace PrintAndSnap
 
             try
             {
+                photoPrintToken.ThrowIfCancellationRequested();
                 printingInProgress = true;
+
+                paymentFunBackBtn.Enabled = false;
+                paymentFunCancelBtn.Enabled = false;
 
                 // disable print + download first
                 paymentFunPrintBtn.Enabled = false;
@@ -4526,6 +4592,14 @@ namespace PrintAndSnap
 
                 for (int i = 0; i < copies; i++)
                 {
+                    photoPrintToken.ThrowIfCancellationRequested();
+
+                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    {
+                        throw new InvalidOperationException(
+                            "FUN printer is unavailable. Printing could not be confirmed.");
+                    }
+
                     DebugLog(
                         "FUN PRINT: Printing copy " +
                         (i + 1) +
@@ -4533,17 +4607,20 @@ namespace PrintAndSnap
                         copies
                     );
 
+                    photoPrintToken.ThrowIfCancellationRequested();
                     photoPrinting.PrintFunPhoto(
                         readyToPrint,
                         PHOTO_PRINTER
                     );
+                    photoPrintToken.ThrowIfCancellationRequested();
 
                     // Small delay between print jobs
                     // so the printer has time to finish
                     // accepting the previous job.
                     if (i < copies - 1)
                     {
-                        await Task.Delay(1000);
+                        await Task.Delay(1000, photoPrintToken);
+                        photoPrintToken.ThrowIfCancellationRequested();
                     }
                 }
 
@@ -4571,9 +4648,27 @@ namespace PrintAndSnap
                 // =========================
                 for (int i = funPrintTime / 1000; i > 0; i--)
                 {
+                    photoPrintToken.ThrowIfCancellationRequested();
                     funPrintingStatusLabel.Text = $"Printing... {i}s";
-                    await Task.Delay(1000);
+
+                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    {
+                        throw new InvalidOperationException(
+                            "FUN printer became unavailable. Printing could not be confirmed.");
+                    }
+
+                    await Task.Delay(1000, photoPrintToken);
+                    photoPrintToken.ThrowIfCancellationRequested();
                 }
+
+                photoPrintToken.ThrowIfCancellationRequested();
+                if (!IsPrinterReady(PHOTO_PRINTER))
+                {
+                    throw new InvalidOperationException(
+                        "FUN printer is unavailable. Printing could not be confirmed.");
+                }
+
+                photoPrintToken.ThrowIfCancellationRequested();
 
                 // =========================
                 // CLEAN TEMP (FUN)
@@ -4658,6 +4753,8 @@ namespace PrintAndSnap
                 // FINISH STATE
                 // =========================
                 printingInProgress = false;
+                paymentFunBackBtn.Enabled = true;
+                paymentFunCancelBtn.Enabled = true;
 
                 funPrintingStatusLabel.Text = "Print complete!";
 
@@ -4680,9 +4777,19 @@ namespace PrintAndSnap
                     );
                 }));
             }
+            catch (OperationCanceledException)
+                when (photoPrintToken.IsCancellationRequested)
+            {
+                return;
+            }
             catch (Exception ex)
             {
+                if (photoPrintToken.IsCancellationRequested)
+                    return;
+
                 printingInProgress = false;
+                paymentFunBackBtn.Enabled = true;
+                paymentFunCancelBtn.Enabled = true;
                 MessageBox.Show("Print failed: " + ex.Message);
             }
         }
@@ -4824,6 +4931,7 @@ namespace PrintAndSnap
 
             try
             {
+                CancelPhotoPrintOperation();
                 resetTokenSource?.Cancel();
                 StopPhotoUploadSession();
 
@@ -5997,6 +6105,8 @@ namespace PrintAndSnap
 
             try
             {
+                CancelPhotoPrintOperation();
+
                 // =========================
                 // STOP PHOTO UPLOAD SERVER
                 // =========================
@@ -6361,6 +6471,11 @@ namespace PrintAndSnap
             printBtn.Enabled = false;
             printBtnPaymentId.Enabled = false;
             paymentFunPrintBtn.Enabled = false;
+
+            backBtnPaymentId.Enabled = true;
+            cancelBtnPaymentId.Enabled = true;
+            paymentFunBackBtn.Enabled = true;
+            paymentFunCancelBtn.Enabled = true;
 
             downloadBtnPaymentId.Enabled = false;
             funDownloadBtn.Enabled = false;

@@ -44,25 +44,46 @@ namespace PrintAndSnap.Services.PhotoPrinting
             int width = 1080;
             int height = 1920;
 
+            int outerPaddingTop = 20;
+            int outerPaddingBottom = 20;
+            int outerPaddingLeft = 10;
+            int outerPaddingRight = 10;
+
+            int count = 2;
+            int verticalGap = 25;
+            int innerMargin = 8;
+
+            if (layoutType == "grid")
+            {
+                int photoWidth = (width - outerPaddingLeft - outerPaddingRight) / 2;
+                height = outerPaddingTop + outerPaddingBottom + 2 * Math.Max(
+                    1,
+                    (int)Math.Round((double)photoWidth * photos[0].Height / photos[0].Width));
+            }
+            else if (layoutType == "vertical")
+            {
+                int contentWidth = width - outerPaddingLeft - outerPaddingRight
+                    - innerMargin * 2;
+                int photoHeight = Math.Max(
+                    1,
+                    (int)Math.Round((double)contentWidth * photos[0].Height / photos[0].Width));
+
+                height = outerPaddingTop + outerPaddingBottom
+                    + count * (photoHeight + innerMargin * 2)
+                    + verticalGap * (count - 1);
+            }
+
             Bitmap canvas = new Bitmap(width, height);
 
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 g.Clear(Color.White);
 
-                int outerPaddingTop = 20;
-                int outerPaddingBottom = 20;
-                int outerPaddingLeft = 10;
-                int outerPaddingRight = 10;
-
                 // =========================
                 // VERTICAL STRIP
                 // =========================
                 if (layoutType == "vertical")
                 {
-                    int count = 4;
-                    int verticalGap = 25;
-
                     int availableHeight = height - outerPaddingTop - outerPaddingBottom - (verticalGap * (count - 1));
                     int cellHeight = availableHeight / count;
                     int cellWidth = width - outerPaddingLeft - outerPaddingRight;
@@ -72,8 +93,6 @@ namespace PrintAndSnap.Services.PhotoPrinting
                     for (int i = 0; i < count; i++)
                     {
                         Bitmap img = photos[i % photos.Count];
-
-                        int innerMargin = 8;
 
                         int contentW = cellWidth - (innerMargin * 2);
                         int contentH = cellHeight - (innerMargin * 2);
@@ -102,7 +121,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                 // =========================
                 else if (layoutType == "grid")
                 {
-                    int rows = 3;
+                    int rows = 1;
                     int outerGap = 20;
 
                     int totalGapY = outerGap * (rows - 1);
@@ -117,7 +136,7 @@ namespace PrintAndSnap.Services.PhotoPrinting
                         int x = outerPaddingLeft;
                         int y = outerPaddingTop + r * (cellHeight + outerGap);
 
-                        // EACH CELL = 2x2 (4 photos)
+                        // ONE GROUP = FOUR PHOTOS IN A 2x2 GRID
                         int miniCols = 2;
                         int miniRows = 2;
 
@@ -139,11 +158,11 @@ namespace PrintAndSnap.Services.PhotoPrinting
                                     ? (y + cellHeight) - my
                                     : (cellHeight / miniRows);
 
-                                // FULL BLEED (NO MARGIN AT ALL)
+                                // FIT EACH PHOTO WITHOUT CROPPING
                                 int contentW = miniW;
                                 int contentH = miniH;
 
-                                float ratio = Math.Max(
+                                float ratio = Math.Min(
                                     (float)contentW / img.Width,
                                     (float)contentH / img.Height
                                 );
