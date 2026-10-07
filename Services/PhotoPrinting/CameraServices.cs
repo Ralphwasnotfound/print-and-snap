@@ -25,10 +25,20 @@ namespace PrintAndSnap.Services.PhotoPrinting
 
             videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
-            if (videoDevices.Count == 0)
-                throw new Exception("No camera detected.");
+            FilterInfo selectedCamera = null;
+            foreach (FilterInfo device in videoDevices)
+            {
+                if (string.Equals(device.Name, "XJS-CT48-3V93", StringComparison.OrdinalIgnoreCase))
+                {
+                    selectedCamera = device;
+                    break;
+                }
+            }
 
-            videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+            if (selectedCamera == null)
+                throw new Exception("USB camera XJS-CT48-3V93 was not detected.");
+
+            videoSource = new VideoCaptureDevice(selectedCamera.MonikerString);
 
             frameHandler = (s, e) =>
             {

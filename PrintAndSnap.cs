@@ -70,8 +70,7 @@ namespace PrintAndSnap
         private readonly string BASE_PATH = @"C:\PrintAndSnap";
 
         // PRINTERS
-        private const string DOCUMENT_PRINTER = "Canon MG3000 series";
-        private const string PHOTO_PRINTER = "EPSON L3210 Series";
+        private const string KIOSK_PRINTER = "EPSON L3210 Series";
 
         //MODES
         enum PhotoMode { None, ID, Fun }
@@ -2371,7 +2370,7 @@ namespace PrintAndSnap
                 //Printer Check
                 //==========
 
-                if (!IsPrinterReady(PHOTO_PRINTER))
+                if (!IsPrinterReady(KIOSK_PRINTER))
                 {
                     MessageBox.Show(
                         this,
@@ -2545,7 +2544,7 @@ namespace PrintAndSnap
         {
             try
             {
-                string printerName = DOCUMENT_PRINTER;
+                string printerName = KIOSK_PRINTER;
 
                 if (!printerManager.PrinterExists(printerName))
                 {
@@ -3743,7 +3742,7 @@ namespace PrintAndSnap
             //=================
             // PRINTER CHECK
             //=================
-            if (!IsPrinterReady(PHOTO_PRINTER))
+            if (!IsPrinterReady(KIOSK_PRINTER))
             {
                 MessageBox.Show(
                     this,
@@ -4388,7 +4387,7 @@ namespace PrintAndSnap
                     {
                         photoPrintToken.ThrowIfCancellationRequested();
 
-                        if (!IsPrinterReady(PHOTO_PRINTER))
+                        if (!IsPrinterReady(KIOSK_PRINTER))
                         {
                             throw new InvalidOperationException(
                                 "ID printer is unavailable. Printing could not be confirmed.");
@@ -4404,7 +4403,7 @@ namespace PrintAndSnap
                         photoPrintToken.ThrowIfCancellationRequested();
                         photoPrinting.PrintIdPhoto(
                             readyToPrint,
-                            PHOTO_PRINTER,
+                            KIOSK_PRINTER,
                             false,
                             printMode
                         );
@@ -4455,7 +4454,7 @@ namespace PrintAndSnap
                         return;
                     }
 
-                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    if (!IsPrinterReady(KIOSK_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "ID printer became unavailable. Printing could not be confirmed.");
@@ -4468,7 +4467,7 @@ namespace PrintAndSnap
 
 
                 photoPrintToken.ThrowIfCancellationRequested();
-                if (!IsPrinterReady(PHOTO_PRINTER))
+                if (!IsPrinterReady(KIOSK_PRINTER))
                 {
                     throw new InvalidOperationException(
                         "ID printer is unavailable. Printing could not be confirmed.");
@@ -4648,7 +4647,7 @@ namespace PrintAndSnap
                 {
                     photoPrintToken.ThrowIfCancellationRequested();
 
-                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    if (!IsPrinterReady(KIOSK_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "FUN printer is unavailable. Printing could not be confirmed.");
@@ -4664,7 +4663,7 @@ namespace PrintAndSnap
                     photoPrintToken.ThrowIfCancellationRequested();
                     photoPrinting.PrintFunPhoto(
                         readyToPrint,
-                        PHOTO_PRINTER
+                        KIOSK_PRINTER
                     );
                     photoPrintToken.ThrowIfCancellationRequested();
 
@@ -4705,7 +4704,7 @@ namespace PrintAndSnap
                     photoPrintToken.ThrowIfCancellationRequested();
                     funPrintingStatusLabel.Text = $"Printing... {i}s";
 
-                    if (!IsPrinterReady(PHOTO_PRINTER))
+                    if (!IsPrinterReady(KIOSK_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "FUN printer became unavailable. Printing could not be confirmed.");
@@ -4716,7 +4715,7 @@ namespace PrintAndSnap
                 }
 
                 photoPrintToken.ThrowIfCancellationRequested();
-                if (!IsPrinterReady(PHOTO_PRINTER))
+                if (!IsPrinterReady(KIOSK_PRINTER))
                 {
                     throw new InvalidOperationException(
                         "FUN printer is unavailable. Printing could not be confirmed.");
@@ -4863,7 +4862,7 @@ namespace PrintAndSnap
                     {
                         return documentPrinting.PrintDocumentFile(
                             currentPdfPath,
-                            DOCUMENT_PRINTER,
+                            KIOSK_PRINTER,
                             totalPages,
                             copies,
                             radioSinglePage.Checked,
@@ -6651,6 +6650,7 @@ namespace PrintAndSnap
         private void PrintImage(Bitmap image)
         {
             PrintDocument pd = new PrintDocument();
+            pd.PrinterSettings.PrinterName = KIOSK_PRINTER;
 
             pd.PrintPage += (s, e) =>
             {
@@ -6755,7 +6755,7 @@ namespace PrintAndSnap
                 return;
             }
 
-            string printerName = "Canon MG3000 series";
+            string printerName = KIOSK_PRINTER;
 
             if (!printerManager.IsPrinterReady(printerName))
             {
