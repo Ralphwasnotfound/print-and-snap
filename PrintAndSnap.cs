@@ -70,7 +70,15 @@ namespace PrintAndSnap
         private readonly string BASE_PATH = @"C:\PrintAndSnap";
 
         // PRINTERS
-        private const string KIOSK_PRINTER = "EPSON L3210 Series";
+        private const string DOCUMENT_PRINTER = "Canon MG3000 series";
+        private const string PHOTO_PRINTER = "EPSON L3210 Series";
+
+        // Local Debug testing only. Release builds always require payment.
+#if DEBUG
+        private static readonly bool ENABLE_PAYMENT = true;
+#else
+        private static readonly bool ENABLE_PAYMENT = true;
+#endif
 
         //MODES
         enum PhotoMode { None, ID, Fun }
@@ -774,18 +782,41 @@ namespace PrintAndSnap
             qrExpireTimer.Interval = 60000; // 60 seconds
             qrExpireTimer.Tick += QrExpireTimer_Tick;
 
-            if (paymentController.Connect())
+            if (ENABLE_PAYMENT)
             {
-                paymentController.PaymentUpdated += PaymentController_PaymentUpdated;
-                paymentController.BillDetected += PaymentController_BillDetected;
+                if (paymentController.Connect())
+                {
+                    paymentController.PaymentUpdated += PaymentController_PaymentUpdated;
+                    paymentController.BillDetected += PaymentController_BillDetected;
 
-                paymentController.CheckHardware();
+                    paymentController.CheckHardware();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Hardware connection failed!",
+                        "Snap and Print",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                }
             }
             else
             {
+                // Reuse the existing payment panels as explicit print confirmation screens.
+                foreach (Label heading in new[] { label2, label14, label9 })
+                {
+                    heading.Text = "TEST MODE -\nPAYMENT DISABLED";
+                    heading.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+                    heading.ForeColor = Color.DarkRed;
+                }
+
                 MessageBox.Show(
-                    "Hardware connection failed!",
-                    "Snap and Print",
+                    this,
+                    "TEST MODE - PAYMENT DISABLED\n\n" +
+                    "Local Debug testing only. Do not distribute this build.\n" +
+                    "Select your settings, then click PRINT to confirm each job.",
+                    "Snap and Print - Local Test Mode",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );
@@ -2370,7 +2401,7 @@ namespace PrintAndSnap
                 //Printer Check
                 //==========
 
-                if (!IsPrinterReady(KIOSK_PRINTER))
+                if (!IsPrinterReady(PHOTO_PRINTER))
                 {
                     MessageBox.Show(
                         this,
@@ -2506,7 +2537,10 @@ namespace PrintAndSnap
                 }
 
                 paymentIDTotal.Text = totalIdPrice.ToString();
-                paymentController.StartPayment(totalIdPrice);
+                if (ENABLE_PAYMENT)
+                    paymentController.StartPayment(totalIdPrice);
+                else
+                    printBtnPaymentId.Enabled = !printingInProgress;
                 printBtn.Enabled = false;
                 downloadBtnPaymentId.Enabled = false;
 
@@ -2544,7 +2578,7 @@ namespace PrintAndSnap
         {
             try
             {
-                string printerName = KIOSK_PRINTER;
+                string printerName = DOCUMENT_PRINTER;
 
                 if (!printerManager.PrinterExists(printerName))
                 {
@@ -3742,7 +3776,7 @@ namespace PrintAndSnap
             //=================
             // PRINTER CHECK
             //=================
-            if (!IsPrinterReady(KIOSK_PRINTER))
+            if (!IsPrinterReady(PHOTO_PRINTER))
             {
                 MessageBox.Show(
                     this,
@@ -3832,9 +3866,10 @@ namespace PrintAndSnap
             //=================
             // START PAYMENT
             //=================
-            paymentController.StartPayment(totalFunPrice);
+            if (ENABLE_PAYMENT)
+                paymentController.StartPayment(totalFunPrice);
 
-            paymentFunPrintBtn.Enabled = false;
+            paymentFunPrintBtn.Enabled = !ENABLE_PAYMENT && !printingInProgress;
 
             currentMode = PhotoMode.Fun;
 
@@ -4343,7 +4378,7 @@ namespace PrintAndSnap
             CancellationToken photoPrintToken = photoPrintTokenSource.Token;
 
             // BLOCK IF NOT FULLY PAID
-            if (paymentController.InsertedPayment < paymentController.TotalAmount)
+            if (ENABLE_PAYMENT && paymentController.InsertedPayment < paymentController.TotalAmount)
             {
                 MessageBox.Show("Please complete payment first.");
                 return;
@@ -4387,7 +4422,7 @@ namespace PrintAndSnap
                     {
                         photoPrintToken.ThrowIfCancellationRequested();
 
-                        if (!IsPrinterReady(KIOSK_PRINTER))
+                        if (!IsPrinterReady(PHOTO_PRINTER))
                         {
                             throw new InvalidOperationException(
                                 "ID printer is unavailable. Printing could not be confirmed.");
@@ -4403,7 +4438,7 @@ namespace PrintAndSnap
                         photoPrintToken.ThrowIfCancellationRequested();
                         photoPrinting.PrintIdPhoto(
                             readyToPrint,
-                            KIOSK_PRINTER,
+                            PHOTO_PRINTER,
                             false,
                             printMode
                         );
@@ -4454,7 +4489,7 @@ namespace PrintAndSnap
                         return;
                     }
 
-                    if (!IsPrinterReady(KIOSK_PRINTER))
+                    if (!IsPrinterReady(PHOTO_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "ID printer became unavailable. Printing could not be confirmed.");
@@ -4467,7 +4502,7 @@ namespace PrintAndSnap
 
 
                 photoPrintToken.ThrowIfCancellationRequested();
-                if (!IsPrinterReady(KIOSK_PRINTER))
+                if (!IsPrinterReady(PHOTO_PRINTER))
                 {
                     throw new InvalidOperationException(
                         "ID printer is unavailable. Printing could not be confirmed.");
@@ -4606,7 +4641,7 @@ namespace PrintAndSnap
         {
             CancellationToken photoPrintToken = photoPrintTokenSource.Token;
             // BLOCK IF NOT PAID 
-            if (paymentController.InsertedPayment < paymentController.TotalAmount)
+            if (ENABLE_PAYMENT && paymentController.InsertedPayment < paymentController.TotalAmount)
             {
                 MessageBox.Show("Please complete payment first.");
                 return;
@@ -4647,7 +4682,7 @@ namespace PrintAndSnap
                 {
                     photoPrintToken.ThrowIfCancellationRequested();
 
-                    if (!IsPrinterReady(KIOSK_PRINTER))
+                    if (!IsPrinterReady(PHOTO_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "FUN printer is unavailable. Printing could not be confirmed.");
@@ -4663,7 +4698,7 @@ namespace PrintAndSnap
                     photoPrintToken.ThrowIfCancellationRequested();
                     photoPrinting.PrintFunPhoto(
                         readyToPrint,
-                        KIOSK_PRINTER
+                        PHOTO_PRINTER
                     );
                     photoPrintToken.ThrowIfCancellationRequested();
 
@@ -4704,7 +4739,7 @@ namespace PrintAndSnap
                     photoPrintToken.ThrowIfCancellationRequested();
                     funPrintingStatusLabel.Text = $"Printing... {i}s";
 
-                    if (!IsPrinterReady(KIOSK_PRINTER))
+                    if (!IsPrinterReady(PHOTO_PRINTER))
                     {
                         throw new InvalidOperationException(
                             "FUN printer became unavailable. Printing could not be confirmed.");
@@ -4715,7 +4750,7 @@ namespace PrintAndSnap
                 }
 
                 photoPrintToken.ThrowIfCancellationRequested();
-                if (!IsPrinterReady(KIOSK_PRINTER))
+                if (!IsPrinterReady(PHOTO_PRINTER))
                 {
                     throw new InvalidOperationException(
                         "FUN printer is unavailable. Printing could not be confirmed.");
@@ -4862,7 +4897,7 @@ namespace PrintAndSnap
                     {
                         return documentPrinting.PrintDocumentFile(
                             currentPdfPath,
-                            KIOSK_PRINTER,
+                            DOCUMENT_PRINTER,
                             totalPages,
                             copies,
                             radioSinglePage.Checked,
@@ -6650,7 +6685,7 @@ namespace PrintAndSnap
         private void PrintImage(Bitmap image)
         {
             PrintDocument pd = new PrintDocument();
-            pd.PrinterSettings.PrinterName = KIOSK_PRINTER;
+            pd.PrinterSettings.PrinterName = PHOTO_PRINTER;
 
             pd.PrintPage += (s, e) =>
             {
@@ -6755,7 +6790,7 @@ namespace PrintAndSnap
                 return;
             }
 
-            string printerName = KIOSK_PRINTER;
+            string printerName = DOCUMENT_PRINTER;
 
             if (!printerManager.IsPrinterReady(printerName))
             {
@@ -6775,9 +6810,10 @@ namespace PrintAndSnap
 
             paymentDocTotal.Text = total.ToString();
 
-            paymentController.StartPayment(total);
+            if (ENABLE_PAYMENT)
+                paymentController.StartPayment(total);
 
-            printBtn.Enabled = false;
+            printBtn.Enabled = !ENABLE_PAYMENT && !printingInProgress;
 
             settingsPanel.Hide();
             paymentPanel.Show();
