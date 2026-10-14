@@ -865,7 +865,7 @@ document
                     return null;
 
                 string uploadUrl =
-                    $"http://192.168.8.100:{PORT}/?token={currentPhotoToken}";
+                    $"http://192.168.8.103:{PORT}/?token={currentPhotoToken}";
 
                 using (var qrGenerator = new QRCoder.QRCodeGenerator())
                 using (var qrData = qrGenerator.CreateQrCode(
